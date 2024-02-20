@@ -1,0 +1,90 @@
+.navbar {
+  height: 45px;
+  padding: 0 !important;
+  /* background-color: red; */
+}
+.navbar-content {
+  width: 100%;
+}
+.navbar-content h1 {
+  font-size: 12px;
+}
+.navbar-content i {
+  font-size: 22px;
+}
+img {
+  height: 35px;
+  transition: all 0.2s ease-in;
+  filter: grayscale(100%);
+}
+img:hover {
+  transition: all 0.2s ease-in;
+  transform: scale(1.05);
+  cursor: pointer;
+  filter: grayscale(0%);
+}
+
+/* notification */
+.notification-bell {
+  position: relative;
+  cursor: pointer;
+}
+
+.bell-icon {
+  position: relative;
+  display: inline-block;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -1px;
+  right: 3px;
+  width: 8px;
+  height: 8px;
+  background-color: red;
+  border-radius: 50%;
+  display: none;
+}
+
+.notification-bell.active .notification-badge {
+  display: block;
+}
+
+/* menu profile */
+.menu-profile {
+  position: absolute;
+  z-index: 999;
+  right: 0;
+  background-color: #176b87;
+  padding: 20px 0;
+  width: 194px;
+  border-radius: 7px;
+}
+.profile .slide-fade-enter-active,
+.profile .slide-fade-leave-active {
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+.profile .slide-fade-enter,
+.profile .slide-fade-leave-to {
+  transform: translateY(50px);
+  opacity: 0;
+}
+
+/* menu profile */
+.menu-notification {
+  z-index: 999;
+  position: absolute;
+  right: 0;
+  background-color: #fff;
+  width: 300px;
+  border-radius: 7px;
+}
+.notification-bell .slide-fade-enter-active,
+.notification-bell .slide-fade-leave-active {
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+.notification-bell .slide-fade-enter,
+.notification-bell .slide-fade-leave-to {
+  transform: translateY(50px);
+  opacity: 0;
+}

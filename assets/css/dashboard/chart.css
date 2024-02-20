@@ -1,0 +1,41 @@
+.chart {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+
+.box {
+  background-color: #ffffff;
+  padding: 30px 0;
+  text-align: center;
+  border-radius: 15px;
+  box-shadow: 1px 1px 15px #e1e1e1;
+}
+
+/* chart */
+.row .col-5 {
+  position: relative;
+}
+
+[id^="chart-"] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  /* margin-left: -12%; */
+  margin-top: -2%;
+  height: 60px;
+  width: 100px;
+}
+.desc-chart {
+  text-align: left;
+  margin-left: -10px;
+}
+.desc-chart h1 {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+.desc-chart span {
+  font-size: 24px;
+  font-weight: 500;
+}

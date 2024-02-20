@@ -1,0 +1,28 @@
+.profil-description {
+  padding: 0 15px;
+}
+
+h1 {
+  font-size: 12px;
+  line-height: 18px;
+}
+p {
+  font-size: 10px;
+  color: grey;
+}
+
+.menu {
+  padding: 0 10px;
+}
+.menu ul li {
+  margin-bottom: 5px;
+}
+.menu ul li a {
+  padding: 10px 8px;
+  color: #fff;
+  font-size: 10px;
+}
+.menu ul li a:hover {
+  background-color: #d7d7d717;
+  border-radius: 5px;
+}

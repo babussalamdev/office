@@ -1,0 +1,44 @@
+.notification-content {
+  padding: 10px 0;
+}
+.notification-content h1 {
+  padding: 10px 20px;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+/* notification */
+.notification ul {
+  padding: 5px 10px;
+}
+.notification ul li {
+  padding: 0 10px;
+}
+.list-notification:hover {
+  background-color: aliceblue;
+  cursor: pointer;
+}
+
+.image-notification i {
+  /* height: 50px; */
+  /* width: auto; */
+  font-size: 45px;
+  border-radius: 50%;
+}
+
+.desc-notification {
+  box-sizing: border-box;
+  padding: 0 10px;
+}
+.desc-notification h2 {
+  font-size: 10px;
+}
+.desc-notification .text-container {
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* Jumlah baris maksimum */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.text-container p {
+  font-size: 12px;
+}
