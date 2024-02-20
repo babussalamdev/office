@@ -4,18 +4,12 @@
       <div class="container">
         <div class="row">
           <div class="col-6">
-            <div
-              class="d-flex align-items-center gap-3 animate__animated animate__fadeInLeft"
-            >
+            <div class="d-flex align-items-center gap-3 animate__animated animate__fadeInLeft">
               <img src="~/assets/img/logo-1.png" alt="Logo Babussalam" />
               <span class="fw-semibold">Sistem Ma'had Babussalam</span>
             </div>
             <div>
-              <img
-                src="~/assets/img/main.png"
-                alt="main image"
-                class="mainImage animate__animated animate__fadeInLeft"
-              />
+              <img src="~/assets/img/main.png" alt="main image" class="mainImage animate__animated animate__fadeInLeft" />
               <h1 class="animate__animated animate__fadeInLeft">
                 Just one small step to enter <br />
                 your dashboard
@@ -28,39 +22,21 @@
           </div>
           <div class="col-6 right-side">
             <form @submit.prevent="submit">
-              <h2
-                class="text-white fw-semibold animate__animated animate__fadeInRight"
-              >
+              <h2 class="text-white fw-semibold animate__animated animate__fadeInRight">
                 Sign In
               </h2>
 
               <div class="input-card">
                 <!-- input username -->
-                <div
-                  class="input-group-manual mb-3 animate__animated animate__fadeInRight"
-                >
+                <div class="input-group-manual mb-3 animate__animated animate__fadeInRight">
                   <i class="bx bx-user mx-4"></i>
-                  <input
-                    type="text"
-                    class="input"
-                    name="username"
-                    placeholder="Enter email or phone"
-                    required
-                  />
+                  <input type="text" class="input" name="username" placeholder="Username" required />
                 </div>
 
                 <!-- input password -->
-                <div
-                  class="input-group-manual mb-3 animate__animated animate__fadeInRight"
-                >
+                <div class="input-group-manual mb-3 animate__animated animate__fadeInRight">
                   <i class="bx bx-lock-alt mx-4"></i>
-                  <input
-                    :type="type"
-                    class="input"
-                    name="password"
-                    placeholder="Password"
-                    required
-                  />
+                  <input :type="type" class="input" name="password" placeholder="Password" required />
                   <i class="bx bx-low-vision mx-4" @click="typePass"></i>
                 </div>
 
@@ -69,9 +45,7 @@
                 </p>
 
                 <!-- button submit -->
-                <div
-                  class="input-group mb-5 animate__animated animate__fadeInRight"
-                >
+                <div class="input-group mb-5 animate__animated animate__fadeInRight">
                   <input type="submit" class="btn" value="Masuk" />
                 </div>
               </div>
@@ -79,9 +53,7 @@
               <!-- register link -->
               <p class="mt-4 text-white animate__animated animate__fadeInRight">
                 Don't have an account ?
-                <nuxt-link to="/" class="text-decoration-none"
-                  >Sign Up</nuxt-link
-                >
+                <nuxt-link to="/" class="text-decoration-none">Sign Up</nuxt-link>
               </p>
             </form>
           </div>
@@ -117,7 +89,7 @@ export default {
             expires: 1,
           });
           this.btnLoad = false;
-          this.$router.push("/dashboard");
+          this.$router.push({ path: "/dashboard" });
         }
       } catch (error) {
         this.btnLoad = false;
