@@ -1,16 +1,45 @@
 <template>
   <main>
-    <Sidebar />
+    <Sidebar :isSidebar="isSidebar" />
+    <!-- menu mobile  -->
+    <div class="menu-mobile" :class="!isSidebar ? 'menu-mobile-open' : ''">
+      <div
+        class="logo justify-content-between animate__animated animate__zoomIn"
+      >
+        <img src="~/assets/img/logo-1.png" />
+        <span @click="toggleSidebar">
+          <i v-if="isSidebar" class="bx bx-menu-alt-right"></i>
+          <i v-else class="bx bx-window-close"></i>
+        </span>
+      </div>
+    </div>
+
+    <!-- content -->
     <div class="content">
       <nuxt />
     </div>
+
+    <div class="overlay" v-if="!isSidebar"></div>
   </main>
 </template>
 
 <script>
 import Sidebar from "~/components/all/Sidebar.vue";
 
-export default { components: { Sidebar } };
+export default {
+  components: { Sidebar },
+  data() {
+    return {
+      isSidebar: true,
+    };
+  },
+
+  methods: {
+    toggleSidebar() {
+      this.isSidebar = !this.isSidebar;
+    },
+  },
+};
 </script>
 
 <style>
@@ -25,8 +54,70 @@ main {
 }
 .content {
   background: #f1f5f9;
-  height: 1000px;
+  height: max-content;
   border-top-left-radius: 20px;
   padding: 10px 20px;
+}
+
+/* khusus  */
+@media screen and (min-width: 576px) {
+  .menu-mobile {
+    display: none;
+  }
+}
+@media screen and (max-width: 1200px) {
+  main {
+    padding-left: 68px;
+  }
+}
+
+/* mobile */
+@media screen and (max-width: 576px) {
+  main {
+    padding-left: 0;
+    padding-top: 20px;
+  }
+  .content {
+    margin-top: 50px;
+  }
+  .overlay {
+    /* Gaya untuk overlay */
+    content: "";
+    background-color: rgba(0, 0, 0, 0.615);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 50;
+    height: 100vh;
+    width: 100vh;
+  }
+
+  .menu-mobile {
+    position: fixed;
+    top: 0;
+    z-index: 88;
+    width: 100%;
+    padding: 0 20px;
+    background: #176b87d2;
+  }
+  .menu-mobile-open {
+    background-color: rgba(0, 0, 0, 0);
+  }
+  .menu-mobile .logo {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .menu-mobile .logo img {
+    width: 30px;
+    display: block;
+  }
+  .menu-mobile .logo i {
+    font-size: 28px;
+    color: white;
+    display: block;
+    cursor: pointer;
+  }
 }
 </style>

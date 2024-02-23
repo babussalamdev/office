@@ -78,28 +78,36 @@ export default {
       local: {
         scheme: 'refresh',
         token: {
-          property: 'idToken',
-          maxAge: 15,
+          property: 'IdToken',
+          maxAge: 1800,
           global: true,
+          // type: 'Bearer'
         },
         refreshToken: {
-          property: 'refreshToken',
-          data: 'refreshToken',
-          maxAge: false
+          property: 'RefreshToken',
+          data: 'RefreshToken',
+          maxAge: 60 * 60 * 24 * 30
         },
+        user: {
+          property: false,
+          autoFetch: true
+        },
+        // api yang dipanggil
         endpoints: {
           login: { url: '/signin-account', method: 'post' },
           refresh: { url: '/refresh-token', method: 'post' },
           user: { url: '/get-account', method: 'get' },
           logout: { url: '/signout-account', method: 'post' }
         },
+        // autoLogout: false
       }
     },
     redirect: {
-      login: '/',
-      logout: '/',
-      callback: '/',
+      login: '/login',
+      logout: '/login',
+      callback: '/login',
       home: false
     }
   }
+
 }

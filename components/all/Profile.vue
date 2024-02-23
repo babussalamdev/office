@@ -44,13 +44,14 @@
         <hr class="text-white" />
         <!-- Logout-->
         <li>
-          <nuxt-link
-            to="/"
+          <a
+            href="javascript:;"
+            @click="logout"
             class="text-decoration-none d-flex align-items-center gap-2"
           >
             <i class="bx bx-door-open"></i>
             <span class="text">Logout</span>
-          </nuxt-link>
+          </a>
         </li>
       </ul>
     </nav>
@@ -58,7 +59,14 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    logout() {
+      this.$cookies.remove("AccessToken");
+      this.$auth.logout();
+    },
+  },
+};
 </script>
 
 <style scoped>

@@ -2,7 +2,6 @@
   position: absolute;
   left: 10px;
   top: 40px;
-  width: 184px;
   width: 198px;
   height: 100%;
   background: transparent;
@@ -106,4 +105,54 @@
   background-repeat: no-repeat;
   background-position: center;
   /* transform: rotate(90deg); */
+}
+
+@media screen and (max-width: 1200px) {
+  .menu ul li span,
+  .logo span {
+    display: none;
+  }
+  .sidebar {
+    width: 58px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 70%;
+    height: 100vh;
+    padding: 0 20px;
+    background: #176b87;
+    color: #fff;
+    z-index: 99;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+  .sidebar-open {
+    transform: translateX(0);
+  }
+  .logo {
+    display: none;
+  }
+  .menu ul li span {
+    display: block;
+  }
+
+  /* menu list */
+
+  .menu ul li.active {
+    border-radius: 30px;
+  }
+  .menu ul li.hoverable:hover {
+    border-radius: 30px;
+  }
+  .curved-div-one {
+    display: none;
+  }
+  .curved-div-two {
+    display: none;
+  }
 }

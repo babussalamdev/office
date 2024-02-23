@@ -1,12 +1,10 @@
 <template>
-  <div class="sidebar">
+  <div class="sidebar" :class="!isSidebar ? 'sidebar-open' : ''" ref="sidebar">
     <!-- Logo -->
     <div class="logo animate__animated animate__zoomIn">
       <img src="~/assets/img/logo-1.png" />
       <span>Sistem Ma'had</span>
     </div>
-
-    <hr />
 
     <!-- Menu -->
     <nav class="menu">
@@ -15,27 +13,24 @@
         <!-- Dashboard -->
         <li
           :class="{
-            active: isRouteActive('/dashboard'),
-            hoverable: !isRouteActive('/dashboard'),
+            active: isRouteActive('/'),
+            hoverable: !isRouteActive('/'),
           }"
         >
           <nuxt-link
-            to="/dashboard"
+            to="/"
             class="text-decoration-none d-flex align-items-center gap-2 animate__animated animate__fadeInRight"
           >
-            <i
-              class="material-icons"
-              :class="{ active: isRouteActive('/dashboard') }"
-            >
+            <i class="material-icons" :class="{ active: isRouteActive('/') }">
               space_dashboard
             </i>
-            <span class="text" :class="{ active: isRouteActive('/dashboard') }"
+            <span class="text" :class="{ active: isRouteActive('/') }"
               >Dashboard</span
             >
           </nuxt-link>
           <!-- lengkungan -->
-          <div v-if="isRouteActive('/dashboard')" class="curved-div-one"></div>
-          <div v-if="isRouteActive('/dashboard')" class="curved-div-two"></div>
+          <div v-if="isRouteActive('/')" class="curved-div-one"></div>
+          <div v-if="isRouteActive('/')" class="curved-div-two"></div>
         </li>
 
         <!-- Help -->
@@ -72,6 +67,7 @@
 import "animate.css";
 
 export default {
+  props: ["isSidebar"],
   data() {
     return {
       activeMenu: null, // Menyimpan menu yang sedang aktif (untuk menampilkan sub-menu)
