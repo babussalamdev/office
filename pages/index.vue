@@ -1,16 +1,13 @@
 <template>
   <section id="home">
     <div class="home animate__animated animate__fadeIn">
-      <!-- navbar -->
-      <Navbar />
-      <hr class="mb-4" />
       <Chart />
       <div class="row">
-        <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-6 mb-3">
           <!-- kelas -->
           <ChartClass />
         </div>
-        <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-6 mb-3">
           <!-- pelanggaran -->
           <Violation />
         </div>
@@ -37,7 +34,7 @@ export default {
 
 <style scoped>
 .home {
-  height: 100vh;
+  height: min-content;
 }
 
 @media screen and (max-width: 992px) {

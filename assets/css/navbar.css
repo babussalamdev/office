@@ -8,6 +8,7 @@
 }
 .navbar-content h1 {
   font-size: 12px;
+  line-height: 18px;
 }
 .navbar-content i {
   font-size: 22px;
@@ -22,6 +23,12 @@ img:hover {
   transform: scale(1.05);
   cursor: pointer;
   filter: grayscale(0%);
+}
+
+.select {
+  font-size: 12px;
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 
 /* notification */
@@ -74,7 +81,7 @@ img:hover {
 .menu-notification {
   z-index: 999;
   position: absolute;
-  right: 0;
+  right: -10px;
   background-color: #fff;
   width: 300px;
   border-radius: 7px;

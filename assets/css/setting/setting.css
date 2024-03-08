@@ -1,0 +1,207 @@
+#halaqoh .halaqoh .row {
+  margin-bottom: 18px;
+}
+#halaqoh .halaqoh .row .upload-data-santri {
+  transform: scale(0.85);
+  border-radius: 10px;
+}
+#halaqoh .halaqoh .row .button-santri button {
+  font-size: 12px;
+  width: 150px;
+}
+#halaqoh .halaqoh .table-responsive {
+  overflow-x: auto;
+}
+#halaqoh .halaqoh .table-responsive .table {
+  width: 100%;
+}
+#halaqoh .halaqoh .table-responsive .table thead tr th {
+  padding: 15px 20px;
+  background: #176b87;
+  font-size: 12px;
+  color: #fff;
+}
+#halaqoh .halaqoh .table-responsive .table tbody tr td {
+  padding: 15px 20px;
+  margin: auto;
+  font-size: 12px;
+}
+@media screen and (max-width: 576px) {
+  #halaqoh .halaqoh .table-responsive .table thead tr th {
+    font-size: 12px;
+  }
+  #halaqoh .halaqoh .table-responsive .table tbody tr td {
+    font-size: 12px;
+  }
+}
+
+#kelas .kelas .row {
+  margin-bottom: 18px;
+}
+#kelas .kelas .row .upload-data-santri {
+  transform: scale(0.85);
+  border-radius: 10px;
+}
+#kelas .kelas .row .button-santri button {
+  font-size: 12px;
+  width: 150px;
+}
+#kelas .kelas .table-responsive {
+  overflow-x: auto;
+}
+#kelas .kelas .table-responsive .table {
+  width: 100%;
+}
+#kelas .kelas .table-responsive .table thead tr th {
+  padding: 15px 20px;
+  background: #176b87;
+  font-size: 12px;
+  color: #fff;
+}
+#kelas .kelas .table-responsive .table tbody tr td {
+  padding: 15px 20px;
+  margin: auto;
+  font-size: 12px;
+}
+@media screen and (max-width: 576px) {
+  #kelas .kelas .table-responsive .table thead tr th {
+    font-size: 12px;
+  }
+  #kelas .kelas .table-responsive .table tbody tr td {
+    font-size: 12px;
+  }
+}
+
+#kaldiksetup .kaldiksetup .nav-kaldik {
+  font-size: 14px;
+}
+#kaldiksetup .kaldiksetup .nav-kaldik .cta-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+@media screen and (max-width: 576px) {
+  #kaldiksetup .kaldiksetup .nav-kaldik .cta-info {
+    justify-content: start;
+    flex-direction: row-reverse;
+  }
+}
+@media screen and (min-width: 577px) {
+  #kaldiksetup .kaldiksetup .nav-kaldik {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+#kaldiksetup .kaldiksetup .table-responsive {
+  overflow-x: auto;
+}
+#kaldiksetup .kaldiksetup .table-responsive .table {
+  width: 100%;
+}
+#kaldiksetup .kaldiksetup .table-responsive .table thead tr th {
+  padding: 15px 20px;
+  background: #176b87;
+  font-size: 12px;
+  color: #fff;
+}
+#kaldiksetup .kaldiksetup .table-responsive .table tbody tr td {
+  padding: 15px 20px;
+  margin: auto;
+  font-size: 12px;
+}
+@media screen and (max-width: 576px) {
+  #kaldiksetup .kaldiksetup .table-responsive .table thead tr th {
+    font-size: 12px;
+  }
+  #kaldiksetup .kaldiksetup .table-responsive .table tbody tr td {
+    font-size: 12px;
+  }
+}
+#kaldiksetup .modal {
+  font-size: 14px;
+}
+
+#mapel .mapel .row {
+  margin-bottom: 18px;
+}
+#mapel .mapel .row .upload-data-santri {
+  transform: scale(0.85);
+  border-radius: 10px;
+}
+#mapel .mapel .row .button-santri button {
+  font-size: 12px;
+  width: 150px;
+}
+#mapel .mapel .table-responsive {
+  overflow-x: auto;
+}
+#mapel .mapel .table-responsive .table {
+  width: 100%;
+}
+#mapel .mapel .table-responsive .table thead tr th {
+  padding: 15px 20px;
+  background: #176b87;
+  font-size: 12px;
+  color: #fff;
+}
+#mapel .mapel .table-responsive .table tbody tr td {
+  padding: 15px 20px;
+  margin: auto;
+  font-size: 12px;
+}
+@media screen and (max-width: 576px) {
+  #mapel .mapel .table-responsive .table thead tr th {
+    font-size: 12px;
+  }
+  #mapel .mapel .table-responsive .table tbody tr td {
+    font-size: 12px;
+  }
+}
+
+#utama .utama .row {
+  margin-bottom: 18px;
+}
+#utama .utama .row .upload-data-santri {
+  transform: scale(0.85);
+  border-radius: 10px;
+}
+#utama .utama .row .button-santri button {
+  font-size: 12px;
+  width: 150px;
+}
+#utama .utama .table-responsive {
+  overflow-x: auto;
+}
+#utama .utama .table-responsive .table {
+  width: 100%;
+}
+#utama .utama .table-responsive .table thead tr th {
+  padding: 15px 20px;
+  background: #176b87;
+  font-size: 12px;
+  color: #fff;
+}
+#utama .utama .table-responsive .table tbody tr td {
+  padding: 10px 20px;
+  margin: auto;
+  font-size: 12px;
+}
+#utama .utama .table-responsive .table tbody tr td button {
+  font-size: 10px;
+  padding: 3px 10px;
+}
+#utama .utama .table-responsive .table tbody tr td .item {
+  font-size: 10px;
+  padding: 7px 15px;
+  border-radius: 30px;
+  color: #fff;
+}
+@media screen and (max-width: 576px) {
+  #utama .utama .table-responsive .table thead tr th {
+    font-size: 12px;
+  }
+  #utama .utama .table-responsive .table tbody tr td {
+    font-size: 12px;
+  }
+}/*# sourceMappingURL=setting.css.map */

@@ -1,0 +1,307 @@
+#halaqoh {
+  .halaqoh {
+    .row {
+      margin-bottom: 18px;
+      .upload-data-santri {
+        transform: scale(0.85);
+        border-radius: 10px;
+      }
+      .button-santri {
+        button {
+          font-size: 12px;
+          width: 150px;
+        }
+      }
+    }
+    .table-responsive {
+      overflow-x: auto;
+      .table {
+        width: 100%;
+        thead {
+          tr {
+            th {
+              padding: 15px 20px;
+              background: #176b87;
+              font-size: 12px;
+              color: #fff;
+            }
+          }
+        }
+        tbody {
+          tr {
+            td {
+              padding: 15px 20px;
+              margin: auto;
+              font-size: 12px;
+            }
+          }
+        }
+        @media screen and (max-width: 576px) {
+          thead {
+            tr {
+              th {
+                font-size: 12px;
+              }
+            }
+          }
+          tbody {
+            tr {
+              td {
+                font-size: 12px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+#kelas {
+  .kelas {
+    .row {
+      margin-bottom: 18px;
+      .upload-data-santri {
+        transform: scale(0.85);
+        border-radius: 10px;
+      }
+      .button-santri {
+        button {
+          font-size: 12px;
+          width: 150px;
+        }
+      }
+    }
+    .table-responsive {
+      overflow-x: auto;
+      .table {
+        width: 100%;
+        thead {
+          tr {
+            th {
+              padding: 15px 20px;
+              background: #176b87;
+              font-size: 12px;
+              color: #fff;
+            }
+          }
+        }
+        tbody {
+          tr {
+            td {
+              padding: 15px 20px;
+              margin: auto;
+              font-size: 12px;
+            }
+          }
+        }
+        @media screen and (max-width: 576px) {
+          thead {
+            tr {
+              th {
+                font-size: 12px;
+              }
+            }
+          }
+          tbody {
+            tr {
+              td {
+                font-size: 12px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+#kaldiksetup {
+  .kaldiksetup {
+    .nav-kaldik {
+      font-size: 14px;
+      .cta-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        @media screen and (max-width: 576px) {
+          justify-content: start;
+          flex-direction: row-reverse;
+        }
+      }
+      @media screen and (min-width: 577px) {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+    .table-responsive {
+      overflow-x: auto;
+      .table {
+        width: 100%;
+        thead {
+          tr {
+            th {
+              padding: 15px 20px;
+              background: #176b87;
+              font-size: 12px;
+              color: #fff;
+            }
+          }
+        }
+        tbody {
+          tr {
+            td {
+              padding: 15px 20px;
+              margin: auto;
+              font-size: 12px;
+            }
+          }
+        }
+        @media screen and (max-width: 576px) {
+          thead {
+            tr {
+              th {
+                font-size: 12px;
+              }
+            }
+          }
+          tbody {
+            tr {
+              td {
+                font-size: 12px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .modal {
+    font-size: 14px;
+  }
+}
+#mapel {
+  .mapel {
+    .row {
+      margin-bottom: 18px;
+      .upload-data-santri {
+        transform: scale(0.85);
+        border-radius: 10px;
+      }
+      .button-santri {
+        button {
+          font-size: 12px;
+          width: 150px;
+        }
+      }
+    }
+    .table-responsive {
+      overflow-x: auto;
+      .table {
+        width: 100%;
+        thead {
+          tr {
+            th {
+              padding: 15px 20px;
+              background: #176b87;
+              font-size: 12px;
+              color: #fff;
+            }
+          }
+        }
+        tbody {
+          tr {
+            td {
+              padding: 15px 20px;
+              margin: auto;
+              font-size: 12px;
+            }
+          }
+        }
+        @media screen and (max-width: 576px) {
+          thead {
+            tr {
+              th {
+                font-size: 12px;
+              }
+            }
+          }
+          tbody {
+            tr {
+              td {
+                font-size: 12px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+#utama {
+  .utama {
+    .row {
+      margin-bottom: 18px;
+      .upload-data-santri {
+        transform: scale(0.85);
+        border-radius: 10px;
+      }
+      .button-santri {
+        button {
+          font-size: 12px;
+          width: 150px;
+        }
+      }
+    }
+    .table-responsive {
+      overflow-x: auto;
+      .table {
+        width: 100%;
+        thead {
+          tr {
+            th {
+              padding: 15px 20px;
+              background: #176b87;
+              font-size: 12px;
+              color: #fff;
+            }
+          }
+        }
+        tbody {
+          tr {
+            td {
+              padding: 10px 20px;
+              margin: auto;
+              font-size: 12px;
+              button {
+                font-size: 10px;
+                padding: 3px 10px;
+              }
+              .item {
+                font-size: 10px;
+                padding: 7px 15px;
+                border-radius: 30px;
+                color: #fff;
+              }
+            }
+          }
+        }
+        @media screen and (max-width: 576px) {
+          thead {
+            tr {
+              th {
+                font-size: 12px;
+              }
+            }
+          }
+          tbody {
+            tr {
+              td {
+                font-size: 12px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

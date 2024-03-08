@@ -1,0 +1,39 @@
+#pegawai .pegawai {
+  min-height: 100vh;
+}
+#pegawai .pegawai .row {
+  margin-bottom: 18px;
+}
+#pegawai .pegawai .row .upload-data-santri {
+  transform: scale(0.85);
+  border-radius: 10px;
+}
+#pegawai .pegawai .row .button-pegawai button {
+  font-size: 14px;
+  width: 150px;
+}
+#pegawai .pegawai .table-responsive {
+  overflow-x: auto;
+}
+#pegawai .pegawai .table-responsive .table {
+  width: 100%;
+}
+#pegawai .pegawai .table-responsive .table thead tr th {
+  padding: 15px 20px;
+  background: #176b87;
+  font-size: 14px;
+  color: #fff;
+}
+#pegawai .pegawai .table-responsive .table tbody tr td {
+  padding: 15px 20px;
+  margin: auto;
+  font-size: 14px;
+}
+@media screen and (max-width: 576px) {
+  #pegawai .pegawai .table-responsive .table thead tr th {
+    font-size: 12px;
+  }
+  #pegawai .pegawai .table-responsive .table tbody tr td {
+    font-size: 12px;
+  }
+}/*# sourceMappingURL=pegawai.css.map */

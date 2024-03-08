@@ -1,14 +1,19 @@
 .sidebar {
-  position: absolute;
+  position: fixed;
   left: 10px;
-  top: 40px;
+  top: 0;
+  padding-top: 20px;
+  height: 100vh !important;
   width: 198px;
-  height: 100%;
-  background: transparent;
+  overflow-y: scroll;
+  height: max-content;
   color: #fff;
   z-index: 99;
 }
 
+.sidebar-container {
+  height: max-content;
+}
 .logo {
   display: flex;
   gap: 10px;
@@ -35,12 +40,21 @@
 }
 
 .menu ul li {
-  padding: 17px;
   cursor: pointer;
   transition: background-color 0.3s;
   margin-bottom: 5px;
 }
 
+.menu ul li a {
+  position: relative;
+  margin: 2px 0;
+  padding: 17px;
+}
+.menu ul li .nuxt-link-exact-active {
+  background-color: #f1f5f9;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
 .menu ul li span {
   font-size: 12px;
   color: #fff;
@@ -50,62 +64,67 @@
   font-size: 12px;
   color: #fff;
 }
+.menu ul li .nuxt-link-exact-active::before,
+.menu ul li .nuxt-link-exact-active::after {
+  --border-radius: 1rem;
 
-.menu ul li.active {
-  background-color: #f1f5f9;
+  content: "";
+  position: absolute;
+  width: var(--border-radius);
+  height: var(--border-radius);
+  right: 0;
+  background: #176b87;
+}
+.menu ul li .nuxt-link-exact-active::before {
+  top: calc(var(--border-radius) * -1);
+  box-shadow: 10px 10px 0 10px #f1f5f9;
+  border-radius: 0 0 100vw 0;
+}
+.menu ul li .nuxt-link-exact-active::after {
+  bottom: calc(var(--border-radius) * -1);
+  box-shadow: 10px -10px 0 10px #f1f5f9;
+  border-radius: 0 100vw 0 0;
+}
+
+.menu ul li .nuxt-link-exact-active span,
+.menu ul li .nuxt-link-exact-active i {
+  color: #176b87;
+}
+
+/* dropdown */
+.dropdown {
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 5px;
+
+  position: relative;
+  margin: 2px 0;
+  padding: 17px;
+}
+.dropdown-list {
+  background: #14586e;
+  border-radius: 10px 0 0 10px;
+  padding: 5px 10px 5px 10px !important;
+  margin-bottom: 15px;
+}
+.dropdown-list li .nuxt-link-exact-active {
+  border-radius: 5px !important;
+}
+.dropdown-list li .nuxt-link-exact-active::before,
+.dropdown-list li .nuxt-link-exact-active::after {
+  display: none !important;
+}
+/* .custom-link {
+  position: relative;
+  margin: 2px 10px;
+  width: 100px;
+  padding: 17px;
+  background-color: #000000;
   border-top-left-radius: 30px;
   border-bottom-left-radius: 30px;
-  position: relative;
-}
-
-.menu ul li span.active {
-  color: #176b87;
-}
-
-.menu ul li i.active {
-  color: #176b87;
-}
-
-.menu ul li.hoverable:hover {
-  background-color: #414141b1;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
-}
-
-.menu ul ul li {
-  padding: 10px 25px;
-  background-color: #444;
-}
+} */
 
 /* desain tambahan sidebar link */
-.curved-div-one {
-  position: absolute;
-  top: -24px;
-  right: -0.5px;
-  width: 25px;
-  height: 25px;
-  border-right: 1px solid #f1f5f9;
-  border-top: 1px solid #f1f5f9;
-  background-image: url(~/assets/img/lengkungan.svg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  transform: rotate(90deg);
-}
-.curved-div-two {
-  position: absolute;
-  bottom: -24px;
-  right: -0.5px;
-  width: 25px;
-  height: 25px;
-  border-right: 1px solid #f1f5f9;
-  border-top: 1px solid #f1f5f9;
-  background-image: url(~/assets/img/lengkungan.svg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  /* transform: rotate(90deg); */
-}
 
 @media screen and (max-width: 1200px) {
   .menu ul li span,
@@ -119,11 +138,11 @@
 
 @media screen and (max-width: 576px) {
   .sidebar {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
-    width: 70%;
-    height: 100vh;
+    width: 80%;
+    height: 111vh !important;
     padding: 0 20px;
     background: #176b87;
     color: #fff;
@@ -143,16 +162,11 @@
 
   /* menu list */
 
-  .menu ul li.active {
+  .menu ul li .nuxt-link-exact-active {
     border-radius: 30px;
   }
-  .menu ul li.hoverable:hover {
-    border-radius: 30px;
-  }
-  .curved-div-one {
-    display: none;
-  }
-  .curved-div-two {
+  .menu ul li .nuxt-link-exact-active::before,
+  .menu ul li .nuxt-link-exact-active::after {
     display: none;
   }
 }

@@ -7,3 +7,10 @@ body {
 :root {
   --bg-grey: #c4c4c4;
 }
+
+::-webkit-scrollbar {
+  width: 1px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}

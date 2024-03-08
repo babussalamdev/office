@@ -1,8 +1,6 @@
 <template>
   <section id="help">
-    <div class="help">
-      <Navbar />
-    </div>
+    <div class="help"></div>
   </section>
 </template>
 

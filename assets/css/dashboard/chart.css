@@ -4,12 +4,20 @@
   gap: 20px;
 }
 
+h2 {
+  font-size: 14px;
+}
+
 .box {
   background-color: #ffffff;
   padding: 30px 0;
   text-align: center;
   border-radius: 15px;
   box-shadow: 1px 1px 15px #e1e1e1;
+}
+
+.box:hover {
+  box-shadow: 1px 1px 15px #acacac;
 }
 
 /* chart */

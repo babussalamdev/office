@@ -4,13 +4,31 @@
       class="navbar-content d-flex align-items-center justify-content-between"
     >
       <div>
-        <h1 class="text-capitalize animate__animated animate__fadeInUp">
-          Application > <span class="text-primary">{{ $route.name }}</span>
+        <h1 class="text-capitalize">
+          Application >
+          <span class="text-primary">
+            {{
+              $route.name === "index"
+                ? "Dashboard"
+                : $route.name === "kaldiksetup"
+                ? "Kalender"
+                : $route.name === "rekaptahfidz"
+                ? "Rekap Tahfidz"
+                : $route.name
+            }}</span
+          >
         </h1>
       </div>
 
       <!-- menu profil melayang -->
       <div class="d-flex align-items-center gap-3">
+        <select name="Kelas" id="kelas" class="form-select select" required>
+          <option value="" selected disabled>Unit</option>
+          <option value="SD">SD</option>
+          <option value="SMP">SMP</option>
+          <option value="SMA">SMA</option>
+          <option value="Tahfidz">Tahfidz</option>
+        </select>
         <!-- notification -->
         <div
           class="notification-bell"

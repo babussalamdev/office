@@ -14,6 +14,7 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'view-transition', content: 'same-origin' },
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' }
     ],
@@ -21,6 +22,9 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/Logo-Mahad.png' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/icon?family=Material+Icons' },
       { rel: 'stylesheet', href: 'https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' }
+    ],
+    script: [
+      { src: 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js', type: 'text/javascript' },
     ]
   },
 
@@ -41,7 +45,14 @@ export default {
     dirs: [
       '~/components',
       '~/components/all',
-      '~/components/home'
+      '~/components/utama',
+      '~/components/home',
+      '~/components/kelas',
+      '~/components/kelompok',
+      '~/components/mapel',
+      '~/components/kaldik',
+      '~/components/santri',
+      '~/components/santri/database',
     ]
   },
 

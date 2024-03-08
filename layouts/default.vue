@@ -15,8 +15,14 @@
     </div>
 
     <!-- content -->
-    <div class="content">
-      <nuxt />
+    <div class="content" :class="!isSidebar ? 'fix' : ''">
+      <!-- <div class="animate__animated animate__fadeInUp"> -->
+      <Navbar />
+      <hr class="mb-4" />
+      <!-- </div> -->
+      <div class="position-relative">
+        <nuxt />
+      </div>
     </div>
 
     <div class="overlay" v-if="!isSidebar"></div>
@@ -47,15 +53,11 @@ export default {
 @import url(~/assets/css/style.css);
 main {
   background-color: #176b87;
-  height: max-content;
   padding-left: 208px;
-  padding-top: 20px;
-  /* padding-bottom: 20px; */
 }
 .content {
   background: #f1f5f9;
-  height: max-content;
-  border-top-left-radius: 20px;
+  min-height: 100vh;
   padding: 10px 20px;
 }
 
@@ -88,8 +90,9 @@ main {
     top: 0;
     left: 0;
     z-index: 50;
-    height: 100vh;
+    height: max-content;
     width: 100vh;
+    height: 100vh;
   }
 
   .menu-mobile {
@@ -98,8 +101,13 @@ main {
     z-index: 88;
     width: 100%;
     padding: 0 20px;
-    background: #176b87d2;
+    background: #176b87d7;
   }
+  .fix {
+    height: 75vh !important;
+    overflow-y: hidden;
+  }
+
   .menu-mobile-open {
     background-color: rgba(0, 0, 0, 0);
   }

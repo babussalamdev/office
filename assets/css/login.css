@@ -79,9 +79,11 @@ a {
   font-size: 14px;
   font-weight: 600;
   width: 150px;
+  transition: all 1s ease;
 }
 .btn:hover {
-  background-color: #1e8cb1;
+  background: linear-gradient(135deg, #258bac, #2396bd);
+  transition: all 1s ease;
 }
 .loginPage::before {
   content: "";

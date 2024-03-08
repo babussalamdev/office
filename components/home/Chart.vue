@@ -1,30 +1,34 @@
 <template>
-  <div class="mb-4">
-    <h2 class="text-capitalize mb-3 animate__animated animate__fadeInUp">
-      absence report
-    </h2>
-    <div class="chart">
-      <div
-        class="box animate__animated animate__fadeInUp"
-        v-for="(data, index) in santriData"
-        :key="index"
-      >
-        <div class="">
-          <div class="row">
-            <div class="col-6 d-flex align-items-center justify-content-center">
-              <div :id="'chart-' + index" class="chart-container"></div>
-            </div>
-            <div class="col-6">
-              <div class="desc-chart">
-                <h1 class="text-secondary">{{ data.status }}</h1>
-                <span :id="'jumlah-' + index">{{ data.jumlah }}</span>
+  <section id="chart">
+    <div class="mb-4">
+      <h2 class="text-capitalize mb-3 animate__animated animate__fadeInUp">
+        absence report
+      </h2>
+      <div class="chart">
+        <div
+          class="box animate__animated animate__fadeInUp"
+          v-for="(data, index) in santriData"
+          :key="index"
+        >
+          <div class="">
+            <div class="row">
+              <div
+                class="col-6 d-flex align-items-center justify-content-center"
+              >
+                <div :id="'chart-' + index" class="chart-container"></div>
+              </div>
+              <div class="col-6">
+                <div class="desc-chart">
+                  <h1 class="text-secondary">{{ data.status }}</h1>
+                  <span :id="'jumlah-' + index">{{ data.jumlah }}</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
