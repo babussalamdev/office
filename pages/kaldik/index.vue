@@ -1,44 +1,27 @@
 <template>
   <section id="kaldik">
     <div class="kaldik animate__animated animate__fadeIn">
-      <div class="container">
-        <div class="card p-5">
-          <div class="calendar animate__animated animate__fadeInUp">
-            <FullCalendar :options="calendarOptions" />
-          </div>
-        </div>
-      </div>
+      <Calendar :transformedData="transformedData" />
     </div>
   </section>
 </template>
 
 <script>
-import FullCalendar from "@fullcalendar/vue";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin from "@fullcalendar/interaction";
+import { mapGetters } from "vuex";
 
 export default {
-  components: {
-    FullCalendar, // make the <FullCalendar> tag available
+  async asyncData({ store }) {
+    const program = localStorage.getItem("program");
+    store.dispatch(`kaldik/changeUnit`, program);
   },
-  data() {
-    return {
-      calendarOptions: {
-        plugins: [dayGridPlugin, interactionPlugin],
-        locale: "id",
-        initialView: "dayGridMonth",
-        dateClick: this.handleDateClick,
-        events: [
-          {
-            title: "event 1",
-            date: "2024-03-01",
-            backgroundColor: "#6420AA",
-            borderColor: "#6420AA",
-          },
-          { title: "event 2", date: "2024-02-29" },
-        ],
+
+  computed: {
+    ...mapGetters("kaldik", ["getKaldik"]),
+    transformedData: {
+      get() {
+        return this.getKaldik;
       },
-    };
+    },
   },
   methods: {
     handleDateClick: function (arg) {
@@ -49,5 +32,5 @@ export default {
 </script>
 
 <style scoped>
-@import url(~/assets/css/kaldik/kladik.css);
+@import url('~/assets/css/kaldik/kladik.css');
 </style>

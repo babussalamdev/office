@@ -47,9 +47,13 @@
 
 <script>
 import Swal from "sweetalert2";
+import { mapState } from "vuex";
 
 export default {
-  props: ["kelas"],
+  computed: {
+    ...mapState("kelas", ["kelas"]),
+  },
+
   methods: {
     async deleteItem(key) {
       const result = await Swal.fire({
@@ -73,7 +77,8 @@ export default {
         const result = await this.$axios.$delete(
           `delete-database?kelas=${key.split("#")[1]}`
         );
-        this.$emit("deleteKelas", key);
+
+        this.$store.commit("kelas/deleteKelas", key);
       }
     },
   },

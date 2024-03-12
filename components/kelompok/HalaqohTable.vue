@@ -12,7 +12,7 @@
       <tbody>
         <tr v-for="(data, i) in halaqah" :key="i">
           <td scope="row">{{ data.Sort }}</td>
-          <td scope="row">{{ data.Nama }}</td>
+          <td scope="row" class="text-capitalize">{{ data.Nama }}</td>
           <td scope="row" class="text-uppercase">{{ data.Program }}</td>
           <td class="text-end">
             <a href="javascript:;" @click="deleteItem(data.SK)"
@@ -27,9 +27,12 @@
 
 <script>
 import Swal from "sweetalert2";
+import { mapState } from "vuex";
 
 export default {
-  props: ["halaqah"],
+  computed: {
+    ...mapState("kelompok", ["halaqah"]),
+  },
   methods: {
     async deleteItem(key) {
       const result = await Swal.fire({
@@ -53,7 +56,7 @@ export default {
         const result = await this.$axios.$delete(
           `delete-database?halaqah=${key.split("#")[1]}`
         );
-        this.$emit("deleteHalaqah", key);
+        this.$store.commit("kelompok/deleteHalaqah", key);
       }
     },
   },

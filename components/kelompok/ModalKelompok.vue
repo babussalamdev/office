@@ -43,7 +43,7 @@
                   required
                 />
               </div>
-              <div class="mb-3">
+              <!-- <div class="mb-3">
                 <label for="program" class="form-label">program</label>
                 <select
                   name="Program"
@@ -59,7 +59,7 @@
                   <option value="SMA">SMA</option>
                   <option value="Tahfidz">Tahfidz</option>
                 </select>
-              </div>
+              </div> -->
             </div>
             <div class="modal-footer">
               <button
@@ -122,7 +122,7 @@
                 <label for="nama" class="form-label">Nama Asrama</label>
                 <input name="Nama" type="text" class="form-control" id="nama" />
               </div>
-              <div class="mb-3">
+              <!-- <div class="mb-3">
                 <label for="program" class="form-label">program</label>
                 <select
                   name="Program"
@@ -138,7 +138,7 @@
                   <option value="SMA">SMA</option>
                   <option value="Tahfidz">Tahfidz</option>
                 </select>
-              </div>
+              </div> -->
             </div>
             <div class="modal-footer">
               <button
@@ -181,9 +181,10 @@ export default {
     async inputHalaqah(event) {
       this.btn = false;
       const data = Object.fromEntries(new FormData(event.target));
+      data["Program"] = localStorage.getItem("program");
       try {
         const result = await this.$axios.$post(
-          "/input-database?halaqah=idhal",
+          "/input-database?subject=halaqah&code=idhal",
           data
         );
         this.btn = true;
@@ -195,7 +196,7 @@ export default {
           timer: 1500,
         });
         this.$refs.inputHalaqah.reset();
-        this.$emit("updateHalaqah", result);
+        this.$store.commit("kelompok/updateHalaqah", result);
         $("#InputDataHalaqoh").modal("hide");
       } catch (error) {
         this.btn = true;
@@ -210,9 +211,10 @@ export default {
     async inputAsrama(event) {
       this.btn = false;
       const data = Object.fromEntries(new FormData(event.target));
+      data["Program"] = localStorage.getItem("program");
       try {
         const result = await this.$axios.$post(
-          "/input-database?asrama=idasr",
+          "/input-database?subject=asrama&code=idasr",
           data
         );
         this.btn = true;
@@ -224,7 +226,7 @@ export default {
           timer: 1500,
         });
         this.$refs.inputAsrama.reset();
-        this.$emit("updateAsrama", result);
+        this.$store.commit("kelompok/updateAsrama", result);
         $("#InputDataAsrama").modal("hide");
       } catch (error) {
         this.btn = true;

@@ -36,7 +36,7 @@
                   id="jurusan"
                 />
               </div>
-              <div class="mb-3">
+              <!-- <div class="mb-3">
                 <label for="program" class="form-label">program</label>
                 <select
                   name="Program"
@@ -52,7 +52,7 @@
                   <option value="SMA">SMA</option>
                   <option value="Tahfidz">Tahfidz</option>
                 </select>
-              </div>
+              </div> -->
             </div>
             <div class="modal-footer">
               <button
@@ -122,23 +122,6 @@
                   required
                 />
               </div>
-              <div class="mb-3">
-                <label for="program" class="form-label">program</label>
-                <select
-                  name="Program"
-                  id="program"
-                  class="form-select"
-                  required
-                >
-                  <option value="" selected disabled>
-                    -- Pilih Program --
-                  </option>
-                  <option value="SD">SD</option>
-                  <option value="SMP">SMP</option>
-                  <option value="SMA">SMA</option>
-                  <option value="Tahfidz">Tahfidz</option>
-                </select>
-              </div>
             </div>
             <div class="modal-footer">
               <button
@@ -201,23 +184,6 @@
                 <label for="nama" class="form-label">Nama Eskul</label>
                 <input name="Nama" type="text" class="form-control" id="nama" />
               </div>
-              <div class="mb-3">
-                <label for="program" class="form-label">program</label>
-                <select
-                  name="Program"
-                  id="program"
-                  class="form-select"
-                  required
-                >
-                  <option value="" selected disabled>
-                    -- Pilih Program --
-                  </option>
-                  <option value="SD">SD</option>
-                  <option value="SMP">SMP</option>
-                  <option value="SMA">SMA</option>
-                  <option value="Tahfidz">Tahfidz</option>
-                </select>
-              </div>
             </div>
             <div class="modal-footer">
               <button
@@ -260,9 +226,10 @@ export default {
     async inputKelas(event) {
       this.btn = false;
       const data = Object.fromEntries(new FormData(event.target));
+      data["Program"] = localStorage.getItem("program");
       try {
         const result = await this.$axios.$post(
-          "/input-database?kelas=idcls",
+          "/input-database?subject=kelas&code=idcls",
           data
         );
         this.btn = true;
@@ -274,7 +241,7 @@ export default {
           timer: 1500,
         });
         this.$refs.inputKelas.reset();
-        this.$emit("updateKelas", result);
+        this.$store.commit("kelas/updateKelas", result);
         $("#inputKelas").modal("hide");
       } catch (error) {
         this.btn = true;
@@ -289,9 +256,10 @@ export default {
     async inputJurusan(event) {
       this.btn = false;
       const data = Object.fromEntries(new FormData(event.target));
+      data["Program"] = localStorage.getItem("program");
       try {
         const result = await this.$axios.$post(
-          "/input-database?jurusan=idfcl",
+          "/input-database?subject=jurusan&code=idfcl",
           data
         );
         this.btn = true;
@@ -303,7 +271,7 @@ export default {
           timer: 1500,
         });
         this.$refs.inputJurusan.reset();
-        this.$emit("updateJurusan", result);
+        this.$store.commit("kelas/updateJurusan", result);
         $("#inputJurusan").modal("hide");
       } catch (error) {
         this.btn = true;
@@ -318,9 +286,10 @@ export default {
     async inputEkskull(event) {
       this.btn = false;
       const data = Object.fromEntries(new FormData(event.target));
+      data["Program"] = localStorage.getItem("program");
       try {
         const result = await this.$axios.$post(
-          "/input-database?ekskull=ideks",
+          "/input-database?subject=ekskull&code=ideks",
           data
         );
         this.btn = true;
@@ -332,7 +301,7 @@ export default {
           timer: 1500,
         });
         this.$refs.inputEkskull.reset();
-        this.$emit("updateEkskull", result);
+        this.$store.commit("kelas/updateEkskull", result);
         $("#inputEkskull").modal("hide");
       } catch (error) {
         this.btn = true;

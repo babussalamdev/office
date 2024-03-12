@@ -17,12 +17,20 @@
                 : $route.name
             }}</span
           >
+          {{ $route.name }}
         </h1>
       </div>
 
       <!-- menu profil melayang -->
       <div class="d-flex align-items-center gap-3">
-        <select name="Kelas" id="kelas" class="form-select select" required>
+        <select
+          name="Kelas"
+          id="kelas"
+          class="form-select select"
+          required
+          @change="setUnit"
+          v-model="unit"
+        >
           <option value="" selected disabled>Unit</option>
           <option value="SD">SD</option>
           <option value="SMP">SMP</option>
@@ -69,11 +77,14 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   data() {
     return {
       profil: false,
       notif: false,
+      unit: "",
       // notifications: ["Notification 1", "Notification 2", "Notification 3"],
       notifications: ["notification"],
       notificationOpened: false,
@@ -83,6 +94,12 @@ export default {
     // Menambahkan event listener ke dokumen
     document.addEventListener("click", this.hideProfileOnClickOutside);
     document.addEventListener("click", this.hideNotifOnClickOutside);
+
+    const program = localStorage.getItem("program");
+    if (program) {
+      this.unit = program;
+      this.setUnit();
+    }
   },
   destroyed() {
     // Menghapus event listener saat komponen dihancurkan
@@ -90,6 +107,22 @@ export default {
     document.removeEventListener("click", this.hideNotifOnClickOutside);
   },
   methods: {
+    setUnit() {
+      localStorage.setItem("program", this.unit);
+      this.$store.commit("navbar/changeUnit", this.unit);
+      const name = this.$route.name;
+      if (name === "setting-mapel") {
+        this.$store.dispatch(`mapel/changeUnit`, this.unit);
+      } else if (name === "setting-kelas") {
+        this.$store.dispatch(`kelas/changeUnit`, this.unit);
+      } else if (name === "setting-periode") {
+        this.$store.dispatch(`periode/changeUnit`, this.unit);
+      } else if (name === "setting-kelompok") {
+        this.$store.dispatch(`kelompok/changeUnit`, this.unit);
+      } else if (name === "setting-kaldiksetup" || name === "kaldik") {
+        this.$store.dispatch(`kaldik/changeUnit`, this.unit);
+      }
+    },
     viewProfle() {
       this.profil = !this.profil;
     },

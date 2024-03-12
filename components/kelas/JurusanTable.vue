@@ -47,9 +47,13 @@
 
 <script>
 import Swal from "sweetalert2";
+import { mapState } from "vuex";
 
 export default {
-  props: ["jurusan"],
+  computed: {
+    ...mapState("kelas", ["jurusan"]),
+  },
+
   methods: {
     async deleteItem(key) {
       const result = await Swal.fire({
@@ -73,7 +77,7 @@ export default {
         const result = await this.$axios.$delete(
           `delete-database?jurusan=${key.split("#")[1]}`
         );
-        this.$emit("deleteJurusan", key);
+        this.$store.commit("kelas/deleteJurusan", key);
       }
     },
   },
