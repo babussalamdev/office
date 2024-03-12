@@ -29,20 +29,30 @@
                   type="number"
                   class="form-control"
                   id="sort"
+                  required
                 />
               </div>
               <div class="mb-3">
                 <label for="nama" class="form-label">Nama Mapel</label>
-                <input name="Nama" type="text" class="form-control" id="nama" />
+                <input
+                  name="Nama"
+                  type="text"
+                  class="form-control"
+                  id="nama"
+                  required
+                />
               </div>
               <div class="mb-3">
                 <label for="kelas" class="form-label">Kelas</label>
                 <select name="Kelas" id="kelas" class="form-select" required>
                   <option value="" selected disabled>-- Pilih Kelas --</option>
-                  <option value="SD">SD</option>
-                  <option value="SMP">SMP</option>
-                  <option value="SMA">SMA</option>
-                  <option value="Tahfidz">Tahfidz</option>
+                  <option
+                    v-for="(value, index) in kelas"
+                    :key="index"
+                    :value="value.Nama"
+                  >
+                    {{ value.Nama }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -78,43 +88,47 @@
 import Swal from "sweetalert2";
 
 export default {
+  props: ["kelas"],
   data() {
     return {
       btn: true,
+      unit: "",
     };
   },
+  // mounted() {
+  //   this.unit = localStorage.getItem("program");
+  // },
   methods: {
     async inputMapel(event) {
       this.btn = false;
       const data = Object.fromEntries(new FormData(event.target));
-      this.$refs.inputMapel.reset();
-      console.log(data);
+      data["Program"] = localStorage.getItem("program");
       this.btn = true;
-      // try {
-      //   const result = await this.$axios.$post(
-      //     "/input-database?halaqah=idhal",
-      //     data
-      //   );
-      //   this.btn = true;
-      //   Swal.fire({
-      //     position: "center",
-      //     icon: "success",
-      //     text: "Data berhasil di input",
-      //     showConfirmButton: false,
-      //     timer: 1500,
-      //   });
-      //   this.$refs.inputHalaqah.reset();
-      //   this.$emit("updateHalaqah", result);
-      //   $("#InputDataHalaqoh").modal("hide");
-      // } catch (error) {
-      //   this.btn = true;
-      //   Swal.fire({
-      //     icon: "warning",
-      //     text: error,
-      //     showConfirmButton: false,
-      //     timer: 1500,
-      //   });
-      // }
+      try {
+        const result = await this.$axios.$post(
+          "/input-database?subject=mapel&code=idmap",
+          data
+        );
+        this.btn = true;
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          text: "Data berhasil di input",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        this.$refs.inputMapel.reset();
+        this.$store.commit("mapel/updateMapel", result);
+        $("#InputDataMapel").modal("hide");
+      } catch (error) {
+        this.btn = true;
+        Swal.fire({
+          icon: "warning",
+          text: error,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
     },
   },
 };

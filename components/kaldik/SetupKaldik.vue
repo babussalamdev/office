@@ -12,10 +12,10 @@
       </thead>
       <tbody>
         <tr v-for="(data, index) in kaldik" :key="index">
-          <td>{{ data.kegiatan }}</td>
-          <td>{{ data.TglAwal }}</td>
-          <td>{{ data.TglAkhir }}</td>
-          <td :style="{ color: data.WarnaLabel }">{{ data.WarnaLabel }}</td>
+          <td class="text-capitalize">{{ data.Nama }}</td>
+          <td>{{ formatDate(data.Mulai) }}</td>
+          <td>{{ formatDate(data.Berakhir) }}</td>
+          <td :style="{ color: data.Warna }">{{ data.Warna }}</td>
           <td class="text-end">
             <a href="#">
               <i class="bx bx-pencil text-primary"></i>
@@ -31,8 +31,18 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+import formatSet from "~/mixins/formatSet.js";
+
 export default {
-  props: ["kaldik"],
+  async asyncData({ store }) {
+    const program = localStorage.getItem("program");
+    store.dispatch(`kaldik/changeUnit`, program);
+  },
+  computed: {
+    ...mapState("kaldik", ["kaldik"]),
+  },
+  mixins: [formatSet],
 };
 </script>
 

@@ -1,5 +1,6 @@
 <template>
   <section id="kaldik">
+    {{ kaldik }}
     <div class="kaldik animate__animated animate__fadeIn">
       <div class="container">
         <div class="card p-5">
@@ -16,11 +17,27 @@
 import FullCalendar from "@fullcalendar/vue";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import { mapGetters } from "vuex";
 
 export default {
+  async asyncData({ store }) {
+    const program = localStorage.getItem("program");
+    store.dispatch(`kaldik/changeUnit`, program);
+  },
+
+  computed: {
+    ...mapGetters("kaldik", ["getKaldik"]),
+    kaldik: {
+      get() {
+        return this.getKaldik;
+      },
+    },
+  },
+
   components: {
     FullCalendar, // make the <FullCalendar> tag available
   },
+
   data() {
     return {
       calendarOptions: {
@@ -28,15 +45,7 @@ export default {
         locale: "id",
         initialView: "dayGridMonth",
         dateClick: this.handleDateClick,
-        events: [
-          {
-            title: "event 1",
-            date: "2024-03-01",
-            backgroundColor: "#6420AA",
-            borderColor: "#6420AA",
-          },
-          { title: "event 2", date: "2024-02-29" },
-        ],
+        initialEvents: this.kaldik,
       },
     };
   },

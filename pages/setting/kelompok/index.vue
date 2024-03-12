@@ -23,7 +23,7 @@
           </div>
 
           <!-- table -->
-          <HalaqohTable :halaqah="halaqah" @deleteHalaqah="deleteHalaqah" />
+          <HalaqohTable />
         </div>
         <!-- right side -->
         <!-- Asrama -->
@@ -46,38 +46,19 @@
           </div>
 
           <!-- table -->
-          <AsramaTable :asrama="asrama" @deleteAsrama="deleteAsrama" />
+          <AsramaTable />
         </div>
       </div>
     </div>
 
     <!-- modal -->
-    <ModalKelompok
-      @updateHalaqah="updateHalaqah"
-      @updateAsrama="updateAsrama"
-    />
+    <ModalKelompok />
   </section>
 </template>
 
 <script>
 export default {
-  async asyncData({ $axios }) {
-    const { halaqah, asrama } = await $axios.$get(
-      "get-database?halaqah=settings"
-    );
-    return { halaqah, asrama };
-  },
   methods: {
-    updateHalaqah(data) {
-      this.halaqah.push(data);
-      this.halaqah.sort((a, b) => {
-        return a.Sort - b.Sort;
-      });
-    },
-    deleteHalaqah(key) {
-      const i = this.halaqah.findIndex((x) => x.SK === key);
-      this.halaqah.splice(i, 1);
-    },
     updateAsrama(data) {
       this.asrama.push(data);
       this.asrama.sort((a, b) => {

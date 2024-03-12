@@ -98,33 +98,32 @@ export default {
     async inputUtama(event) {
       this.btn = false;
       const data = Object.fromEntries(new FormData(event.target));
-      console.log(data);
-      this.btn = true;
-      // try {
-      //   const result = await this.$axios.$post(
-      //     "/input-database?halaqah=idhal",
-      //     data
-      //   );
-      //   this.btn = true;
-      //   Swal.fire({
-      //     position: "center",
-      //     icon: "success",
-      //     text: "Data berhasil di input",
-      //     showConfirmButton: false,
-      //     timer: 1500,
-      //   });
-      //   this.$refs.inputHalaqah.reset();
-      //   this.$emit("updateHalaqah", result);
-      //   $("#InputDataHalaqoh").modal("hide");
-      // } catch (error) {
-      //   this.btn = true;
-      //   Swal.fire({
-      //     icon: "warning",
-      //     text: error,
-      //     showConfirmButton: false,
-      //     timer: 1500,
-      //   });
-      // }
+      data["Program"] = localStorage.getItem("program");
+      try {
+        const result = await this.$axios.$post(
+          "/input-database?subject=periode&code=idprd",
+          data
+        );
+        this.btn = true;
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          text: "Data berhasil di input",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        this.$refs.inputUtama.reset();
+        this.$store.commit("periode/updatePeriode", result);
+        $("#InputDataUtama").modal("hide");
+      } catch (error) {
+        this.btn = true;
+        Swal.fire({
+          icon: "warning",
+          text: error,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
     },
   },
 };

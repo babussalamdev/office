@@ -12,7 +12,7 @@
       <tbody>
         <tr v-for="(data, i) in asrama" :key="i">
           <td scope="row">{{ data.Sort }}</td>
-          <td scope="row">{{ data.Nama }}</td>
+          <td scope="row" class="text-capitalize">{{ data.Nama }}</td>
           <td scope="row" class="text-uppercase">{{ data.Program }}</td>
           <td class="text-end">
             <a href="javascript:;" @click="deleteItem(data.SK)"
@@ -27,9 +27,13 @@
 
 <script>
 import Swal from "sweetalert2";
+import { mapState } from "vuex";
 
 export default {
-  props: ["asrama"],
+  computed: {
+    ...mapState("kelompok", ["asrama"]),
+  },
+
   methods: {
     async deleteItem(key) {
       const result = await Swal.fire({
@@ -53,7 +57,7 @@ export default {
         const result = await this.$axios.$delete(
           `delete-database?asrama=${key.split("#")[1]}`
         );
-        this.$emit("deleteAsrama", key);
+        this.$store.commit("kelompok/deleteAsrama", key);
       }
     },
   },

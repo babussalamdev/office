@@ -1,4 +1,10 @@
+let development = process.env.NODE_ENV !== 'production'
 export default {
+  server: {
+    host: "0.0.0.0",
+    port: 3000
+  },
+
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 

@@ -11,7 +11,7 @@
               type="button"
               class="btn btn-sm btn-primary button-santri"
               data-bs-toggle="modal"
-              data-bs-target="#InputDataMapel"
+              @click="modalShow"
             >
               Tambah Mapel
             </button>
@@ -22,12 +22,28 @@
       <TableMapel />
     </div>
     <!-- modal -->
-    <ModalMapel />
+    <ModalMapel :kelas="kelas" />
   </section>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      kelas: "",
+    };
+  },
+  methods: {
+    async modalShow() {
+      const unit = localStorage.getItem("program");
+      const data = await this.$axios.$get(
+        `get-database?subject=kelas&program=${unit}`
+      );
+      this.kelas = data;
+      $("#InputDataMapel").modal("show");
+    },
+  },
+};
 </script>
 
 <style>

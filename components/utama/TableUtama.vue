@@ -11,25 +11,24 @@
         </tr>
       </thead>
       <tbody>
-        <!-- <tr v-for="(data, i) in halaqah" :key="i">
+        <tr v-for="(data, i) in periode" :key="i">
           <td scope="row">{{ data.Sort }}</td>
-          <td scope="row">{{ data.Nama }}</td>
-          <td scope="row" class="text-uppercase">{{ data.Program }}</td>
-          <td class="text-end">
-            <a href="javascript:;" @click="deleteItem(data.SK)"
-              ><i class="bx bx-trash text-danger"></i
-            ></a>
-          </td>
-        </tr> -->
-        <tr>
-          <td scope="row">1</td>
-          <td scope="row">Ganjil</td>
-          <td scope="row">2023</td>
+          <td scope="row">{{ data.Semester }}</td>
+          <td scope="row" class="text-uppercase">{{ data.Tahun }}</td>
           <td scope="row">
-            <span class="item bg-warning"> active </span>
+            <span class="item" :class="data.Status === 'active' ? 'bg-success' : 'bg-danger'"">{{ data.Status }}</span>
           </td>
           <td class="text-end">
-            <button class="btn btn-primary">On</button>
+            <a href="javascript:;" @click="updateItem(data.SK, data.Status)"
+              ><button
+                class="btn"
+                :class="
+                  data.Status === 'active' ? 'btn-secondary' : 'btn-primary'
+                "
+              >
+                {{ data.Status === "active" ? "off" : "on" }}
+              </button></a
+            >
           </td>
         </tr>
       </tbody>
@@ -39,33 +38,42 @@
 
 <script>
 import Swal from "sweetalert2";
+import { mapState } from "vuex";
 
 export default {
-  props: ["halaqah"],
+  computed: {
+    ...mapState("periode", ["periode"]),
+  },
   methods: {
-    async deleteItem(key) {
+    async updateItem(key, status) {
       const result = await Swal.fire({
         title: "Apakah anda yakin?",
-        text: "Data akan dihapus secara permanen!",
+        text: "Subject akan dinonaktifkan",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
+        confirmButtonText: "Ya, Non-Aktifkan",
       });
+      const data = {
+        Status: status === "active" ? "inactive" : "active",
+      };
 
       if (result.isConfirmed) {
         Swal.fire({
           position: "center",
           icon: "success",
-          text: "Data berhasil dihapus!",
+          text: "Data berhasil dinonaktifkan!",
           showConfirmButton: false,
           timer: 1500,
         });
-        const result = await this.$axios.$delete(
-          `delete-database?halaqah=${key.split("#")[1]}`
+        console.log(data);
+        const result = await this.$axios.$put(
+          `update-database?subject=periode&sk=${key.split("#")[1]}`,
+          data
         );
-        this.$emit("deleteHalaqah", key);
+        const response = { key, Status: status === "active" ? "inactive" : "active" }
+        this.$store.commit("periode/updateSubject", response);
       }
     },
   },

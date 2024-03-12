@@ -25,7 +25,7 @@
               <label for="kegiatan" class="form-label">kegiatan</label>
               <input
                 type="text"
-                name="kegiatan"
+                name="Nama"
                 class="form-control"
                 id="kegiatan"
                 aria-describedby="emailHelp"
@@ -36,7 +36,7 @@
                 <label for="tglMulai" class="form-label">tanggal mulai</label>
                 <input
                   type="date"
-                  name="tglMulai"
+                  name="Mulai"
                   class="form-control mb-3 mb-md-0"
                   id="tglMulai"
                 />
@@ -45,19 +45,19 @@
                 <label for="tglAkhir" class="form-label">tanggal akhir</label>
                 <input
                   type="date"
-                  name="tglAkhir"
+                  name="Berakhir"
                   class="form-control"
                   id="tglAkhir"
                 />
               </div>
             </div>
             <div class="mb-3">
-              <label for="kegiatan" class="form-label">warna label</label>
+              <label for="warna" class="form-label">warna label</label>
               <input
                 type="color"
-                name="warna"
+                name="Warna"
                 class="form-control"
-                id="kegiatan"
+                id="warna"
                 aria-describedby="emailHelp"
               />
             </div>
@@ -102,8 +102,13 @@ export default {
     async inputKaldik(event) {
       this.btn = false;
       const data = Object.fromEntries(new FormData(event.target));
+      data["Program"] = localStorage.getItem("program");
       console.log(data);
-      if (data) {
+      try {
+        const result = await this.$axios.$post(
+          "/input-database?subject=kaldik&code=idkal",
+          data
+        );
         this.btn = true;
         Swal.fire({
           position: "center",
@@ -113,31 +118,17 @@ export default {
           timer: 1500,
         });
         this.$refs.inputKaldik.reset();
-        this.$emit("updateKelas", data);
+        this.$store.commit("kaldik/updateKaldik", result);
         $("#inputKaldik").modal("hide");
+      } catch (error) {
+        this.btn = true;
+        Swal.fire({
+          icon: "warning",
+          text: error,
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
-      //   try {
-      //     // await this.$axios.$post("/input-database?kelas=input", data);
-      //     this.btn = true;
-      //     Swal.fire({
-      //       position: "center",
-      //       icon: "success",
-      //       text: "Data berhasil di input",
-      //       showConfirmButton: false,
-      //       timer: 1500,
-      //     });
-      //     this.$refs.inputKaldik.reset();
-      //     this.$emit("updateKelas", data);
-      //     $("#inputKaldik").modal("hide");
-      //   } catch (error) {
-      //     this.btn = true;
-      //     Swal.fire({
-      //       icon: "warning",
-      //       text: error,
-      //       showConfirmButton: false,
-      //       timer: 1500,
-      //     });
-      //   }
     },
   },
 };

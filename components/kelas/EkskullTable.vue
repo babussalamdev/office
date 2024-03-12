@@ -47,9 +47,12 @@
 
 <script>
 import Swal from "sweetalert2";
+import { mapState } from "vuex";
 
 export default {
-  props: ["ekskull"],
+  computed: {
+    ...mapState("kelas", ["ekskull"]),
+  },
   methods: {
     async deleteItem(key) {
       const result = await Swal.fire({
@@ -73,7 +76,7 @@ export default {
         const result = await this.$axios.$delete(
           `delete-database?ekskull=${key.split("#")[1]}`
         );
-        this.$emit("deleteEkskull", key);
+        this.$store.commit("kelas/deleteEkskull", key);
       }
     },
   },
