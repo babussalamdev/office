@@ -19,10 +19,8 @@
         </div>
       </div>
       <!-- table -->
-      <TableMapel />
+      <TableMapel :kelas="kelas" :jurusan="jurusan" />
     </div>
-    <!-- modal -->
-    <ModalMapel :kelas="kelas" />
   </section>
 </template>
 
@@ -31,15 +29,17 @@ export default {
   data() {
     return {
       kelas: "",
+      jurusan: "",
     };
   },
   methods: {
     async modalShow() {
       const unit = localStorage.getItem("program");
       const data = await this.$axios.$get(
-        `get-database?subject=kelas&program=${unit}`
+        `get-database?subject=optionsmapel&program=${unit}`
       );
-      this.kelas = data;
+      this.kelas = data.kelas;
+      this.jurusan = data.jurusan;
       $("#InputDataMapel").modal("show");
     },
   },
