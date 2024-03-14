@@ -1,7 +1,7 @@
 <template>
   <section id="santri">
-    <div class="santri animate__animated animate__fadeIn">
-      <div class="mt-3 animate__animated animate__fadeInUp">
+    <div class="santri">
+      <div class="mt-3">
         <div class="d-flex flex-row-reverse mb-3 gap-3 align-items-center">
           <div class="upload-data-santri">
             <input
@@ -26,11 +26,11 @@
       </div>
 
       <!-- table -->
-      <SantriDbTabel :santri="santri" />
+      <TableSantri :santri="santri" />
     </div>
 
     <!-- Modal -->
-    <SantriDbModal />
+    <!-- <SantriDbModal /> -->
   </section>
 </template>
 
@@ -55,11 +55,11 @@ export default {
     };
   },
 
-  async asyncData({ $axios }) {
-    const databaseSantri = await $axios.$get("get-database?santri=active");
-    console.log(databaseSantri);
-    return { databaseSantri };
-  },
+  // async asyncData({ $axios }) {
+  //   // const databaseSantri = await $axios.$get("get-database?santri=active");
+  //   console.log(databaseSantri);
+  //   return { databaseSantri };
+  // },
 };
 </script>
 

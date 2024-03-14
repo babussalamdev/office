@@ -7,8 +7,12 @@
         <div class="col-12 col-md-6">
           <!-- Button trigger modal -->
           <div class="button-santri float-end">
-            <button type="button" class="btn btn-sm btn-primary button-santri" data-bs-toggle="modal"
-              data-bs-target="#inputDataStruktur">
+            <button
+              type="button"
+              class="btn btn-sm btn-primary button-santri"
+              data-bs-toggle="modal"
+              data-bs-target="#inputDataStruktur"
+            >
               Tambah Data
             </button>
           </div>

@@ -17,7 +17,11 @@
               {{ data.Nama }}
             </td>
             <td scope="row" class="text-uppercase container-permissions">
-              <div v-for="(value, i) in data.Permissions" :key="i" style="display: inline">
+              <div
+                v-for="(value, i) in data.Permissions"
+                :key="i"
+                style="display: inline"
+              >
                 <div class="btn-group btn-group-sm px-1 py-1 list-permissions">
                   <div class="btn btn-secondary disabled">
                     <span>{{ value }}</span>
@@ -26,15 +30,19 @@
               </div>
             </td>
             <td class="text-end align-middle">
-              <a href="javascript:;" @click="editItem(i)"><i class="bx bx-edit text-primary"></i></a>
-              <a href="javascript:;" @click="deleteItem(data.SK)"><i class="bx bx-trash text-danger"></i></a>
+              <a href="javascript:;" @click="editItem(i)"
+                ><i class="bx bx-edit text-primary"></i
+              ></a>
+              <a href="javascript:;" @click="deleteItem(data.SK)"
+                ><i class="bx bx-trash text-danger"></i
+              ></a>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
     <!-- modal -->
-    <ModalStruktur />
+    <ModalStruktur :updateData="updateData" />
   </div>
 </template>
 
@@ -72,7 +80,8 @@ export default {
           timer: 1500,
         });
         await this.$axios.$delete(
-          `delete-database?subject=struktur&id=${key.split("#")[0]}&code=${key.split("#")[1]
+          `delete-database?subject=struktur&id=${key.split("#")[0]}&code=${
+            key.split("#")[1]
           }`
         );
         this.$store.commit("struktur/deleteStruktur", key);

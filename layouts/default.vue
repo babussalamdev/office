@@ -30,10 +30,7 @@
 </template>
 
 <script>
-import Sidebar from "~/components/all/Sidebar.vue";
-
 export default {
-  components: { Sidebar },
   data() {
     return {
       isSidebar: true,
