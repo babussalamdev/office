@@ -32,5 +32,5 @@ export default {
 </script>
 
 <style scoped>
-@import url('~/assets/css/kaldik/kladik.css');
+@import url(~/assets/css/kaldik/kladik.css);
 </style>

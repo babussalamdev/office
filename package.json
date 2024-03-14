@@ -28,7 +28,7 @@
     "sweetalert2": "^11.7.1",
     "vue": "^2.7.10",
     "vue-apexcharts": "^1.6.2",
-    "vue-multiselect": "^2.1.7",
+    "vue-multiselect": "^2.1.9",
     "vue-qrcode-reader": "^2.3.18",
     "vue-server-renderer": "^2.7.10",
     "vue-template-compiler": "^2.7.10",

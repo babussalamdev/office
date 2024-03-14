@@ -2,7 +2,7 @@ export default {
     setkaldik(state, value) {
         state.kaldik = value
     },
-    updatekaldik(state, value) {
+    inputKaldik(state, value) {
         state.kaldik.push(value);
         state.kaldik.sort((a, b) => {
             return a.Sort - b.Sort;

@@ -5,19 +5,31 @@
         <thead>
           <tr>
             <th scope="col">Sort</th>
-            <th scope="col">Nama Mapel</th>
-            <th scope="col">Kelas</th>
-            <th scope="col">Jurusan</th>
+            <th scope="col">Nama</th>
+            <th scope="col">Permission</th>
             <th scope="col" class="text-end">Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(data, i) in mapel" :key="i">
-            <td scope="row">{{ data.Sort }}</td>
-            <td scope="row" class="text-capitalize">{{ data.Nama }}</td>
-            <td scope="row" class="text-uppercase">{{ data.Kelas }}</td>
-            <td scope="row" class="text-uppercase">{{ data.Jurusan }}</td>
-            <td class="text-end">
+          <tr v-for="(data, i) in struktur" :key="i">
+            <td scope="row" class="align-middle">{{ data.Sort }}</td>
+            <td scope="row" class="text-capitalize align-middle">
+              {{ data.Nama }}
+            </td>
+            <td scope="row" class="text-uppercase container-permissions">
+              <div
+                v-for="(value, i) in data.Permissions"
+                :key="i"
+                style="display: inline"
+              >
+                <div class="btn-group btn-group-sm px-1 py-1 list-permissions">
+                  <div class="btn btn-secondary disabled">
+                    <span>{{ value }}</span>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td class="text-end align-middle">
               <a href="javascript:;" @click="editItem(i)"
                 ><i class="bx bx-edit text-primary"></i
               ></a>
@@ -29,7 +41,8 @@
         </tbody>
       </table>
     </div>
-    <ModalMapel :updateData="updateData" />
+    <!-- modal -->
+    <ModalStruktur />
   </div>
 </template>
 
@@ -44,7 +57,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("mapel", ["mapel"]),
+    ...mapState("struktur", ["struktur"]),
   },
   methods: {
     async deleteItem(key) {
@@ -67,16 +80,16 @@ export default {
           timer: 1500,
         });
         const result = await this.$axios.$delete(
-          `delete-database?subject=mapel&id=${key.split("#")[1]}$code=${
-            key.split("#")[2]
+          `delete-database?subject=struktur&id=${key.split("#")[0]}&code=${
+            key.split("#")[1]
           }`
         );
-        this.$store.commit("mapel/deleteMapel", key);
+        this.$store.commit("struktur/deleteStruktur", key);
       }
     },
     async editItem(index) {
-      $("#updateDataMapel").modal("show");
-      this.updateData = this.mapel[index];
+      $("#updateDataStruktur").modal("show");
+      this.updateData = this.struktur[index];
     },
   },
 };

@@ -1,12 +1,10 @@
 export default {
-    setMapel(state, value) {
-        state.mapel = value.mapel
-        state.kelas = value.kelas
-        state.jurusan = value.jurusan
+    setStruktur(state, value) {
+        state.struktur = value
     },
-    inputMapel(state, value) {
-        state.mapel.push(value);
-        state.mapel.sort((a, b) => {
+    inputStruktur(state, value) {
+        state.struktur.push(value);
+        state.struktur.sort((a, b) => {
             return a.Sort - b.Sort;
         });
     },
@@ -24,8 +22,8 @@ export default {
         //     state.mapel[i] = { ...state.mapel[i], ...value };
         // }
     },
-    deleteMapel(state, value) {
-        const i = state.mapel.findIndex((x) => x.SK === value);
-        state.mapel.splice(i, 1);
+    deleteStruktur(state, value) {
+        const i = state.struktur.findIndex((x) => x.SK === value);
+        state.struktur.splice(i, 1);
     },
 }

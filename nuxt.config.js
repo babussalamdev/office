@@ -55,6 +55,7 @@ export default {
       '~/components/home',
       '~/components/kelas',
       '~/components/kelompok',
+      '~/components/struktur',
       '~/components/mapel',
       '~/components/kaldik',
       '~/components/santri',

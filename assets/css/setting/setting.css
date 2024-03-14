@@ -204,4 +204,56 @@
   #utama .utama .table-responsive .table tbody tr td {
     font-size: 12px;
   }
+}
+
+#struktur .struktur .row {
+  margin-bottom: 18px;
+}
+#struktur .struktur .row .upload-data-santri {
+  transform: scale(0.85);
+  border-radius: 10px;
+}
+#struktur .struktur .row .button-santri button {
+  font-size: 12px;
+  width: 150px;
+}
+#struktur .struktur .table-responsive {
+  overflow-x: auto;
+}
+#struktur .struktur .table-responsive .table {
+  width: 100%;
+}
+#struktur .struktur .table-responsive .table thead tr th {
+  padding: 15px 20px;
+  background: #176b87;
+  font-size: 12px;
+  color: #fff;
+}
+#struktur .struktur .table-responsive .table tbody tr td {
+  padding: 8px 20px;
+  margin: auto;
+  font-size: 12px;
+}
+#struktur .struktur .table-responsive .table tbody tr td button {
+  font-size: 10px;
+  padding: 3px 10px;
+}
+#struktur .struktur .table-responsive .table tbody tr .container-permissions .list-permissions .btn {
+  background: #000;
+}
+#struktur .struktur .table-responsive .table tbody tr .container-permissions .list-permissions .btn span {
+  font-size: 10px;
+}
+@media screen and (max-width: 576px) {
+  #struktur .struktur .table-responsive .table tbody tr .container-permissions .list-permissions .btn span {
+    font-size: 8px;
+  }
+}
+@media screen and (max-width: 576px) {
+  #struktur .struktur .table-responsive .table thead tr th {
+    font-size: 12px;
+  }
+  #struktur .struktur .table-responsive .table tbody tr td {
+    font-size: 12px;
+  }
 }/*# sourceMappingURL=setting.css.map */

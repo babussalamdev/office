@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="card p-5">
+  <div class="calendar-container">
+    <div class="card p-3">
       <div class="calendar animate__animated animate__fadeInUp">
         <FullCalendar :options="calendarOptions" />
       </div>
@@ -9,47 +9,47 @@
 </template>
 
 <script>
-import '@fullcalendar/core/'
-import FullCalendar from '@fullcalendar/vue'
-import interactionPlugin from '@fullcalendar/interaction'
-import dayGridPlugin from '@fullcalendar/daygrid'
+import "@fullcalendar/core/";
+import FullCalendar from "@fullcalendar/vue";
+import interactionPlugin from "@fullcalendar/interaction";
+import dayGridPlugin from "@fullcalendar/daygrid";
 export default {
-  props: ['transformedData'],
+  props: ["transformedData"],
   components: {
-    FullCalendar
+    FullCalendar,
   },
   data() {
     return {
       calendarOptions: {
         plugins: [dayGridPlugin, interactionPlugin],
-        initialView: 'dayGridMonth',
+        initialView: "dayGridMonth",
         nowIndicator: true,
         editable: true,
         businessHours: true,
         dayMaxEvents: true,
         selectable: true,
-        events: '',
-        locale: 'ID',
-      }
-    }
+        events: "",
+        locale: "ID",
+      },
+    };
   },
   methods: {
     loadCalendar() {
       this.calendarOptions = {
         plugins: [dayGridPlugin, interactionPlugin],
-        initialView: 'dayGridMonth',
+        initialView: "dayGridMonth",
         nowIndicator: true,
         editable: true,
         businessHours: true,
         dayMaxEvents: true,
         selectable: true,
         events: this.transformedData,
-        locale: 'ID',
-      }
-    }
+        locale: "ID",
+      };
+    },
   },
   watch: {
-    transformedData: 'loadCalendar'
+    transformedData: "loadCalendar",
   },
 };
 </script>

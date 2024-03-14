@@ -121,6 +121,8 @@ export default {
         this.$store.dispatch(`kelompok/changeUnit`, this.unit);
       } else if (name === "setting-kaldiksetup" || name === "kaldik") {
         this.$store.dispatch(`kaldik/changeUnit`, this.unit);
+      } else if (name === "setting-struktur") {
+        this.$store.dispatch(`struktur/changeUnit`, this.unit);
       }
     },
     viewProfle() {

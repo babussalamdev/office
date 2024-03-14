@@ -1,4 +1,12 @@
 #kaldik {
   height: -moz-min-content;
   height: min-content;
+}
+#kaldik .calendar-container {
+  font-size: 14px !important;
+}
+@media screen and (max-width: 576px) {
+  #kaldik .calendar-container {
+    font-size: 12px !important;
+  }
 }/*# sourceMappingURL=kladik.css.map */

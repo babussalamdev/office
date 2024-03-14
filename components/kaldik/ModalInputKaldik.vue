@@ -1,7 +1,7 @@
 <template>
   <div
     class="modal fade text-capitalize"
-    id="InputKaldik"
+    id="inputKaldik"
     tabindex="-1"
     aria-labelledby="exampleModalLabel"
     aria-hidden="true"
@@ -103,7 +103,6 @@ export default {
       this.btn = false;
       const data = Object.fromEntries(new FormData(event.target));
       data["Program"] = localStorage.getItem("program");
-      console.log(data);
       try {
         const result = await this.$axios.$post(
           "/input-database?subject=kaldik&code=idkal",
@@ -118,7 +117,7 @@ export default {
           timer: 1500,
         });
         this.$refs.inputKaldik.reset();
-        this.$store.commit("kaldik/updateKaldik", result);
+        this.$store.commit("kaldik/inputKaldik", result);
         $("#inputKaldik").modal("hide");
       } catch (error) {
         this.btn = true;

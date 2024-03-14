@@ -19,27 +19,20 @@
         </div>
       </div>
       <!-- table -->
-      <TableMapel :kelas="kelas" :jurusan="jurusan" />
+      <TableMapel />
     </div>
   </section>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      kelas: "",
-      jurusan: "",
-    };
+  async asyncData({ store }) {
+    const program = localStorage.getItem("program");
+    store.dispatch(`mapel/changeUnit`, program);
   },
+
   methods: {
     async modalShow() {
-      const unit = localStorage.getItem("program");
-      const data = await this.$axios.$get(
-        `get-database?subject=optionsmapel&program=${unit}`
-      );
-      this.kelas = data.kelas;
-      this.jurusan = data.jurusan;
       $("#InputDataMapel").modal("show");
     },
   },
