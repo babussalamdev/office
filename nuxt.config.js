@@ -50,16 +50,16 @@ export default {
   components: {
     dirs: [
       '~/components',
-      '~/components/all',
-      '~/components/utama',
       '~/components/home',
-      '~/components/kelas',
-      '~/components/kelompok',
-      '~/components/struktur',
-      '~/components/mapel',
-      '~/components/kaldik',
+      '~/components/menu',
       '~/components/santri',
       '~/components/santri/database',
+      '~/components/settings/kaldik',
+      '~/components/settings/kelas',
+      '~/components/settings/kelompok',
+      '~/components/settings/mapel',
+      '~/components/settings/periode',
+      '~/components/settings/struktur',
     ]
   },
 
