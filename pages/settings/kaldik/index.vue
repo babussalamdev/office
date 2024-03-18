@@ -6,9 +6,17 @@
           <h1>Kalender Akademik</h1>
         </div>
         <div class="cta-info mb-3 mb-sm-0">
-          <span>0 Total Kegiatan</span>
+          <span
+            ><span id="total-kegiatan" v-text="totalKegiatan"></span> Total
+            Kegiatan</span
+          >
           <div class="button-santri">
-            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#inputKaldik">
+            <button
+              type="button"
+              class="btn btn-primary btn-sm"
+              data-bs-toggle="modal"
+              data-bs-target="#inputKaldik"
+            >
               Tambah
               <!-- <i class="material-icons"> add </i> -->
             </button>
@@ -18,15 +26,22 @@
       <!-- table -->
       <TableKaldik />
     </div>
-    <ModalKaldik />
   </section>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   async asyncData({ store }) {
     const program = localStorage.getItem("program");
     store.dispatch(`kaldik/changeUnit`, program);
+  },
+  computed: {
+    ...mapState("kaldik", ["kaldik"]),
+    totalKegiatan() {
+      return this.kaldik.length;
+    },
   },
 };
 </script>

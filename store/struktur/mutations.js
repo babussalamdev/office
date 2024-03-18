@@ -14,6 +14,7 @@ export default {
         const data = state.struktur[i];
         data.Sort = value.Sort;
         data.Nama = value.Nama
+        data.Permissions = value.Permissions
 
 
         // if (i !== -1) {

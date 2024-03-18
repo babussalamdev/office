@@ -1,11 +1,22 @@
 #santri {
   .santri {
     min-height: 100vh;
-    .button-santri {
-      button {
-        font-size: 12px;
-        i {
-          font-size: 10px;
+    .database-santri {
+      width: 50%;
+      margin: 0 0 0 auto;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      justify-content: end;
+      @media screen and (max-width: 768px) {
+        width: inherit !important;
+      }
+      .button-santri {
+        button {
+          font-size: 12px;
+          i {
+            font-size: 10px;
+          }
         }
       }
     }

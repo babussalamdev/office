@@ -151,8 +151,19 @@ export default {
             expires: 1,
           });
           this.btnLoad = true;
-          console.log(this.$auth.user);
+          console.log(this.$auth.user.user.role);
           this.$router.push("/");
+          if (this.$auth.user.user.role === "santri") {
+            this.$cookies.remove("AccessToken");
+            this.$auth.logout();
+            Swal.fire({
+              position: "center",
+              icon: "error",
+              text: "Anda tidak memiliki hak akses",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
         }
       } catch (error) {
         this.btnLoad = true;

@@ -1,7 +1,13 @@
 <template>
   <div>
     <!-- update modal -->
-    <div class="modal fade" id="updateDataMapel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div
+      class="modal fade"
+      id="updateDataMapel"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <form @submit.prevent="updateMapel" ref="updateMapel">
@@ -9,38 +15,81 @@
               <h1 class="modal-title fs-5" id="exampleModalLabel">
                 Update Mapel
               </h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
             </div>
             <div class="modal-body">
               <div class="mb-3">
                 <label for="sort" class="form-label">Sort</label>
-                <input name="Sort" type="number" class="form-control" id="sort" :value="updateData.Sort" required />
+                <input
+                  name="Sort"
+                  type="number"
+                  class="form-control"
+                  id="sort"
+                  :value="updateData.Sort"
+                  required
+                />
               </div>
               <div class="mb-3">
                 <label for="nama" class="form-label">Nama Mapel</label>
-                <input name="Nama" type="text" class="form-control" id="nama" :value="updateData.Nama" required />
+                <input
+                  name="Nama"
+                  type="text"
+                  class="form-control"
+                  id="nama"
+                  :value="updateData.Nama"
+                  required
+                />
               </div>
               <div class="mb-3">
                 <label for="kelas" class="form-label">Kelas</label>
-                <select name="Kelas" id="kelas" class="form-select" :value="updateData.Kelas" required>
+                <select
+                  name="Kelas"
+                  id="kelas"
+                  class="form-select"
+                  :value="updateData.Kelas"
+                  required
+                >
                   <option value="" selected disabled>-- Pilih Kelas --</option>
-                  <option v-for="(value, index) in kelas" :key="index" :value="value.Nama">
+                  <option
+                    v-for="(value, index) in kelas"
+                    :key="index"
+                    :value="value.Nama"
+                  >
                     {{ value.Nama }}
                   </option>
                 </select>
               </div>
               <div class="mb-3">
                 <label for="jurusan" class="form-label">Jurusan</label>
-                <select name="Jurusan" id="jurusan" class="form-select" :value="updateData.Jurusan" required>
+                <select
+                  name="Jurusan"
+                  id="jurusan"
+                  class="form-select"
+                  :value="updateData.Jurusan"
+                  required
+                >
                   <option value="non-jurusan" selected>Non-Jurusan</option>
-                  <option v-for="(value, index) in jurusan" :key="index" :value="value.Nama">
+                  <option
+                    v-for="(value, index) in jurusan"
+                    :key="index"
+                    :value="value.Nama"
+                  >
                     {{ value.Nama }}
                   </option>
                 </select>
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
                 Close
               </button>
               <span>
@@ -48,7 +97,10 @@
                   Simpan
                 </button>
                 <button v-else class="btn btn-primary" type="button" disabled>
-                  <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                  <span
+                    class="spinner-border spinner-border-sm"
+                    aria-hidden="true"
+                  ></span>
                   <span role="status">Loading...</span>
                 </button>
               </span>
@@ -59,7 +111,13 @@
     </div>
 
     <!-- input modal -->
-    <div class="modal fade" id="InputDataMapel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div
+      class="modal fade"
+      id="InputDataMapel"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <form @submit.prevent="inputMapel" ref="inputMapel">
@@ -67,38 +125,72 @@
               <h1 class="modal-title fs-5" id="exampleModalLabel">
                 Input Mapel
               </h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
             </div>
             <div class="modal-body">
               <div class="mb-3">
                 <label for="sort" class="form-label">Sort</label>
-                <input name="Sort" type="number" class="form-control" id="sort" required />
+                <input
+                  name="Sort"
+                  type="number"
+                  class="form-control"
+                  id="sort"
+                  required
+                />
               </div>
               <div class="mb-3">
                 <label for="nama" class="form-label">Nama Mapel</label>
-                <input name="Nama" type="text" class="form-control" id="nama" required />
+                <input
+                  name="Nama"
+                  type="text"
+                  class="form-control"
+                  id="nama"
+                  required
+                />
               </div>
               <div class="mb-3">
                 <label for="kelas" class="form-label">Kelas</label>
                 <select name="Kelas" id="kelas" class="form-select" required>
                   <option value="" selected disabled>-- Pilih Kelas --</option>
-                  <option v-for="(value, index) in kelas" :key="index" :value="value.Nama">
+                  <option
+                    v-for="(value, index) in kelas"
+                    :key="index"
+                    :value="value.Nama"
+                  >
                     {{ value.Nama }}
                   </option>
                 </select>
               </div>
               <div class="mb-3">
                 <label for="jurusan" class="form-label">Jurusan</label>
-                <select name="Jurusan" id="jurusan" class="form-select" required>
+                <select
+                  name="Jurusan"
+                  id="jurusan"
+                  class="form-select"
+                  required
+                >
                   <option value="Non-Jurusan" selected>Non-Jurusan</option>
-                  <option v-for="(value, index) in jurusan" :key="index" :value="value.Nama">
+                  <option
+                    v-for="(value, index) in jurusan"
+                    :key="index"
+                    :value="value.Nama"
+                  >
                     {{ value.Nama }}
                   </option>
                 </select>
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
                 Close
               </button>
               <span>
@@ -106,7 +198,10 @@
                   Simpan
                 </button>
                 <button v-else class="btn btn-primary" type="button" disabled>
-                  <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                  <span
+                    class="spinner-border spinner-border-sm"
+                    aria-hidden="true"
+                  ></span>
                   <span role="status">Loading...</span>
                 </button>
               </span>
@@ -173,7 +268,8 @@ export default {
       const key = this.updateData.SK;
       try {
         const result = await this.$axios.$put(
-          `/update-database?subject=mapel&id=${key.split("#")[1]}&code=${key.split("#")[2]
+          `/update-database?subject=mapel&id=${key.split("#")[1]}&code=${
+            key.split("#")[2]
           }&sk=${key.split("#")[2]}`,
           data
         );

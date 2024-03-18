@@ -8,8 +8,18 @@ export default {
             return a.Sort - b.Sort;
         });
     },
-    deleteMapel(state, value) {
-        const i = state.mapel.findIndex((x) => x.SK === value);
-        state.mapel.splice(i, 1);
+
+    updateKaldik(state, value) {
+        const i = state.kaldik.findIndex((x) => x.SK === value.SK)
+
+        const data = state.kaldik[i]
+        data.Nama = value.Nama
+        data.Mulai = value.Mulai
+        data.Berakhir = value.Berakhir
+        data.Warna = value.Warna
+    },
+    deleteKaldik(state, value) {
+        const i = state.kaldik.findIndex((x) => x.SK === value);
+        state.kaldik.splice(i, 1);
     },
 }

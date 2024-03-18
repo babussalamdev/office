@@ -17,7 +17,6 @@
                 : $route.name
             }}</span
           >
-          {{ $route.name }}
         </h1>
       </div>
 
@@ -58,7 +57,7 @@
         <!-- profile -->
         <div class="profile">
           <img
-            @click="viewProfle()"
+            @click="viewProfile()"
             src="~/assets/img/foto.jpeg"
             alt="foto profil"
             class="rounded-circle"
@@ -123,10 +122,12 @@ export default {
         this.$store.dispatch(`kaldik/changeUnit`, this.unit);
       } else if (name === "setting-struktur") {
         this.$store.dispatch(`struktur/changeUnit`, this.unit);
+      } else if (name === "santri-database") {
+        this.$store.dispatch(`santri/database/changeUnit`, this.unit);
       }
     },
-    viewProfle() {
-      this.profil = !this.profil;
+    viewProfile() {
+      this.profile = !this.profile;
     },
     hideProfileOnClickOutside(event) {
       // Mengambil referensi elemen profile

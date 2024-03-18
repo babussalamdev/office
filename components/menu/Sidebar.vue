@@ -324,6 +324,22 @@
                   >
                 </nuxt-link>
               </li>
+              <!-- Kaldik -->
+              <li>
+                <nuxt-link
+                  to="/settings/kaldik"
+                  class="text-decoration-none d-flex align-items-center gap-2"
+                >
+                  <i
+                    class="material-icons animate__animated animate__fadeInRight"
+                  >
+                    edit_calendar
+                  </i>
+                  <span class="text animate__animated animate__fadeInRight"
+                    >Kaldik</span
+                  >
+                </nuxt-link>
+              </li>
               <!-- Kelompok -->
               <li>
                 <nuxt-link
@@ -369,22 +385,6 @@
                   </i>
                   <span class="text animate__animated animate__fadeInRight"
                     >Mapel</span
-                  >
-                </nuxt-link>
-              </li>
-              <!-- Kaldik -->
-              <li>
-                <nuxt-link
-                  to="/settings/kaldik"
-                  class="text-decoration-none d-flex align-items-center gap-2"
-                >
-                  <i
-                    class="material-icons animate__animated animate__fadeInRight"
-                  >
-                    edit_calendar
-                  </i>
-                  <span class="text animate__animated animate__fadeInRight"
-                    >Kaldik</span
                   >
                 </nuxt-link>
               </li>
