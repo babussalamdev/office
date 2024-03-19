@@ -68,24 +68,27 @@ export default {
       };
 
       if (result.isConfirmed) {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          text: "Data berhasil dinonaktifkan!",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        const program = localStorage.getItem("program");
         await this.$axios.$put(
-          `update-database?subject=periode&id=${key.split("#")[0]}&code=${
+          `update-database?subject=periode&program=${program}&code=${
             key.split("#")[1]
           }`,
           data
         );
-        const response = {
-          key,
-          Status: status === "active" ? "inactive" : "active",
-        };
-        this.$store.commit("periode/updateSubject", response);
+        if (result) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            text: "Data berhasil dinonaktifkan!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          const response = {
+            key,
+            Status: status === "active" ? "inactive" : "active",
+          };
+          this.$store.commit("periode/updateSubject", response);
+        }
       }
     },
   },

@@ -66,8 +66,9 @@ export default {
       });
 
       if (result.isConfirmed) {
+        const program = localStorage.getItem("program");
         await this.$axios.$delete(
-          `delete-database?subject=kaldik&id=${key.split("#")[0]}&code=${
+          `delete-database?subject=kaldik&program=${program}&code=${
             key.split("#")[1]
           }`
         );

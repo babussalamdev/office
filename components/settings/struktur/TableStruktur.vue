@@ -72,19 +72,22 @@ export default {
       });
 
       if (result.isConfirmed) {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          text: "Data berhasil dihapus!",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        const program = localStorage.getItem("program");
         await this.$axios.$delete(
-          `delete-database?subject=struktur&id=${key.split("#")[0]}&code=${
+          `delete-database?subject=struktur&program=${program}&code=${
             key.split("#")[1]
           }`
         );
         this.$store.commit("struktur/deleteStruktur", key);
+        if (result) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            text: "Data berhasil dihapus!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
       }
     },
     async editItem(index) {

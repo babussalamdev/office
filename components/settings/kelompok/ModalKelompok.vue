@@ -1,7 +1,13 @@
 <template>
   <div>
     <!-- Modal Halaqah -->
-    <div class="modal fade" id="InputDataHalaqoh" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div
+      class="modal fade"
+      id="InputDataHalaqoh"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <form @submit.prevent="inputHalaqah" ref="inputHalaqah">
@@ -9,20 +15,41 @@
               <h1 class="modal-title fs-5" id="exampleModalLabel">
                 Input Halaqoh
               </h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
             </div>
             <div class="modal-body">
               <div class="mb-3">
                 <label for="sort" class="form-label">Urutan</label>
-                <input name="Sort" type="number" class="form-control" id="sort" required />
+                <input
+                  name="Sort"
+                  type="number"
+                  class="form-control"
+                  id="sort"
+                  required
+                />
               </div>
               <div class="mb-3">
                 <label for="nama" class="form-label">Nama Halaqoh</label>
-                <input name="Nama" type="text" class="form-control" id="nama" required />
+                <input
+                  name="Nama"
+                  type="text"
+                  class="form-control"
+                  id="nama"
+                  required
+                />
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
                 Close
               </button>
               <span>
@@ -30,7 +57,10 @@
                   Simpan
                 </button>
                 <button v-else class="btn btn-primary" type="button" disabled>
-                  <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                  <span
+                    class="spinner-border spinner-border-sm"
+                    aria-hidden="true"
+                  ></span>
                   <span role="status">Loading...</span>
                 </button>
               </span>
@@ -40,7 +70,13 @@
       </div>
     </div>
     <!-- Modal Asrama -->
-    <div class="modal fade" id="InputDataAsrama" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div
+      class="modal fade"
+      id="InputDataAsrama"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <form @submit.prevent="inputAsrama" ref="inputAsrama">
@@ -48,12 +84,22 @@
               <h1 class="modal-title fs-5" id="exampleModalLabel">
                 Input Asrama
               </h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
             </div>
             <div class="modal-body">
               <div class="mb-3">
                 <label for="sort" class="form-label">Sort</label>
-                <input name="Sort" type="number" class="form-control" id="sort" />
+                <input
+                  name="Sort"
+                  type="number"
+                  class="form-control"
+                  id="sort"
+                />
               </div>
               <div class="mb-3">
                 <label for="nama" class="form-label">Nama Asrama</label>
@@ -61,7 +107,11 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
                 Close
               </button>
               <span>
@@ -69,7 +119,10 @@
                   Simpan
                 </button>
                 <button v-else class="btn btn-primary" type="button" disabled>
-                  <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                  <span
+                    class="spinner-border spinner-border-sm"
+                    aria-hidden="true"
+                  ></span>
                   <span role="status">Loading...</span>
                 </button>
               </span>
@@ -97,7 +150,7 @@ export default {
       data["Program"] = localStorage.getItem("program");
       try {
         const result = await this.$axios.$post(
-          "/input-database?subject=halaqah&id=idhal",
+          "/input-database?subject=halaqah",
           data
         );
         this.btn = true;
@@ -127,7 +180,7 @@ export default {
       data["Program"] = localStorage.getItem("program");
       try {
         const result = await this.$axios.$post(
-          "/input-database?subject=asrama&id=idasr",
+          "/input-database?subject=asrama",
           data
         );
         this.btn = true;

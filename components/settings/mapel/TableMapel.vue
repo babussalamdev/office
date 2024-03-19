@@ -18,8 +18,12 @@
             <td scope="row" class="text-uppercase">{{ data.Kelas }}</td>
             <td scope="row" class="text-uppercase">{{ data.Jurusan }}</td>
             <td class="text-end">
-              <a href="javascript:;" @click="editItem(i)"><i class="bx bx-edit text-primary"></i></a>
-              <a href="javascript:;" @click="deleteItem(data.SK)"><i class="bx bx-trash text-danger"></i></a>
+              <a href="javascript:;" @click="editItem(i)"
+                ><i class="bx bx-edit text-primary"></i
+              ></a>
+              <a href="javascript:;" @click="deleteItem(data.SK)"
+                ><i class="bx bx-trash text-danger"></i
+              ></a>
             </td>
           </tr>
         </tbody>
@@ -55,17 +59,22 @@ export default {
       });
 
       if (result.isConfirmed) {
+        const program = localStorage.getItem("program");
         await this.$axios.$delete(
-          `delete-database?subject=mapel&id=${key.split("#")[1]}$code=${key.split("#")[2]}`
+          `delete-database?subject=mapel&program=${program}&code=${
+            key.split("#")[2]
+          }`
         );
         this.$store.commit("mapel/deleteMapel", key);
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          text: "Data berhasil dihapus!",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        if (result) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            text: "Data berhasil dihapus!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
       }
     },
     async editItem(index) {

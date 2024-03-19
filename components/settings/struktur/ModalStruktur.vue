@@ -233,7 +233,7 @@ export default {
       data["Permissions"] = this.value.map((x) => x.name);
       try {
         const result = await this.$axios.$post(
-          "/input-database?subject=struktur&id=idstr",
+          "/input-database?subject=struktur",
           data
         );
         this.btn = true;
@@ -265,8 +265,9 @@ export default {
       data["Permissions"] = this.value.map((x) => x.name);
       const key = this.updateData.SK;
       try {
+        const program = localStorage.getItem("program");
         const result = await this.$axios.$put(
-          `update-database?subject=struktur&id=${key.split("#")[0]}&code=${
+          `update-database?subject=struktur&program=${program}&code=${
             key.split("#")[1]
           }`,
           data

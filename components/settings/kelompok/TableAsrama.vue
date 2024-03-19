@@ -15,7 +15,9 @@
           <td scope="row" class="text-capitalize">{{ data.Nama }}</td>
           <td scope="row" class="text-uppercase">{{ data.Program }}</td>
           <td class="text-end">
-            <a href="javascript:;" @click="deleteItem(data.SK)"><i class="bx bx-trash text-danger"></i></a>
+            <a href="javascript:;" @click="deleteItem(data.SK)"
+              ><i class="bx bx-trash text-danger"></i
+            ></a>
           </td>
         </tr>
       </tbody>
@@ -45,17 +47,22 @@ export default {
       });
 
       if (result.isConfirmed) {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          text: "Data berhasil dihapus!",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        const program = localStorage.getItem("program");
         const result = await this.$axios.$delete(
-          `delete-database?subject=asrama&id=${key.split("#")[0]}&code=${key.split("#")[1]}`
+          `delete-database?subject=asrama&program=${program}&code=${
+            key.split("#")[1]
+          }`
         );
         this.$store.commit("kelompok/deleteAsrama", key);
+        if (result) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            text: "Data berhasil dihapus!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
       }
     },
   },

@@ -202,7 +202,7 @@ export default {
       data["Program"] = localStorage.getItem("program");
       try {
         const result = await this.$axios.$post(
-          "/input-database?subject=kaldik&id=idkal",
+          `/input-database?subject=kaldik`,
           data
         );
         this.btn = true;
@@ -230,9 +230,10 @@ export default {
       this.btn = false;
       const data = Object.fromEntries(new FormData(event.target));
       const key = this.updateData.SK;
+      const program = localStorage.getItem("program");
       try {
         const result = await this.$axios.$put(
-          `update-database?subject=kaldik&id=${key.split("#")[0]}&code=${
+          `update-database?subject=kaldik&program=${program}&code=${
             key.split("#")[1]
           }`,
           data

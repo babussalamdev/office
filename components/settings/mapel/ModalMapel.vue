@@ -238,7 +238,7 @@ export default {
       this.btn = true;
       try {
         const result = await this.$axios.$post(
-          `/input-database?subject=mapel&id=idmap`,
+          `/input-database?subject=mapel`,
           data
         );
         this.btn = true;
@@ -268,9 +268,9 @@ export default {
       const key = this.updateData.SK;
       try {
         const result = await this.$axios.$put(
-          `/update-database?subject=mapel&id=${key.split("#")[1]}&code=${
+          `/update-database?subject=mapel&program=${key.split("#")[0]}&kelas=${key.split("#")[1]}&code=${
             key.split("#")[2]
-          }&sk=${key.split("#")[2]}`,
+          }`,
           data
         );
         this.btn = true;

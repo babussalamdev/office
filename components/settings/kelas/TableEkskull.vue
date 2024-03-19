@@ -5,8 +5,12 @@
       <div class="col-12 col-md-6">
         <!-- Button trigger modal -->
         <div class="button-santri float-end">
-          <button type="button" class="btn btn-sm btn-primary button-santri" data-bs-toggle="modal"
-            data-bs-target="#inputEkskull">
+          <button
+            type="button"
+            class="btn btn-sm btn-primary button-santri"
+            data-bs-toggle="modal"
+            data-bs-target="#inputEkskull"
+          >
             Tambah Eskul
           </button>
         </div>
@@ -30,7 +34,9 @@
             <td scope="row" class="text-capitalize">{{ data.Nama }}</td>
             <td scope="row" class="text-uppercase">{{ data.Program }}</td>
             <td class="text-end">
-              <a href="javascript:;" @click="deleteItem(data.SK)"><i class="bx bx-trash text-danger"></i></a>
+              <a href="javascript:;" @click="deleteItem(data.SK)"
+                ><i class="bx bx-trash text-danger"></i
+              ></a>
             </td>
           </tr>
         </tbody>
@@ -67,8 +73,11 @@ export default {
           showConfirmButton: false,
           timer: 1500,
         });
+        const program = localStorage.getItem("program");
         await this.$axios.$delete(
-          `delete-database?subject=ekskull&id=${key.split("#")[0]}&code=${key.split("#")[1]}`
+          `delete-database?subject=ekskull&program=${program}&code=${
+            key.split("#")[1]
+          }`
         );
         this.$store.commit("kelas/deleteEkskull", key);
       }
