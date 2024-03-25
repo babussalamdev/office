@@ -151,9 +151,9 @@ export default {
             expires: 1,
           });
           this.btnLoad = true;
-          console.log(this.$auth.user.user.role);
           this.$router.push("/");
-          if (this.$auth.user.user.role === "santri") {
+          console.log(this.$auth.user);
+          if (this.$auth.user.role === "santri") {
             this.$cookies.remove("AccessToken");
             this.$auth.logout();
             Swal.fire({

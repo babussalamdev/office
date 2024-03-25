@@ -18,7 +18,7 @@
             </td>
             <td scope="row" class="text-uppercase container-permissions">
               <div
-                v-for="(value, i) in data.Permissions"
+                v-for="(value, i) in data.Permissions.split(',')"
                 :key="i"
                 style="display: inline"
               >

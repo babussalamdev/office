@@ -19,7 +19,6 @@
           >
         </h1>
       </div>
-
       <!-- menu profil melayang -->
       <div class="d-flex align-items-center gap-3">
         <select
@@ -31,10 +30,14 @@
           v-model="unit"
         >
           <option value="" selected disabled>Unit</option>
-          <option value="SD">SD</option>
-          <option value="SMP">SMP</option>
-          <option value="SMA">SMA</option>
-          <option value="Tahfidz">Tahfidz</option>
+          <option
+            v-for="(program, i) in $auth.user.type.split(',')"
+            :key="i"
+            :value="program"
+            class="text-uppercase"
+          >
+            {{ program }}
+          </option>
         </select>
         <!-- notification -->
         <div
@@ -87,6 +90,8 @@ export default {
       // notifications: ["Notification 1", "Notification 2", "Notification 3"],
       notifications: ["notification"],
       notificationOpened: false,
+      // option
+      userType: "",
     };
   },
   mounted() {
@@ -109,6 +114,7 @@ export default {
     setUnit() {
       localStorage.setItem("program", this.unit);
       this.$store.commit("navbar/changeUnit", this.unit);
+      this.$store.dispatch("index/changeUnit", this.unit);
       const name = this.$route.name;
       if (name === "setting-mapel") {
         this.$store.dispatch(`mapel/changeUnit`, this.unit);
@@ -124,6 +130,8 @@ export default {
         this.$store.dispatch(`struktur/changeUnit`, this.unit);
       } else if (name === "santri-database") {
         this.$store.dispatch(`santri/database/changeUnit`, this.unit);
+      } else if (name === "pegawai-database") {
+        this.$store.dispatch(`pegawai/database/changeUnit`, this.unit);
       }
     },
     viewProfile() {

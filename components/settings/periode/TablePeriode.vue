@@ -53,7 +53,7 @@ export default {
       const result = await Swal.fire({
         title: "Apakah anda yakin?",
         text: `Subject akan di ${
-          status === "active" ? "Non-Aktifkan" : "Aktifkan"
+          status === "active" ? "Non-Aktif" : "Aktif"
         }kan`,
         icon: "warning",
         showCancelButton: true,

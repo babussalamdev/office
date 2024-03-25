@@ -1,6 +1,6 @@
 export default {
     setDatabase(state, value) {
-        state.santri = value
+        state.pegawai = value
     },
     inputSantriBulk(state, value) {
         state.santri = [...state.santri, ...value];
@@ -8,25 +8,29 @@ export default {
             return a.Nama - b.Nama;
         });
     },
-    inputSantriSingle(state, value) {
-        state.santri.push(value)
-        state.santri.sort((a, b) => {
+    inputPegawaiSingle(state, value) {
+        state.pegawai.push(value)
+        state.pegawai.sort((a, b) => {
             return a.Nama - b.Nama;
         });
     },
-    updateSantri(state, value) {
-        const i = state.santri.findIndex((x) => x.SK === value.SK)
+    updatePegawai(state, value) {
+        const i = state.pegawai.findIndex((x) => x.SK === value.SK)
 
-        const data = state.santri[i]
+        const data = state.pegawai[i]
         data.Nama = value.Nama;
-        data.Nisn = value.Nisn;
-        data.Orangtua = value.Orangtua;
-        data.Alamat = value.Alamat;
+        data.Lulusan = value.Lulusan;
+        data.Nip = value.Nip;
+        data.Program = value.Program;
 
 
         // if (i !== -1) {
         //     state.mapel[i] = { ...state.mapel[i], ...value };
         // }
+    },
+    updateSubject(state, value) {
+        const i = state.pegawai.findIndex((x) => x.SK === value.key);
+        state.pegawai[i].Status = value.Status
     },
     deleteMapel(state, value) {
         const i = state.mapel.findIndex((x) => x.SK === value);

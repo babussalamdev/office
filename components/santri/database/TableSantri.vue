@@ -3,7 +3,7 @@
     <div>
       <div class="table-responsive">
         <!-- Modal -->
-        <ModalSantri />
+        <ModalSantri :updateData="updateData" :years="years" />
         <table class="table table-hover table-striped">
           <thead>
             <tr>
@@ -22,12 +22,12 @@
               <td>
                 <input type="checkbox" />
               </td>
-              <td>{{ san.nama }}</td>
-              <td>{{ san.nisn }}</td>
-              <td>{{ san.ortu }}</td>
-              <td>{{ san.alamat }}</td>
+              <td class="text-capitalize">{{ san.Nama }}</td>
+              <td>{{ san.Nisn }}</td>
+              <td class="text-capitalize">{{ san.Orangtua }}</td>
+              <td class="text-capitalize">{{ san.Alamat }}</td>
               <td class="text-end">
-                <a href="#" @click="edit(san.id)">
+                <a href="#" @click="editItem(index)">
                   <i class="bx bx-pencil text-primary"></i>
                 </a>
                 <a href="#" @click="rmv(san.id, san.name)">
@@ -43,10 +43,24 @@
 </template>
 
 <script>
-// import { mapState } from vuex
+import { mapState } from "vuex";
 
 export default {
-  props: ["santri"],
+  props: ["years"],
+  data() {
+    return {
+      updateData: "",
+    };
+  },
+  computed: {
+    ...mapState("santri/database", ["santri"]),
+  },
+  methods: {
+    async editItem(index) {
+      $("#updateDataSantri").modal("show");
+      this.updateData = this.santri[index];
+    },
+  },
 };
 </script>
 

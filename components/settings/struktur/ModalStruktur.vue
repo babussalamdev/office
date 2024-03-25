@@ -192,13 +192,13 @@ export default {
       btn: true,
       value: [],
       options: [
-        { name: "mutabaah-rekap", code: 1 },
+        { name: "mutabaah", code: 1 },
         { name: "santri-database", code: 2 },
         { name: "santri-kelas", code: 3 },
         { name: "santri-asrama", code: 4 },
         { name: "santri-halaqah", code: 5 },
         { name: "santri-ekskull", code: 6 },
-        { name: "pegawai-pegawai", code: 7 },
+        { name: "pegawai-database", code: 7 },
         { name: "pegawai-halaqah", code: 8 },
         { name: "pegawai-walas", code: 9 },
         { name: "pegawai-musyrif", code: 10 },
@@ -230,7 +230,8 @@ export default {
       this.btn = false;
       const data = Object.fromEntries(new FormData(event.target));
       data["Program"] = localStorage.getItem("program");
-      data["Permissions"] = this.value.map((x) => x.name);
+      data["Permissions"] = this.value.map((x) => x.name).join(",");
+      console.log(data);
       try {
         const result = await this.$axios.$post(
           "/input-database?subject=struktur",
@@ -306,7 +307,7 @@ export default {
     },
 
     async valueUpdate() {
-      const permissions = this.updateData.Permissions;
+      const permissions = this.updateData.Permissions.split(",");
       if (permissions && permissions.length > 0) {
         const mappedArray = permissions.map((x) => {
           const option = this.options.find((option) => option.name === x);

@@ -2,8 +2,12 @@
   <div>
     <!-- profil desc -->
     <div class="profil-description">
-      <h1 class="text-white fw-semibold mb-2">Muhammad Fauzan Gunawan</h1>
-      <p class="text-white fw-light mb-4">Fullstack Developer</p>
+      <h1 class="text-white fw-semibold mb-2 text-capitalize">
+        {{ $auth.user.name }}
+      </h1>
+      <p class="text-white fw-light mb-4 text-capitalize">
+        {{ $auth.user.role }}
+      </p>
       <hr class="text-white" />
     </div>
 
@@ -63,6 +67,8 @@ export default {
   methods: {
     logout() {
       this.$cookies.remove("AccessToken");
+      localStorage.removeItem("program");
+      this.$store.commit("index/changeUnit", "");
       this.$auth.logout();
     },
   },

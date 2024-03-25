@@ -1,6 +1,6 @@
 <template>
   <section id="home">
-    <div class="home animate__animated animate__fadeIn">
+    <div v-if="unit" class="home animate__animated animate__fadeIn">
       <Chart />
       <div class="row">
         <div class="col-12 col-lg-6 mb-3">
@@ -13,10 +13,15 @@
         </div>
       </div>
     </div>
+    <div v-else>
+      <h1>Welcome</h1>
+    </div>
   </section>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   data() {
     return {
@@ -28,6 +33,9 @@ export default {
         { name: "Hammam Musyafa", jenis: "Bahasa" },
       ],
     };
+  },
+  computed: {
+    ...mapState("index", ["unit"]),
   },
 };
 </script>

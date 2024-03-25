@@ -1,0 +1,12 @@
+select angkatan di sebelah kiri atas
+
+tombol update
+tombol active inactive
+catatan dulu
+
+Pegawai
+table
+	nama
+	lulusan Diploma, Sarjana, Magister, Doktoral
+	nip
+	

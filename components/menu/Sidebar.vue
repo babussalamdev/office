@@ -7,10 +7,11 @@
         <span>Sistem Ma'had</span>
       </div>
       <hr class="mb-3" />
+      {{ unit }}
       <!-- Menu -->
       <nav class="menu">
         <!-- Menu Utama -->
-        <ul>
+        <ul v-if="unit">
           <!-- Dashboard -->
           <li>
             <nuxt-link
@@ -422,6 +423,7 @@
             </nuxt-link>
           </li>
         </ul>
+        <p v-else>No program selected.</p>
       </nav>
     </div>
   </div>
@@ -429,6 +431,7 @@
 
 <script>
 import "animate.css";
+import { mapState } from "vuex";
 
 export default {
   props: ["isSidebar"],
@@ -440,6 +443,10 @@ export default {
       listSettings: false,
       listMutabaah: false,
     };
+  },
+
+  computed: {
+    ...mapState("index", ["unit"]),
   },
   methods: {
     santri() {
