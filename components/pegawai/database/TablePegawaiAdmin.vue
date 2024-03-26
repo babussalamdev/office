@@ -89,7 +89,7 @@ export default {
   },
   methods: {
     async editItem(index) {
-      $("#updateDataPegawai").modal("show");
+      $("#updateDataPegawaiAdmin").modal("show");
       this.updateData = this.pegawai[index];
     },
     async updateItem(user, key, status) {

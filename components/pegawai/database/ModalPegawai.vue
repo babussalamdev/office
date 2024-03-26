@@ -142,20 +142,23 @@
         </div>
       </div>
     </div>
-    <!-- update database pegawai -->
+    <!-- update database pegawai Admin -->
     <div
       class="modal fade"
-      id="updateDataPegawai"
+      id="updateDataPegawaiAdmin"
       tabindex="-1"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
     >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form @submit.prevent="updatePegawai" ref="updateDataPegawai">
+          <form
+            @submit.prevent="updatePegawaiAdmin"
+            ref="updateDataPegawaiAdmin"
+          >
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">
-                Update Data Pegawai
+                Update Data Pegawai ( Admin )
               </h1>
               <button
                 type="button"
@@ -249,23 +252,20 @@
         </div>
       </div>
     </div>
-    <!-- update database pegawai Admin -->
+    <!-- update database pegawai  -->
     <div
       class="modal fade"
-      id="updateDataPegawaiAdmin"
+      id="updateDataPegawai"
       tabindex="-1"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
     >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form
-            @submit.prevent="updatePegawaiAdmin"
-            ref="updateDataPegawaiAdmin"
-          >
+          <form @submit.prevent="updatePegawai" ref="updateDataPegawai">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">
-                Update Data Pegawai ( Admin )
+                Update Data Pegawai
               </h1>
               <button
                 type="button"
@@ -276,57 +276,24 @@
             </div>
             <div class="modal-body">
               <div class="mb-3">
-                <label for="nama" class="form-label">Nama</label>
-                <input
-                  name="Nama"
-                  type="text"
-                  class="form-control"
-                  id="nama"
-                  :value="updateData.Nama"
-                />
-              </div>
-              <div class="mb-3">
-                <label for="lulusan" class="form-label">Lulusan</label>
-                <select
-                  name="Lulusan"
-                  id="lulusan"
-                  class="form-select"
-                  :value="updateData.Lulusan"
-                  required
-                >
-                  <option value="" selected disabled>
-                    -- Pilih Lulusan --
-                  </option>
-                  <option value="sd">SD</option>
-                  <option value="smp">SMP</option>
-                  <option value="sma">SMA</option>
-                  <option value="diploma">Diploma</option>
-                  <option value="sarjana">Sarjana</option>
-                  <option value="magister">Magister</option>
-                  <option value="doktoral">Doktoral</option>
-                </select>
-              </div>
-              <div class="mb-3">
-                <label for="nip" class="form-label">NIP</label>
-                <input
-                  name="Nip"
-                  type="text"
-                  class="form-control"
-                  id="nip"
-                  :value="updateData.Nip"
-                />
-              </div>
-              <div class="mb-3">
                 <label for="jabatan" class="form-label">Jabatan</label>
                 <select
                   name="Jabatan"
                   id="jabatan"
                   class="form-select"
+                  v-model="jabatanShow"
                   :value="updateData.Lulusan"
                   required
                 >
                   <option value="" selected disabled>
-                    -- Pilih Lulusan --
+                    -- Pilih Jabatan --
+                  </option>
+                  <option
+                    v-for="(value, index) in jabatan"
+                    :value="value"
+                    :key="index"
+                  >
+                    {{ value }}
                   </option>
                 </select>
               </div>
@@ -363,6 +330,7 @@
 import Swal from "sweetalert2";
 import { v4 as uuidv4 } from "uuid";
 import Multiselect from "vue-multiselect";
+import { mapState } from "vuex";
 
 export default {
   props: ["updateData"],
@@ -370,6 +338,7 @@ export default {
     return {
       btn: true,
       password: "",
+      jabatanShow: "",
       value: [],
       options: [
         { name: "sd", code: 1 },
@@ -378,6 +347,9 @@ export default {
         { name: "tahfidz", code: 4 },
       ],
     };
+  },
+  computed: {
+    ...mapState("pegawai/database", ["jabatan"]),
   },
   components: {
     Multiselect,
@@ -406,6 +378,7 @@ export default {
       const program = this.value.map((x) => x.name);
       data["Program"] = program.join();
       data["Password"] = this.password;
+      console.log(data);
       try {
         const result = await this.$axios.$post(
           `/input-pegawai?method=single`,
@@ -427,6 +400,7 @@ export default {
           $("#InputDataPegawai").modal("hide");
         }
       } catch (error) {
+        this.btn = true;
         console.log(error);
         Swal.fire({
           text: error,
@@ -437,8 +411,8 @@ export default {
         });
       }
     },
-    async updatePegawai(event) {
-      // this.btn = false;
+    async updatePegawaiAdmin(event) {
+      this.btn = false;
       const data = Object.fromEntries(new FormData(event.target));
       const program = this.value.map((x) => x.name);
       data["Program"] = program.join();
@@ -446,7 +420,7 @@ export default {
         const username = this.updateData.Username;
         const id = this.updateData.SK;
         const result = await this.$axios.$put(
-          `update-pegawai?username=${username}&id=${id}`,
+          `update-pegawai?subject=admin&username=${username}&id=${id}`,
           data
         );
         this.btn = true;
@@ -462,6 +436,43 @@ export default {
         this.value = [];
         this.$emit("deleteUpdateData");
         this.$store.commit("pegawai/database/updatePegawai", data);
+        $("#updateDataPegawai").modal("hide");
+      } catch (error) {
+        this.btn = true;
+        Swal.fire({
+          icon: "warning",
+          text: error,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    },
+    async updatePegawai(event) {
+      this.btn = false;
+      const data = {};
+      const program = localStorage.getItem("program");
+      data["Program"] = program;
+      data["Value"] = this.jabatanShow;
+      try {
+        const username = this.updateData.Username;
+        const id = this.updateData.SK;
+        const result = await this.$axios.$put(
+          `update-pegawai?subject=Jabatan&username=${username}&id=${id}`,
+          data
+        );
+        this.btn = true;
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          text: "Data berhasil di input",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        result["SK"] = id;
+        this.$refs.updateDataPegawai.reset();
+        this.value = [];
+        this.$emit("deleteUpdateData");
+        this.$store.commit("pegawai/database/updatePegawaiJabatan", result);
         $("#updateDataPegawai").modal("hide");
       } catch (error) {
         this.btn = true;

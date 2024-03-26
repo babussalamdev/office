@@ -7,7 +7,6 @@
         <span>Sistem Ma'had</span>
       </div>
       <hr class="mb-3" />
-      {{ unit }}
       <!-- Menu -->
       <nav class="menu">
         <!-- Menu Utama -->

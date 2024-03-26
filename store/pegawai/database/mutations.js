@@ -1,6 +1,10 @@
 export default {
-    setDatabase(state, value) {
+    setDatabaseAll(state, value) {
         state.pegawai = value
+    },
+    setDatabase(state, value) {
+        state.pegawai = value.pegawai
+        state.jabatan = value.jabatan
     },
     inputSantriBulk(state, value) {
         state.santri = [...state.santri, ...value];
@@ -28,12 +32,28 @@ export default {
         //     state.mapel[i] = { ...state.mapel[i], ...value };
         // }
     },
+    updatePegawaiJabatan(state, value) {
+        const i = state.pegawai.findIndex((x) => x.SK === value.SK)
+
+        const data = state.pegawai[i]
+        data.Jabatan = value.Jabatan
+
+
+        // if (i !== -1) {
+        //     state.mapel[i] = { ...state.mapel[i], ...value };
+        // }
+    },
+
     updateSubject(state, value) {
         const i = state.pegawai.findIndex((x) => x.SK === value.key);
         state.pegawai[i].Status = value.Status
     },
-    deleteMapel(state, value) {
-        const i = state.mapel.findIndex((x) => x.SK === value);
-        state.mapel.splice(i, 1);
+
+    // on off
+    setStatusPengajar(state, data) {
+        state.pegawai.Pengajar = data
+    },
+    setStatusPengampu(state, data) {
+        state.pegawai.Pengajar = data
     },
 }

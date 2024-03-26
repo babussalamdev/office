@@ -4,7 +4,7 @@ export default {
             const result = await this.$axios.$get(
                 `get-pegawai`
             );
-            commit('setDatabase', result);
+            commit('setDatabaseAll', result);
         } else {
             const result = await this.$axios.$get(
                 `get-pegawai?program=${data}`
@@ -13,5 +13,20 @@ export default {
 
         }
     },
-
+    async setStatusPengajar({ commit }, value) {
+        const detail = {
+            cnc: cnc,
+            status: value
+        }
+        const data = await this.$axios.$put(`/card/blokirCard`, detail)
+        commit('setStatusPengajar', value)
+    },
+    async setStatusPengampu({ commit }, value) {
+        const detail = {
+            cnc: cnc,
+            status: value
+        }
+        const data = await this.$axios.$put(`/card/blokirCard`, detail)
+        commit('setStatusPengampu', value)
+    }
 }
