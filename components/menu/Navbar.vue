@@ -104,6 +104,8 @@ export default {
       this.unit = program;
       this.setUnit();
     }
+
+    console.log(program);
   },
   destroyed() {
     // Menghapus event listener saat komponen dihancurkan
@@ -113,8 +115,12 @@ export default {
   methods: {
     setUnit() {
       localStorage.setItem("program", this.unit);
-      this.$store.commit("navbar/changeUnit", this.unit);
-      this.$store.dispatch("index/changeUnit", this.unit);
+      // this.$store.commit("navbar/changeUnit", this.unit);
+      if (this.unit === "admin") {
+        this.$store.commit("index/admin");
+      } else {
+        this.$store.dispatch("index/changeUnit", this.unit);
+      }
       const name = this.$route.name;
       if (name === "setting-mapel") {
         this.$store.dispatch(`mapel/changeUnit`, this.unit);

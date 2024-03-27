@@ -68,7 +68,7 @@ export default {
     logout() {
       this.$cookies.remove("AccessToken");
       localStorage.removeItem("program");
-      this.$store.commit("index/changeUnit", "");
+      this.$store.commit("index/removeAll");
       this.$auth.logout();
     },
   },

@@ -48,6 +48,7 @@
                 <multiselect
                   name="Permissions"
                   v-model="value"
+                  class="text-capitalize"
                   tag-placeholder="Add this as new tag"
                   placeholder="Search or add a tag"
                   label="name"
@@ -193,23 +194,23 @@ export default {
       value: [],
       options: [
         { name: "mutabaah", code: 1 },
-        { name: "santri-database", code: 2 },
-        { name: "santri-kelas", code: 3 },
-        { name: "santri-asrama", code: 4 },
-        { name: "santri-halaqah", code: 5 },
-        { name: "santri-ekskull", code: 6 },
-        { name: "pegawai-database", code: 7 },
-        { name: "pegawai-halaqah", code: 8 },
-        { name: "pegawai-walas", code: 9 },
-        { name: "pegawai-musyrif", code: 10 },
-        { name: "pegawai-mapel", code: 11 },
-        { name: "settings-periode", code: 12 },
-        { name: "settings-kelompok", code: 13 },
-        { name: "settings-kelas", code: 14 },
-        { name: "settings-mapel", code: 15 },
-        { name: "settings-kaldik", code: 16 },
-        { name: "settings-struktur", code: 17 },
-        { name: "settings-permission", code: 18 },
+        { name: "data santri", code: 2 },
+        { name: "kelas", code: 3 },
+        { name: "asrama", code: 4 },
+        { name: "halaqah santri", code: 5 },
+        { name: "ekskull", code: 6 },
+        { name: "data pegawai", code: 7 },
+        { name: "halaqah pegawai", code: 8 },
+        { name: "wali kelas", code: 9 },
+        { name: "musyrif", code: 10 },
+        { name: "mata pelajaran", code: 11 },
+        { name: "setup periode", code: 12 },
+        { name: "setup kelompok", code: 13 },
+        { name: "setup kelas", code: 14 },
+        { name: "setup mapel", code: 15 },
+        { name: "setup kaldik", code: 16 },
+        { name: "setup struktur", code: 17 },
+        { name: "setup permission", code: 18 },
       ],
     };
   },

@@ -37,6 +37,10 @@ export default {
   computed: {
     ...mapState("index", ["unit"]),
   },
+
+  // mounted() {
+  //   console.log(this.unit);
+  // },
 };
 </script>
 

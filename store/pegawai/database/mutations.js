@@ -54,6 +54,9 @@ export default {
         state.pegawai.Pengajar = data
     },
     setStatusPengampu(state, data) {
-        state.pegawai.Pengajar = data
+        const i = state.pegawai.findIndex((x) => x.SK === data.index)
+        console.log(data)
+        console.log(state.pegawai)
+        state.pegawai[i].Pengampu[data.unit] = data.Pengampu[data.unit]
     },
 }

@@ -1,4 +1,6 @@
 export default () => ({
     unit: '',
-    permissions: ''
+    permissions: '',
+    pengajar: '',
+    pengampu: ''
 })

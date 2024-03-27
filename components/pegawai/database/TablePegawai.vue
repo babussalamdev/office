@@ -41,7 +41,14 @@
               <td class="text-capitalize align-middle">
                 <div class="form-switch">
                   <input
-                    v-model="blokPengajar"
+                    :checked="data.Pengajar[unit] === 'on' ? true : false"
+                    @change="
+                      statusPengajar(
+                        data.Username,
+                        data.SK,
+                        data.Pengajar[unit]
+                      )
+                    "
                     class="form-check-input"
                     type="checkbox"
                     role="switch"
@@ -52,7 +59,14 @@
               <td class="text-capitalize align-middle">
                 <div class="form-switch">
                   <input
-                    v-model="blokPengampu"
+                    :checked="data.Pengampu[unit] === 'on' ? true : false"
+                    @change="
+                      statusPengampu(
+                        data.Username,
+                        data.SK,
+                        data.Pengampu[unit]
+                      )
+                    "
                     class="form-check-input"
                     type="checkbox"
                     role="switch"
@@ -92,7 +106,6 @@
 <script>
 import Swal from "sweetalert2";
 import { mapState } from "vuex";
-import { mapGetters } from "vuex";
 
 export default {
   data() {
@@ -103,29 +116,29 @@ export default {
   computed: {
     ...mapState("pegawai/database", ["pegawai"]),
     ...mapState("index", ["unit"]),
-    ...mapGetters(["getStatusPengajar", "getStatusPengampu"]),
-    blokPengajar: {
-      get() {
-        const condition = this.getStatusPengajar === "on" ? true : false;
-        return condition;
-      },
-      set(value) {
-        const condition = value ? "active" : "block";
-        this.$store.dispatch("setStatusPengajar", condition);
-      },
-    },
-    blokPengampu: {
-      get() {
-        const condition = this.getStatusPengampu === "on" ? true : false;
-        return condition;
-      },
-      set(value) {
-        const condition = value ? "active" : "block";
-        this.$store.dispatch("setStatusPengampu", condition);
-      },
-    },
   },
+
   methods: {
+    statusPengajar(username, sk, status) {
+      const condition = status === "off" ? "on" : "off";
+      const data = {
+        key: sk,
+        user: username,
+        unit: this.unit,
+        condition: condition,
+      };
+      this.$store.dispatch("pegawai/database/setStatusPengajar", data);
+    },
+    statusPengampu(username, sk, status) {
+      const condition = status === "off" ? "on" : "off";
+      const data = {
+        key: sk,
+        user: username,
+        unit: this.unit,
+        condition: condition,
+      };
+      this.$store.dispatch("pegawai/database/setStatusPengampu", data);
+    },
     async editItem(index) {
       $("#updateDataPegawai").modal("show");
       this.updateData = this.pegawai[index];

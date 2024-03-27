@@ -1,6 +1,6 @@
 export default {
     async changeUnit({ commit }, data) {
-        if (data === 'all') {
+        if (data === 'admin') {
             const result = await this.$axios.$get(
                 `get-pegawai`
             );
@@ -14,19 +14,31 @@ export default {
         }
     },
     async setStatusPengajar({ commit }, value) {
-        const detail = {
-            cnc: cnc,
-            status: value
+        const user = value.user
+        const key = value.key
+        const data = {
+            Program: value.unit,
+            Value: value.condition
         }
-        const data = await this.$axios.$put(`/card/blokirCard`, detail)
-        commit('setStatusPengajar', value)
+        const result = await this.$axios.$put(
+            `update-pegawai?subject=Pengajar&username=${user}&id=${key}`,
+            data
+        );
+        commit('setStatusPengajar', result)
     },
     async setStatusPengampu({ commit }, value) {
-        const detail = {
-            cnc: cnc,
-            status: value
+        const user = value.user
+        const key = value.key
+        const data = {
+            Program: value.unit,
+            Value: value.condition
         }
-        const data = await this.$axios.$put(`/card/blokirCard`, detail)
-        commit('setStatusPengampu', value)
-    }
+        const result = await this.$axios.$put(
+            `update-pegawai?subject=Pengampu&username=${user}&id=${key}`,
+            data
+        );
+        result['unit'] = value.unit
+        result['index'] = value.key
+        commit('setStatusPengampu', result)
+    },
 }

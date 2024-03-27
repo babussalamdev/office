@@ -7,6 +7,7 @@
         <span>Sistem Ma'had</span>
       </div>
       <hr class="mb-3" />
+
       <!-- Menu -->
       <nav class="menu">
         <!-- Menu Utama -->
@@ -109,7 +110,7 @@
               <i class="bx bx-chevron-down"></i>
             </div>
             <ul v-if="listSantri" class="dropdown-list">
-              <li>
+              <li v-if="permissions.includes('santri-database')">
                 <nuxt-link
                   to="/santri/database"
                   class="custom-link text-decoration-none d-flex align-items-center gap-2"
@@ -124,7 +125,7 @@
                   >
                 </nuxt-link>
               </li>
-              <li>
+              <li v-if="permissions.includes('santri-kelas')">
                 <nuxt-link
                   to="/santri/kelas"
                   class="text-decoration-none d-flex align-items-center gap-2"
@@ -139,7 +140,7 @@
                   >
                 </nuxt-link>
               </li>
-              <li>
+              <li v-if="permissions.includes('santri-asrama')">
                 <nuxt-link
                   to="/santri/asrama"
                   class="text-decoration-none d-flex align-items-center gap-2"
@@ -154,7 +155,7 @@
                   >
                 </nuxt-link>
               </li>
-              <li>
+              <li v-if="permissions.includes('santri-halaqoh')">
                 <nuxt-link
                   to="/santri/halaqoh"
                   class="text-decoration-none d-flex align-items-center gap-2"
@@ -169,7 +170,7 @@
                   >
                 </nuxt-link>
               </li>
-              <li>
+              <li v-if="permissions.includes('santri-ekskull')">
                 <nuxt-link
                   to="/santri/ekskull"
                   class="text-decoration-none d-flex align-items-center gap-2"
@@ -207,7 +208,7 @@
             </div>
             <ul v-if="listPegawai" class="dropdown-list">
               <!-- database -->
-              <li>
+              <li v-if="permissions.includes('pegawai-database')">
                 <nuxt-link
                   to="/pegawai/database"
                   class="custom-link text-decoration-none d-flex align-items-center gap-2"
@@ -445,8 +446,9 @@ export default {
   },
 
   computed: {
-    ...mapState("index", ["unit"]),
+    ...mapState("index", ["unit", "permissions"]),
   },
+
   methods: {
     santri() {
       this.listSantri = !this.listSantri;
