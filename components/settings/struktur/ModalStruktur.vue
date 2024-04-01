@@ -193,24 +193,18 @@ export default {
       btn: true,
       value: [],
       options: [
-        { name: "mutabaah", code: 1 },
-        { name: "data santri", code: 2 },
-        { name: "kelas", code: 3 },
-        { name: "asrama", code: 4 },
-        { name: "halaqah santri", code: 5 },
-        { name: "ekskull", code: 6 },
-        { name: "data pegawai", code: 7 },
-        { name: "halaqah pegawai", code: 8 },
-        { name: "wali kelas", code: 9 },
-        { name: "musyrif", code: 10 },
-        { name: "mata pelajaran", code: 11 },
-        { name: "setup periode", code: 12 },
-        { name: "setup kelompok", code: 13 },
-        { name: "setup kelas", code: 14 },
-        { name: "setup mapel", code: 15 },
-        { name: "setup kaldik", code: 16 },
-        { name: "setup struktur", code: 17 },
-        { name: "setup permission", code: 18 },
+        { name: "data santri", code: 0 },
+        { name: "kelas", code: 1 },
+        { name: "asrama", code: 2 },
+        { name: "halaqah", code: 3 },
+        { name: "ekskull", code: 4 },
+        { name: "pengampu", code: 5 },
+        { name: "wali kelas", code: 6 },
+        { name: "musyrif", code: 7 },
+        { name: "mata pelajaran", code: 8 },
+        { name: "halaqah / asrama", code: 9 },
+        { name: "setup kelas", code: 10 },
+        { name: "setup mapel", code: 11 },
       ],
     };
   },
@@ -232,7 +226,6 @@ export default {
       const data = Object.fromEntries(new FormData(event.target));
       data["Program"] = localStorage.getItem("program");
       data["Permissions"] = this.value.map((x) => x.name).join(",");
-      console.log(data);
       try {
         const result = await this.$axios.$post(
           "/input-database?subject=struktur",

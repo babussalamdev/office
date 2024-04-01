@@ -1,6 +1,6 @@
 export default {
-    setDatabaseAll(state, value) {
-        state.pegawai = value
+    setWalas(state, value) {
+        state.walas = value
     },
     setDatabase(state, value) {
         state.pegawai = value.pegawai
@@ -50,17 +50,4 @@ export default {
         state.pegawai[i].Status = value.Status
     },
 
-    // on off
-    setStatusPengampu(state, data) {
-        const i = state.pegawai.findIndex((x) => x.SK === data.index)
-        state.pegawai[i].Pengampu[data.unit] = data.Pengampu[data.unit]
-    },
-    setStatusPengajar(state, data) {
-        const i = state.pegawai.findIndex((x) => x.SK === data.index)
-        state.pegawai[i].Pengajar[data.unit] = data.Pengajar[data.unit]
-    },
-    setStatusPersonalia(state, data) {
-        const i = state.pegawai.findIndex((x) => x.SK === data.index)
-        state.pegawai[i].Personalia = data.Personalia
-    },
 }

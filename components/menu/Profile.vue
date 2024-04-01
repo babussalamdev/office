@@ -18,7 +18,7 @@
         <!-- Profil -->
         <li>
           <nuxt-link
-            to="/profil"
+            to="/user/profile"
             class="text-decoration-none d-flex align-items-center gap-2"
           >
             <i class="bx bx-user"></i>
@@ -28,7 +28,7 @@
         <!-- Change Password -->
         <li>
           <nuxt-link
-            to="/password"
+            to="/user/password"
             class="text-decoration-none d-flex align-items-center gap-2"
           >
             <i class="bx bx-lock-alt"></i>

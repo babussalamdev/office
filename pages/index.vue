@@ -1,15 +1,20 @@
 <template>
   <section id="home">
     <div v-if="unit" class="home animate__animated animate__fadeIn">
-      <Chart />
+      <div v-if="$auth.user.role !== 'administrator'">
+        <Chart />
+      </div>
+      <div v-if="$auth.user.role === 'administrator'">
+        <ChartAdmin />
+      </div>
       <div class="row">
         <div class="col-12 col-lg-6 mb-3">
           <!-- kelas -->
-          <ChartClass />
+          <!-- <ChartClass /> -->
         </div>
         <div class="col-12 col-lg-6 mb-3">
           <!-- pelanggaran -->
-          <Violation />
+          <!-- <Violation /> -->
         </div>
       </div>
     </div>

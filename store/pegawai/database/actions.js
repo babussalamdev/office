@@ -41,4 +41,20 @@ export default {
         result['index'] = value.key
         commit('setStatusPengampu', result)
     },
+    async setStatusPersonalia({ commit }, value) {
+        const user = value.user
+        const key = value.key
+        const data = {
+            Program: value.unit,
+            Value: value.condition
+        }
+        console.log(data)
+        // const result = await this.$axios.$put(
+        //     `update-pegawai?subject=Personalia&username=${user}&id=${key}`,
+        //     data
+        // );
+        result['unit'] = value.unit
+        result['index'] = value.key
+        commit('setStatusPengampu', result)
+    },
 }

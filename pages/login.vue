@@ -152,7 +152,6 @@ export default {
           });
           this.btnLoad = true;
           this.$router.push("/");
-          console.log(this.$auth.user);
           if (this.$auth.user.role === "santri") {
             this.$cookies.remove("AccessToken");
             this.$auth.logout();

@@ -24,19 +24,19 @@
           </thead>
           <tbody>
             <!-- <tr v-for="(data, index) in kaldik" :key="index">
-            <td>{{ data.kegiatan }}</td>
-            <td>{{ data.TglAwal }}</td>
-            <td>{{ data.TglAkhir }}</td>
-            <td :style="{ color: data.WarnaLabel }">{{ data.WarnaLabel }}</td>
-            <td class="text-end">
-              <a href="#">
-                <i class="bx bx-pencil text-primary"></i>
-              </a>
-              <a href="#">
-                <i class="bx bx-trash text-danger"></i>
-              </a>
-            </td>
-          </tr> -->
+              <td>{{ data.kegiatan }}</td>
+              <td>{{ data.TglAwal }}</td>
+              <td>{{ data.TglAkhir }}</td>
+              <td :style="{ color: data.WarnaLabel }">{{ data.WarnaLabel }}</td>
+              <td class="text-end">
+                <a href="#">
+                  <i class="bx bx-pencil text-primary"></i>
+                </a>
+                <a href="#">
+                  <i class="bx bx-trash text-danger"></i>
+                </a>
+              </td>
+            </tr> -->
           </tbody>
         </table>
       </div>

@@ -226,6 +226,49 @@
                 ></multiselect>
                 <!-- <pre class="language-json"><code>{{ value  }}</code></pre> -->
               </div>
+              <div class="mb-3">
+                <label for="personalia" class="form-label mb-2"
+                  >Personalia</label
+                >
+                <div class="d-flex gap-4">
+                  <div
+                    class="form-check d-flex align-items-center justify-content-center gap-2"
+                  >
+                    <input
+                      value="off"
+                      class="form-check-input"
+                      type="radio"
+                      name="Personalia"
+                      id="flexRadioDefault2"
+                      :checked="updateData.Personalia === 'on' ? false : true"
+                    />
+                    <label
+                      class="form-check-label mt-1"
+                      for="flexRadioDefault2"
+                    >
+                      Off
+                    </label>
+                  </div>
+                  <div
+                    class="form-check d-flex align-items-center justify-content-center gap-2"
+                  >
+                    <input
+                      value="on"
+                      class="form-check-input"
+                      type="radio"
+                      name="Personalia"
+                      id="flexRadioDefault1"
+                      :checked="updateData.Personalia === 'on' ? true : false"
+                    />
+                    <label
+                      class="form-check-label mt-1"
+                      for="flexRadioDefault1"
+                    >
+                      On
+                    </label>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="modal-footer">
               <button
@@ -436,7 +479,7 @@ export default {
         this.value = [];
         this.$emit("deleteUpdateData");
         this.$store.commit("pegawai/database/updatePegawai", data);
-        $("#updateDataPegawai").modal("hide");
+        $("#updateDataPegawaiAdmin").modal("hide");
       } catch (error) {
         this.btn = true;
         Swal.fire({

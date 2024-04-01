@@ -1,0 +1,55 @@
+#profile .profile .row .card {
+  border: none !important;
+  border-radius: 10px !important;
+  box-shadow: 0 0 30px rgba(161, 161, 161, 0.1176470588);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 40px 0;
+}
+#profile .profile .row .card i {
+  font-size: 120px;
+}
+#profile .profile .row .card h1 {
+  font-size: 18px;
+  font-weight: 600;
+}
+#profile .profile .row .card span {
+  padding: 7px 15px;
+  border-radius: 3px;
+  font-size: 12px;
+  color: green;
+  background: rgba(10, 214, 10, 0.205);
+  margin-bottom: 15px;
+}
+#profile .profile .row .card .label-card {
+  border-radius: 7px;
+  background: #f1f5f9;
+  width: 75%;
+  padding: 15px 25px;
+  margin-bottom: 5px;
+}
+#profile .profile .row .card .label-card p {
+  color: grey;
+  font-size: 11px;
+  margin-bottom: 5px;
+}
+#profile .profile .row .card .label-card h2 {
+  font-size: 16px;
+}
+
+#password .password .row form {
+  background: #fff;
+  border-radius: 10px !important;
+  box-shadow: 0 0 30px rgba(161, 161, 161, 0.1176470588);
+  padding: 30px 30px;
+}
+#password .password .row form h1 {
+  font-weight: 600;
+  font-size: 20px;
+  margin-bottom: 35px;
+}
+#password .password .row form label {
+  font-size: 14px;
+}/*# sourceMappingURL=user.css.map */

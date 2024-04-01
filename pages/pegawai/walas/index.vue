@@ -1,11 +1,18 @@
 <template>
-  <div>
-    <h1>Wali Kelas</h1>
-  </div>
+  <section id="walas">
+    <div class="walas">
+      <WalasTable />
+    </div>
+  </section>
 </template>
 
 <script>
-export default {};
+export default {
+  async asyncData({ store }) {
+    const program = localStorage.getItem("program");
+    store.dispatch(`pegawai/walas/showWalas`, program);
+  },
+};
 </script>
 
 <style scoped></style>

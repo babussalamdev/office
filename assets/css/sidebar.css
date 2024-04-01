@@ -42,13 +42,17 @@
 .menu ul li {
   cursor: pointer;
   transition: background-color 0.3s;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
+  margin-top: 15px;
 }
 
 .menu ul li a {
   position: relative;
   margin: 2px 0;
   padding: 17px;
+}
+.menu ul li .sub-menu {
+  border-left: 1px solid #fff;
 }
 .menu ul li .nuxt-link-exact-active {
   background-color: #f1f5f9;

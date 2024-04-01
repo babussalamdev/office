@@ -7,7 +7,6 @@
         <span>Sistem Ma'had</span>
       </div>
       <hr class="mb-3" />
-
       <!-- Menu -->
       <nav class="menu">
         <!-- Menu Utama -->
@@ -28,7 +27,7 @@
           </li>
 
           <!-- Kaldik -->
-          <li>
+          <li v-if="$auth.user.role !== 'administrator'">
             <nuxt-link
               to="/kaldik"
               class="text-decoration-none d-flex align-items-center gap-2"
@@ -41,24 +40,11 @@
               >
             </nuxt-link>
           </li>
-          <!-- Absensi -->
-          <li>
-            <nuxt-link
-              to="/absensi"
-              class="text-decoration-none d-flex align-items-center gap-2"
-            >
-              <i class="material-icons animate__animated animate__fadeInRight">
-                checklist
-              </i>
-              <span class="text animate__animated animate__fadeInRight"
-                >Absensi</span
-              >
-            </nuxt-link>
-          </li>
-          <!-- Mutabaah -->
-          <li>
+
+          <!-- Kelas-->
+          <li v-if="pengajar === 'on'">
             <div
-              @click="mutabaah"
+              @click="kelas"
               class="dropdown d-flex align-items-center justify-content-between gap-2"
             >
               <span class="d-flex align-items-center gap-2">
@@ -68,33 +54,51 @@
                   menu_book
                 </i>
                 <span class="text animate__animated animate__fadeInRight"
-                  >Mutabaah</span
+                  >Kelas</span
                 >
               </span>
               <i class="bx bx-chevron-down"></i>
             </div>
-            <ul v-if="listMutabaah" class="dropdown-list">
+            <ul v-if="listKelas" class="dropdown-list">
+              <!-- absensi -->
               <li>
                 <nuxt-link
-                  to="/mutabaah/rekap"
+                  to="/kelas/absensi"
                   class="custom-link text-decoration-none d-flex align-items-center gap-2"
                 >
-                  <i
-                    class="material-icons animate__animated animate__fadeInRight"
-                  >
-                    summarize
-                  </i>
                   <span class="text animate__animated animate__fadeInRight"
-                    >Rekap Hafalan</span
+                    >Absensi</span
+                  >
+                </nuxt-link>
+              </li>
+              <!-- jurnal -->
+              <li>
+                <nuxt-link
+                  to="/kelas/jurnal"
+                  class="custom-link text-decoration-none d-flex align-items-center gap-2"
+                >
+                  <span class="text animate__animated animate__fadeInRight"
+                    >Jurnal</span
+                  >
+                </nuxt-link>
+              </li>
+              <!-- nilai -->
+              <li>
+                <nuxt-link
+                  to="/kelas/nilai"
+                  class="custom-link text-decoration-none d-flex align-items-center gap-2"
+                >
+                  <span class="text animate__animated animate__fadeInRight"
+                    >Nilai</span
                   >
                 </nuxt-link>
               </li>
             </ul>
           </li>
-          <!-- Santri -->
-          <li>
+          <!-- Asrama -->
+          <li v-if="permissions.includes('asrama')">
             <div
-              @click="santri"
+              @click="asrama"
               class="dropdown d-flex align-items-center justify-content-between gap-2"
             >
               <span class="d-flex align-items-center gap-2">
@@ -104,94 +108,41 @@
                   account_box
                 </i>
                 <span class="text animate__animated animate__fadeInRight"
-                  >Santri</span
+                  >Asrama</span
                 >
               </span>
               <i class="bx bx-chevron-down"></i>
             </div>
-            <ul v-if="listSantri" class="dropdown-list">
-              <li v-if="permissions.includes('santri-database')">
+            <ul v-if="listAsrama" class="dropdown-list">
+              <!-- absensi -->
+              <li>
                 <nuxt-link
-                  to="/santri/database"
+                  to="/asrama/absensi"
                   class="custom-link text-decoration-none d-flex align-items-center gap-2"
                 >
-                  <i
-                    class="material-icons animate__animated animate__fadeInRight"
-                  >
-                    face
-                  </i>
                   <span class="text animate__animated animate__fadeInRight"
-                    >Database Santri</span
+                    >Absensi</span
                   >
                 </nuxt-link>
               </li>
-              <li v-if="permissions.includes('santri-kelas')">
+              <!-- waktu tidur -->
+              <li>
                 <nuxt-link
-                  to="/santri/kelas"
-                  class="text-decoration-none d-flex align-items-center gap-2"
+                  to="/asrama/waktutidur"
+                  class="custom-link text-decoration-none d-flex align-items-center gap-2"
                 >
-                  <i
-                    class="material-icons animate__animated animate__fadeInRight"
-                  >
-                    school
-                  </i>
                   <span class="text animate__animated animate__fadeInRight"
-                    >Kelas</span
-                  >
-                </nuxt-link>
-              </li>
-              <li v-if="permissions.includes('santri-asrama')">
-                <nuxt-link
-                  to="/santri/asrama"
-                  class="text-decoration-none d-flex align-items-center gap-2"
-                >
-                  <i
-                    class="material-icons animate__animated animate__fadeInRight"
-                  >
-                    bedtime
-                  </i>
-                  <span class="text animate__animated animate__fadeInRight"
-                    >Asrama</span
-                  >
-                </nuxt-link>
-              </li>
-              <li v-if="permissions.includes('santri-halaqoh')">
-                <nuxt-link
-                  to="/santri/halaqoh"
-                  class="text-decoration-none d-flex align-items-center gap-2"
-                >
-                  <i
-                    class="material-icons animate__animated animate__fadeInRight"
-                  >
-                    book
-                  </i>
-                  <span class="text animate__animated animate__fadeInRight"
-                    >Halaqoh</span
-                  >
-                </nuxt-link>
-              </li>
-              <li v-if="permissions.includes('santri-ekskull')">
-                <nuxt-link
-                  to="/santri/ekskull"
-                  class="text-decoration-none d-flex align-items-center gap-2"
-                >
-                  <i
-                    class="material-icons animate__animated animate__fadeInRight"
-                  >
-                    sports_volleyball
-                  </i>
-                  <span class="text animate__animated animate__fadeInRight"
-                    >Ekskull</span
+                    >Waktu Tidur</span
                   >
                 </nuxt-link>
               </li>
             </ul>
           </li>
 
-          <!-- Pegawai -->
-          <li>
+          <!-- Tahfidz -->
+          <li v-if="pengampu === 'on'">
             <div
-              @click="pegawai"
+              @click="tahfidz"
               class="dropdown d-flex align-items-center justify-content-between gap-2"
             >
               <span class="d-flex align-items-center gap-2">
@@ -201,89 +152,42 @@
                   accessibility
                 </i>
                 <span class="text animate__animated animate__fadeInRight"
-                  >Pegawai</span
+                  >Tahfidz</span
                 >
               </span>
               <i class="bx bx-chevron-down"></i>
             </div>
-            <ul v-if="listPegawai" class="dropdown-list">
-              <!-- database -->
-              <li v-if="permissions.includes('pegawai-database')">
+            <ul v-if="listTahfidz" class="dropdown-list">
+              <!-- absensi -->
+              <li>
                 <nuxt-link
-                  to="/pegawai/database"
+                  to="/tahfidz/absensi"
                   class="custom-link text-decoration-none d-flex align-items-center gap-2"
                 >
-                  <i
-                    class="material-icons animate__animated animate__fadeInRight"
-                  >
-                    input
-                  </i>
                   <span class="text animate__animated animate__fadeInRight"
-                    >Pegawai</span
+                    >Absensi</span
                   >
                 </nuxt-link>
               </li>
-              <!-- halaqoh -->
+              <!-- mutabaah -->
               <li>
                 <nuxt-link
-                  to="/pegawai/halaqoh"
+                  to="/tahfidz/mutabaah"
                   class="custom-link text-decoration-none d-flex align-items-center gap-2"
                 >
-                  <i
-                    class="material-icons animate__animated animate__fadeInRight"
-                  >
-                    menu_book
-                  </i>
                   <span class="text animate__animated animate__fadeInRight"
-                    >Halaqoh</span
+                    >Mutabaah</span
                   >
                 </nuxt-link>
               </li>
               <!-- wali kelas -->
               <li>
                 <nuxt-link
-                  to="/pegawai/walas"
+                  to="/tahfidz/nilai"
                   class="custom-link text-decoration-none d-flex align-items-center gap-2"
                 >
-                  <i
-                    class="material-icons animate__animated animate__fadeInRight"
-                  >
-                    face
-                  </i>
                   <span class="text animate__animated animate__fadeInRight"
-                    >Wali Kelas</span
-                  >
-                </nuxt-link>
-              </li>
-              <!-- musyrif -->
-              <li>
-                <nuxt-link
-                  to="/pegawai/musyrif"
-                  class="custom-link text-decoration-none d-flex align-items-center gap-2"
-                >
-                  <i
-                    class="material-icons animate__animated animate__fadeInRight"
-                  >
-                    face
-                  </i>
-                  <span class="text animate__animated animate__fadeInRight"
-                    >Musyrif</span
-                  >
-                </nuxt-link>
-              </li>
-              <!-- mapel -->
-              <li>
-                <nuxt-link
-                  to="/pegawai/mapel"
-                  class="custom-link text-decoration-none d-flex align-items-center gap-2"
-                >
-                  <i
-                    class="material-icons animate__animated animate__fadeInRight"
-                  >
-                    auto_stories
-                  </i>
-                  <span class="text animate__animated animate__fadeInRight"
-                    >Mapel</span
+                    >Nilai</span
                   >
                 </nuxt-link>
               </li>
@@ -309,121 +213,261 @@
               <i class="bx bx-chevron-down"></i>
             </div>
             <ul v-if="listSettings" class="dropdown-list">
-              <!-- Utama -->
-              <li>
-                <nuxt-link
-                  to="/settings/periode"
-                  class="text-decoration-none d-flex align-items-center gap-2"
+              <!-- Santri Menu -->
+              <li v-if="$auth.user.role !== 'administrator'">
+                <div
+                  @click="santriSub"
+                  class="dropdown d-flex align-items-center justify-content-between gap-2"
                 >
-                  <i
-                    class="material-icons animate__animated animate__fadeInRight"
-                  >
-                    dns
-                  </i>
-                  <span class="text animate__animated animate__fadeInRight"
-                    >Periode</span
-                  >
-                </nuxt-link>
+                  <span class="d-flex align-items-center gap-2">
+                    <span class="text animate__animated animate__fadeInRight"
+                      >Santri</span
+                    >
+                  </span>
+                  <i class="bx bx-chevron-down"></i>
+                </div>
+                <!-- sub menu santri -->
+                <ul v-if="santriSubList" class="dropdown-list">
+                  <!-- data -->
+                  <li v-if="permissions.includes('data santri')">
+                    <nuxt-link
+                      to="/santri/database"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2"
+                    >
+                      <span class="text animate__animated animate__fadeInRight"
+                        >Data</span
+                      >
+                    </nuxt-link>
+                  </li>
+                  <!-- kelas -->
+                  <li v-if="permissions.includes('kelas')">
+                    <nuxt-link
+                      to="/santri/kelas"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2"
+                    >
+                      <span class="text animate__animated animate__fadeInRight"
+                        >Kelas</span
+                      >
+                    </nuxt-link>
+                  </li>
+                  <!-- asrama -->
+                  <li v-if="permissions.includes('asrama')">
+                    <nuxt-link
+                      to="/santri/asrama"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2"
+                    >
+                      <span class="text animate__animated animate__fadeInRight"
+                        >Asrama</span
+                      >
+                    </nuxt-link>
+                  </li>
+                  <!-- halaqah -->
+                  <li v-if="permissions.includes('halaqah')">
+                    <nuxt-link
+                      to="/santri/halaqoh"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2"
+                    >
+                      <span class="text animate__animated animate__fadeInRight"
+                        >Halaqah</span
+                      >
+                    </nuxt-link>
+                  </li>
+                  <!-- ekskull -->
+                  <li v-if="permissions.includes('ekskull')">
+                    <nuxt-link
+                      to="/santri/ekskull"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2"
+                    >
+                      <span class="text animate__animated animate__fadeInRight"
+                        >Ekskull</span
+                      >
+                    </nuxt-link>
+                  </li>
+                </ul>
               </li>
-              <!-- Kaldik -->
+              <!-- Pegawai Menu -->
               <li>
-                <nuxt-link
-                  to="/settings/kaldik"
-                  class="text-decoration-none d-flex align-items-center gap-2"
+                <div
+                  @click="pegawaiSub"
+                  class="dropdown d-flex align-items-center justify-content-between gap-2"
                 >
-                  <i
-                    class="material-icons animate__animated animate__fadeInRight"
+                  <span class="d-flex align-items-center gap-2">
+                    <span class="text animate__animated animate__fadeInRight"
+                      >Pegawai</span
+                    >
+                  </span>
+                  <i class="bx bx-chevron-down"></i>
+                </div>
+                <!-- sub menu pegawai -->
+                <ul v-if="pegawaiSubList" class="dropdown-list">
+                  <!-- data -->
+                  <li
+                    v-if="
+                      personalia === 'on' || $auth.user.role === 'administrator'
+                    "
                   >
-                    edit_calendar
-                  </i>
-                  <span class="text animate__animated animate__fadeInRight"
-                    >Kaldik</span
+                    <nuxt-link
+                      to="/pegawai/database"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2"
+                    >
+                      <span class="text animate__animated animate__fadeInRight"
+                        >Data</span
+                      >
+                    </nuxt-link>
+                  </li>
+                  <!-- halaqah -->
+                  <li
+                    v-if="
+                      $auth.user.role !== 'administrator' &&
+                      permissions.includes('pengampu')
+                    "
                   >
-                </nuxt-link>
+                    <nuxt-link
+                      to="/pegawai/halaqoh"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2"
+                    >
+                      <span class="text animate__animated animate__fadeInRight"
+                        >Halaqah</span
+                      >
+                    </nuxt-link>
+                  </li>
+                  <!-- wali kelas -->
+                  <li
+                    v-if="
+                      $auth.user.role !== 'administrator' &&
+                      permissions.includes('wali kelas')
+                    "
+                  >
+                    <nuxt-link
+                      to="/pegawai/walas"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2"
+                    >
+                      <span class="text animate__animated animate__fadeInRight"
+                        >Wali Kelas</span
+                      >
+                    </nuxt-link>
+                  </li>
+                  <!-- musyrif -->
+                  <li
+                    v-if="
+                      $auth.user.role !== 'administrator' &&
+                      permissions.includes('musyrif')
+                    "
+                  >
+                    <nuxt-link
+                      to="/pegawai/musyrif"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2"
+                    >
+                      <span class="text animate__animated animate__fadeInRight"
+                        >Musyrif</span
+                      >
+                    </nuxt-link>
+                  </li>
+                  <!-- mapel -->
+                  <li
+                    v-if="
+                      $auth.user.role !== 'administrator' &&
+                      permissions.includes('mata pelajaran')
+                    "
+                  >
+                    <nuxt-link
+                      to="/pegawai/mapel"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2"
+                    >
+                      <span class="text animate__animated animate__fadeInRight"
+                        >Mapel</span
+                      >
+                    </nuxt-link>
+                  </li>
+                </ul>
               </li>
-              <!-- Kelompok -->
-              <li>
-                <nuxt-link
-                  to="/settings/kelompok"
-                  class="text-decoration-none d-flex align-items-center gap-2"
+              <!-- Database Menu -->
+              <li v-if="$auth.user.role !== 'administrator'">
+                <div
+                  @click="databaseSub"
+                  class="dropdown d-flex align-items-center justify-content-between gap-2"
                 >
-                  <i
-                    class="material-icons animate__animated animate__fadeInRight"
-                  >
-                    auto_stories
-                  </i>
-                  <span class="text animate__animated animate__fadeInRight"
-                    >Kelompok</span
-                  >
-                </nuxt-link>
-              </li>
-              <!-- Kelas -->
-              <li>
-                <nuxt-link
-                  to="/settings/kelas"
-                  class="text-decoration-none d-flex align-items-center gap-2"
-                >
-                  <i
-                    class="material-icons animate__animated animate__fadeInRight"
-                  >
-                    school
-                  </i>
-                  <span class="text animate__animated animate__fadeInRight"
-                    >Kelas</span
-                  >
-                </nuxt-link>
-              </li>
-              <!-- Mapel -->
-              <li>
-                <nuxt-link
-                  to="/settings/mapel"
-                  class="text-decoration-none d-flex align-items-center gap-2"
-                >
-                  <i
-                    class="material-icons animate__animated animate__fadeInRight"
-                  >
-                    sticky_note_2
-                  </i>
-                  <span class="text animate__animated animate__fadeInRight"
-                    >Mapel</span
-                  >
-                </nuxt-link>
-              </li>
-              <!-- Struktur -->
-              <li>
-                <nuxt-link
-                  to="/settings/struktur"
-                  class="text-decoration-none d-flex align-items-center gap-2"
-                >
-                  <i
-                    class="material-icons animate__animated animate__fadeInRight"
-                  >
-                    timeline
-                  </i>
-                  <span class="text animate__animated animate__fadeInRight"
-                    >Struktur</span
-                  >
-                </nuxt-link>
+                  <span class="d-flex align-items-center gap-2">
+                    <span class="text animate__animated animate__fadeInRight"
+                      >Database</span
+                    >
+                  </span>
+                  <i class="bx bx-chevron-down"></i>
+                </div>
+                <!-- sub menu pegawai -->
+                <ul v-if="databaseSubList" class="dropdown-list">
+                  <!-- Utama -->
+                  <li v-if="personalia === 'on'">
+                    <nuxt-link
+                      to="/settings/periode"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2"
+                    >
+                      <span class="text animate__animated animate__fadeInRight"
+                        >Periode</span
+                      >
+                    </nuxt-link>
+                  </li>
+                  <!-- Kaldik -->
+                  <li v-if="personalia === 'on'">
+                    <nuxt-link
+                      to="/settings/kaldik"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2"
+                    >
+                      <span class="text animate__animated animate__fadeInRight"
+                        >Kaldik</span
+                      >
+                    </nuxt-link>
+                  </li>
+                  <!-- Kelompok -->
+                  <li v-if="permissions.includes('halaqah / asrama')">
+                    <nuxt-link
+                      to="/settings/kelompok"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2"
+                    >
+                      <span class="text animate__animated animate__fadeInRight"
+                        >Halaqah / Asrama</span
+                      >
+                    </nuxt-link>
+                  </li>
+                  <!-- Kelas -->
+                  <li v-if="permissions.includes('setup kelas')">
+                    <nuxt-link
+                      to="/settings/kelas"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2"
+                    >
+                      <span class="text animate__animated animate__fadeInRight"
+                        >Kelas</span
+                      >
+                    </nuxt-link>
+                  </li>
+                  <!-- Mapel -->
+                  <li v-if="permissions.includes('setup mapel')">
+                    <nuxt-link
+                      to="/settings/mapel"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2"
+                    >
+                      <span class="text animate__animated animate__fadeInRight"
+                        >Mapel</span
+                      >
+                    </nuxt-link>
+                  </li>
+                  <!-- Struktur -->
+                  <li v-if="personalia === 'on'">
+                    <nuxt-link
+                      to="/settings/struktur"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2"
+                    >
+                      <span class="text animate__animated animate__fadeInRight"
+                        >Struktur</span
+                      >
+                    </nuxt-link>
+                  </li>
+                </ul>
               </li>
             </ul>
           </li>
-
-          <!-- Help -->
-          <li>
-            <nuxt-link
-              to="/help"
-              class="text-decoration-none d-flex align-items-center gap-2"
-            >
-              <i class="material-icons animate__animated animate__fadeInRight">
-                quiz
-              </i>
-              <span class="text animate__animated animate__fadeInRight"
-                >Help</span
-              >
-            </nuxt-link>
-          </li>
         </ul>
-        <p v-else>No program selected.</p>
+        <p v-else></p>
       </nav>
     </div>
   </div>
@@ -438,29 +482,53 @@ export default {
   data() {
     return {
       activeMenu: null, // Menyimpan menu yang sedang aktif (untuk menampilkan sub-menu)
-      listSantri: false,
-      listPegawai: false,
+      listAsrama: false,
+      listTahfidz: false,
       listSettings: false,
-      listMutabaah: false,
+      listKelas: false,
+      santriSubList: false,
+      pegawaiSubList: false,
+      databaseSubList: false,
     };
   },
 
   computed: {
-    ...mapState("index", ["unit", "permissions"]),
+    ...mapState("index", [
+      "unit",
+      "permissions",
+      "pengajar",
+      "pengampu",
+      "personalia",
+    ]),
   },
 
   methods: {
-    santri() {
-      this.listSantri = !this.listSantri;
+    asrama() {
+      this.listAsrama = !this.listAsrama;
     },
-    pegawai() {
-      this.listPegawai = !this.listPegawai;
+    tahfidz() {
+      this.listTahfidz = !this.listTahfidz;
     },
     settings() {
       this.listSettings = !this.listSettings;
     },
-    mutabaah() {
-      this.listMutabaah = !this.listMutabaah;
+    kelas() {
+      this.listKelas = !this.listKelas;
+    },
+    santriSub() {
+      this.santriSubList = !this.santriSubList;
+      this.pegawaiSubList = false;
+      this.databaseSubListSubList = false;
+    },
+    pegawaiSub() {
+      this.pegawaiSubList = !this.pegawaiSubList;
+      this.santriSubList = false;
+      this.databaseSubList = false;
+    },
+    databaseSub() {
+      this.databaseSubList = !this.databaseSubList;
+      this.santriSubList = false;
+      this.pegawaiSubList = false;
     },
 
     // Method untuk menampilkan/menyembunyikan sub-menu saat menu utama diklik

@@ -1,12 +1,9 @@
-select angkatan di sebelah kiri atas
+ayano
+123456
 
-tombol update
-tombol active inactive
-catatan dulu
+suzune
+123456
 
-Pegawai
-table
-	nama
-	lulusan Diploma, Sarjana, Magister, Doktoral
-	nip
-	
+manabu
+654321
+

@@ -4,7 +4,7 @@ h2 {
 
 .chart {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
 
@@ -47,25 +47,21 @@ h2 {
 }
 
 /* chart */
-.row .col-5 {
-  position: relative;
-}
 
-[id^="chart-"] {
+[id^="chartAdmin-"] {
   position: absolute;
   left: 0;
   top: 0;
-  /* margin-left: -12%; */
   margin-top: -2%;
   height: 60px;
   width: 105px;
 }
+
 .desc-chart {
   position: absolute;
   text-align: left;
   top: 30%;
   left: 105px;
-  /* margin-left: -10px; */
 }
 .desc-chart h1 {
   font-size: 14px;
@@ -79,7 +75,7 @@ h2 {
 
 @media screen and (max-width: 992px) {
   .chart {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 @media screen and (max-width: 768px) {

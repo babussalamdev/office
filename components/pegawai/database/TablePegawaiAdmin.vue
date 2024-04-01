@@ -16,6 +16,7 @@
               <th scope="col">Nama</th>
               <th scope="col">Lulusan</th>
               <th scope="col">NIP</th>
+              <th scope="col">Personalia</th>
               <th scope="col">Program</th>
               <th scope="col" class="text-end">Action</th>
             </tr>
@@ -30,6 +31,16 @@
                 {{ data.Lulusan }}
               </td>
               <td class="text-capitalize">{{ data.Nip }}</td>
+              <td class="text-capitalize align-middle">
+                <span
+                  class="personalia"
+                  :class="
+                    data.Personalia === 'on' ? 'bg-primary' : 'bg-secondary'
+                  "
+                >
+                  {{ data.Personalia }}
+                </span>
+              </td>
               <td scope="row" class="text-uppercase container-permissions">
                 <div
                   style="display: inline"
@@ -88,6 +99,15 @@ export default {
     ...mapState("pegawai/database", ["pegawai"]),
   },
   methods: {
+    statusPersonalia(username, sk, status) {
+      const condition = status === "off" ? "on" : "off";
+      const data = {
+        key: sk,
+        user: username,
+        condition: condition,
+      };
+      this.$store.dispatch("pegawai/database/setStatusPersonalia", data);
+    },
     async editItem(index) {
       $("#updateDataPegawaiAdmin").modal("show");
       this.updateData = this.pegawai[index];
