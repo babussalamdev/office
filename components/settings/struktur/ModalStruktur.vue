@@ -257,7 +257,7 @@ export default {
     async updateStruktur(event) {
       this.btn = false;
       const data = Object.fromEntries(new FormData(event.target));
-      data["Permissions"] = this.value.map((x) => x.name);
+      data["Permissions"] = this.value.map((x) => x.name).join(",");
       const key = this.updateData.SK;
       try {
         const program = localStorage.getItem("program");

@@ -4,7 +4,8 @@ export default {
         state.pengajar = value?.result.Pengajar
         state.pengampu = value?.result.Pengampu
         state.personalia = value?.result.Personalia
-        state.permissions = value?.result.Permissions.split(',')
+        state.permissions = value?.result?.Permissions.split(',')
+
     },
     admin(state) {
         state.unit = 'admin'

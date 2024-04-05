@@ -6,7 +6,6 @@ export default {
         const datas = {
             result, program: data
         }
-        console.log(datas)
         commit('setUnit', datas);
     },
 

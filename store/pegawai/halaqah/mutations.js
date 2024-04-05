@@ -1,14 +1,11 @@
 export default {
-    setWalas(state, value) {
-        state.walas = value.data.pegawai
-        state.kelas = value.data.select
+    setMusyrif(state, value) {
+        state.musyrif = value.data.pegawai
+        state.asrama = value.data.select
     },
-    updateWalas(state, value) {
-        console.log(value)
-        console.log(state.walas)
-        const i = state.walas.findIndex((x) => x.SK === value.SK)
-        console.log(i)
-        state.walas[i].Kelas[value.Program] = value.Value
+    setDatabase(state, value) {
+        state.pegawai = value.pegawai
+        state.jabatan = value.jabatan
     },
     inputSantriBulk(state, value) {
         state.santri = [...state.santri, ...value];

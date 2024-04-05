@@ -59,6 +59,7 @@ export default {
       '~/components/pegawai/database',
       '~/components/pegawai/halaqah',
       '~/components/pegawai/walas',
+      '~/components/pegawai/musyrif',
       '~/components/settings/kaldik',
       '~/components/settings/kelas',
       '~/components/settings/kelompok',

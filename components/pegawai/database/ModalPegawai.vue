@@ -332,7 +332,7 @@
                     -- Pilih Jabatan --
                   </option>
                   <option
-                    v-for="(value, index) in jabatan"
+                    v-for="(value, index) in select"
                     :value="value"
                     :key="index"
                   >
@@ -392,7 +392,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("pegawai/database", ["jabatan"]),
+    ...mapState("pegawai/database", ["select"]),
   },
   components: {
     Multiselect,

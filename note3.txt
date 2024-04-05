@@ -1,0 +1,21 @@
+manabu
+123456
+
+suzune
+713415
+
+kiyo
+2be726
+
+kei
+d638c2
+
+honami
+03f892
+
+get-pegawai?
+
+get-pegawai?program=${data}&opsi=halaqah&position=Pengampu`
+get-pegawai?program=${data}&opsi=mapel&position=Pengajar
+
+pisahkan antara tabel halaqah dan asrama

@@ -1,4 +1,4 @@
 export default () => ({
     pegawai: [],
-    jabatan: []
+    select: []
 })

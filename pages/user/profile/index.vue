@@ -15,7 +15,7 @@
             </div>
             <div class="label-card">
               <p>Jabatan</p>
-              <h2>Kepala Sekolah</h2>
+              <h2 class="text-capitalize">{{ profile.Jabatan }}</h2>
             </div>
             {{ profile }}
           </div>

@@ -15,4 +15,6 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style>
+@import url(~/assets/css/pegawai/pegawai.css);
+</style>

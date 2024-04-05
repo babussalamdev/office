@@ -8,6 +8,7 @@
             <th scope="col">Nama Mapel</th>
             <th scope="col">Kelas</th>
             <th scope="col">Jurusan</th>
+            <th scope="col">Hari</th>
             <th scope="col" class="text-end">Action</th>
           </tr>
         </thead>
@@ -17,6 +18,19 @@
             <td scope="row" class="text-capitalize">{{ data.Nama }}</td>
             <td scope="row" class="text-uppercase">{{ data.Kelas }}</td>
             <td scope="row" class="text-uppercase">{{ data.Jurusan }}</td>
+            <td scope="row" class="text-uppercase container-hari">
+              <div
+                v-for="(value, i) in data.Hari.split(',')"
+                :key="i"
+                style="display: inline"
+              >
+                <div class="btn-group btn-group-sm px-1 py-1 list-hari">
+                  <div class="btn btn-secondary disabled">
+                    <span>{{ value }}</span>
+                  </div>
+                </div>
+              </div>
+            </td>
             <td class="text-end">
               <a href="javascript:;" @click="editItem(i)"
                 ><i class="bx bx-edit text-primary"></i

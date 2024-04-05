@@ -1,0 +1,10 @@
+profile rapihin
+
+nama
+nip
+
+kelas
+
+action
+
+get-pegawai?program=program&opsi=kelas&position=wali kelas

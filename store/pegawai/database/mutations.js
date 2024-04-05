@@ -4,7 +4,7 @@ export default {
     },
     setDatabase(state, value) {
         state.pegawai = value.pegawai
-        state.jabatan = value.jabatan
+        state.select = value.select
     },
     inputSantriBulk(state, value) {
         state.santri = [...state.santri, ...value];

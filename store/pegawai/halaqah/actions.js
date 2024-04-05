@@ -1,7 +1,8 @@
 export default {
-    async showWalas({ commit }, data) {
-        const result = await this.$axios.get(`get-pegawai?program=${data}&opsi=kelas&position=wali kelas`)
-        commit('setWalas', result)
+    async showHalaqah({ commit }, data) {
+        const result = await this.$axios.get(`get-pegawai?program=${data}&opsi=asrama&position=`)
+        console.log(result)
+        commit('setMusyrif', result)
         // if (data === 'admin') {
         //     const result = await this.$axios.$get(
         //         `get-pegawai`

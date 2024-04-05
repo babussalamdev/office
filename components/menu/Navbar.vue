@@ -87,6 +87,7 @@ export default {
       profile: false,
       notif: false,
       unit: "",
+      orderedUnit: ["sd", "smp", "sma", "tahfidz"],
       // notifications: ["Notification 1", "Notification 2", "Notification 3"],
       notifications: ["notification"],
       notificationOpened: false,

@@ -1,11 +1,20 @@
 <template>
-  <div>
-    <h1>Musyrif</h1>
-  </div>
+  <section id="musyrif">
+    <div class="musyrif">
+      <MusyrifTable />
+    </div>
+  </section>
 </template>
 
 <script>
-export default {};
+export default {
+  async asyncData({ store }) {
+    const program = localStorage.getItem("program");
+    store.dispatch(`pegawai/musyrif/showMusyrif`, program);
+  },
+};
 </script>
 
-<style scoped></style>
+<style>
+@import url(~/assets/css/pegawai/pegawai.css);
+</style>

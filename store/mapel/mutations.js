@@ -18,6 +18,7 @@ export default {
         data.Nama = value.Nama;
         data.Kelas = value.Kelas;
         data.Jurusan = value.Jurusan;
+        data.Hari = value.Hari
 
 
         // if (i !== -1) {

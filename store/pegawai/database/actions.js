@@ -7,7 +7,7 @@ export default {
             commit('setDatabaseAll', result);
         } else {
             const result = await this.$axios.$get(
-                `get-pegawai?program=${data}`
+                `get-pegawai?program=${data}&opsi=struktur`
             );
             commit('setDatabase', result);
 

@@ -71,4 +71,106 @@
   #pegawai .pegawai .table-responsive .table tbody tr td {
     font-size: 12px;
   }
+}
+
+#walas .walas {
+  min-height: 100vh;
+}
+#walas .walas .table-responsive {
+  overflow-x: auto;
+}
+#walas .walas .table-responsive .table {
+  width: 100%;
+}
+#walas .walas .table-responsive .table thead tr th {
+  padding: 15px 20px;
+  background: #176b87;
+  font-size: 12px;
+  color: #fff;
+}
+#walas .walas .table-responsive .table tbody tr td {
+  line-height: 16px;
+  padding: 10px 20px;
+  margin: auto;
+  font-size: 12px;
+}
+#walas .walas .table-responsive .table tbody tr td .action {
+  margin-top: 1px !important;
+  height: 100%;
+  min-width: 54px !important;
+}
+#walas .walas .table-responsive .table tbody tr td .personalia {
+  font-size: 12px;
+  color: #fff;
+  border-radius: 30px;
+  padding: 5px 15px;
+}
+#walas .walas .table-responsive .table tbody tr td span {
+  font-size: 12px !important;
+}
+#walas .walas .table-responsive .table tbody tr td button {
+  padding: 2px 5px 0.5px !important;
+}
+#walas .walas .table-responsive .table tbody tr td button i {
+  font-size: 14px !important;
+  padding: -5px !important;
+}
+@media screen and (max-width: 576px) {
+  #walas .walas .table-responsive .table thead tr th {
+    font-size: 12px;
+  }
+  #walas .walas .table-responsive .table tbody tr td {
+    font-size: 12px;
+  }
+}
+
+#musyrif .musyrif {
+  min-height: 100vh;
+}
+#musyrif .musyrif .table-responsive {
+  overflow-x: auto;
+}
+#musyrif .musyrif .table-responsive .table {
+  width: 100%;
+}
+#musyrif .musyrif .table-responsive .table thead tr th {
+  padding: 15px 20px;
+  background: #176b87;
+  font-size: 12px;
+  color: #fff;
+}
+#musyrif .musyrif .table-responsive .table tbody tr td {
+  line-height: 16px;
+  padding: 10px 20px;
+  margin: auto;
+  font-size: 12px;
+}
+#musyrif .musyrif .table-responsive .table tbody tr td .action {
+  margin-top: 1px !important;
+  height: 100%;
+  min-width: 54px !important;
+}
+#musyrif .musyrif .table-responsive .table tbody tr td .personalia {
+  font-size: 12px;
+  color: #fff;
+  border-radius: 30px;
+  padding: 5px 15px;
+}
+#musyrif .musyrif .table-responsive .table tbody tr td span {
+  font-size: 12px !important;
+}
+#musyrif .musyrif .table-responsive .table tbody tr td button {
+  padding: 2px 5px 0.5px !important;
+}
+#musyrif .musyrif .table-responsive .table tbody tr td button i {
+  font-size: 14px !important;
+  padding: -5px !important;
+}
+@media screen and (max-width: 576px) {
+  #musyrif .musyrif .table-responsive .table thead tr th {
+    font-size: 12px;
+  }
+  #musyrif .musyrif .table-responsive .table tbody tr td {
+    font-size: 12px;
+  }
 }/*# sourceMappingURL=pegawai.css.map */

@@ -83,6 +83,22 @@
                   </option>
                 </select>
               </div>
+              <div class="mb-3">
+                <label class="typo__label mb-2">Hari</label>
+                <multiselect
+                  name="Hari"
+                  v-model="value"
+                  tag-placeholder="Add this as new tag"
+                  placeholder="Search or add a tag"
+                  label="name"
+                  track-by="code"
+                  :options="options"
+                  :multiple="true"
+                  :taggable="true"
+                  @tag="addTag"
+                  required
+                ></multiselect>
+              </div>
             </div>
             <div class="modal-footer">
               <button
@@ -184,6 +200,22 @@
                   </option>
                 </select>
               </div>
+              <div class="mb-3">
+                <label class="typo__label mb-2">Hari</label>
+                <multiselect
+                  name="Hari"
+                  v-model="value"
+                  tag-placeholder="Add this as new tag"
+                  placeholder="Search or add a tag"
+                  label="name"
+                  track-by="code"
+                  :options="options"
+                  :multiple="true"
+                  :taggable="true"
+                  @tag="addTag"
+                  required
+                ></multiselect>
+              </div>
             </div>
             <div class="modal-footer">
               <button
@@ -216,9 +248,13 @@
 <script>
 import Swal from "sweetalert2";
 import { mapState } from "vuex";
+import Multiselect from "vue-multiselect";
 
 export default {
   props: ["updateData"],
+  components: {
+    Multiselect,
+  },
 
   computed: {
     ...mapState("mapel", ["kelas", "jurusan"]),
@@ -228,14 +264,36 @@ export default {
     return {
       btn: true,
       unit: "",
+      value: [],
+      options: [
+        { name: "senin", code: 0 },
+        { name: "selasa", code: 1 },
+        { name: "rabu", code: 2 },
+        { name: "kamis", code: 3 },
+        { name: "jumat", code: 4 },
+        { name: "sabtu", code: 5 },
+        { name: "ahad", code: 6 },
+      ],
     };
   },
+  mounted() {
+    document
+      .getElementById("updateDataMapel")
+      .addEventListener("hidden.bs.modal", function () {
+        this.value = [];
+      });
+  },
+  watch: {
+    updateData: "valueUpdate",
+  },
+
   methods: {
     async inputMapel(event) {
       this.btn = false;
       const data = Object.fromEntries(new FormData(event.target));
       data["Program"] = localStorage.getItem("program");
-      this.btn = true;
+      data["Hari"] = this.value.map((x) => x.name).join(",");
+      console.log(data);
       try {
         const result = await this.$axios.$post(
           `/input-database?subject=mapel`,
@@ -250,6 +308,7 @@ export default {
           timer: 1500,
         });
         this.$refs.inputMapel.reset();
+        this.value = [];
         this.$store.commit("mapel/inputMapel", result);
         $("#InputDataMapel").modal("hide");
       } catch (error) {
@@ -265,12 +324,14 @@ export default {
     async updateMapel(event) {
       this.btn = false;
       const data = Object.fromEntries(new FormData(event.target));
+      data["Hari"] = this.value.map((x) => x.name).join(",");
+      console.log(data);
       const key = this.updateData.SK;
       try {
         const result = await this.$axios.$put(
-          `/update-database?subject=mapel&program=${key.split("#")[0]}&kelas=${key.split("#")[1]}&code=${
-            key.split("#")[2]
-          }`,
+          `/update-database?subject=mapel&program=${key.split("#")[0]}&kelas=${
+            key.split("#")[1]
+          }&code=${key.split("#")[2]}`,
           data
         );
         this.btn = true;
@@ -283,6 +344,7 @@ export default {
         });
         data["SK"] = key;
         this.$refs.updateMapel.reset();
+        this.value = [];
         this.$store.commit("mapel/updateMapel", data);
         $("#updateDataMapel").modal("hide");
       } catch (error) {
@@ -293,6 +355,26 @@ export default {
           showConfirmButton: false,
           timer: 1500,
         });
+      }
+    },
+
+    addTag(newTag) {
+      const tag = {
+        name: newTag,
+        code: newTag.substring(0, 2) + Math.floor(Math.random() * 10000000),
+      };
+      this.options.push(tag);
+      this.value.push(tag);
+    },
+
+    async valueUpdate() {
+      const hari = this.updateData.Hari.split(",");
+      if (hari && hari.length > 0) {
+        const mappedArray = hari.map((x) => {
+          const option = this.options.find((option) => option.name === x);
+          return { name: x, code: option ? option.code : null };
+        });
+        this.value = mappedArray;
       }
     },
   },
