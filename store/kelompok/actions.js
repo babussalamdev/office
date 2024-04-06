@@ -1,9 +1,15 @@
 export default {
-    async changeUnit({ commit }, data) {
-        const { halaqah, asrama } = await this.$axios.$get(
-            `get-database?subject=settingskelompok&program=${data}`
+    async changeUnitHalaqah({ commit }, data) {
+        const result = await this.$axios.$get(
+            `get-database?subject=halaqah&program=${data}`
         );
-        commit('setData', { halaqah, asrama });
+        commit('setDataHalaqah', result);
         // get-database?kelas=settings&program=${data}
+    },
+    async changeUnitAsrama({ commit }, data) {
+        const result = await this.$axios.$get(
+            `get-database?subject=asrama&program=${data}`
+        );
+        commit('setDataAsrama', result);
     },
 }

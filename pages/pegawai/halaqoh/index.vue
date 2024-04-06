@@ -1,7 +1,7 @@
 <template>
   <section id="musyrif">
     <div class="musyrif">
-      <MusyrifTable />
+      <HalaqahTable />
     </div>
   </section>
 </template>
@@ -10,7 +10,7 @@
 export default {
   async asyncData({ store }) {
     const program = localStorage.getItem("program");
-    store.dispatch(`pegawai/musyrif/showHalaqah`, program);
+    store.dispatch(`pegawai/halaqah/showHalaqah`, program);
   },
 };
 </script>

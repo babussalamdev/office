@@ -1,7 +1,9 @@
 export default {
-    setData(state, value) {
-        state.halaqah = value.halaqah
-        state.asrama = value.asrama
+    setDataHalaqah(state, value) {
+        state.halaqah = value
+    },
+    setDataAsrama(state, value) {
+        state.asrama = value
     },
     updateHalaqah(state, value) {
         state.halaqah.push(value);

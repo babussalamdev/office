@@ -3,17 +3,17 @@
     <!-- update database pegawai  -->
     <div
       class="modal fade"
-      id="updateDataMusyrif"
+      id="updateDataHalaqah"
       tabindex="-1"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
     >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form @submit.prevent="updateMusyrif" ref="updateDataMusyrif">
+          <form @submit.prevent="updateHalaqah" ref="updateDataHalaqah">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">
-                Update Data Musyrif
+                Update Data Halaqah
               </h1>
               <button
                 type="button"
@@ -24,17 +24,19 @@
             </div>
             <div class="modal-body">
               <div class="mb-3">
-                <label for="kelas" class="form-label">Asrama</label>
+                <label for="kelas" class="form-label">Halaqah</label>
                 <select
                   name="Asrama"
                   id="Asrama"
                   class="form-select"
-                  v-model="asramaShow"
+                  v-model="halaqahShow"
                   required
                 >
-                  <option value="" selected disabled>-- Pilih Asrama --</option>
+                  <option value="off" selected disabled>
+                    -- Pilih Halaqah --
+                  </option>
                   <option
-                    v-for="(value, index) in asrama"
+                    v-for="(value, index) in halaqah"
                     :value="value"
                     :key="index"
                   >
@@ -73,54 +75,66 @@
 
 <script>
 import { mapState } from "vuex";
+import Swal from "sweetalert2";
 
 export default {
   props: ["updateData"],
   data() {
     return {
       btn: true,
-      asramaShow: "",
+      halaqahShow: "",
+      unit: localStorage.getItem("program"),
     };
   },
   computed: {
-    ...mapState("pegawai/musyrif", ["asrama"]),
+    ...mapState("pegawai/halaqah", ["halaqah"]),
+  },
+  watch: {
+    updateData: {
+      handler(data) {
+        this.halaqahShow = data.Halaqah[this.unit];
+      },
+    },
   },
   methods: {
-    async updateWalas(event) {
-      //   this.btn = false;
-      const data = Object.fromEntries(new FormData(event.target));
-      console.log(data);
-      //   try {
-      //     const result = await this.$axios.$post(
-      //       `/input-pegawai?method=single`,
-      //       data
-      //     );
-      //     if (result) {
-      //       Swal.fire({
-      //         position: "center",
-      //         icon: "success",
-      //         text: "Your work has been saved",
-      //         showConfirmButton: false,
-      //         timer: 1500,
-      //       });
-      //       this.btn = true;
-      //       this.$store.commit("pegawai/database/inputPegawaiSingle", result);
-      //       this.$refs.inputDataPegawai.reset();
-      //       this.value = [];
-      //       this.password = "";
-      //       $("#InputDataPegawai").modal("hide");
-      //     }
-      //   } catch (error) {
-      //     this.btn = true;
-      //     console.log(error);
-      //     Swal.fire({
-      //       text: error,
-      //       icon: "error",
-      //       timer: 3000,
-      //       timerProgressBar: false,
-      //       showConfirmButton: false,
-      //     });
-      //   }
+    async updateHalaqah(event) {
+      this.btn = false;
+      const data = {};
+      const program = localStorage.getItem("program");
+      data["Value"] = this.halaqahShow;
+      data["Program"] = program;
+      try {
+        const user = this.updateData.Username;
+        const key = this.updateData.SK;
+        const result = await this.$axios.$put(
+          `update-pegawai?subject=Halaqah&username=${user}&id=${key}`,
+          data
+        );
+        if (result) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            text: "Your work has been saved",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          data["SK"] = key;
+          this.btn = true;
+          this.$store.commit("pegawai/halaqah/updateHalaqah", data);
+          this.$refs.updateDataHalaqah.reset();
+          $("#updateDataHalaqah").modal("hide");
+        }
+      } catch (error) {
+        this.btn = true;
+        console.log(error);
+        Swal.fire({
+          text: error,
+          icon: "error",
+          timer: 3000,
+          timerProgressBar: false,
+          showConfirmButton: false,
+        });
+      }
     },
   },
 };

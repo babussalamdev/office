@@ -1,11 +1,11 @@
 export default {
     setMusyrif(state, value) {
-        state.musyrif = value.data.pegawai
-        state.asrama = value.data.select
+        state.pengampu = value.data.pegawai
+        state.halaqah = value.data.select
     },
-    setDatabase(state, value) {
-        state.pegawai = value.pegawai
-        state.jabatan = value.jabatan
+    updateHalaqah(state, value) {
+        const i = state.pengampu.findIndex((x) => x.SK === value.SK)
+        state.pengampu[i].Halaqah[value.Program] = value.Value
     },
     inputSantriBulk(state, value) {
         state.santri = [...state.santri, ...value];

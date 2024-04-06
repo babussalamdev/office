@@ -202,9 +202,10 @@ export default {
         { name: "wali kelas", code: 6 },
         { name: "musyrif", code: 7 },
         { name: "mata pelajaran", code: 8 },
-        { name: "halaqah / asrama", code: 9 },
-        { name: "setup kelas", code: 10 },
-        { name: "setup mapel", code: 11 },
+        { name: "setup halaqah", code: 9 },
+        { name: "setup asrama", code: 10 },
+        { name: "setup kelas", code: 11 },
+        { name: "setup mapel", code: 12 },
       ],
     };
   },

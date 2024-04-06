@@ -417,14 +417,25 @@
                       >
                     </nuxt-link>
                   </li>
-                  <!-- Kelompok -->
-                  <li v-if="permissions.includes('halaqah / asrama')">
+                  <!-- Halaqah -->
+                  <li v-if="permissions.includes('setup halaqah')">
                     <nuxt-link
-                      to="/settings/kelompok"
+                      to="/settings/halaqah"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2"
                     >
                       <span class="text animate__animated animate__fadeInRight"
-                        >Halaqah / Asrama</span
+                        >Halaqah</span
+                      >
+                    </nuxt-link>
+                  </li>
+                  <!-- Asrama -->
+                  <li v-if="permissions.includes('setup asrama')">
+                    <nuxt-link
+                      to="/settings/asrama"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2"
+                    >
+                      <span class="text animate__animated animate__fadeInRight"
+                        >Asrama</span
                       >
                     </nuxt-link>
                   </li>

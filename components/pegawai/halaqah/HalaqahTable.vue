@@ -3,24 +3,27 @@
     <div>
       <div class="table-responsive">
         <!-- Modal -->
-        <MusyrifModal :updateData="updateData" />
+        <HalaqahModal :updateData="updateData" />
         <table class="table table-hover table-striped">
           <thead>
             <tr>
               <th scope="col">Nama</th>
-              <th scope="col">Asrama</th>
+              <th scope="col">Nama Halaqah</th>
               <th scope="col" class="text-end">Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(data, index) in musyrif" :key="index">
+            <tr v-for="(data, index) in pengampu" :key="index">
               <td class="text-capitalize align-middle">
                 <h1>{{ data.Nama }}</h1>
                 <p class="text-secondary">{{ data.Nip }}</p>
               </td>
               <td class="text-capitalize align-middle">
-                belum dipilih
-                <!-- {{  }} -->
+                {{
+                  data.Halaqah[unit] === "off"
+                    ? "belum dipilih"
+                    : data.Halaqah[unit]
+                }}
               </td>
 
               <td class="text-end align-middle">
@@ -45,16 +48,19 @@ export default {
   data() {
     return {
       updateData: "",
+      unit: "",
     };
   },
+  mounted() {
+    this.unit = localStorage.getItem("program");
+  },
   computed: {
-    ...mapState("pegawai/musyrif", ["musyrif", "asrama"]),
+    ...mapState("pegawai/halaqah", ["pengampu", "halaqah"]),
   },
   methods: {
     async editItem(index) {
-      $("#updateDataMusyrif").modal("show");
-      this.updateData = this.musyrif[index];
-      console.log(this.updateData);
+      $("#updateDataHalaqah").modal("show");
+      this.updateData = this.pengampu[index];
     },
   },
 };

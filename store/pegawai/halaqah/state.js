@@ -1,4 +1,4 @@
 export default () => ({
-    musyrif: [],
-    asrama: []
+    pengampu: [],
+    halaqah: []
 })
