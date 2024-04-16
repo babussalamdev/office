@@ -234,6 +234,7 @@
 }
 #struktur .struktur .table-responsive {
   overflow-x: auto;
+  box-shadow: 0 0 15px rgba(177, 177, 177, 0.4);
 }
 #struktur .struktur .table-responsive .table {
   width: 100%;

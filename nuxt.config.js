@@ -60,12 +60,14 @@ export default {
       '~/components/pegawai/halaqah',
       '~/components/pegawai/walas',
       '~/components/pegawai/musyrif',
+      '~/components/report/absensi',
       '~/components/settings/kaldik',
       '~/components/settings/kelas',
       '~/components/settings/kelompok',
       '~/components/settings/mapel',
       '~/components/settings/periode',
       '~/components/settings/struktur',
+      '~/components/settings/absensi',
     ]
   },
 

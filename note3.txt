@@ -1,16 +1,16 @@
-manabu
+manabu ( hrd )
 123456
 
-suzune
+suzune ( tu )
 713415
 
-kiyo
+kiyo ( walas )
 2be726
 
 kei ( walas )
 d638c2
 
-honami ( pengajar )
+honami ( musyrif )
 03f892
 
 hirata ( kurikulum )

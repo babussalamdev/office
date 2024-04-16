@@ -192,6 +192,78 @@
               </li>
             </ul>
           </li>
+          <!-- Report -->
+          <li
+            v-if="
+              permissions.includes('report mapel') ||
+              permissions.includes('report tahfidz') ||
+              permissions.includes('report absensi') ||
+              permissions.includes('report pelanggaran')
+            "
+          >
+            <div
+              @click="report"
+              class="dropdown d-flex align-items-center justify-content-between gap-2"
+            >
+              <span class="d-flex align-items-center gap-2">
+                <i
+                  class="material-icons animate__animated animate__fadeInRight"
+                >
+                  account_box
+                </i>
+                <span class="text animate__animated animate__fadeInRight"
+                  >Report</span
+                >
+              </span>
+              <i class="bx bx-chevron-down"></i>
+            </div>
+            <ul v-if="listReport" class="dropdown-list">
+              <!-- mapel -->
+              <li v-if="permissions.includes('report mapel')">
+                <nuxt-link
+                  to="/report/mapel"
+                  class="custom-link text-decoration-none d-flex align-items-center gap-2"
+                >
+                  <span class="text animate__animated animate__fadeInRight"
+                    >Nilai Mapel</span
+                  >
+                </nuxt-link>
+              </li>
+              <!-- tahfidz -->
+              <li v-if="permissions.includes('report tahfidz')">
+                <nuxt-link
+                  to="/report/tahfidz"
+                  class="custom-link text-decoration-none d-flex align-items-center gap-2"
+                >
+                  <span class="text animate__animated animate__fadeInRight"
+                    >Tahfidz</span
+                  >
+                </nuxt-link>
+              </li>
+              <!-- absensi -->
+              <li v-if="permissions.includes('report absensi')">
+                <nuxt-link
+                  to="/report/absensi"
+                  class="custom-link text-decoration-none d-flex align-items-center gap-2"
+                >
+                  <span class="text animate__animated animate__fadeInRight"
+                    >Absensi</span
+                  >
+                </nuxt-link>
+              </li>
+              <!-- pelanggaran -->
+              <li v-if="permissions.includes('report pelanggaran')">
+                <nuxt-link
+                  to="/report/pelanggaran"
+                  class="custom-link text-decoration-none d-flex align-items-center gap-2"
+                >
+                  <span class="text animate__animated animate__fadeInRight"
+                    >Pelanggaran</span
+                  >
+                </nuxt-link>
+              </li>
+            </ul>
+          </li>
 
           <!-- Settings -->
           <li>
@@ -212,6 +284,56 @@
               <i class="bx bx-chevron-down"></i>
             </div>
             <ul v-if="listSettings" class="dropdown-list">
+              <!-- Absensi Menu -->
+              <li v-if="$auth.user.role !== 'administrator'">
+                <div
+                  @click="absensiSub"
+                  class="dropdown d-flex align-items-center justify-content-between gap-2"
+                >
+                  <span class="d-flex align-items-center gap-2">
+                    <span class="text animate__animated animate__fadeInRight"
+                      >Absensi</span
+                    >
+                  </span>
+                  <i class="bx bx-chevron-down"></i>
+                </div>
+                <!-- sub menu absensi -->
+                <ul v-if="absensiSubList" class="dropdown-list">
+                  <!-- kelas -->
+                  <li>
+                    <nuxt-link
+                      to="/settings/absensi/kelas"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2"
+                    >
+                      <span class="text animate__animated animate__fadeInRight"
+                        >Kelas</span
+                      >
+                    </nuxt-link>
+                  </li>
+                  <!-- asrama -->
+                  <li>
+                    <nuxt-link
+                      to="/settings/absensi/asrama"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2"
+                    >
+                      <span class="text animate__animated animate__fadeInRight"
+                        >Asrama</span
+                      >
+                    </nuxt-link>
+                  </li>
+                  <!-- halaqah -->
+                  <li>
+                    <nuxt-link
+                      to="/settings/absensi/halaqah"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2"
+                    >
+                      <span class="text animate__animated animate__fadeInRight"
+                        >Halaqah</span
+                      >
+                    </nuxt-link>
+                  </li>
+                </ul>
+              </li>
               <!-- Santri Menu -->
               <li v-if="$auth.user.role !== 'administrator'">
                 <div
@@ -472,6 +594,17 @@
                       >
                     </nuxt-link>
                   </li>
+                  <!-- Setup Absen -->
+                  <li v-if="personalia === 'on'">
+                    <nuxt-link
+                      to="/settings/absensi"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2"
+                    >
+                      <span class="text animate__animated animate__fadeInRight"
+                        >Absensi</span
+                      >
+                    </nuxt-link>
+                  </li>
                 </ul>
               </li>
             </ul>
@@ -496,6 +629,8 @@ export default {
       listTahfidz: false,
       listSettings: false,
       listKelas: false,
+      listReport: false,
+      absensiSubList: false,
       santriSubList: false,
       pegawaiSubList: false,
       databaseSubList: false,
@@ -519,26 +654,38 @@ export default {
     tahfidz() {
       this.listTahfidz = !this.listTahfidz;
     },
+    report() {
+      this.listReport = !this.listReport;
+    },
     settings() {
       this.listSettings = !this.listSettings;
     },
     kelas() {
       this.listKelas = !this.listKelas;
     },
+    absensiSub() {
+      this.absensiSubList = !this.absensiSubList;
+      this.santriSubList = false;
+      this.pegawaiSubList = false;
+      this.databaseSubListSubList = false;
+    },
     santriSub() {
       this.santriSubList = !this.santriSubList;
       this.pegawaiSubList = false;
       this.databaseSubListSubList = false;
+      this.absensiSubList = false;
     },
     pegawaiSub() {
       this.pegawaiSubList = !this.pegawaiSubList;
       this.santriSubList = false;
       this.databaseSubList = false;
+      this.absensiSubList = false;
     },
     databaseSub() {
       this.databaseSubList = !this.databaseSubList;
       this.santriSubList = false;
       this.pegawaiSubList = false;
+      this.absensiSubList = false;
     },
 
     // Method untuk menampilkan/menyembunyikan sub-menu saat menu utama diklik

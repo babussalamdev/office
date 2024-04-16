@@ -13,7 +13,7 @@
               <th scope="col">
                 <input type="checkbox" />
               </th>
-              <th scope="col">Nama</th>
+              <th scope="col">Nama / NIS</th>
               <th scope="col">Username</th>
               <th scope="col">Lulusan</th>
               <th scope="col">Jabatan</th>

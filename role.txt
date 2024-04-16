@@ -1,0 +1,32 @@
+// walas
+report 
+	tahfidz
+	nilai mapel
+	absensi
+	pelanggaran
+
+
+// musyrif
+	pelanggaran
+
+
+// kesantrian
+	absensi
+	pelanggaran
+	
+
+// kor tahfidz
+	tahfidz
+
+
+// setup absen
+	buat setup baru di settings
+
+absensi
+nama nis, status, catatan, waktu dan action
+
+note
+settings untuk walas dan musyrif hilang
+masukkan kedalam permissions 	
+
+	

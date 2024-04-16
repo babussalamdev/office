@@ -38,8 +38,12 @@
 }
 #santri .santri .table-responsive {
   overflow-x: auto;
+  width: 100%;
 }
 #santri .santri .table-responsive .table {
+  width: 100%;
+}
+#santri .santri .table-responsive .table .table-hover {
   width: 100%;
 }
 #santri .santri .table-responsive .table thead tr th {
@@ -52,6 +56,11 @@
   padding: 15px 20px;
   margin: auto;
   font-size: 12px;
+}
+#santri .santri .table-responsive .table tbody tr td .power {
+  font-size: 12px;
+  padding: 5px;
+  border-radius: 3px;
 }
 @media screen and (max-width: 576px) {
   #santri .santri .table-responsive .table thead tr th {

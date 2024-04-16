@@ -28,8 +28,8 @@ export default {
         //     state.mapel[i] = { ...state.mapel[i], ...value };
         // }
     },
-    deleteMapel(state, value) {
-        const i = state.mapel.findIndex((x) => x.SK === value);
-        state.mapel.splice(i, 1);
+    deleteSantri(state, value) {
+        const i = state.santri.findIndex((x) => x.SK === value);
+        state.santri.splice(i, 1);
     },
 }

@@ -1,0 +1,64 @@
+#report {
+  .report {
+    .table-responsive {
+      overflow-x: auto;
+      // border-radius: 5px !important;
+      box-shadow: 0 0 15px #b1b1b166;
+      .table {
+        width: 100%;
+        thead {
+          tr {
+            th {
+              padding: 15px 20px;
+              background: #176b87;
+              font-size: 12px;
+              color: #fff;
+            }
+          }
+        }
+        tbody {
+          tr {
+            td {
+              padding: 15px 20px;
+              margin: auto;
+              font-size: 12px;
+              button {
+                font-size: 10px;
+                padding: 3px 10px;
+              }
+            }
+            .container-permissions {
+              .list-permissions {
+                .btn {
+                  background: #000;
+                  span {
+                    font-size: 10px;
+                    @media screen and (max-width: 576px) {
+                      font-size: 8px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        @media screen and (max-width: 576px) {
+          thead {
+            tr {
+              th {
+                font-size: 12px;
+              }
+            }
+          }
+          tbody {
+            tr {
+              td {
+                font-size: 12px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

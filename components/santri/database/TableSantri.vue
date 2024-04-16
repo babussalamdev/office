@@ -3,7 +3,11 @@
     <div>
       <div class="table-responsive">
         <!-- Modal -->
-        <ModalSantri :updateData="updateData" :years="years" />
+        <ModalSantri
+          :updateData="updateData"
+          :years="years"
+          :deleteData="deleteData"
+        />
         <table class="table table-hover table-striped">
           <thead>
             <tr>
@@ -27,11 +31,23 @@
               <td class="text-capitalize">{{ san.Orangtua }}</td>
               <td class="text-capitalize">{{ san.Alamat }}</td>
               <td class="text-end">
-                <a href="#" @click="editItem(index)">
+                <a href="#" @click="editItem(index)" class="me-1">
                   <i class="bx bx-pencil text-primary"></i>
                 </a>
-                <a href="#" @click="rmv(san.id, san.name)">
-                  <i class="bx bx-trash text-danger"></i>
+                <!-- <button @click="deleteItem(index)">
+                  
+                </button> -->
+                <a href="javascript:;" @click="deleteItem(index)">
+                  <i
+                    class="material-icons power text-white"
+                    :class="
+                      santri[index].Status === 'active'
+                        ? 'bg-primary'
+                        : 'bg-secondary'
+                    "
+                  >
+                    power_settings_new
+                  </i>
                 </a>
               </td>
             </tr>
@@ -44,12 +60,14 @@
 
 <script>
 import { mapState } from "vuex";
+import Swal from "sweetalert2";
 
 export default {
   props: ["years"],
   data() {
     return {
       updateData: "",
+      deleteData: "",
     };
   },
   computed: {
@@ -59,6 +77,20 @@ export default {
     async editItem(index) {
       $("#updateDataSantri").modal("show");
       this.updateData = this.santri[index];
+    },
+
+    async deleteItem(index) {
+      if (this.santri[index].Status !== "active") {
+        Swal.fire({
+          icon: "warning",
+          text: "Data tidak bisa diubah",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      } else {
+        $("#deleteDataSantri").modal("show");
+        this.deleteData = this.santri[index];
+      }
     },
   },
 };

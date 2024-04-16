@@ -266,6 +266,80 @@
         </div>
       </div>
     </div>
+    <!-- delete database santri -->
+    <div
+      class="modal fade"
+      id="deleteDataSantri"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <form @submit.prevent="deleteSantri" ref="deleteSantri">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">
+                Non Aktifkan Santri
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <select
+                  class="form-select"
+                  aria-label="Default select example"
+                  name="status"
+                  required
+                >
+                  <option value="" selected disabled>-- Pilih Alasan --</option>
+                  <option value="keluar">Keluar</option>
+                  <option value="pindah">Pindah</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <div class="form-floating">
+                  <textarea
+                    name="alasan"
+                    class="form-control"
+                    placeholder="Leave a comment here"
+                    id="floatingTextarea2"
+                    style="height: 100px"
+                    required
+                  ></textarea>
+                  <label for="floatingTextarea2">Beri Catatan</label>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <span>
+                <button v-if="btn" type="submit" class="btn btn-primary">
+                  simpan
+                </button>
+                <button v-else class="btn btn-primary" type="button" disabled>
+                  <span
+                    class="spinner-border spinner-border-sm"
+                    aria-hidden="true"
+                  ></span>
+                  <span role="status">Loading...</span>
+                </button>
+              </span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -274,7 +348,7 @@ import Swal from "sweetalert2";
 import { v4 as uuidv4 } from "uuid";
 
 export default {
-  props: ["years", "updateData"],
+  props: ["years", "updateData", "deleteData"],
   data() {
     return {
       btn: true,
@@ -307,6 +381,7 @@ export default {
             timer: 1500,
           });
           this.btn = true;
+          this.password = "";
           this.$store.commit("santri/database/inputSantriSingle", result);
           this.$refs.inputDataSantri.reset();
           $("#InputDataSantri").modal("hide");
@@ -355,6 +430,46 @@ export default {
           showConfirmButton: false,
           timer: 1500,
         });
+      }
+    },
+
+    async deleteSantri(event) {
+      this.btn = false;
+      const data = Object.fromEntries(new FormData(event.target));
+      const status = data.status;
+      const note = data.alasan;
+      const key = this.deleteData.SK.split("#")[1];
+      const angkatan = this.deleteData.SK.split("#")[0];
+      const user = this.deleteData.Username;
+      const program = localStorage.getItem("program");
+      try {
+        const result = await this.$axios.$delete(
+          `delete-santri?username=${user}&key=${key}&angkatan=${angkatan}&program=${program}&status=${status}&note=${note}`
+        );
+        if (result) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            text: "Data berhasil di non aktifkan",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          this.btn = true;
+          const shortKey = this.deleteData.SK;
+          this.$store.commit("santri/database/deleteSantri", shortKey);
+          this.$refs.deleteSantri.reset();
+          $("#deleteDataSantri").modal("hide");
+        }
+      } catch (error) {
+        Swal.fire({
+          icon: "warning",
+          text: error,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        this.btn = true;
+        this.$refs.deleteSantri.reset();
+        $("#deleteDataSantri").modal("hide");
       }
     },
   },

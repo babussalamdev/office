@@ -38,8 +38,12 @@
     }
     .table-responsive {
       overflow-x: auto;
+      width: 100%;
       .table {
         width: 100%;
+        .table-hover {
+          width: 100%;
+        }
         thead {
           tr {
             th {
@@ -56,6 +60,11 @@
               padding: 15px 20px;
               margin: auto;
               font-size: 12px;
+              .power {
+                font-size: 12px;
+                padding: 5px;
+                border-radius: 3px;
+              }
             }
           }
         }
