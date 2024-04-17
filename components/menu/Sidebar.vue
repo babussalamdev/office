@@ -3,7 +3,9 @@
     <div class="sidebar-container scrollarea">
       <!-- Logo -->
       <div class="logo animate__animated animate__zoomIn">
-        <img src="~/assets/img/logo-1.png" />
+        <a href="/">
+          <img src="~/assets/img/logo-1.png" />
+        </a>
         <span>Sistem Ma'had</span>
       </div>
       <hr class="mb-3" />
@@ -193,14 +195,7 @@
             </ul>
           </li>
           <!-- Report -->
-          <li
-            v-if="
-              permissions.includes('report mapel') ||
-              permissions.includes('report tahfidz') ||
-              permissions.includes('report absensi') ||
-              permissions.includes('report pelanggaran')
-            "
-          >
+          <li>
             <div
               @click="report"
               class="dropdown d-flex align-items-center justify-content-between gap-2"
@@ -241,7 +236,7 @@
                 </nuxt-link>
               </li>
               <!-- absensi -->
-              <li v-if="permissions.includes('report absensi')">
+              <li>
                 <nuxt-link
                   to="/report/absensi"
                   class="custom-link text-decoration-none d-flex align-items-center gap-2"
@@ -597,7 +592,7 @@
                   <!-- Setup Absen -->
                   <li v-if="personalia === 'on'">
                     <nuxt-link
-                      to="/settings/absensi"
+                      to="/settings/setupabsensi"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2"
                     >
                       <span class="text animate__animated animate__fadeInRight"

@@ -150,7 +150,7 @@ export default {
 
       // Memeriksa apakah elemen yang diklik berada di luar profile
       if (profileElement && !profileElement.contains(event.target)) {
-        this.profil = false; // Sembunyikan profile
+        this.profile = false; // Sembunyikan profile
       }
     },
     hideNotifOnClickOutside(event) {

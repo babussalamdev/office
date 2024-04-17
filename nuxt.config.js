@@ -68,6 +68,7 @@ export default {
       '~/components/settings/periode',
       '~/components/settings/struktur',
       '~/components/settings/absensi',
+      '~/components/settings/setupabsensi',
     ]
   },
 

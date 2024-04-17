@@ -1,11 +1,17 @@
 <template>
-  <div>
-    <h1>Absensi Kelas</h1>
-  </div>
+  <section id="absensi">
+    <div class="absensi animate__animated animate__fadeInUp">
+      <h2 class="mb-3">Absensi Kelas</h2>
+      <!-- table -->
+      <TableAbsensi />
+    </div>
+  </section>
 </template>
 
 <script>
 export default {};
 </script>
 
-<style lang="scss" scoped></style>
+<style>
+@import url(~/assets/css/absensi/absensi.css);
+</style>

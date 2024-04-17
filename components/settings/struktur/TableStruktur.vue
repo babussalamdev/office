@@ -7,6 +7,7 @@
             <th scope="col">Sort</th>
             <th scope="col">Nama</th>
             <th scope="col">Permission</th>
+            <th scope="col">Settings</th>
             <th scope="col" class="text-end">Action</th>
           </tr>
         </thead>
@@ -27,6 +28,17 @@
                     <span>{{ value }}</span>
                   </div>
                 </div>
+              </div>
+            </td>
+            <td class="text-capitalize align-middle">
+              <div class="form-switch">
+                <input
+                  @change="openSettings(data.SK, data.Status)"
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  id="flexSwitchCheckChecked"
+                />
               </div>
             </td>
             <td class="text-end align-middle">
@@ -58,6 +70,7 @@ export default {
   },
   computed: {
     ...mapState("struktur", ["struktur"]),
+    ...mapState("index", ["unit"]),
   },
   methods: {
     async deleteItem(key) {
@@ -89,6 +102,16 @@ export default {
           });
         }
       }
+    },
+    async openSettings(sk, status) {
+      const condition = status === "active" ? "inactive" : "active";
+      const program = localStorage.getItem("program");
+      const data = {
+        key: sk,
+        unit: this.unit,
+        condition: condition,
+      };
+      this.$store.dispatch("struktur/openSettings", data);
     },
     async editItem(index) {
       $("#updateDataStruktur").modal("show");

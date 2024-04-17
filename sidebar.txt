@@ -32,3 +32,20 @@ ${
 
 zangun
 fec515
+
+Buat satu baris baru
+	settings-database-struktur
+	nama kolom : Settings
+	on  off
+	`update-pegawai?subject=Settings&id=${key}`,
+
+buat tabel untuk setup pegawai yang ngajar
+	settings-pegawai-mapel
+	api get : `get-pegawai?program=${data}&opsi=mapel&position=pengajar`
+
+v-if="
+              permissions.includes('report mapel') ||
+              permissions.includes('report tahfidz') ||
+              permissions.includes('report absensi') ||
+              permissions.includes('report pelanggaran')
+            "
