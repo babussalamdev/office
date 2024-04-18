@@ -1,6 +1,6 @@
 <template>
   <section id="santri">
-    <div class="santri">
+    <div class="santri animate__animated animate__fadeInUp">
       <div class="mt-3">
         <div class="database-santri mb-3">
           <div class="left">

@@ -44,7 +44,7 @@
           </li>
 
           <!-- Kelas-->
-          <li v-if="pengajar === 'on'">
+          <li>
             <div
               @click="kelas"
               class="dropdown d-flex align-items-center justify-content-between gap-2"
@@ -98,7 +98,7 @@
             </ul>
           </li>
           <!-- Asrama -->
-          <li v-if="permissions.includes('asrama')">
+          <li>
             <div
               @click="asrama"
               class="dropdown d-flex align-items-center justify-content-between gap-2"
@@ -141,7 +141,7 @@
             </ul>
           </li>
           <!-- Tahfidz -->
-          <li v-if="pengampu === 'on'">
+          <li>
             <div
               @click="tahfidz"
               class="dropdown d-flex align-items-center justify-content-between gap-2"
@@ -345,7 +345,7 @@
                 <!-- sub menu santri -->
                 <ul v-if="santriSubList" class="dropdown-list">
                   <!-- data -->
-                  <li v-if="permissions.includes('data santri')">
+                  <li>
                     <nuxt-link
                       to="/santri/database"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2"
@@ -356,7 +356,7 @@
                     </nuxt-link>
                   </li>
                   <!-- kelas -->
-                  <li v-if="permissions.includes('kelas')">
+                  <li>
                     <nuxt-link
                       to="/santri/kelas"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2"
@@ -367,7 +367,7 @@
                     </nuxt-link>
                   </li>
                   <!-- asrama -->
-                  <li v-if="permissions.includes('asrama')">
+                  <li>
                     <nuxt-link
                       to="/santri/asrama"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2"
@@ -378,7 +378,7 @@
                     </nuxt-link>
                   </li>
                   <!-- halaqah -->
-                  <li v-if="permissions.includes('halaqah')">
+                  <li>
                     <nuxt-link
                       to="/santri/halaqoh"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2"
@@ -389,7 +389,7 @@
                     </nuxt-link>
                   </li>
                   <!-- ekskull -->
-                  <li v-if="permissions.includes('ekskull')">
+                  <li>
                     <nuxt-link
                       to="/santri/ekskull"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2"
@@ -432,12 +432,7 @@
                     </nuxt-link>
                   </li>
                   <!-- halaqah -->
-                  <li
-                    v-if="
-                      $auth.user.role !== 'administrator' &&
-                      permissions.includes('pengampu')
-                    "
-                  >
+                  <li v-if="$auth.user.role !== 'administrator'">
                     <nuxt-link
                       to="/pegawai/halaqoh"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2"
@@ -448,12 +443,7 @@
                     </nuxt-link>
                   </li>
                   <!-- wali kelas -->
-                  <li
-                    v-if="
-                      $auth.user.role !== 'administrator' &&
-                      permissions.includes('wali kelas')
-                    "
-                  >
+                  <li v-if="$auth.user.role !== 'administrator'">
                     <nuxt-link
                       to="/pegawai/walas"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2"
@@ -464,12 +454,7 @@
                     </nuxt-link>
                   </li>
                   <!-- musyrif -->
-                  <li
-                    v-if="
-                      $auth.user.role !== 'administrator' &&
-                      permissions.includes('musyrif')
-                    "
-                  >
+                  <li v-if="$auth.user.role !== 'administrator'">
                     <nuxt-link
                       to="/pegawai/musyrif"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2"
@@ -480,12 +465,7 @@
                     </nuxt-link>
                   </li>
                   <!-- mapel -->
-                  <li
-                    v-if="
-                      $auth.user.role !== 'administrator' &&
-                      permissions.includes('mata pelajaran')
-                    "
-                  >
+                  <li v-if="$auth.user.role !== 'administrator'">
                     <nuxt-link
                       to="/pegawai/mapel"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2"
@@ -535,7 +515,7 @@
                     </nuxt-link>
                   </li>
                   <!-- Halaqah -->
-                  <li v-if="permissions.includes('setup halaqah')">
+                  <li>
                     <nuxt-link
                       to="/settings/halaqah"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2"
@@ -546,7 +526,7 @@
                     </nuxt-link>
                   </li>
                   <!-- Asrama -->
-                  <li v-if="permissions.includes('setup asrama')">
+                  <li>
                     <nuxt-link
                       to="/settings/asrama"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2"
@@ -557,7 +537,7 @@
                     </nuxt-link>
                   </li>
                   <!-- Kelas -->
-                  <li v-if="permissions.includes('setup kelas')">
+                  <li>
                     <nuxt-link
                       to="/settings/kelas"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2"
@@ -568,7 +548,7 @@
                     </nuxt-link>
                   </li>
                   <!-- Mapel -->
-                  <li v-if="permissions.includes('setup mapel')">
+                  <li>
                     <nuxt-link
                       to="/settings/mapel"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2"
