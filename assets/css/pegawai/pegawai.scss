@@ -230,6 +230,15 @@
 #mapel {
   .mapel {
     min-height: 100vh;
+    .row {
+      select {
+        font-size: 12px;
+        width: 100px;
+      }
+      h2 {
+        margin-bottom: 0px !important;
+      }
+    }
     .table-responsive {
       overflow-x: auto;
       .table {

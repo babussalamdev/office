@@ -178,6 +178,13 @@
 #mapel .mapel {
   min-height: 100vh;
 }
+#mapel .mapel .row select {
+  font-size: 12px;
+  width: 100px;
+}
+#mapel .mapel .row h2 {
+  margin-bottom: 0px !important;
+}
 #mapel .mapel .table-responsive {
   overflow-x: auto;
 }

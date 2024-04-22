@@ -6,7 +6,6 @@
           <tr>
             <th scope="col">Sort</th>
             <th scope="col">Nama Mapel</th>
-            <th scope="col">Kelas</th>
             <th scope="col">Jurusan</th>
             <th scope="col">Hari</th>
             <th scope="col" class="text-end">Action</th>
@@ -16,7 +15,6 @@
           <tr v-for="(data, i) in mapel" :key="i">
             <td scope="row">{{ data.Sort }}</td>
             <td scope="row" class="text-capitalize">{{ data.Nama }}</td>
-            <td scope="row" class="text-uppercase">{{ data.Kelas }}</td>
             <td scope="row" class="text-uppercase">{{ data.Jurusan }}</td>
             <td scope="row" class="text-uppercase container-hari">
               <div

@@ -17,16 +17,28 @@
           <tbody>
             <tr v-for="(data, index) in mapel" :key="index">
               <td class="text-capitalize align-middle">
-                {{ data.Mapel }}
+                {{ data.Nama }}
+              </td>
+              <td scope="row" class="text-uppercase">
+                <div
+                  v-for="(value, i) in data.Hari.split(',')"
+                  :key="i"
+                  style="display: inline"
+                >
+                  <div
+                    class="btn-group btn-group-sm px-1 py-1 list-permissions"
+                  >
+                    <div class="btn btn-secondary disabled">
+                      <span>{{ value }}</span>
+                    </div>
+                  </div>
+                </div>
               </td>
               <td class="text-capitalize align-middle">
-                {{ data.Hari }}
+                {{ data.Jam === "" ? "belum dipilih" : data.Jam }}
               </td>
               <td class="text-capitalize align-middle">
-                {{ data.Jam }}
-              </td>
-              <td class="text-capitalize align-middle">
-                <h1>{{ data.Nama }}</h1>
+                <h1>{{ data.Pengajar }}</h1>
                 <p class="text-secondary mt-1">{{ data.Nip }}</p>
               </td>
               <!-- <td class="text-capitalize align-middle">
@@ -47,6 +59,7 @@
             </tr>
           </tbody>
         </table>
+        <!-- {{ mapel }} -->
       </div>
     </div>
   </div>
@@ -60,7 +73,7 @@ export default {
     return {
       updateData: "",
       unit: "",
-      mapel: [
+      mapelMain: [
         {
           Mapel: "aqidah",
           Hari: "senin",
@@ -88,9 +101,9 @@ export default {
   // mounted() {
   //   this.unit = localStorage.getItem("program");
   // },
-  // computed: {
-  //   ...mapState("pegawai/halaqah", ["pengampu", "halaqah"]),
-  // },
+  computed: {
+    ...mapState("pegawai/mapel", ["mapel"]),
+  },
   // methods: {
   //   async editItem(index) {
   //     $("#updateDataHalaqah").modal("show");

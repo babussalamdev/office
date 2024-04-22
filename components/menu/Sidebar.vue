@@ -642,7 +642,7 @@ export default {
       this.absensiSubList = !this.absensiSubList;
       this.santriSubList = false;
       this.pegawaiSubList = false;
-      this.databaseSubListSubList = false;
+      this.databaseSubList = false;
     },
     santriSub() {
       this.santriSubList = !this.santriSubList;

@@ -46,25 +46,6 @@
                 />
               </div>
               <div class="mb-3">
-                <label for="kelas" class="form-label">Kelas</label>
-                <select
-                  name="Kelas"
-                  id="kelas"
-                  class="form-select"
-                  :value="updateData.Kelas"
-                  required
-                >
-                  <option value="" selected disabled>-- Pilih Kelas --</option>
-                  <option
-                    v-for="(value, index) in kelas"
-                    :key="index"
-                    :value="value.Nama"
-                  >
-                    {{ value.Nama }}
-                  </option>
-                </select>
-              </div>
-              <div class="mb-3">
                 <label for="jurusan" class="form-label">Jurusan</label>
                 <select
                   name="Jurusan"
@@ -170,19 +151,6 @@
                 />
               </div>
               <div class="mb-3">
-                <label for="kelas" class="form-label">Kelas</label>
-                <select name="Kelas" id="kelas" class="form-select" required>
-                  <option value="" selected disabled>-- Pilih Kelas --</option>
-                  <option
-                    v-for="(value, index) in kelas"
-                    :key="index"
-                    :value="value.Nama"
-                  >
-                    {{ value.Nama }}
-                  </option>
-                </select>
-              </div>
-              <div class="mb-3">
                 <label for="jurusan" class="form-label">Jurusan</label>
                 <select
                   name="Jurusan"
@@ -257,7 +225,7 @@ export default {
   },
 
   computed: {
-    ...mapState("mapel", ["kelas", "jurusan"]),
+    ...mapState("mapel", ["kelas", "jurusan", "selectKelas"]),
   },
 
   data() {
@@ -291,6 +259,7 @@ export default {
     async inputMapel(event) {
       this.btn = false;
       const data = Object.fromEntries(new FormData(event.target));
+      data["Kelas"] = this.selectKelas;
       data["Program"] = localStorage.getItem("program");
       data["Hari"] = this.value.map((x) => x.name).join(",");
       console.log(data);

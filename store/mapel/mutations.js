@@ -1,8 +1,15 @@
 export default {
     setMapel(state, value) {
-        state.mapel = value.mapel
         state.kelas = value.kelas
         state.jurusan = value.jurusan
+        state.mapel = []
+        state.setKelas = ''
+    },
+    setKelas(state, value) {
+        state.mapel = value.mapel
+    },
+    setSelectKelas(state, value) {
+        state.selectKelas = value
     },
     inputMapel(state, value) {
         state.mapel.push(value);

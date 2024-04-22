@@ -1,9 +1,14 @@
 export default {
     async changeUnit({ commit }, data) {
         const result = await this.$axios.$get(
-            `get-database?subject=mapel&program=${data}`
+            `get-database?subject=opsimapel&program=${data}`
         );
         commit('setMapel', result);
     },
-
+    async getKelas({ commit }, data) {
+        const result = await this.$axios.$get(
+            `get-database?subject=mapel&program=${data.program}&kelas=${data.kelas}`
+        )
+        commit('setKelas', result)
+    }
 }

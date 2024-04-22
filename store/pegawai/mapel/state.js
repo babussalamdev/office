@@ -1,4 +1,5 @@
 export default () => ({
-    pengampu: [],
-    halaqah: []
+    kelas: [],
+    jurusan: [],
+    mapel: [],
 })

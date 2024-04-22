@@ -86,6 +86,7 @@ export default {
     return {
       btn: true,
       years: [],
+      angkatan: "",
     };
   },
 

@@ -125,6 +125,10 @@
 #mapel .mapel .row {
   margin-bottom: 18px;
 }
+#mapel .mapel .row .select {
+  font-size: 12px;
+  width: 100px;
+}
 #mapel .mapel .row .upload-data-santri {
   transform: scale(0.85);
   border-radius: 10px;
