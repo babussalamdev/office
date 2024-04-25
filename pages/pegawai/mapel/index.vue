@@ -1,6 +1,6 @@
 <template>
   <section id="mapel">
-    <div class="mapel animate__animated animate__fadeInUp">
+    <div class="mapel">
       <div class="row mb-3">
         <div class="col-12 col-md-6 d-flex align-items-center">
           <h2 class="text-capitalize mb-3">setup mapel</h2>

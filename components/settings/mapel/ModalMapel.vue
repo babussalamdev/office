@@ -234,13 +234,24 @@ export default {
       unit: "",
       value: [],
       options: [
-        { name: "senin", code: 0 },
-        { name: "selasa", code: 1 },
-        { name: "rabu", code: 2 },
-        { name: "kamis", code: 3 },
-        { name: "jumat", code: 4 },
-        { name: "sabtu", code: 5 },
-        { name: "ahad", code: 6 },
+        { name: "senin-1", code: 0 },
+        { name: "senin-2", code: 1 },
+        { name: "senin-3", code: 2 },
+        { name: "selasa-1", code: 3 },
+        { name: "selasa-2", code: 4 },
+        { name: "selasa-3", code: 5 },
+        { name: "rabu-1", code: 6 },
+        { name: "rabu-2", code: 7 },
+        { name: "rabu-3", code: 8 },
+        { name: "kamis-1", code: 9 },
+        { name: "kamis-2", code: 10 },
+        { name: "kamis-3", code: 11 },
+        { name: "jumat-1", code: 12 },
+        { name: "jumat-2", code: 13 },
+        { name: "jumat-3", code: 14 },
+        { name: "sabtu-1", code: 15 },
+        { name: "sabtu-2", code: 16 },
+        { name: "sabtu-3", code: 17 },
       ],
     };
   },
@@ -261,25 +272,34 @@ export default {
       const data = Object.fromEntries(new FormData(event.target));
       data["Kelas"] = this.selectKelas;
       data["Program"] = localStorage.getItem("program");
-      data["Hari"] = this.value.map((x) => x.name).join(",");
-      console.log(data);
+      data["Hari"] = this.value.map((x) => x.name);
       try {
         const result = await this.$axios.$post(
           `/input-database?subject=mapel`,
           data
         );
         this.btn = true;
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          text: "Data berhasil di input",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        this.$refs.inputMapel.reset();
-        this.value = [];
-        this.$store.commit("mapel/inputMapel", result);
-        $("#InputDataMapel").modal("hide");
+        if (result.message === "Kelas terisi dengan mapel lain") {
+          Swal.fire({
+            position: "center",
+            icon: "warning",
+            text: result.message,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        } else {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            text: "Data berhasil di input",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          this.$refs.inputMapel.reset();
+          this.value = [];
+          this.$store.commit("mapel/inputMapel", result);
+          $("#InputDataMapel").modal("hide");
+        }
       } catch (error) {
         this.btn = true;
         Swal.fire({
@@ -293,8 +313,7 @@ export default {
     async updateMapel(event) {
       this.btn = false;
       const data = Object.fromEntries(new FormData(event.target));
-      data["Hari"] = this.value.map((x) => x.name).join(",");
-      console.log(data);
+      data["Hari"] = this.value.map((x) => x.name);
       const key = this.updateData.SK;
       try {
         const result = await this.$axios.$put(
@@ -304,18 +323,28 @@ export default {
           data
         );
         this.btn = true;
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          text: "Data berhasil di input",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        data["SK"] = key;
-        this.$refs.updateMapel.reset();
-        this.value = [];
-        this.$store.commit("mapel/updateMapel", data);
-        $("#updateDataMapel").modal("hide");
+        if (result.message === "Kelas terisi dengan mapel lain") {
+          Swal.fire({
+            position: "center",
+            icon: "warning",
+            text: result.message,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        } else {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            text: "Data berhasil di input",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          data["SK"] = key;
+          this.$refs.updateMapel.reset();
+          this.value = [];
+          this.$store.commit("mapel/updateMapel", data);
+          $("#updateDataMapel").modal("hide");
+        }
       } catch (error) {
         this.btn = true;
         Swal.fire({
@@ -337,7 +366,7 @@ export default {
     },
 
     async valueUpdate() {
-      const hari = this.updateData.Hari.split(",");
+      const hari = this.updateData.Hari;
       if (hari && hari.length > 0) {
         const mappedArray = hari.map((x) => {
           const option = this.options.find((option) => option.name === x);

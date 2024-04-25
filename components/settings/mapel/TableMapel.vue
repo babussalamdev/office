@@ -16,9 +16,9 @@
             <td scope="row">{{ data.Sort }}</td>
             <td scope="row" class="text-capitalize">{{ data.Nama }}</td>
             <td scope="row" class="text-uppercase">{{ data.Jurusan }}</td>
-            <td scope="row" class="text-uppercase container-hari">
+            <td scope="row" class="text-capitalize container-hari">
               <div
-                v-for="(value, i) in data.Hari.split(',')"
+                v-for="(value, i) in data.Hari"
                 :key="i"
                 style="display: inline"
               >
@@ -72,10 +72,10 @@ export default {
 
       if (result.isConfirmed) {
         const program = localStorage.getItem("program");
-        await this.$axios.$delete(
+        const result = await this.$axios.$delete(
           `delete-database?subject=mapel&program=${program}&code=${
             key.split("#")[2]
-          }`
+          }&kelas=${key.split("#")[1]}`
         );
         this.$store.commit("mapel/deleteMapel", key);
         if (result) {

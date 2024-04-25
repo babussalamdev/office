@@ -189,6 +189,7 @@
   overflow-x: auto;
 }
 #mapel .mapel .table-responsive .table {
+  box-shadow: 0 0 20px rgba(177, 177, 177, 0.4);
   width: 100%;
 }
 #mapel .mapel .table-responsive .table thead tr th {
@@ -199,7 +200,7 @@
 }
 #mapel .mapel .table-responsive .table tbody tr td {
   line-height: 16px;
-  padding: 10px 20px;
+  padding: 8px 20px;
   margin: auto;
   font-size: 12px;
 }
@@ -208,21 +209,11 @@
   height: 100%;
   min-width: 54px !important;
 }
-#mapel .mapel .table-responsive .table tbody tr td .personalia {
-  font-size: 12px;
-  color: #fff;
-  border-radius: 30px;
-  padding: 5px 15px;
+#mapel .mapel .table-responsive .table tbody tr td .btn {
+  padding: 2px 7px !important;
 }
-#mapel .mapel .table-responsive .table tbody tr td span {
+#mapel .mapel .table-responsive .table tbody tr td .btn span {
   font-size: 12px !important;
-}
-#mapel .mapel .table-responsive .table tbody tr td button {
-  padding: 2px 5px 0.5px !important;
-}
-#mapel .mapel .table-responsive .table tbody tr td button i {
-  font-size: 14px !important;
-  padding: -5px !important;
 }
 @media screen and (max-width: 576px) {
   #mapel .mapel .table-responsive .table thead tr th {

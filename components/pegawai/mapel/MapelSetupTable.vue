@@ -1,15 +1,14 @@
 <template>
   <div>
     <div>
+      <MapelSetupModal :updateData="updateData" />
       <div class="table-responsive">
         <!-- Modal -->
-        <HalaqahModal :updateData="updateData" />
         <table class="table table-hover table-striped">
           <thead>
             <tr>
               <th scope="col">Mapel</th>
               <th scope="col">Hari</th>
-              <th scope="col">Jam</th>
               <th scope="col">Pengajar</th>
               <th scope="col" class="text-end">Action</th>
             </tr>
@@ -19,27 +18,23 @@
               <td class="text-capitalize align-middle">
                 {{ data.Nama }}
               </td>
-              <td scope="row" class="text-uppercase">
+              <td scope="row" class="text-capitalize">
                 <div
-                  v-for="(value, i) in data.Hari.split(',')"
+                  v-for="(value, i) in data.Hari"
                   :key="i"
                   style="display: inline"
                 >
                   <div
                     class="btn-group btn-group-sm px-1 py-1 list-permissions"
                   >
-                    <div class="btn btn-secondary disabled">
-                      <span>{{ value }}</span>
+                    <div class="btn btn-dark disabled">
+                      <span style="font-size: 12px">{{ value }}</span>
                     </div>
                   </div>
                 </div>
               </td>
               <td class="text-capitalize align-middle">
-                {{ data.Jam === "" ? "belum dipilih" : data.Jam }}
-              </td>
-              <td class="text-capitalize align-middle">
-                <h1>{{ data.Pengajar }}</h1>
-                <p class="text-secondary mt-1">{{ data.Nip }}</p>
+                <h1>{{ data.GSIPK1 }}</h1>
               </td>
               <!-- <td class="text-capitalize align-middle">
                 {{
@@ -59,7 +54,7 @@
             </tr>
           </tbody>
         </table>
-        <!-- {{ mapel }} -->
+        {{ mapel }}
       </div>
     </div>
   </div>
@@ -73,29 +68,6 @@ export default {
     return {
       updateData: "",
       unit: "",
-      mapelMain: [
-        {
-          Mapel: "aqidah",
-          Hari: "senin",
-          Jam: "08.00",
-          Nama: "fauzan gunawan",
-          Nip: "2341312",
-        },
-        {
-          Mapel: "fiqh",
-          Hari: "selasa",
-          Jam: "08.00",
-          Nama: "afifa cantika",
-          Nip: "2341312",
-        },
-        {
-          Mapel: "bahasa arab",
-          Hari: "rabu",
-          Jam: "08.00",
-          Nama: "shahla nazara",
-          Nip: "2341312",
-        },
-      ],
     };
   },
   // mounted() {
@@ -104,11 +76,11 @@ export default {
   computed: {
     ...mapState("pegawai/mapel", ["mapel"]),
   },
-  // methods: {
-  //   async editItem(index) {
-  //     $("#updateDataHalaqah").modal("show");
-  //     this.updateData = this.pengampu[index];
-  //   },
-  // },
+  methods: {
+    async editItem(index) {
+      $("#mapelSetupModal").modal("show");
+      this.updateData = this.mapel[index];
+    },
+  },
 };
 </script>
