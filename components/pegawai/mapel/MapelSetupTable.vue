@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <MapelSetupModal :updateData="updateData" />
+      <MapelSetupModal :updateData="updateData" @update="updateItem" />
       <div class="table-responsive">
         <!-- Modal -->
         <table class="table table-hover table-striped">
@@ -19,14 +19,8 @@
                 {{ data.Nama }}
               </td>
               <td scope="row" class="text-capitalize">
-                <div
-                  v-for="(value, i) in data.Hari"
-                  :key="i"
-                  style="display: inline"
-                >
-                  <div
-                    class="btn-group btn-group-sm px-1 py-1 list-permissions"
-                  >
+                <div v-for="(value, i) in data.Hari" :key="i" style="display: inline">
+                  <div class="btn-group btn-group-sm px-1 py-1 list-permissions">
                     <div class="btn btn-dark disabled">
                       <span style="font-size: 12px">{{ value }}</span>
                     </div>
