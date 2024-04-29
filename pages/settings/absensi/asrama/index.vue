@@ -9,7 +9,10 @@
 </template>
 
 <script>
-export default {};
+export default {
+  // async asyncData() {
+  // }
+};
 </script>
 
 <style>

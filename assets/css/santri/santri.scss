@@ -92,6 +92,14 @@
 #settings {
   .settings {
     min-height: 100vh;
+    .input-group {
+      button {
+        font-size: 12px !important;
+      }
+      select {
+        font-size: 12px !important;
+      }
+    }
     h2 {
       font-size: 14px;
     }

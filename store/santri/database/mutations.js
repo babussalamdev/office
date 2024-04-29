@@ -1,6 +1,6 @@
 export default {
     setDatabase(state, value) {
-        state.santri = value
+        state.santri = value.Santri
     },
     inputSantriBulk(state, value) {
         state.santri = [...state.santri, ...value];

@@ -74,6 +74,12 @@
 #settings .settings {
   min-height: 100vh;
 }
+#settings .settings .input-group button {
+  font-size: 12px !important;
+}
+#settings .settings .input-group select {
+  font-size: 12px !important;
+}
 #settings .settings h2 {
   font-size: 14px;
 }

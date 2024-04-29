@@ -1,16 +1,23 @@
 <template>
   <section id="settings">
-    <div class="settings animate__animated animate__fadeInUp">
-      <h2 class="text-capitalize mb-3">
-        data {{ $route.name.replace("-", " ") }}
-      </h2>
+    <div class="settings">
       <KelasSantriTable />
     </div>
   </section>
 </template>
 
 <script>
-export default {};
+export default {
+  async asyncData({ store }) {
+    const program = localStorage.getItem("program");
+    const angkatan = new Date().getFullYear();
+    const data = {
+      program: program,
+      angkatan: angkatan,
+    };
+    store.dispatch(`santri/kelas/changeUnit`, data);
+  },
+};
 </script>
 
 <style>

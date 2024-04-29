@@ -11,9 +11,9 @@
         <table class="table table-hover table-striped">
           <thead>
             <tr>
-              <th scope="col">
+              <!-- <th scope="col">
                 <input type="checkbox" />
-              </th>
+              </th> -->
               <th scope="col">Nama</th>
               <th scope="col">NISN</th>
               <th scope="col">Orang Tua</th>
@@ -23,9 +23,9 @@
           </thead>
           <tbody>
             <tr v-for="(san, index) in santri" :key="index">
-              <td>
+              <!-- <td>
                 <input type="checkbox" />
-              </td>
+              </td> -->
               <td class="text-capitalize">{{ san.Nama }}</td>
               <td>{{ san.Nisn }}</td>
               <td class="text-capitalize">{{ san.Orangtua }}</td>

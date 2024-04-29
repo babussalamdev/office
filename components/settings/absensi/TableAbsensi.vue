@@ -55,7 +55,7 @@
               </td>
               <td class="text-end align-middle">
                 <a href="javasript:;" class="bg-success">
-                  <i class="material-icons"> school </i> Hadir</a
+                  <i class="material-icons"> school </i> Sekolah</a
                 >
                 <a href="javasript:;" class="bg-danger">
                   <i class="material-icons"> person_off </i> Absen</a
@@ -63,8 +63,11 @@
                 <a href="javasript:;" class="bg-warning">
                   <i class="material-icons"> medication </i> Sakit</a
                 >
+                <a href="javasript:;" class="bg-secondary">
+                  <i class="material-icons"> villa </i> Rumah</a
+                >
                 <a href="javasript:;" class="bg-primary">
-                  <i class="material-icons"> villa </i> Pulang</a
+                  <i class="material-icons"> villa </i> Izin</a
                 >
               </td>
             </tr>
