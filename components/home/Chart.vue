@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     renderChart() {
-      const colors = ["#3498db", "#2ecc71", "#f1c40f", "#e74c3c", "#9b59b6"];
+      const colors = ["#198754", "#6c757d", "#ffc107", "#0d6efd", "#dc3545"];
       const totalSantri = this.santriData.reduce(
         (total, data) => total + data.jumlah,
         0

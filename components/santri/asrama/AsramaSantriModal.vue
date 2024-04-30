@@ -3,17 +3,20 @@
     <!-- update database pegawai  -->
     <div
       class="modal fade"
-      id="updateDataHalaqah"
+      id="updateDataSantriAsrama"
       tabindex="-1"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
     >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form @submit.prevent="updateHalaqah" ref="updateDataHalaqah">
+          <form
+            @submit.prevent="updateDataSantriAsrama"
+            ref="updateDataSantriAsrama"
+          >
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">
-                Update Data Halaqah
+                Bulk Update kelas
               </h1>
               <button
                 type="button"
@@ -24,19 +27,17 @@
             </div>
             <div class="modal-body">
               <div class="mb-3">
-                <label for="kelas" class="form-label">Halaqah</label>
+                <label for="Kelas" class="form-label">Halaqah</label>
                 <select
-                  name="Asrama"
-                  id="Asrama"
+                  name="value"
+                  id="Kelas"
                   class="form-select"
-                  v-model="halaqahShow"
+                  v-model="asramaShow"
                   required
                 >
-                  <option value="off" selected disabled>
-                    -- Pilih Halaqah --
-                  </option>
+                  <option value="" selected disabled>-- Pilih Asrama --</option>
                   <option
-                    v-for="(value, index) in halaqah"
+                    v-for="(value, index) in selectAsrama"
                     :value="value"
                     :key="index"
                   >
@@ -82,35 +83,28 @@ export default {
   data() {
     return {
       btn: true,
-      halaqahShow: "",
-      unit: localStorage.getItem("program"),
+      asramaShow: "",
+      // unit: localStorage.getItem("program"),
     };
   },
   computed: {
-    ...mapState("pegawai/halaqah", ["halaqah"]),
-  },
-  watch: {
-    updateData: {
-      handler(data) {
-        this.halaqahShow = data.Halaqah[this.unit];
-      },
-    },
+    ...mapState("santri/asrama", ["selectAsrama"]),
   },
   methods: {
-    async updateHalaqah(event) {
+    async updateDataSantriAsrama(event) {
       this.btn = false;
       const data = {};
       const program = localStorage.getItem("program");
-      data["Value"] = this.halaqahShow;
-      data["Program"] = program;
+      data["value"] = this.asramaShow;
+      data["sort"] = this.updateData;
+      console.log(data, program);
       try {
-        const user = this.updateData.Username;
-        const key = this.updateData.SK;
         const result = await this.$axios.$put(
-          `update-pegawai?subject=Halaqah&username=${user}&id=${key}`,
+          `update-santri?subject=none&code=none&program=${program}&bulk=Asrama`,
           data
         );
         if (result) {
+          this.btn = true;
           Swal.fire({
             position: "center",
             icon: "success",
@@ -118,11 +112,10 @@ export default {
             showConfirmButton: false,
             timer: 1500,
           });
-          data["SK"] = key;
-          this.btn = true;
-          this.$store.commit("pegawai/halaqah/updateHalaqah", data);
-          this.$refs.updateDataHalaqah.reset();
-          $("#updateDataHalaqah").modal("hide");
+          this.$store.commit("santri/asrama/updateAsramaSantri", data);
+          this.asramaShow = "";
+          this.$emit("resetSelect");
+          $("#updateDataSantriAsrama").modal("hide");
         }
       } catch (error) {
         this.btn = true;

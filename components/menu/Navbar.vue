@@ -135,6 +135,8 @@ export default {
         this.$store.dispatch(`kaldik/changeUnit`, this.unit);
       } else if (name === "setting-struktur") {
         this.$store.dispatch(`struktur/changeUnit`, this.unit);
+      } else if (name === "setting-setupabsensi") {
+        this.$store.dispatch(`setupabsensi/getAbsensi`, this.unit);
       } else if (name === "santri-database") {
         this.$store.dispatch(`santri/database/changeUnit`, this.unit);
       } else if (name === "pegawai-database") {

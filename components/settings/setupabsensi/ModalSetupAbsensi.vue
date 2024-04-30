@@ -13,7 +13,7 @@
           <form @submit.prevent="inputStruktur" ref="inputStruktur">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">
-                Input Struktur
+                Input Permissions Absensi
               </h1>
               <button
                 type="button"
@@ -24,29 +24,20 @@
             </div>
             <div class="modal-body">
               <div class="mb-3">
-                <label for="sort" class="form-label">Sort</label>
-                <input
-                  name="Sort"
-                  type="number"
-                  class="form-control"
-                  id="sort"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="nama" class="form-label">Nama</label>
-                <input
-                  name="Nama"
-                  type="text"
-                  class="form-control"
-                  id="nama"
-                  required
-                />
+                <select class="form-select" name="Nama">
+                  <option selected>-- Pilih Struktur --</option>
+                  <option
+                    v-for="(data, index) in struktur"
+                    :key="index"
+                    :value="data.Nama"
+                  >
+                    {{ data.Nama }}
+                  </option>
+                </select>
               </div>
               <div class="mb-3">
                 <label class="typo__label mb-2">Permissions</label>
                 <multiselect
-                  name="Permissions"
                   v-model="value"
                   class="text-capitalize"
                   tag-placeholder="Add this as new tag"
@@ -112,31 +103,24 @@
             </div>
             <div class="modal-body">
               <div class="mb-3">
-                <label for="sort" class="form-label">Sort</label>
-                <input
-                  name="Sort"
-                  type="number"
-                  class="form-control"
-                  id="sort"
-                  :value="updateData.Sort"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="nama" class="form-label">Nama</label>
-                <input
+                <select
+                  class="form-select"
                   name="Nama"
-                  type="text"
-                  class="form-control"
-                  id="nama"
                   :value="updateData.Nama"
-                  required
-                />
+                >
+                  <option selected>-- Pilih Struktur --</option>
+                  <option
+                    v-for="(data, index) in struktur"
+                    :key="index"
+                    :value="data.Nama"
+                  >
+                    {{ data.Nama }}
+                  </option>
+                </select>
               </div>
               <div class="mb-3">
                 <label class="typo__label mb-2">Permissions</label>
                 <multiselect
-                  name="Permissions"
                   v-model="value"
                   tag-placeholder="Add this as new tag"
                   placeholder="Search or add a tag"
@@ -180,6 +164,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import Swal from "sweetalert2";
 import Multiselect from "vue-multiselect";
 
@@ -193,23 +178,11 @@ export default {
       btn: true,
       value: [],
       options: [
-        { name: "data santri", code: 0 },
-        { name: "kelas", code: 1 },
-        { name: "asrama", code: 2 },
-        { name: "halaqah", code: 3 },
-        { name: "ekskull", code: 4 },
-        { name: "pengampu", code: 5 },
-        { name: "wali kelas", code: 6 },
-        { name: "musyrif", code: 7 },
-        { name: "mata pelajaran", code: 8 },
-        { name: "setup halaqah", code: 9 },
-        { name: "setup asrama", code: 10 },
-        { name: "setup kelas", code: 11 },
-        { name: "setup mapel", code: 12 },
-        { name: "report mapel", code: 13 },
-        { name: "report tahfidz", code: 14 },
-        { name: "report absensi", code: 15 },
-        { name: "report pelanggaran", code: 16 },
+        { name: "hadir", code: 0 },
+        { name: "absen", code: 1 },
+        { name: "sakit", code: 2 },
+        { name: "pulang", code: 3 },
+        { name: "izin", code: 4 },
       ],
     };
   },
@@ -220,6 +193,9 @@ export default {
       .addEventListener("hidden.bs.modal", function () {
         this.value = [];
       });
+  },
+  computed: {
+    ...mapState("setupabsensi", ["struktur"]),
   },
   watch: {
     updateData: "valueUpdate",
@@ -233,7 +209,7 @@ export default {
       data["Permissions"] = this.value.map((x) => x.name).join(",");
       try {
         const result = await this.$axios.$post(
-          "/input-database?subject=struktur",
+          `/input-database?subject=absensi`,
           data
         );
         this.btn = true;
@@ -246,7 +222,7 @@ export default {
         });
         this.$refs.inputStruktur.reset();
         this.value = [];
-        this.$store.commit("struktur/inputStruktur", result);
+        this.$store.commit("setupabsensi/inputStruktur", result);
         $("#inputDataStruktur").modal("hide");
       } catch (error) {
         this.btn = true;
@@ -267,7 +243,7 @@ export default {
       try {
         const program = localStorage.getItem("program");
         const result = await this.$axios.$put(
-          `update-database?subject=struktur&program=${program}&code=${
+          `update-database?subject=absensi&program=${program}&code=${
             key.split("#")[1]
           }`,
           data
@@ -283,7 +259,7 @@ export default {
         data["SK"] = key;
         this.$refs.updateStruktur.reset();
         this.value = [];
-        this.$store.commit("struktur/updateStruktur", data);
+        this.$store.commit("setupabsensi/updateStruktur", data);
         $("#updateDataStruktur").modal("hide");
       } catch (error) {
         this.btn = true;

@@ -1,4 +1,5 @@
 export default () => ({
     santri: [],
-    permissions: []
+    selectEkskull: [],
+    select: []
 })

@@ -1,17 +1,18 @@
 <template>
   <section id="absensi">
-    <div class="absensi animate__animated animate__fadeInUp">
+    <div class="absensi">
       <h2 class="mb-3">Absensi Asrama</h2>
       <!-- table -->
-      <TableAbsensi />
+      <TableAbsensiAsrama />
     </div>
   </section>
 </template>
 
 <script>
 export default {
-  // async asyncData() {
-  // }
+  async asyncData({ store }) {
+    store.dispatch(`absensi/asrama/changeUnit`);
+  },
 };
 </script>
 

@@ -35,7 +35,7 @@
       </div>
       <div class="table-responsive">
         <!-- Modal -->
-        <KelasSantriModal :updateData="updateData" />
+        <KelasSantriModal :updateData="updateData" @resetSelect="resetSelect" />
         <table class="table table-hover table-striped">
           <thead>
             <tr>
@@ -158,6 +158,11 @@ export default {
     async editBulk(index) {
       $("#updateDataSantriKelas").modal("show");
       this.updateData = this.data;
+    },
+    resetSelect() {
+      this.data = [];
+      this.selectAll = false;
+      this.selectedItems = {};
     },
   },
 };

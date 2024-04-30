@@ -115,7 +115,8 @@ export default {
             timer: 1500,
           });
           this.$store.commit("santri/kelas/updateKelasSantri", data);
-          this.$refs.updateDataSantriKelas.reset();
+          this.$emit("resetSelect");
+          this.kelasShow = "";
           $("#updateDataSantriKelas").modal("hide");
         }
       } catch (error) {

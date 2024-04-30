@@ -27,19 +27,19 @@ h2 {
   width: 5px;
 }
 .box:nth-child(1)::after {
-  background: #3498db;
+  background: #198754;
 }
 .box:nth-child(2)::after {
-  background: #2ecc71;
+  background: #6c757d;
 }
 .box:nth-child(3)::after {
-  background: #f1c40f;
+  background: #ffc107;
 }
 .box:nth-child(4)::after {
-  background: #e74c3c;
+  background: #0d6efd;
 }
 .box:nth-child(5)::after {
-  background: #9b59b6;
+  background: #dc3545;
 }
 
 .box:hover {

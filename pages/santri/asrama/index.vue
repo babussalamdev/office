@@ -1,17 +1,18 @@
 <template>
   <section id="settings">
-    <div class="settings animate__animated animate__fadeInUp">
-      <h2 class="text-capitalize mb-3">
-        data {{ $route.name.replace("-", " ") }}
-      </h2>
-      <h2></h2>
+    <div class="settings">
       <AsramaSantriTable />
     </div>
   </section>
 </template>
 
 <script>
-export default {};
+export default {
+  async asyncData({ store }) {
+    const program = localStorage.getItem("program");
+    store.dispatch(`santri/asrama/changeUnit`, program);
+  },
+};
 </script>
 
 <style>

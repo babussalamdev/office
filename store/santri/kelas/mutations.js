@@ -16,22 +16,22 @@ export default {
         });
     },
     updateKelasSantri(state, data) {
-        const updatedData = state.santri.map((item, index) => {
-            const key = data.sort.map((sk) => {
-                const i = state.santri.findIndex((x) => x.SK === sk)
-                const datas = state.santri[i];
-                datas['Kelas'] = data.value
-                if (index === i) {
-                    return data;
-                }
-                return item;
-            })
-            return key
+        const updatedData = state.santri.map(item => {
+            // Cari objek dalam state.santri yang memiliki SK yang sama dengan yang ada di data.sort
+            if (data.sort.includes(item.SK)) {
+                // Salin objek agar tidak memodifikasi state langsung
+                const updatedItem = { ...item };
+                // Perbarui nilai 'Kelas' dari objek yang ditemukan
+                updatedItem['Kelas'] = data.value;
+                return updatedItem;
+            }
+            return item; // Kembalikan objek tanpa modifikasi jika tidak ada yang sesuai
         });
-        console.log(updatedData)
 
-        state.mapel = updatedData
+        // Perbarui state dengan data yang diperbarui
+        state.santri = updatedData;
     },
+
     setPengajar(state, value) {
         const i = state.mapel.findIndex((x) => x.SK === value.SK)
         const data = state.mapel[i];

@@ -48,25 +48,45 @@
               </td>
               <td class="text-capitalize align-middle">{{ data.Catatan }}</td>
               <td class="text-capitalize align-middle">
-                <h1>{{ data.Waktu.split(" ")[0] }}</h1>
+                <h1>{{ data.Waktu?.split(" ")[0] }}</h1>
                 <p class="mt-1 text-secondary">
-                  {{ data.Waktu.split(" ")[1] }}
+                  {{ data.Waktu?.split(" ")[1] }}
                 </p>
               </td>
               <td class="text-end align-middle">
-                <a href="javasript:;" class="bg-success">
-                  <i class="material-icons"> school </i> Sekolah</a
+                <a
+                  href="javasript:;"
+                  class="bg-success"
+                  v-if="permissions.includes('hadir')"
                 >
-                <a href="javasript:;" class="bg-danger">
+                  <i class="material-icons"> school </i> Hadir</a
+                >
+                <a
+                  href="javasript:;"
+                  class="bg-danger"
+                  v-if="permissions.includes('absen')"
+                >
                   <i class="material-icons"> person_off </i> Absen</a
                 >
-                <a href="javasript:;" class="bg-warning">
+                <a
+                  href="javasript:;"
+                  class="bg-warning"
+                  v-if="permissions.includes('sakit')"
+                >
                   <i class="material-icons"> medication </i> Sakit</a
                 >
-                <a href="javasript:;" class="bg-secondary">
-                  <i class="material-icons"> villa </i> Rumah</a
+                <a
+                  href="javasript:;"
+                  class="bg-secondary"
+                  v-if="permissions.includes('pulang')"
                 >
-                <a href="javasript:;" class="bg-primary">
+                  <i class="material-icons"> villa </i> Pulang</a
+                >
+                <a
+                  href="javasript:;"
+                  class="bg-primary"
+                  v-if="permissions.includes('izin')"
+                >
                   <i class="material-icons"> villa </i> Izin</a
                 >
               </td>
@@ -79,40 +99,11 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
-  data() {
-    return {
-      santri: [
-        {
-          Nama: "fauzan gunawan",
-          Nis: "534241",
-          Status: "rumah",
-          Catatan: "",
-          Waktu: "2024-04-15 14:30:00",
-        },
-        {
-          Nama: "afifa cantika",
-          Nis: "534241",
-          Status: "pondok",
-          Catatan: "",
-          Waktu: "2024-04-15 14:30:00",
-        },
-        {
-          Nama: "sari hariyanti",
-          Nis: "534241",
-          Status: "sakit",
-          Catatan: "Panas Meriang",
-          Waktu: "2024-04-15 14:30:00",
-        },
-        {
-          Nama: "shahla nazara",
-          Nis: "534241",
-          Status: "absen",
-          Catatan: "",
-          Waktu: "2024-04-15 14:30:00",
-        },
-      ],
-    };
+  computed: {
+    ...mapState("absensi/asrama", ["santri", "permissions"]),
   },
 };
 </script>

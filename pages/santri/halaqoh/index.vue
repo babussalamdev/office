@@ -1,16 +1,18 @@
 <template>
   <section id="settings">
     <div class="settings">
-      <h2 class="text-capitalize mb-3">
-        data {{ $route.name.replace("-", " ") }}
-      </h2>
       <HalaqahSantriTable />
     </div>
   </section>
 </template>
 
 <script>
-export default {};
+export default {
+  async asyncData({ store }) {
+    const program = localStorage.getItem("program");
+    store.dispatch(`santri/halaqah/changeUnit`, program);
+  },
+};
 </script>
 
 <style>
