@@ -43,6 +43,10 @@ export default {
     ...mapState("index", ["unit"]),
   },
 
+  async asyncData({ store }) {
+    store.dispatch(`home/setMainChart`);
+  },
+
   // mounted() {
   //   console.log(this.unit);
   // },

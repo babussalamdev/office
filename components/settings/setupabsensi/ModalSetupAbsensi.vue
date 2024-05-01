@@ -52,6 +52,16 @@
                 ></multiselect>
                 <!-- <pre class="language-json"><code>{{ value  }}</code></pre> -->
               </div>
+              <div class="mb-3">
+                <label for="" class="mb-3">Database</label>
+                <select class="form-select" name="Database">
+                  <option selected>-- Pilih Database --</option>
+                  <option value="kelas">kelas</option>
+                  <option value="asrama">asrama</option>
+                  <option value="halaqah">halaqah</option>
+                  <option value="ekskull">ekskull</option>
+                </select>
+              </div>
             </div>
             <div class="modal-footer">
               <button

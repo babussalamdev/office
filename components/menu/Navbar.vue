@@ -123,7 +123,9 @@ export default {
         this.$store.dispatch("index/changeUnit", this.unit);
       }
       const name = this.$route.name;
-      if (name === "setting-mapel") {
+      if (name === "index") {
+        this.$store.dispatch(`home/setMainChart`, this.unit);
+      } else if (name === "setting-mapel") {
         this.$store.dispatch(`mapel/changeUnit`, this.unit);
       } else if (name === "setting-kelas") {
         this.$store.dispatch(`kelas/changeUnit`, this.unit);

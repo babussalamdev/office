@@ -3,6 +3,13 @@
     h2 {
       font-size: 14px;
     }
+    select {
+      font-size: 12px;
+      width: 100px;
+      @media screen and (max-width: 576px) {
+        width: 100% !important;
+      }
+    }
     .table-responsive {
       overflow-x: auto;
       // border-radius: 5px !important;

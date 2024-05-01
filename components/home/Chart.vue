@@ -23,21 +23,32 @@
 
 <script>
 import ApexCharts from "apexcharts";
+import { mapState } from "vuex";
 
 export default {
   data() {
     return {
       santriData: [
-        { status: "Mahad", jumlah: 102 },
-        { status: "Rumah", jumlah: 62 },
-        { status: "Sakit", jumlah: 42 },
-        { status: "Izin", jumlah: 82 },
-        { status: "Absen", jumlah: 32 },
+        { status: "Mahad", jumlah: 0 },
+        { status: "Rumah", jumlah: 0 },
+        { status: "Sakit", jumlah: 0 },
+        { status: "Izin", jumlah: 0 },
+        { status: "Absen", jumlah: 0 },
       ],
     };
   },
+  computed: {
+    ...mapState("home", ["chart", "dataChart"]),
+  },
+
   mounted() {
     this.renderChart();
+  },
+  watch: {
+    dataChart() {
+      this.renderChart();
+      this.santriData;
+    },
   },
   methods: {
     renderChart() {
@@ -47,7 +58,7 @@ export default {
         0
       );
 
-      this.santriData.forEach((data, index) => {
+      this.santriData.map((data, index) => {
         const chartId = "chart-" + index;
         const percentage = (data.jumlah / totalSantri) * 100;
         const options = {

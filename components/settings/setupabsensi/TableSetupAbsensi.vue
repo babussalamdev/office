@@ -23,6 +23,7 @@
           <tr>
             <th scope="col">Nama</th>
             <th scope="col">Permission</th>
+            <th scope="col">Database</th>
             <th scope="col" class="text-end">Action</th>
           </tr>
         </thead>
@@ -43,6 +44,9 @@
                   </div>
                 </div>
               </div>
+            </td>
+            <td scope="row" class="align-middle">
+              {{ data.Database }}
             </td>
             <td class="text-end align-middle">
               <a href="javascript:;" @click="editItem(i)"

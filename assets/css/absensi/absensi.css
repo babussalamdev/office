@@ -1,6 +1,15 @@
 #absensi .absensi h2 {
   font-size: 14px;
 }
+#absensi .absensi select {
+  font-size: 12px;
+  width: 100px;
+}
+@media screen and (max-width: 576px) {
+  #absensi .absensi select {
+    width: 100% !important;
+  }
+}
 #absensi .absensi .table-responsive {
   overflow-x: auto;
 }
