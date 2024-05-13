@@ -51,6 +51,16 @@ h2 {
   position: relative;
 }
 
+.apexcharts-tracks {
+  position: absolute;
+  background: red;
+}
+
+.chart-container {
+  width: 110px !important;
+  margin-top: -5px;
+}
+
 [id^="chart-"] {
   position: absolute;
   left: 0;

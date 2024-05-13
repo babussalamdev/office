@@ -133,7 +133,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("absensi", ["santri", "permissions", "select"]),
+    ...mapState("asramaAbsensi", ["santri", "permissions", "select"]),
   },
 
   methods: {
@@ -146,7 +146,7 @@ export default {
     },
     getAbsensi() {
       const kelas = this.selectKelas;
-      this.$store.dispatch("absensi/getAbsensi", kelas);
+      this.$store.dispatch("asramaAbsensi/getAbsensi", kelas);
     },
   },
 };

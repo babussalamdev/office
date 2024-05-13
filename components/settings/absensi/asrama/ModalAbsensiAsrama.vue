@@ -103,7 +103,7 @@ export default {
           });
           result["SK"] = this.updateData.santri.SK;
           this.$refs.santriAbsen.reset();
-          this.$store.commit("absensi/updateAbsen", result);
+          this.$store.commit("asramaAbsensi/updateAbsen", result);
           $("#modalAbsen").modal("hide");
         }
       } catch (error) {

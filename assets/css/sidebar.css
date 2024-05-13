@@ -1,12 +1,16 @@
 .sidebar {
   position: fixed;
-  left: 10px;
-  top: 0;
-  padding-top: 20px;
-  height: 100vh !important;
+  background-color: #176b87;
+  left: 7px;
+  top: 7px;
+  padding-top: 40px;
+  padding-left: 15px;
+  height: calc(100vh - 13px);
   width: 198px;
+  width: 208px;
   overflow-y: scroll;
-  height: max-content;
+  border-radius: 10px;
+  /* height: max-content; */
   color: #fff;
   z-index: 99;
 }
@@ -140,7 +144,8 @@
   }
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 1200px) {
+  /*ini awalnya 576px*/
   .sidebar {
     position: absolute;
     top: 0;

@@ -53,6 +53,12 @@ export default {
       '~/components',
       '~/components/home',
       '~/components/menu',
+      '~/components/kelas',
+      '~/components/kelas/nilai',
+      '~/components/pelanggaran',
+      '~/components/pelanggaran/record',
+      '~/components/tahfidz',
+      '~/components/tahfidz/mutabaah',
       '~/components/santri',
       '~/components/santri/database',
       '~/components/santri/halaqah',
@@ -73,6 +79,7 @@ export default {
       '~/components/settings/absensi',
       '~/components/settings/absensi/asrama',
       '~/components/settings/setupabsensi',
+      '~/components/settings/setuppelanggaran',
     ]
   },
 

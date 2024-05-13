@@ -15,8 +15,11 @@
     }
     .table-responsive {
       overflow-x: auto;
+      border-radius: 7px !important;
+      box-shadow: 0 0 15px #b1b1b166;
       .table {
         width: 100%;
+        margin-bottom: 0 !important;
         thead {
           tr {
             th {
@@ -330,6 +333,9 @@
   .struktur {
     .row {
       margin-bottom: 18px;
+      h3 {
+        font-size: 14px;
+      }
       .upload-data-santri {
         transform: scale(0.85);
         border-radius: 10px;
@@ -343,10 +349,11 @@
     }
     .table-responsive {
       overflow-x: auto;
-      // border-radius: 5px !important;
+      border-radius: 7px !important;
+      box-shadow: 0 0 15px #b1b1b166;
       .table {
-        box-shadow: 0 0 15px #b1b1b166;
         width: 100%;
+        margin-bottom: 0 !important;
         thead {
           tr {
             th {

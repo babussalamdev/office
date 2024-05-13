@@ -167,7 +167,6 @@
         thead {
           tr {
             th {
-              border: 0.5px solid;
               text-align: center;
               vertical-align: middle;
               padding: 15px 20px;
@@ -180,9 +179,12 @@
         tbody {
           tr {
             td {
-              padding: 15px 20px;
+              padding: 12px 20px;
               margin: auto;
               font-size: 12px;
+              i {
+                cursor: pointer;
+              }
             }
           }
         }

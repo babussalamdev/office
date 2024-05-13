@@ -127,7 +127,6 @@
   width: 100%;
 }
 #rekaptahfidz .rekaptahfidz .table-responsive .table thead tr th {
-  border: 0.5px solid;
   text-align: center;
   vertical-align: middle;
   padding: 15px 20px;
@@ -136,9 +135,12 @@
   color: #fff;
 }
 #rekaptahfidz .rekaptahfidz .table-responsive .table tbody tr td {
-  padding: 15px 20px;
+  padding: 12px 20px;
   margin: auto;
   font-size: 12px;
+}
+#rekaptahfidz .rekaptahfidz .table-responsive .table tbody tr td i {
+  cursor: pointer;
 }
 @media screen and (max-width: 576px) {
   #rekaptahfidz .rekaptahfidz .table-responsive .table thead tr th {

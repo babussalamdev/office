@@ -18,18 +18,32 @@
     <div class="content" :class="!isSidebar ? 'fix' : ''">
       <!-- <div class="animate__animated animate__fadeInUp"> -->
       <Navbar />
-      <hr class="mb-4" />
+      <hr class="mb-4 d-block d-md-none" />
       <!-- </div> -->
-      <div class="position-relative">
+      <div class="nuxt position-relative">
         <nuxt />
+      </div>
+
+      <div
+        v-if="overlay"
+        class="overlay d-flex align-items-center justify-content-center"
+      >
+        <div class="spinner-grow text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <!-- <div class="spinner-border text-light" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div> -->
       </div>
     </div>
 
-    <div class="overlay" v-if="!isSidebar"></div>
+    <!-- <div class="overlay" v-if="!isSidebar"></div> -->
   </main>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   data() {
     return {
@@ -42,6 +56,10 @@ export default {
       this.isSidebar = !this.isSidebar;
     },
   },
+
+  computed: {
+    ...mapState("mainkelas", ["overlay"]),
+  },
 };
 </script>
 
@@ -49,13 +67,28 @@ export default {
 @import url(~/assets/css/reset.css);
 @import url(~/assets/css/style.css);
 main {
-  background-color: #176b87;
+  background-color: #f1f5f9;
   padding-left: 208px;
+  padding-left: 213px;
 }
 .content {
   background: #f1f5f9;
   min-height: 100vh;
-  padding: 10px 20px;
+  padding: 10px 15px 10px 20px;
+}
+.overlay {
+  position: absolute;
+  background: #00000077;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+}
+@media screen and (min-width: 577px) {
+  .nuxt {
+    padding-top: 100px !important;
+  }
 }
 
 /* khusus  */
@@ -66,7 +99,7 @@ main {
 }
 @media screen and (max-width: 1200px) {
   main {
-    padding-left: 68px;
+    padding-left: 0px !important; /*awalny 68px */
   }
 }
 
@@ -79,9 +112,9 @@ main {
   .content {
     margin-top: 50px;
   }
-  .overlay {
-    /* Gaya untuk overlay */
-    content: "";
+  /* .overlay { */
+  /* Gaya untuk overlay */
+  /* content: "";
     background-color: rgba(0, 0, 0, 0.615);
     position: fixed;
     top: 0;
@@ -90,7 +123,7 @@ main {
     height: max-content;
     width: 100vh;
     height: 100vh;
-  }
+  } */
 
   .menu-mobile {
     position: fixed;

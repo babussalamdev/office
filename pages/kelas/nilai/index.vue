@@ -1,7 +1,7 @@
 <template>
-  <section id="nilai">
-    <div class="nilai">
-      <h1>Nilai Page</h1>
+  <section id="penilaian">
+    <div class="penilaian">
+      <PenilaianKelasTable />
     </div>
   </section>
 </template>
@@ -10,4 +10,6 @@
 export default {};
 </script>
 
-<style lang="scss" scoped></style>
+<style>
+@import url(~/assets/css/kelas/kelas.css);
+</style>

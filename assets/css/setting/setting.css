@@ -11,9 +11,12 @@
 }
 #halaqoh .halaqoh .table-responsive {
   overflow-x: auto;
+  border-radius: 7px !important;
+  box-shadow: 0 0 15px rgba(177, 177, 177, 0.4);
 }
 #halaqoh .halaqoh .table-responsive .table {
   width: 100%;
+  margin-bottom: 0 !important;
 }
 #halaqoh .halaqoh .table-responsive .table thead tr th {
   padding: 15px 20px;
@@ -228,6 +231,9 @@
 #struktur .struktur .row {
   margin-bottom: 18px;
 }
+#struktur .struktur .row h3 {
+  font-size: 14px;
+}
 #struktur .struktur .row .upload-data-santri {
   transform: scale(0.85);
   border-radius: 10px;
@@ -238,10 +244,12 @@
 }
 #struktur .struktur .table-responsive {
   overflow-x: auto;
+  border-radius: 7px !important;
+  box-shadow: 0 0 15px rgba(177, 177, 177, 0.4);
 }
 #struktur .struktur .table-responsive .table {
-  box-shadow: 0 0 15px rgba(177, 177, 177, 0.4);
   width: 100%;
+  margin-bottom: 0 !important;
 }
 #struktur .struktur .table-responsive .table thead tr th {
   padding: 15px 20px;

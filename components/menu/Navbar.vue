@@ -124,6 +124,7 @@ export default {
       }
       const name = this.$route.name;
       if (name === "index") {
+        console.log(this.unit);
         this.$store.dispatch(`home/setMainChart`, this.unit);
       } else if (name === "setting-mapel") {
         this.$store.dispatch(`mapel/changeUnit`, this.unit);

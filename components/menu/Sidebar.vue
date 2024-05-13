@@ -42,7 +42,6 @@
               >
             </nuxt-link>
           </li>
-
           <!-- Kelas-->
           <li>
             <div
@@ -91,7 +90,7 @@
                   class="custom-link text-decoration-none d-flex align-items-center gap-2"
                 >
                   <span class="text animate__animated animate__fadeInRight"
-                    >Nilai</span
+                    >Penilaian</span
                   >
                 </nuxt-link>
               </li>
@@ -194,6 +193,20 @@
               </li>
             </ul>
           </li>
+          <!-- Pelanggaran -->
+          <li>
+            <nuxt-link
+              to="/pelanggaran"
+              class="text-decoration-none d-flex align-items-center gap-2"
+            >
+              <i class="material-icons animate__animated animate__fadeInRight">
+                privacy_tip
+              </i>
+              <span class="text animate__animated animate__fadeInRight"
+                >Pelanggaran</span
+              >
+            </nuxt-link>
+          </li>
           <!-- Report -->
           <li>
             <div
@@ -281,53 +294,24 @@
             <ul v-if="listSettings" class="dropdown-list">
               <!-- Absensi Menu -->
               <li v-if="$auth.user.role !== 'administrator'">
-                <div
-                  @click="absensiSub"
-                  class="dropdown d-flex align-items-center justify-content-between gap-2"
+                <nuxt-link
+                  to="/settings/absensi"
+                  class="text-decoration-none sub-menu d-flex align-items-center gap-2"
                 >
-                  <span class="d-flex align-items-center gap-2">
-                    <span class="text animate__animated animate__fadeInRight"
-                      >Absensi</span
-                    >
-                  </span>
-                  <i class="bx bx-chevron-down"></i>
-                </div>
-                <!-- sub menu absensi -->
-                <ul v-if="absensiSubList" class="dropdown-list">
-                  <!-- kelas -->
-                  <li>
-                    <nuxt-link
-                      to="/settings/absensi/kelas"
-                      class="text-decoration-none sub-menu d-flex align-items-center gap-2"
-                    >
-                      <span class="text animate__animated animate__fadeInRight"
-                        >Kelas</span
-                      >
-                    </nuxt-link>
-                  </li>
-                  <!-- asrama -->
-                  <li>
-                    <nuxt-link
-                      to="/settings/absensi/asrama"
-                      class="text-decoration-none sub-menu d-flex align-items-center gap-2"
-                    >
-                      <span class="text animate__animated animate__fadeInRight"
-                        >Asrama</span
-                      >
-                    </nuxt-link>
-                  </li>
-                  <!-- halaqah -->
-                  <li>
-                    <nuxt-link
-                      to="/settings/absensi/halaqah"
-                      class="text-decoration-none sub-menu d-flex align-items-center gap-2"
-                    >
-                      <span class="text animate__animated animate__fadeInRight"
-                        >Halaqah</span
-                      >
-                    </nuxt-link>
-                  </li>
-                </ul>
+                  <span class="text animate__animated animate__fadeInRight"
+                    >Absensi</span
+                  >
+                </nuxt-link>
+              </li>
+              <li v-if="$auth.user.role !== 'administrator'">
+                <nuxt-link
+                  to="/settings/pelanggaran"
+                  class="text-decoration-none sub-menu d-flex align-items-center gap-2"
+                >
+                  <span class="text animate__animated animate__fadeInRight"
+                    >Pelanggaran</span
+                  >
+                </nuxt-link>
               </li>
               <!-- Santri Menu -->
               <li v-if="$auth.user.role !== 'administrator'">
@@ -569,17 +553,6 @@
                       >
                     </nuxt-link>
                   </li>
-                  <!-- Setup Absen -->
-                  <li v-if="personalia === 'on'">
-                    <nuxt-link
-                      to="/settings/setupabsensi"
-                      class="text-decoration-none sub-menu d-flex align-items-center gap-2"
-                    >
-                      <span class="text animate__animated animate__fadeInRight"
-                        >Absensi</span
-                      >
-                    </nuxt-link>
-                  </li>
                 </ul>
               </li>
             </ul>
@@ -647,7 +620,7 @@ export default {
     santriSub() {
       this.santriSubList = !this.santriSubList;
       this.pegawaiSubList = false;
-      this.databaseSubListSubList = false;
+      this.databaseSubList = false;
       this.absensiSubList = false;
     },
     pegawaiSub() {
