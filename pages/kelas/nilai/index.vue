@@ -7,7 +7,11 @@
 </template>
 
 <script>
-export default {};
+export default {
+  async asyncData({ store }) {
+    store.dispatch("kelas/loadKelasPenilaian");
+  },
+};
 </script>
 
 <style>

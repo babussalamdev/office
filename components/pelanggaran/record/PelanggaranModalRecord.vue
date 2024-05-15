@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- input pelanggaran  -->
+    <!-- update pelanggaran  -->
     <div
       class="modal fade"
       id="updateModal"
@@ -15,7 +15,7 @@
           <form @submit.prevent="inputForm" ref="inputForm">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">
-                Input Data Pelanggaran
+                Update Data Pelanggaran
               </h1>
               <button
                 type="button"
@@ -115,7 +115,7 @@ export default {
   },
   methods: {
     async inputForm(event) {
-      // this.btn = false;
+      this.btn = false;
       const data = Object.fromEntries(new FormData(event.target));
       const program = localStorage.getItem("program");
       const pk = this.updateRecord.PK;
@@ -142,12 +142,12 @@ export default {
             showConfirmButton: false,
             timer: 1500,
           });
-          console.log(result);
-          // result["key"] = this.updateData.SK;
-          // this.$store.commit("pelanggaran/updatePelanggaran", result);
+          // console.log(result);
+          result["key"] = this.updateRecord.SK;
+          this.$store.commit("pelanggaran/updateRecordPelanggaran", result);
           // this.asramaShow = "";
           // this.$emit("resetSelect");
-          $("#inputModal").modal("hide");
+          $("#updateModal").modal("hide");
         }
       } catch (error) {
         this.btn = true;

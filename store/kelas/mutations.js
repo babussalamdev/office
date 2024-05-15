@@ -34,4 +34,15 @@ export default {
         const i = state.ekskull.findIndex((x) => x.SK === value);
         state.ekskull.splice(i, 1);
     },
+
+    // penilaian kelas
+    setkelasPenilaian(state, value) {
+        state.selectKelas = value
+    },
+    selectMapel(state, value) {
+        state.selectedMapel = value
+    },
+    getTahunAjaran(state, value) {
+        console.log('Berhasil')
+    }
 }

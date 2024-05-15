@@ -37,5 +37,13 @@ export default {
     // record
     setRecord(state, value) {
         state.record = value
+    },
+    updateRecordPelanggaran(state, value) {
+        const i = state.record.findIndex((x) => x.SK === value.key)
+        const data = state.record[i]
+        data.Pelanggaran = value.Pelanggaran
+        data.Level = value.Level
+        data.Poin = value.Poin
+        data.Tindakan = value.Tindakan
     }
 }
