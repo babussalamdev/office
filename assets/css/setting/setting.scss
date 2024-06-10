@@ -278,8 +278,11 @@
     }
     .table-responsive {
       overflow-x: auto;
+      border-radius: 7px !important;
+      box-shadow: 0 0 15px #b1b1b166;
       .table {
         width: 100%;
+        margin-bottom: 0 !important;
         thead {
           tr {
             th {

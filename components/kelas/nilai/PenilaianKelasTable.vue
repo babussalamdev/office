@@ -25,6 +25,7 @@
             class="form-select"
             aria-label="Default select example"
             v-model="mapel"
+            @change="selectPeriode"
           >
             <option value="" selected>Mapel</option>
             <option v-for="(value, i) in selectedMapel" :key="i" :value="value">
@@ -38,9 +39,16 @@
             class="form-select"
             aria-label="Default select example"
             v-model="periode"
+            @change="getNilai"
           >
             <option value="" disabled selected>Periode</option>
-            <option value=""></option>
+            <option
+              v-for="(data, index) in selectedPeriode"
+              :key="index"
+              :value="data"
+            >
+              {{ data.periode }} ( {{ data.semester }} )
+            </option>
           </select>
         </div>
       </div>
@@ -118,16 +126,16 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(data, index) in dummy" :key="index">
+          <tr v-for="(data, index) in nilaiSantri" :key="index">
             <td class="text-capitalize align-middle">
               <h1>{{ data.Nama }}</h1>
             </td>
             <td class="text-capitalize align-middle">
               <span v-if="radio === 'hadir'">
                 <input
+                  :value="data.Hadir ? data.Hadir : 0"
                   type="number"
                   class="form-control"
-                  v-model="data.Hadir"
                   @change="update(index, 'Hadir')"
                 />
               </span>
@@ -197,40 +205,54 @@ export default {
       radio: "none",
       hadir: "",
       overlay: false,
-      dummy: [
-        {
-          Nama: "Fauzan Gunawan",
-          Hadir: "90",
-          Harian: "91",
-          UTS: "92",
-          UAS: "95",
-          Total: "92.6",
-        },
-        {
-          Nama: "Fauzan Gunawan",
-          Hadir: "90",
-          Harian: "91",
-          UTS: "92",
-          UAS: "95",
-          Total: "92.6",
-        },
-        {
-          Nama: "Fauzan Gunawan",
-          Hadir: "90",
-          Harian: "91",
-          UTS: "92",
-          UAS: "95",
-          Total: "92.6",
-        },
-      ],
+      // dummy: [
+      //   {
+      //     Nama: "Fauzan Gunawan",
+      //     Hadir: "90",
+      //     Harian: "91",
+      //     UTS: "92",
+      //     UAS: "95",
+      //     Total: "92.6",
+      //   },
+      //   {
+      //     Nama: "Fauzan Gunawan",
+      //     Hadir: "90",
+      //     Harian: "91",
+      //     UTS: "92",
+      //     UAS: "95",
+      //     Total: "92.6",
+      //   },
+      //   {
+      //     Nama: "Fauzan Gunawan",
+      //     Hadir: "90",
+      //     Harian: "91",
+      //     UTS: "92",
+      //     UAS: "95",
+      //     Total: "92.6",
+      //   },
+      // ],
     };
   },
   computed: {
-    ...mapState("kelas", ["selectKelas", "selectedMapel"]),
+    ...mapState("kelas", [
+      "selectKelas",
+      "selectedMapel",
+      "selectedPeriode",
+      "nilaiSantri",
+    ]),
   },
   methods: {
-    async getTahunAjaran() {
-      this.$store.dispatch("kelas/getTahunAjaran");
+    async getNilai() {
+      const data = {
+        kelas: this.kelas,
+        mapel: this.mapel.Nama,
+        jurusan: this.mapel.Jurusan,
+        periode: `${this.periode.periode} ${this.periode.semester}`,
+      };
+      this.$store.dispatch("kelas/getNilai", data);
+    },
+    async selectPeriode() {
+      this.$store.dispatch("kelas/selectPeriode");
     },
     async selectMapel() {
       this.$store.dispatch("kelas/selectMapel", this.kelas);
@@ -291,7 +313,7 @@ a {
 }
 select {
   font-size: 12px;
-  width: 100px;
+  width: max-content !important;
 }
 span {
   font-size: 12px;

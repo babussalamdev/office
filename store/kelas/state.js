@@ -3,5 +3,7 @@ export default () => ({
     jurusan: [],
     ekskull: [],
     selectKelas: [],
-    selectedMapel: []
+    selectedMapel: [],
+    selectedPeriode: [],
+    nilaiSantri: []
 })

@@ -194,9 +194,12 @@
 }
 #utama .utama .table-responsive {
   overflow-x: auto;
+  border-radius: 7px !important;
+  box-shadow: 0 0 15px rgba(177, 177, 177, 0.4);
 }
 #utama .utama .table-responsive .table {
   width: 100%;
+  margin-bottom: 0 !important;
 }
 #utama .utama .table-responsive .table thead tr th {
   padding: 15px 20px;

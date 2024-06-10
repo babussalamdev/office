@@ -6,6 +6,7 @@
           <th scope="col">Sort</th>
           <th scope="col">Semester</th>
           <th scope="col">Tahun</th>
+          <th scope="col">Label</th>
           <th scope="col">Status</th>
           <th scope="col" class="text-end">Action</th>
         </tr>
@@ -15,6 +16,7 @@
           <td scope="row">{{ data.Sort }}</td>
           <td scope="row" class="text-capitalize">{{ data.Semester }}</td>
           <td scope="row" class="text-uppercase">{{ data.Tahun }}</td>
+          <td scope="row" class="text-uppercase">{{ data.Nama }}</td>
           <td scope="row">
             <span
               class="item"

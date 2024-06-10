@@ -42,7 +42,10 @@ export default {
     selectMapel(state, value) {
         state.selectedMapel = value
     },
-    getTahunAjaran(state, value) {
-        console.log('Berhasil')
+    setPeriode(state, value) {
+        state.selectedPeriode = value
+    },
+    setNilai(state, value) {
+        state.nilaiSantri = value.santri
     }
 }

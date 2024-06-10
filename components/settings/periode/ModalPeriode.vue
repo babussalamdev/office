@@ -99,9 +99,19 @@ export default {
       this.btn = false;
       const data = Object.fromEntries(new FormData(event.target));
       data["Program"] = localStorage.getItem("program");
+
+      let label = "";
+      if (data.Semester.toLowerCase() === "ganjil") {
+        const ta = +data.Tahun + 1; // Tambahkan 1 pada tahun kedua
+        label = `${data.Tahun}/${ta}`;
+      } else {
+        const ta = +data.Tahun - 1; // Tambahkan 1 pada tahun kedua
+        label = `${ta}/${data.Tahun}`;
+      }
+      data["Nama"] = label;
       try {
         const result = await this.$axios.$post(
-          "/input-database?subject=periode",
+          `input-database?subject=periode`,
           data
         );
         this.btn = true;

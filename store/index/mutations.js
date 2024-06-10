@@ -5,7 +5,6 @@ export default {
         state.pengampu = value?.result.Pengampu
         state.personalia = value?.result.Personalia
         state.permissions = value?.result?.Permissions?.split(',')
-        console.log(state.permissions)
     },
     admin(state) {
         state.unit = 'admin'
