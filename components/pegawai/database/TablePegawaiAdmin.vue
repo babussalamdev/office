@@ -3,10 +3,7 @@
     <div>
       <div class="table-responsive">
         <!-- Modal -->
-        <ModalPegawai
-          :updateData="updateData"
-          @deleteUpdateData="deleteUpdateData"
-        />
+        <ModalPegawai :updateData="updateData" @deleteUpdateData="deleteUpdateData" />
         <table class="table table-hover table-striped">
           <thead>
             <tr>
@@ -32,24 +29,14 @@
               </td>
               <td class="text-capitalize">{{ data.Nip }}</td>
               <td class="text-capitalize align-middle">
-                <span
-                  class="personalia"
-                  :class="
-                    data.Personalia === 'on' ? 'bg-primary' : 'bg-secondary'
-                  "
-                >
+                <span class="personalia" :class="data.Personalia === 'on' ? 'bg-primary' : 'bg-secondary'
+                  ">
                   {{ data.Personalia }}
                 </span>
               </td>
               <td scope="row" class="text-uppercase container-permissions">
-                <div
-                  style="display: inline"
-                  v-for="(value, i) in data.Program.split(',')"
-                  :key="i"
-                >
-                  <div
-                    class="btn-group btn-group-sm px-1 py-1 list-permissions"
-                  >
+                <div style="display: inline" v-for="(value, i) in data?.Program?.split(',')" :key="i">
+                  <div class="btn-group btn-group-sm px-1 py-1 list-permissions">
                     <div class="btn btn-secondary disabled">
                       <span>{{ value }}</span>
                     </div>
@@ -61,20 +48,13 @@
                   <a href="javascript:;" @click="editItem(index)">
                     <i class="bx bx-pencil text-success"></i>
                   </a>
-                  <a
-                    href="javascript:;"
-                    @click="updateItem(data.Username, data.SK, data.Status)"
-                    ><button
-                      class="btn btn-sm ms-2"
-                      :class="
-                        data.Status === 'active'
-                          ? 'btn-primary'
-                          : 'btn-secondary'
-                      "
-                    >
+                  <a href="javascript:;" @click="updateItem(data.Username, data.SK, data.Status)"><button
+                      class="btn btn-sm ms-2" :class="data.Status === 'active'
+                        ? 'btn-primary'
+                        : 'btn-secondary'
+                        ">
                       <i class="material-icons"> power_settings_new </i>
-                    </button></a
-                  >
+                    </button></a>
                 </div>
               </td>
             </tr>
@@ -115,16 +95,14 @@ export default {
     async updateItem(user, key, status) {
       const result = await Swal.fire({
         title: "Apakah anda yakin?",
-        text: `Subject akan di ${
-          status === "active" ? "Non-Aktif" : "Aktif"
-        }kan`,
+        text: `Subject akan di ${status === "active" ? "Non-Aktif" : "Aktif"
+          }kan`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: `Ya, ${
-          status === "active" ? "Non-Aktifkan" : "Aktifkan"
-        }`,
+        confirmButtonText: `Ya, ${status === "active" ? "Non-Aktifkan" : "Aktifkan"
+          }`,
       });
       if (result.isConfirmed) {
         await this.$axios.$delete(
@@ -134,9 +112,8 @@ export default {
           Swal.fire({
             position: "center",
             icon: "success",
-            text: `Data Berhasil di ${
-              status === "active" ? "Non-Aktif" : "Aktif"
-            }kan`,
+            text: `Data Berhasil di ${status === "active" ? "Non-Aktif" : "Aktif"
+              }kan`,
             showConfirmButton: false,
             timer: 1500,
           });

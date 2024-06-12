@@ -1,10 +1,10 @@
 <template>
   <section id="home">
     <div v-if="unit" class="home animate__animated animate__fadeIn">
-      <div v-if="$auth.user.role !== 'administrator'">
+      <div v-if="$auth.user.role !== 'root'">
         <Chart />
       </div>
-      <div v-if="$auth.user.role === 'administrator'">
+      <div v-if="$auth.user.role === 'root'">
         <ChartAdmin />
       </div>
       <div class="row">
@@ -44,7 +44,8 @@ export default {
   },
 
   async asyncData({ store }) {
-    store.dispatch(`home/setMainChart`);
+    const program = localStorage.getItem('program')
+    store.dispatch(`home/setMainChart`, program);
   },
 
   // mounted() {

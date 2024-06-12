@@ -7,11 +7,11 @@ export default {
             commit('setChart', result);
         } else {
             const program = localStorage.getItem('program')
+            console.log(program)
             const result = await this.$axios.$get(
                 `get-dashboard?program=${program}`
             );
             commit('setChart', result);
         }
     },
-
 }

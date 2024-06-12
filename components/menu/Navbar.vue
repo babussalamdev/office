@@ -1,8 +1,6 @@
 <template>
   <div class="navbar">
-    <div
-      class="navbar-content d-flex align-items-center justify-content-between"
-    >
+    <div class="navbar-content d-flex align-items-center justify-content-between">
       <div>
         <h1 class="text-capitalize">
           Application >
@@ -11,41 +9,26 @@
               $route.name === "index"
                 ? "Dashboard"
                 : $route.name === "kaldiksetup"
-                ? "Kalender"
-                : $route.name === "rekaptahfidz"
-                ? "Rekap Tahfidz"
-                : $route.name
-            }}</span
-          >
+                  ? "Kalender"
+                  : $route.name === "rekaptahfidz"
+                    ? "Rekap Tahfidz"
+                    : $route.name
+            }}</span>
         </h1>
       </div>
       <!-- menu profil melayang -->
       <div class="d-flex align-items-center gap-3">
-        <select
-          name="Kelas"
-          id="kelas"
-          class="form-select select"
-          required
-          @change="setUnit"
-          v-model="unit"
-        >
+        <select class="form-select select" @change="setUnit" v-model="unit" required>
           <option value="" selected disabled>Unit</option>
-          <option
-            v-for="(program, i) in $auth.user.type.split(',')"
-            :key="i"
-            :value="program"
-            class="text-uppercase"
-          >
+          <option v-for="(program, i) in $auth.user.Program?.split(',')" :key="i" :value="program"
+            class="text-uppercase">
             {{ program }}
           </option>
         </select>
+
         <!-- notification -->
-        <div
-          class="notification-bell"
-          :class="{ active: notifications.length > 0 && !notificationOpened }"
-          @click="toggleNotification()"
-          ref="notification"
-        >
+        <div class="notification-bell" :class="{ active: notifications.length > 0 && !notificationOpened }"
+          @click="toggleNotification()" ref="notif">
           <div class="bell-icon">
             <i class="bx bx-bell fw-lighter"></i>
             <div class="notification-badge"></div>
@@ -59,13 +42,8 @@
 
         <!-- profile -->
         <div class="profile">
-          <img
-            @click="viewProfile()"
-            src="~/assets/img/foto.jpeg"
-            alt="foto profil"
-            class="rounded-circle"
-            ref="profile"
-          />
+          <img @click="viewProfile()" src="~/assets/img/foto.jpeg" alt="foto profil" class="rounded-circle"
+            ref="profile" />
           <transition name="slide-fade">
             <div v-if="profile" class="menu-profile">
               <Profile />
@@ -79,100 +57,47 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 
 export default {
-  data() {
-    return {
-      profile: false,
-      notif: false,
-      unit: "",
-      orderedUnit: ["sd", "smp", "sma", "tahfidz"],
-      // notifications: ["Notification 1", "Notification 2", "Notification 3"],
-      notifications: ["notification"],
-      notificationOpened: false,
-      // option
-      userType: "",
-    };
+  computed: {
+    ...mapState('navbar', ['profile', 'notif', 'notifications', 'notificationOpened', 'userType']),
+    ...mapGetters('navbar', ['getUnit']),
+    unit: {
+      get() {
+        return this.getUnit
+      },
+      set(value) {
+        this.changeUnit(value)
+      }
+    }
   },
   mounted() {
     // Menambahkan event listener ke dokumen
-    document.addEventListener("click", this.hideProfileOnClickOutside);
-    document.addEventListener("click", this.hideNotifOnClickOutside);
+    document.addEventListener("click", event => this.hideOutside(event, 'profile'));
+    document.addEventListener("click", event => this.hideOutside(event, 'notif'));
 
     const program = localStorage.getItem("program");
     if (program) {
-      this.unit = program;
-      this.setUnit();
+      this.changeUnit(program)
+      this.setUnit(this.$route.name);
     }
-
-    console.log(program);
   },
   destroyed() {
     // Menghapus event listener saat komponen dihancurkan
-    document.removeEventListener("click", this.hideProfileOnClickOutside);
-    document.removeEventListener("click", this.hideNotifOnClickOutside);
+    document.removeEventListener("click", event => this.hideOutside(event, 'profile'));
+    document.removeEventListener("click", event => this.hideOutside(event, 'notif'));
   },
   methods: {
-    setUnit() {
-      localStorage.setItem("program", this.unit);
-      // this.$store.commit("navbar/changeUnit", this.unit);
-      if (this.unit === "admin") {
-        this.$store.commit("index/admin");
-      } else {
-        this.$store.dispatch("index/changeUnit", this.unit);
-      }
-      const name = this.$route.name;
-      if (name === "index") {
-        console.log(this.unit);
-        this.$store.dispatch(`home/setMainChart`, this.unit);
-      } else if (name === "setting-mapel") {
-        this.$store.dispatch(`mapel/changeUnit`, this.unit);
-      } else if (name === "setting-kelas") {
-        this.$store.dispatch(`kelas/changeUnit`, this.unit);
-      } else if (name === "setting-periode") {
-        this.$store.dispatch(`periode/changeUnit`, this.unit);
-      } else if (name === "setting-kelompok") {
-        this.$store.dispatch(`kelompok/changeUnit`, this.unit);
-      } else if (name === "setting-kaldiksetup" || name === "kaldik") {
-        this.$store.dispatch(`kaldik/changeUnit`, this.unit);
-      } else if (name === "setting-struktur") {
-        this.$store.dispatch(`struktur/changeUnit`, this.unit);
-      } else if (name === "setting-setupabsensi") {
-        this.$store.dispatch(`setupabsensi/getAbsensi`, this.unit);
-      } else if (name === "santri-database") {
-        this.$store.dispatch(`santri/database/changeUnit`, this.unit);
-      } else if (name === "pegawai-database") {
-        this.$store.dispatch(`pegawai/database/changeUnit`, this.unit);
-      }
-    },
-    viewProfile() {
-      this.profile = !this.profile;
-    },
-    hideProfileOnClickOutside(event) {
+    ...mapMutations('navbar', ['changeUnit', 'viewProfile', 'falseData', 'toggleNotification']),
+    ...mapActions('navbar', ['setUnit']),
+    hideOutside(event, data) {
       // Mengambil referensi elemen profile
-      const profileElement = this.$refs.profile;
+      const dataOutside = this.$refs[data];
 
       // Memeriksa apakah elemen yang diklik berada di luar profile
-      if (profileElement && !profileElement.contains(event.target)) {
-        this.profile = false; // Sembunyikan profile
-      }
-    },
-    hideNotifOnClickOutside(event) {
-      // Mengambil referensi elemen profile
-      const notificationElement = this.$refs.notification;
-
-      // Memeriksa apakah elemen yang diklik berada di luar profile
-      if (notificationElement && !notificationElement.contains(event.target)) {
-        this.notif = false; // Sembunyikan profile
-      }
-    },
-    toggleNotification() {
-      this.notif = !this.notif;
-      this.notificationOpened = !this.notificationOpened;
-      // Reset notification status when opened
-      if (this.notificationOpened) {
-        this.notifications = [];
+      if (dataOutside && !dataOutside.contains(event.target)) {
+        this.falseData(data);
       }
     },
   },

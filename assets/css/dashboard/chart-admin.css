@@ -16,6 +16,7 @@ h2 {
   border-radius: 10px;
   box-shadow: 1px 1px 15px #e1e1e1;
 }
+
 .box::after {
   content: "";
   position: absolute;
@@ -26,20 +27,25 @@ h2 {
   height: 60px;
   width: 5px;
 }
+
 .box:nth-child(1)::after {
-  background: #3498db;
+  background: #198754;
 }
+
 .box:nth-child(2)::after {
-  background: #2ecc71;
+  background: #6c757d;
 }
+
 .box:nth-child(3)::after {
-  background: #f1c40f;
+  background: #ffc107;
 }
+
 .box:nth-child(4)::after {
-  background: #e74c3c;
+  background: #0d6efd;
 }
+
 .box:nth-child(5)::after {
-  background: #9b59b6;
+  background: #dc3545;
 }
 
 .box:hover {
@@ -47,11 +53,25 @@ h2 {
 }
 
 /* chart */
+.row .col-5 {
+  position: relative;
+}
 
-[id^="chartAdmin-"] {
+.apexcharts-tracks {
+  position: absolute;
+  background: red;
+}
+
+.chart-container {
+  width: 110px !important;
+  margin-top: -5px;
+}
+
+[id^="chart-"] {
   position: absolute;
   left: 0;
   top: 0;
+  /* margin-left: -12%; */
   margin-top: -2%;
   height: 60px;
   width: 105px;
@@ -62,12 +82,15 @@ h2 {
   text-align: left;
   top: 30%;
   left: 105px;
+  /* margin-left: -10px; */
 }
+
 .desc-chart h1 {
   font-size: 14px;
   font-weight: 500;
   margin-bottom: 5px;
 }
+
 .desc-chart span {
   font-size: 24px;
   font-weight: 500;
@@ -75,14 +98,16 @@ h2 {
 
 @media screen and (max-width: 992px) {
   .chart {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
+
 @media screen and (max-width: 768px) {
   .chart {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
 @media screen and (max-width: 576px) {
   .chart {
     grid-template-columns: repeat(1, 1fr);

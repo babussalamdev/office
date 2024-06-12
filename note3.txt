@@ -11,7 +11,7 @@ kei ( walas )
 d638c2
 
 honami ( musyrif )
-    03f892
+03f892
 
 hirata ( kurikulum )
 70a229

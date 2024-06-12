@@ -17,30 +17,21 @@
       <ul>
         <!-- Profil -->
         <li>
-          <nuxt-link
-            to="/user/profile"
-            class="text-decoration-none d-flex align-items-center gap-2"
-          >
+          <nuxt-link to="/user/profile" class="text-decoration-none d-flex align-items-center gap-2">
             <i class="bx bx-user"></i>
             <span class="text">Profile</span>
           </nuxt-link>
         </li>
         <!-- Change Password -->
         <li>
-          <nuxt-link
-            to="/user/password"
-            class="text-decoration-none d-flex align-items-center gap-2"
-          >
+          <nuxt-link to="/user/password" class="text-decoration-none d-flex align-items-center gap-2">
             <i class="bx bx-lock-alt"></i>
             <span class="text">Change Password</span>
           </nuxt-link>
         </li>
         <!-- Help -->
         <li>
-          <nuxt-link
-            to="/help"
-            class="text-decoration-none d-flex align-items-center gap-2"
-          >
+          <nuxt-link to="/help" class="text-decoration-none d-flex align-items-center gap-2">
             <i class="bx bx-help-circle"></i>
             <span class="text">Help</span>
           </nuxt-link>
@@ -48,11 +39,7 @@
         <hr class="text-white" />
         <!-- Logout-->
         <li>
-          <a
-            href="javascript:;"
-            @click="logout"
-            class="text-decoration-none d-flex align-items-center gap-2"
-          >
+          <a href="javascript:;" @click="logout" class="text-decoration-none d-flex align-items-center gap-2">
             <i class="bx bx-door-open"></i>
             <span class="text">Logout</span>
           </a>
@@ -69,6 +56,7 @@ export default {
       this.$cookies.remove("AccessToken");
       localStorage.removeItem("program");
       this.$store.commit("index/removeAll");
+      this.$store.commit("navbar/removeUnit")
       this.$auth.logout();
     },
   },
