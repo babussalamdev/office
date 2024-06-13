@@ -24,7 +24,7 @@
           </li>
 
           <!-- Kaldik -->
-          <li v-if="$auth.user.role !== 'administrator'">
+          <li v-if="$auth.user.role !== 'root'">
             <nuxt-link to="/kaldik" class="text-decoration-none d-flex align-items-center gap-2">
               <i class="material-icons animate__animated animate__fadeInRight">
                 calendar_month
@@ -195,19 +195,19 @@
             </div>
             <ul v-if="listSettings" class="dropdown-list">
               <!-- Absensi Menu -->
-              <li v-if="$auth.user.role !== 'administrator'">
+              <li v-if="$auth.user.role !== 'root'">
                 <nuxt-link to="/settings/absensi" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Absensi</span>
                 </nuxt-link>
               </li>
-              <li v-if="$auth.user.role !== 'administrator'">
+              <li v-if="$auth.user.role !== 'root'">
                 <nuxt-link to="/settings/pelanggaran"
                   class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Pelanggaran</span>
                 </nuxt-link>
               </li>
               <!-- Santri Menu -->
-              <li v-if="$auth.user.role !== 'administrator'">
+              <li v-if="$auth.user.role !== 'root'">
                 <div @click="notClickSub('santri')"
                   class="dropdown d-flex align-items-center justify-content-between gap-2">
                   <span class="d-flex align-items-center gap-2">
@@ -266,7 +266,7 @@
                 <ul v-if="pegawaiSubList" class="dropdown-list">
                   <!-- data -->
                   <li v-if="
-                    personalia === 'on' || $auth.user.role === 'administrator'
+                    personalia === 'on' || $auth.user.role === 'root'
                   ">
                     <nuxt-link to="/pegawai/database"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
@@ -274,28 +274,28 @@
                     </nuxt-link>
                   </li>
                   <!-- halaqah -->
-                  <li v-if="$auth.user.role !== 'administrator'">
+                  <li v-if="$auth.user.role !== 'root'">
                     <nuxt-link to="/pegawai/halaqoh"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Halaqah</span>
                     </nuxt-link>
                   </li>
                   <!-- wali kelas -->
-                  <li v-if="$auth.user.role !== 'administrator'">
+                  <li v-if="$auth.user.role !== 'root'">
                     <nuxt-link to="/pegawai/walas"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Wali Kelas</span>
                     </nuxt-link>
                   </li>
                   <!-- musyrif -->
-                  <li v-if="$auth.user.role !== 'administrator'">
+                  <li v-if="$auth.user.role !== 'root'">
                     <nuxt-link to="/pegawai/musyrif"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Musyrif</span>
                     </nuxt-link>
                   </li>
                   <!-- mapel -->
-                  <li v-if="$auth.user.role !== 'administrator'">
+                  <li v-if="$auth.user.role !== 'root'">
                     <nuxt-link to="/pegawai/mapel"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Mapel</span>
@@ -304,7 +304,7 @@
                 </ul>
               </li>
               <!-- Database Menu -->
-              <li v-if="$auth.user.role !== 'administrator'">
+              <li v-if="$auth.user.role !== 'root'">
                 <div @click="notClickSub('database')"
                   class="dropdown d-flex align-items-center justify-content-between gap-2">
                   <span class="d-flex align-items-center gap-2">

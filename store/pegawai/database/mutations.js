@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 export default {
     setDatabaseAll(state, value) {
         state.pegawai = value
@@ -17,6 +18,12 @@ export default {
         state.pegawai.sort((a, b) => {
             return a.Nama - b.Nama;
         });
+
+        state.value = [];
+        state.password = "";
+        state.btn = true
+        $("#inputPegawaiForm")[0].reset()
+        $("#InputDataPegawai").modal("hide");
     },
     updatePegawai(state, value) {
         const i = state.pegawai.findIndex((x) => x.SK === value.SK)
@@ -28,10 +35,10 @@ export default {
         data.Program = value.Program;
         data.Personalia = value.Personalia
 
-
-        // if (i !== -1) {
-        //     state.mapel[i] = { ...state.mapel[i], ...value };
-        // }
+        state.value = [];
+        state.updateData = ''
+        $("#updatePegawaiAdmin")[0].reset()
+        $("#updateDataPegawaiAdmin").modal("hide");
     },
     updatePegawaiJabatan(state, value) {
         const i = state.pegawai.findIndex((x) => x.SK === value.SK)
@@ -62,5 +69,23 @@ export default {
     setStatusPersonalia(state, data) {
         const i = state.pegawai.findIndex((x) => x.SK === data.index)
         state.pegawai[i].Personalia = data.Personalia
+    },
+
+    // partikel
+    btn(state, value) {
+      state.btn = state.btn ? false : true
+    },
+    setValue(state, value) {
+      state.value = value
+    },
+    generatePassword(state, value) {
+      state.btn = false;
+      state.password = uuidv4().substr(0, 6);
+      state.btn = true;
+    },
+    editItem(state, value) {
+      const i = state.pegawai.findIndex((x) => x.SK === value)
+      state.updateData = state.pegawai[i];
+      $("#updateDataPegawaiAdmin").modal("show");
     },
 }

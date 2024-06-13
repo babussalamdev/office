@@ -18,13 +18,9 @@
               {{ data.Nama }}
             </td>
             <td scope="row" class="text-uppercase container-permissions">
-              <div
-                v-for="(value, i) in data.Permissions.split(',')"
-                :key="i"
-                style="display: inline"
-              >
+              <div v-for="(value, i) in data.Permissions.split(',')" :key="i" style="display: inline">
                 <div class="btn-group btn-group-sm px-1 py-1 list-permissions">
-                  <div class="btn btn-secondary disabled">
+                  <div class="btn btn-dark">
                     <span>{{ value }}</span>
                   </div>
                 </div>
@@ -32,77 +28,44 @@
             </td>
             <td class="text-capitalize align-middle">
               <div class="form-switch">
-                <input
-                  @change="openSettings(data.SK, data.Status)"
-                  class="form-check-input"
-                  type="checkbox"
-                  role="switch"
-                  id="flexSwitchCheckChecked"
-                />
+                <input @change="openSettings(data.SK, data.Status)" class="form-check-input" type="checkbox"
+                  role="switch" id="flexSwitchCheckChecked" />
               </div>
             </td>
             <td class="text-end align-middle">
-              <a href="javascript:;" @click="editItem(i)"
-                ><i class="bx bx-edit text-primary"></i
-              ></a>
-              <a href="javascript:;" @click="deleteItem(data.SK)"
-                ><i class="bx bx-trash text-danger"></i
-              ></a>
+              <a href="javascript:;" @click="editItem(data.SK)">
+                <button class="btn btn-sm btn-warning">
+                  <i class="bx bx-pencil"></i>
+                </button>
+              </a>
+              <a href="javascript:;" @click="deleteItem(data.SK)">
+                <button class="btn btn-sm btn-danger">
+                  <i class="bx bx-trash text-white"></i>
+                </button>
+              </a>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
     <!-- modal -->
-    <ModalStruktur :updateData="updateData" />
+    <ModalStruktur />
   </div>
 </template>
 
 <script>
 import Swal from "sweetalert2";
-import { mapState } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 
 export default {
-  data() {
-    return {
-      updateData: "",
-    };
-  },
   computed: {
     ...mapState("struktur", ["struktur"]),
     ...mapState("index", ["unit"]),
   },
   methods: {
-    async deleteItem(key) {
-      const result = await Swal.fire({
-        title: "Apakah anda yakin?",
-        text: "Data akan dihapus secara permanen!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
-      });
+    ...mapActions('struktur', ['deleteItem']),
+    ...mapMutations('struktur', ['editItem']),
 
-      if (result.isConfirmed) {
-        const program = localStorage.getItem("program");
-        await this.$axios.$delete(
-          `delete-database?subject=struktur&program=${program}&code=${
-            key.split("#")[1]
-          }`
-        );
-        this.$store.commit("struktur/deleteStruktur", key);
-        if (result) {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            text: "Data berhasil dihapus!",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-      }
-    },
     async openSettings(sk, status) {
       const condition = status === "active" ? "inactive" : "active";
       const program = localStorage.getItem("program");
@@ -112,10 +75,6 @@ export default {
         condition: condition,
       };
       this.$store.dispatch("struktur/openSettings", data);
-    },
-    async editItem(index) {
-      $("#updateDataStruktur").modal("show");
-      this.updateData = this.struktur[index];
     },
   },
 };

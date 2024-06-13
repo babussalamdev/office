@@ -1,73 +1,35 @@
 <template>
   <div>
     <!-- modal input -->
-    <div
-      class="modal fade"
-      id="inputDataStruktur"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="inputDataStruktur" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form @submit.prevent="inputStruktur" ref="inputStruktur">
+          <form @submit.prevent="inputStruktur" id="inputStruktur">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">
                 Input Struktur
               </h1>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <div class="mb-3">
                 <label for="sort" class="form-label">Sort</label>
-                <input
-                  name="Sort"
-                  type="number"
-                  class="form-control"
-                  id="sort"
-                  required
-                />
+                <input name="Sort" type="number" class="form-control" id="sort" required />
               </div>
               <div class="mb-3">
                 <label for="nama" class="form-label">Nama</label>
-                <input
-                  name="Nama"
-                  type="text"
-                  class="form-control"
-                  id="nama"
-                  required
-                />
+                <input name="Nama" type="text" class="form-control" id="nama" required />
               </div>
               <div class="mb-3">
                 <label class="typo__label mb-2">Permissions</label>
-                <multiselect
-                  name="Permissions"
-                  v-model="value"
-                  class="text-capitalize"
-                  tag-placeholder="Add this as new tag"
-                  placeholder="Search or add a tag"
-                  label="name"
-                  track-by="code"
-                  :options="options"
-                  :multiple="true"
-                  :taggable="true"
-                  @tag="addTag"
-                  required
-                ></multiselect>
+                <multiselect name="Permissions" v-model="value" class="text-capitalize"
+                  tag-placeholder="Add this as new tag" placeholder="Search or add a tag" label="name" track-by="code"
+                  :options="options" :multiple="true" :taggable="true" @tag="addTag" required></multiselect>
                 <!-- <pre class="language-json"><code>{{ value  }}</code></pre> -->
               </div>
             </div>
             <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                 Close
               </button>
               <span>
@@ -75,10 +37,7 @@
                   Simpan
                 </button>
                 <button v-else class="btn btn-primary" type="button" disabled>
-                  <span
-                    class="spinner-border spinner-border-sm"
-                    aria-hidden="true"
-                  ></span>
+                  <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
                   <span role="status">Loading...</span>
                 </button>
               </span>
@@ -89,74 +48,36 @@
     </div>
 
     <!-- modal update -->
-    <div
-      class="modal fade"
-      id="updateDataStruktur"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="updateDataStruktur" tabindex="-1" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form @submit.prevent="updateStruktur" ref="updateStruktur">
+          <form @submit.prevent="updateStruktur" id="updateStruktur">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">
                 Update Struktur
               </h1>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <div class="mb-3">
                 <label for="sort" class="form-label">Sort</label>
-                <input
-                  name="Sort"
-                  type="number"
-                  class="form-control"
-                  id="sort"
-                  :value="updateData.Sort"
-                  required
-                />
+                <input name="Sort" type="number" class="form-control" id="sort" :value="updateData.Sort" required />
               </div>
               <div class="mb-3">
                 <label for="nama" class="form-label">Nama</label>
-                <input
-                  name="Nama"
-                  type="text"
-                  class="form-control"
-                  id="nama"
-                  :value="updateData.Nama"
-                  required
-                />
+                <input name="Nama" type="text" class="form-control" id="nama" :value="updateData.Nama" required />
               </div>
               <div class="mb-3">
                 <label class="typo__label mb-2">Permissions</label>
-                <multiselect
-                  name="Permissions"
-                  v-model="value"
-                  tag-placeholder="Add this as new tag"
-                  placeholder="Search or add a tag"
-                  label="name"
-                  track-by="code"
-                  :options="options"
-                  :multiple="true"
-                  :taggable="true"
-                  @tag="addTag"
-                  required
-                ></multiselect>
+                <multiselect name="Permissions" v-model="value" tag-placeholder="Add this as new tag"
+                  placeholder="Search or add a tag" label="name" track-by="code" :options="options" :multiple="true"
+                  :taggable="true" @tag="addTag" required></multiselect>
                 <!-- <pre class="language-json"><code>{{ value  }}</code></pre> -->
               </div>
             </div>
             <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                 Close
               </button>
               <span>
@@ -164,10 +85,7 @@
                   Simpan
                 </button>
                 <button v-else class="btn btn-primary" type="button" disabled>
-                  <span
-                    class="spinner-border spinner-border-sm"
-                    aria-hidden="true"
-                  ></span>
+                  <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
                   <span role="status">Loading...</span>
                 </button>
               </span>
@@ -182,38 +100,23 @@
 <script>
 import Swal from "sweetalert2";
 import Multiselect from "vue-multiselect";
-
+import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
 export default {
-  props: ["updateData"],
   components: {
     Multiselect,
   },
-  data() {
-    return {
-      btn: true,
-      value: [],
-      options: [
-        { name: "data santri", code: 0 },
-        { name: "kelas", code: 1 },
-        { name: "asrama", code: 2 },
-        { name: "halaqah", code: 3 },
-        { name: "ekskull", code: 4 },
-        { name: "pengampu", code: 5 },
-        { name: "wali kelas", code: 6 },
-        { name: "musyrif", code: 7 },
-        { name: "mata pelajaran", code: 8 },
-        { name: "setup halaqah", code: 9 },
-        { name: "setup asrama", code: 10 },
-        { name: "setup kelas", code: 11 },
-        { name: "setup mapel", code: 12 },
-        { name: "report mapel", code: 13 },
-        { name: "report tahfidz", code: 14 },
-        { name: "report absensi", code: 15 },
-        { name: "report pelanggaran", code: 16 },
-      ],
-    };
+  computed: {
+    ...mapState('struktur', ['options', 'btn', 'value', 'updateData']),
+    ...mapGetters('struktur', ['getValue']),
+    value: {
+      get() {
+        return this.getValue
+      },
+      set(value) {
+        this.$store.commit('struktur/setValue', value)
+      }
+    }
   },
-
   mounted() {
     document
       .getElementById("updateDataStruktur")
@@ -226,76 +129,7 @@ export default {
   },
 
   methods: {
-    async inputStruktur(event) {
-      this.btn = false;
-      const data = Object.fromEntries(new FormData(event.target));
-      data["Program"] = localStorage.getItem("program");
-      data["Permissions"] = this.value.map((x) => x.name).join(",");
-      try {
-        const result = await this.$axios.$post(
-          "/input-database?subject=struktur",
-          data
-        );
-        this.btn = true;
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          text: "Data berhasil di input",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        this.$refs.inputStruktur.reset();
-        this.value = [];
-        this.$store.commit("struktur/inputStruktur", result);
-        $("#inputDataStruktur").modal("hide");
-      } catch (error) {
-        this.btn = true;
-        Swal.fire({
-          icon: "warning",
-          text: error,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    },
-
-    async updateStruktur(event) {
-      this.btn = false;
-      const data = Object.fromEntries(new FormData(event.target));
-      data["Permissions"] = this.value.map((x) => x.name).join(",");
-      const key = this.updateData.SK;
-      try {
-        const program = localStorage.getItem("program");
-        const result = await this.$axios.$put(
-          `update-database?subject=struktur&program=${program}&code=${
-            key.split("#")[1]
-          }`,
-          data
-        );
-        this.btn = true;
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          text: "Data berhasil di input",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        data["SK"] = key;
-        this.$refs.updateStruktur.reset();
-        this.value = [];
-        this.$store.commit("struktur/updateStruktur", data);
-        $("#updateDataStruktur").modal("hide");
-      } catch (error) {
-        this.btn = true;
-        Swal.fire({
-          icon: "warning",
-          text: error,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    },
-
+    ...mapActions('struktur', ['inputStruktur', 'updateStruktur']),
     addTag(newTag) {
       const tag = {
         name: newTag,

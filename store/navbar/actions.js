@@ -1,12 +1,12 @@
 export default {
-    setUnit({ commit, state, dispatch }, name) {
+    setUnit({ commit, state, dispatch }, datas) {
         localStorage.setItem("program", state.unit);
-        // commit("navbar/changeUnit", state.unit);
         if (state.unit === "root") {
             commit("index/root", null, { root: true });
         } else {
             dispatch("index/changeUnit", state.unit, { root: true });
         }
+        const name = datas.route
         if (name === "index") {
             dispatch(`home/setMainChart`, state.unit, { root: true });
         } else if (name === "setting-mapel") {
@@ -19,7 +19,7 @@ export default {
             dispatch(`kelompok/changeUnit`, state.unit, { root: true });
         } else if (name === "setting-kaldiksetup" || name === "kaldik") {
             dispatch(`kaldik/changeUnit`, state.unit, { root: true });
-        } else if (name === "setting-struktur") {
+        } else if (name === "settings-struktur") {
             dispatch(`struktur/changeUnit`, state.unit, { root: true });
         } else if (name === "setting-setupabsensi") {
             dispatch(`setupabsensi/getAbsensi`, state.unit, { root: true });

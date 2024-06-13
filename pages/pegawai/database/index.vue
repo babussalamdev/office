@@ -1,6 +1,6 @@
 <template>
   <section id="pegawai">
-    <div v-if="$auth.user.role === 'administrator'" class="pegawai">
+    <div v-if="$auth.user.role === 'root'" class="pegawai">
       <div class="mt-3">
         <div class="database-pegawai mb-3">
           <div class="right">

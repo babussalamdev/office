@@ -1,12 +1,6 @@
 <template>
   <div>
-    <div
-      class="modal fade"
-      id="InputDataUtama"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="InputDataUtama" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <form @submit.prevent="inputUtama" ref="inputUtama">
@@ -14,31 +8,16 @@
               <h1 class="modal-title fs-5" id="exampleModalLabel">
                 Input Mapel
               </h1>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <div class="mb-3">
                 <label for="sort" class="form-label">Sort</label>
-                <input
-                  name="Sort"
-                  type="number"
-                  class="form-control"
-                  id="sort"
-                />
+                <input name="Sort" type="number" class="form-control" id="sort" />
               </div>
               <div class="mb-3">
                 <label for="semester" class="form-label">Semester</label>
-                <select
-                  name="Semester"
-                  id="semester"
-                  class="form-select"
-                  required
-                >
+                <select name="Semester" id="semester" class="form-select" required>
                   <option value="" selected disabled>
                     -- Pilih Semester --
                   </option>
@@ -58,11 +37,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                 Close
               </button>
               <span>
@@ -70,10 +45,7 @@
                   Simpan
                 </button>
                 <button v-else class="btn btn-primary" type="button" disabled>
-                  <span
-                    class="spinner-border spinner-border-sm"
-                    aria-hidden="true"
-                  ></span>
+                  <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
                   <span role="status">Loading...</span>
                 </button>
               </span>

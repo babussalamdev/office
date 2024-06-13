@@ -18,7 +18,7 @@
       </div>
       <!-- menu profil melayang -->
       <div class="d-flex align-items-center gap-3">
-        <select class="form-select select" @change="setUnit" v-model="unit" required>
+        <select class="form-select select" @change="setUnit(unit)" v-model="unit" required>
           <option value="" selected disabled>Unit</option>
           <option v-for="(program, i) in $auth.user.Program?.split(',')" :key="i" :value="program"
             class="text-uppercase">
@@ -80,7 +80,7 @@ export default {
     const program = localStorage.getItem("program");
     if (program) {
       this.changeUnit(program)
-      this.setUnit(this.$route.name);
+      this.setUnit({ route: this.$route.name, program: program});
     }
   },
   destroyed() {
@@ -90,7 +90,11 @@ export default {
   },
   methods: {
     ...mapMutations('navbar', ['changeUnit', 'viewProfile', 'falseData', 'toggleNotification']),
-    ...mapActions('navbar', ['setUnit']),
+    // ...mapActions('navbar', ['setUnit']),
+    async setUnit() {
+      const program = localStorage.getItem('program')
+      this.$store.dispatch('navbar/setUnit', { route: this.$route.name, program: program})
+    },
     hideOutside(event, data) {
       // Mengambil referensi elemen profile
       const dataOutside = this.$refs[data];

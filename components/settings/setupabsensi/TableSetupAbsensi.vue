@@ -2,16 +2,14 @@
   <div>
     <!-- mapel input -->
     <div class="row mt-3 animate__animated animate__fadeInUp">
-      <div class="col-12 col-md-6"></div>
+      <div class="col-12 col-md-6 d-flex align-items-center">
+        <h3>Setup Absensi</h3>
+      </div>
       <div class="col-12 col-md-6">
         <!-- Button trigger modal -->
         <div class="button-santri float-end">
-          <button
-            type="button"
-            class="btn btn-sm btn-primary button-santri"
-            data-bs-toggle="modal"
-            data-bs-target="#inputDataStruktur"
-          >
+          <button type="button" class="btn btn-sm btn-primary button-santri" data-bs-toggle="modal"
+            data-bs-target="#inputDataStruktur">
             Tambah Data
           </button>
         </div>
@@ -30,14 +28,10 @@
         <tbody>
           <tr v-for="(data, i) in absensi" :key="i">
             <td scope="row" class="text-capitalize align-middle">
-              {{ data.Nama }}
+              {{ data.Struktur }}
             </td>
             <td scope="row" class="text-uppercase container-permissions">
-              <div
-                v-for="(value, i) in data.Permissions.split(',')"
-                :key="i"
-                style="display: inline"
-              >
+              <div v-for="(value, i) in data.Permissions?.split(',')" :key="i" style="display: inline">
                 <div class="btn-group btn-group-sm px-1 py-1 list-permissions">
                   <div class="btn btn-secondary disabled">
                     <span>{{ value }}</span>
@@ -49,81 +43,37 @@
               {{ data.Database }}
             </td>
             <td class="text-end align-middle">
-              <a href="javascript:;" @click="editItem(i)"
-                ><i class="bx bx-edit text-primary"></i
-              ></a>
-              <a href="javascript:;" @click="deleteItem(data.SK)"
-                ><i class="bx bx-trash text-danger"></i
-              ></a>
+              <a href="javascript:;" @click="editItem(data.SK)">
+                <button class="btn btn-sm btn-warning">
+                  <i class="bx bx-pencil text-dark"></i>
+                </button>
+              </a>
+              <a href="javascript:;" @click="deleteItem(data.SK)">
+                <button class="btn btn-sm btn-danger">
+                  <i class="bx bx-trash text-white"></i>
+                </button>
+              </a>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
     <!-- modal -->
-    <ModalSetupAbsensi :updateData="updateData" />
+    <ModalSetupAbsensi />
   </div>
 </template>
 
 <script>
 import Swal from "sweetalert2";
-import { mapState } from "vuex";
+import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
 
 export default {
-  data() {
-    return {
-      updateData: "",
-      // absensi: [
-      //   {
-      //     Sort: "1",
-      //     Nama: "Wali Kelas",
-      //     Permissions: "pondok,absen",
-      //   },
-      //   {
-      //     Sort: "1",
-      //     Nama: "Kesantrian",
-      //     Permissions: "pondok,sakit",
-      //   },
-      // ],
-    };
-  },
   computed: {
     ...mapState("setupabsensi", ["absensi", "struktur"]),
   },
   methods: {
-    async deleteItem(key) {
-      const result = await Swal.fire({
-        title: "Apakah anda yakin?",
-        text: "Data akan dihapus secara permanen!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
-      });
-      if (result.isConfirmed) {
-        const program = localStorage.getItem("program");
-        await this.$axios.$delete(
-          `delete-database?subject=absensi&program=${program}&code=${
-            key.split("#")[1]
-          }`
-        );
-        this.$store.commit("setupabsensi/deleteStruktur", key);
-        if (result) {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            text: "Data berhasil dihapus!",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-      }
-    },
-    async editItem(index) {
-      $("#updateDataStruktur").modal("show");
-      this.updateData = this.absensi[index];
-    },
+    ...mapActions('setupabsensi', ['deleteItem']),
+    ...mapMutations('setupabsensi', ['editItem']),
   },
 };
 </script>
