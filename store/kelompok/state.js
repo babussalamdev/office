@@ -1,4 +1,5 @@
 export default () => ({
     halaqah: [],
-    asrama: []
+    asrama: [],
+    btn: true
 })

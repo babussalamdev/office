@@ -1,4 +1,4 @@
 export default () => ({
     pelanggaran: [],
-    struktur: []
+    struktur: [],
 })

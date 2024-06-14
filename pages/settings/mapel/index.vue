@@ -4,14 +4,7 @@
       <!-- mapel input -->
       <div class="row mt-3 animate__animated animate__fadeInUp">
         <div class="col-12 col-md-6">
-          <select
-            name="Mapel"
-            id="mapel"
-            v-model="listKelas"
-            @change="kelasLoad"
-            class="form-select select"
-            required
-          >
+          <select name="Mapel" id="mapel" v-model="listKelas" @change="kelasLoad()" class="form-select select" required>
             <option value="" selected disabled>Kelas</option>
             <option v-for="(data, index) in kelas" :key="index" :value="data">
               {{ data.Nama }}
@@ -21,13 +14,8 @@
         <div class="col-12 col-md-6">
           <!-- Button trigger modal -->
           <div class="button-santri float-end">
-            <button
-              type="button"
-              class="btn btn-sm btn-primary button-santri"
-              data-bs-toggle="modal"
-              data-bs-target="#InputDataMapel"
-              :disabled="isMapelEmpty"
-            >
+            <button type="button" class="btn btn-sm btn-primary button-santri" data-bs-toggle="modal"
+              data-bs-target="#InputDataMapel" :disabled="isMapelEmpty">
               Tambah Mapel
             </button>
           </div>
@@ -40,8 +28,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-
+import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -57,6 +44,7 @@ export default {
     store.dispatch(`mapel/changeUnit`, program);
   },
   methods: {
+    ...mapActions('mapel'),
     kelasLoad() {
       const program = localStorage.getItem("program");
       const data = {

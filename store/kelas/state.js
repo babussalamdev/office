@@ -5,5 +5,7 @@ export default () => ({
     selectKelas: [],
     selectedMapel: [],
     selectedPeriode: [],
-    nilaiSantri: []
+    nilaiSantri: [],
+
+    btn: true
 })

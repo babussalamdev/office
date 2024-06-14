@@ -10,5 +10,11 @@ export default {
             }
         ))
         return kaldik
+    },
+    getStart(state) {
+      return state.start
+    },
+    getEnd(state) {
+      return state.end
     }
 }

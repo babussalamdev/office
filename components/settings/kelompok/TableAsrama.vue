@@ -15,9 +15,11 @@
           <td scope="row" class="text-capitalize">{{ data.Nama }}</td>
           <td scope="row" class="text-uppercase">{{ data.Program }}</td>
           <td class="text-end">
-            <a href="javascript:;" @click="deleteItem(data.SK)"
-              ><i class="bx bx-trash text-danger"></i
-            ></a>
+            <a href="javascript:;" @click="deleteItem(data.SK)">
+              <button class="btn btn-sm btn-danger">
+                <i class="bx bx-trash text-white"></i>
+              </button>
+            </a>
           </td>
         </tr>
       </tbody>
@@ -27,44 +29,15 @@
 
 <script>
 import Swal from "sweetalert2";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   computed: {
     ...mapState("kelompok", ["asrama"]),
   },
-
   methods: {
-    async deleteItem(key) {
-      const result = await Swal.fire({
-        title: "Apakah anda yakin?",
-        text: "Data akan dihapus secara permanen!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
-      });
+    ...mapActions('kelompok', ['deleteItem']),
 
-      if (result.isConfirmed) {
-        const program = localStorage.getItem("program");
-        const result = await this.$axios.$delete(
-          `delete-database?subject=asrama&program=${program}&code=${
-            key.split("#")[1]
-          }`
-        );
-        this.$store.commit("kelompok/deleteAsrama", key);
-        if (result) {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            text: "Data berhasil dihapus!",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-      }
-    },
   },
 };
 </script>

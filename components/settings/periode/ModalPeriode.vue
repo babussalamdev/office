@@ -3,7 +3,7 @@
     <div class="modal fade" id="InputDataUtama" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form @submit.prevent="inputUtama" ref="inputUtama">
+          <form @submit.prevent="inputUtama" id="inputUtama">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">
                 Input Mapel
@@ -59,54 +59,13 @@
 
 <script>
 import Swal from "sweetalert2";
-
+import { mapActions, mapMutations, mapGetters, mapState } from 'vuex'
 export default {
-  data() {
-    return {
-      btn: true,
-    };
+  computed: {
+    ...mapState('periode', ['btn'])
   },
   methods: {
-    async inputUtama(event) {
-      this.btn = false;
-      const data = Object.fromEntries(new FormData(event.target));
-      data["Program"] = localStorage.getItem("program");
-
-      let label = "";
-      if (data.Semester.toLowerCase() === "ganjil") {
-        const ta = +data.Tahun + 1; // Tambahkan 1 pada tahun kedua
-        label = `${data.Tahun}/${ta}`;
-      } else {
-        const ta = +data.Tahun - 1; // Tambahkan 1 pada tahun kedua
-        label = `${ta}/${data.Tahun}`;
-      }
-      data["Nama"] = label;
-      try {
-        const result = await this.$axios.$post(
-          `input-database?subject=periode`,
-          data
-        );
-        this.btn = true;
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          text: "Data berhasil di input",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        this.$refs.inputUtama.reset();
-        this.$store.commit("periode/updatePeriode", result);
-        $("#InputDataUtama").modal("hide");
-      } catch (error) {
-        this.btn = true;
-        Swal.fire({
-          icon: "warning",
-          text: error,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    },
+    ...mapActions('periode', ['inputUtama'])
   },
 };
 </script>

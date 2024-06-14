@@ -1,3 +1,5 @@
 export default () => ({
-    kaldik: []
+    kaldik: [],
+    btn: true,
+    updateData: '',
 })

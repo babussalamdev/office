@@ -1,75 +1,39 @@
 <template>
   <div>
     <!-- modal input -->
-    <div
-      class="modal fade text-capitalize"
-      id="inputKaldik"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
+    <div class="modal fade text-capitalize" id="inputKaldik" tabindex="-1" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form @submit.prevent="inputKaldik" ref="inputKaldik">
+          <form @submit.prevent="inputKaldik" id="inputDataKaldik">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">
                 kegiatan baru
               </h1>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <div class="mb-3">
                 <label for="kegiatan" class="form-label">kegiatan</label>
-                <input
-                  type="text"
-                  name="Nama"
-                  class="form-control"
-                  id="kegiatan"
-                  aria-describedby="emailHelp"
-                />
+                <input type="text" name="Nama" class="form-control" id="kegiatan" aria-describedby="emailHelp" />
               </div>
               <div class="mb-3 d-block d-md-flex justify-content-between">
                 <div>
                   <label for="tglMulai" class="form-label">tanggal mulai</label>
-                  <input
-                    type="date"
-                    name="Mulai"
-                    class="form-control mb-3 mb-md-0"
-                    id="tglMulai"
-                  />
+                  <input type="date" name="TanggalMulai" class="form-control mb-3 mb-md-0" id="tglMulai" />
                 </div>
                 <div>
                   <label for="tglAkhir" class="form-label">tanggal akhir</label>
-                  <input
-                    type="date"
-                    name="Berakhir"
-                    class="form-control"
-                    id="tglAkhir"
-                  />
+                  <input type="date" name="TanggalAkhir" class="form-control" id="tglAkhir" />
                 </div>
               </div>
               <div class="mb-3">
                 <label for="warna" class="form-label">warna label</label>
-                <input
-                  type="color"
-                  name="Warna"
-                  class="form-control"
-                  id="warna"
-                  aria-describedby="emailHelp"
-                />
+                <input type="color" name="WarnaLabel" class="form-control" id="warna" aria-describedby="emailHelp" />
               </div>
             </div>
             <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                 close
               </button>
               <span>
@@ -77,10 +41,7 @@
                   simpan
                 </button>
                 <button v-else class="btn btn-primary" type="button" disabled>
-                  <span
-                    class="spinner-border spinner-border-sm"
-                    aria-hidden="true"
-                  ></span>
+                  <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
                   <span role="status">Loading...</span>
                 </button>
               </span>
@@ -90,79 +51,43 @@
       </div>
     </div>
     <!-- modal update -->
-    <div
-      class="modal fade text-capitalize"
-      id="updateKaldik"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
+    <div class="modal fade text-capitalize" id="updateKaldik" tabindex="-1" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form @submit.prevent="updateKaldik" ref="updateKaldik">
+          <form @submit.prevent="updateKaldik" id="updateDataKaldik">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">
                 Update Kegiatan
               </h1>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <div class="mb-3">
                 <label for="kegiatan" class="form-label">kegiatan</label>
-                <input
-                  type="text"
-                  name="Nama"
-                  class="form-control"
-                  id="kegiatan"
-                  :value="updateData.Nama"
-                  aria-describedby="emailHelp"
-                />
+                <input type="text" name="Nama" class="form-control" id="kegiatan" :value="updateData.Nama"
+                  aria-describedby="emailHelp" />
               </div>
               <div class="mb-3 d-block d-md-flex justify-content-between">
                 <div>
                   <label for="tglMulai" class="form-label">tanggal mulai</label>
-                  <input
-                    type="date"
-                    name="Mulai"
-                    class="form-control mb-3 mb-md-0"
-                    id="tglMulai"
-                    :value="updateData.Mulai"
-                  />
+                  <input type="date" name="TanggalMulai" class="form-control mb-3 mb-md-0" id="tglMulai"
+                    :value="updateData.TanggalMulai" />
                 </div>
                 <div>
                   <label for="tglAkhir" class="form-label">tanggal akhir</label>
-                  <input
-                    type="date"
-                    name="Berakhir"
-                    class="form-control"
-                    id="tglAkhir"
-                    :value="updateData.Berakhir"
-                  />
+                  <input type="date" name="TanggalAkhir" class="form-control" id="tglAkhir"
+                    :value="updateData.TanggalAkhir" />
                 </div>
               </div>
               <div class="mb-3">
                 <label for="warna" class="form-label">warna label</label>
-                <input
-                  type="color"
-                  name="Warna"
-                  class="form-control"
-                  id="warna"
-                  :value="updateData.Warna"
-                  aria-describedby="emailHelp"
-                />
+                <input type="color" name="WarnaLabel" class="form-control" id="warna" :value="updateData.WarnaLabel"
+                  aria-describedby="emailHelp" />
               </div>
             </div>
             <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                 close
               </button>
               <span>
@@ -170,10 +95,7 @@
                   simpan
                 </button>
                 <button v-else class="btn btn-primary" type="button" disabled>
-                  <span
-                    class="spinner-border spinner-border-sm"
-                    aria-hidden="true"
-                  ></span>
+                  <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
                   <span role="status">Loading...</span>
                 </button>
               </span>
@@ -187,79 +109,14 @@
 
 <script>
 import Swal from "sweetalert2";
-
+import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
 export default {
-  props: ["updateData"],
-  data() {
-    return {
-      btn: true,
-    };
+  computed: {
+    ...mapState('kaldik', ['btn', 'updateData']),
   },
   methods: {
-    async inputKaldik(event) {
-      this.btn = false;
-      const data = Object.fromEntries(new FormData(event.target));
-      data["Program"] = localStorage.getItem("program");
-      try {
-        const result = await this.$axios.$post(
-          `/input-database?subject=kaldik`,
-          data
-        );
-        this.btn = true;
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          text: "Data berhasil di input",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        this.$refs.inputKaldik.reset();
-        this.$store.commit("kaldik/inputKaldik", result);
-        $("#inputKaldik").modal("hide");
-      } catch (error) {
-        this.btn = true;
-        Swal.fire({
-          icon: "warning",
-          text: error,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    },
-    async updateKaldik(event) {
-      this.btn = false;
-      const data = Object.fromEntries(new FormData(event.target));
-      const key = this.updateData.SK;
-      const program = localStorage.getItem("program");
-      try {
-        const result = await this.$axios.$put(
-          `update-database?subject=kaldik&program=${program}&code=${
-            key.split("#")[1]
-          }`,
-          data
-        );
-        this.btn = true;
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          text: "Data berhasil di input",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        data["SK"] = key;
-        this.$refs.updateKaldik.reset();
-        this.$store.commit("kaldik/updateKaldik", data);
-        $("#updateKaldik").modal("hide");
-      } catch (error) {
-        this.btn = true;
-        Swal.fire({
-          icon: "warning",
-          text: error,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    },
+    ...mapActions('kaldik', ['inputKaldik', 'updateKaldik']),
+    ...mapMutations('kaldik'),
   },
 };
 </script>

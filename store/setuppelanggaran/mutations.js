@@ -1,7 +1,8 @@
 export default {
     setPelanggaran(state, value) {
-        state.pelanggaran = value.pelanggaran
-        state.struktur = value.struktur
+      state.pelanggaran = value
+        // state.pelanggaran = value.pelanggaran
+        // state.struktur = value.struktur
     },
     inputStruktur(state, value) {
         state.pelanggaran.push(value);
@@ -10,7 +11,8 @@ export default {
         });
     },
     deleteStruktur(state, value) {
-        const i = state.pelanggaran.findIndex((x) => x.SK === value);
+        const sk = value.replace('%23', '#')
+        const i = state.pelanggaran.findIndex((x) => x.SK === sk);
         state.pelanggaran.splice(i, 1);
     },
     updateStruktur(state, value) {

@@ -1,16 +1,14 @@
 <template>
   <div>
     <div class="row mt-3 animate__animated animate__fadeInUp">
-      <div class="col-12 col-md-6"></div>
+      <div class="col-12 col-md-6 d-flex align-items-center">
+        <h3>Setup Jurusan</h3>
+      </div>
       <div class="col-12 col-md-6">
         <!-- Button trigger modal -->
         <div class="button-santri float-end">
-          <button
-            type="button"
-            class="btn btn-sm btn-primary button-santri"
-            data-bs-toggle="modal"
-            data-bs-target="#inputJurusan"
-          >
+          <button type="button" class="btn btn-sm btn-primary button-santri" data-bs-toggle="modal"
+            data-bs-target="#inputJurusan">
             Tambah Jurusan
           </button>
         </div>
@@ -34,9 +32,11 @@
             <td scope="row" class="text-capitalize">{{ data.Nama }}</td>
             <td scope="row" class="text-uppercase">{{ data.Program }}</td>
             <td class="text-end">
-              <a href="javascript:;" @click="deleteItem(data.SK)"
-                ><i class="bx bx-trash text-danger"></i
-              ></a>
+              <a href="javascript:;" @click="deleteJurusan(data.SK)">
+                <button class="btn btn-sm btn-danger">
+                  <i class="bx bx-trash text-white"></i>
+                </button>
+              </a>
             </td>
           </tr>
         </tbody>
@@ -47,42 +47,14 @@
 
 <script>
 import Swal from "sweetalert2";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   computed: {
     ...mapState("kelas", ["jurusan"]),
   },
-
   methods: {
-    async deleteItem(key) {
-      const result = await Swal.fire({
-        title: "Apakah anda yakin?",
-        text: "Data akan dihapus secara permanen!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
-      });
-
-      if (result.isConfirmed) {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          text: "Data berhasil dihapus!",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        const program = localStorage.getItem("program");
-        await this.$axios.$delete(
-          `delete-database?subject=jurusan&program=${program}&code=${
-            key.split("#")[1]
-          }`
-        );
-        this.$store.commit("kelas/deleteJurusan", key);
-      }
-    },
+    ...mapActions('kelas', ['deleteJurusan']),
   },
 };
 </script>

@@ -2,6 +2,9 @@
   .halaqoh {
     .row {
       margin-bottom: 18px;
+      h3 {
+        font-size: 14px;
+      }
       .upload-data-santri {
         transform: scale(0.85);
         border-radius: 10px;
@@ -33,9 +36,16 @@
         tbody {
           tr {
             td {
-              padding: 15px 20px;
+              padding: 12px 20px;
               margin: auto;
               font-size: 12px;
+              button {
+                padding: 2px 5px 0.5px !important;
+                i {
+                  font-size: 14px !important;
+                  padding: -5px !important;
+                }
+              }
             }
           }
         }
@@ -63,6 +73,9 @@
   .kelas {
     .row {
       margin-bottom: 18px;
+      h3 {
+        font-size: 14px;
+      }
       .upload-data-santri {
         transform: scale(0.85);
         border-radius: 10px;
@@ -76,8 +89,11 @@
     }
     .table-responsive {
       overflow-x: auto;
+      border-radius: 7px !important;
+      box-shadow: 0 0 15px #b1b1b166;
       .table {
         width: 100%;
+        margin-bottom: 0 !important;
         thead {
           tr {
             th {
@@ -91,9 +107,16 @@
         tbody {
           tr {
             td {
-              padding: 15px 20px;
+              padding: 10px 20px;
               margin: auto;
               font-size: 12px;
+              button {
+                padding: 2px 5px 0.5px !important;
+                i {
+                  font-size: 14px !important;
+                  padding: -5px !important;
+                }
+              }
             }
           }
         }
@@ -138,8 +161,11 @@
     }
     .table-responsive {
       overflow-x: auto;
+      border-radius: 7px !important;
+      box-shadow: 0 0 15px #b1b1b166;
       .table {
         width: 100%;
+        margin-bottom: 0 !important;
         thead {
           tr {
             th {
@@ -156,6 +182,13 @@
               padding: 15px 20px;
               margin: auto;
               font-size: 12px;
+              button {
+                padding: 2px 5px 0.5px !important;
+                i {
+                  font-size: 14px !important;
+                  padding: -5px !important;
+                }
+              }
             }
           }
         }
@@ -203,8 +236,11 @@
     }
     .table-responsive {
       overflow-x: auto;
+      border-radius: 7px !important;
+      box-shadow: 0 0 15px #b1b1b166;
       .table {
         width: 100%;
+        margin-bottom: 0 !important;
         thead {
           tr {
             th {
@@ -222,8 +258,11 @@
               margin: auto;
               font-size: 12px;
               button {
-                font-size: 10px;
-                padding: 3px 10px;
+                padding: 2px 5px 0.5px !important;
+                i {
+                  font-size: 14px !important;
+                  padding: -5px !important;
+                }
               }
             }
             .container-hari {
@@ -265,6 +304,9 @@
   .utama {
     .row {
       margin-bottom: 18px;
+      h3 {
+        font-size: 14px;
+      }
       .upload-data-santri {
         transform: scale(0.85);
         border-radius: 10px;
@@ -300,8 +342,11 @@
               margin: auto;
               font-size: 12px;
               button {
-                font-size: 10px;
-                padding: 3px 10px;
+                padding: 2px 5px 0.5px !important;
+                i {
+                  font-size: 14px !important;
+                  padding: -5px !important;
+                }
               }
               .item {
                 font-size: 10px;

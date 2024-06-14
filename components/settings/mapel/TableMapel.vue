@@ -17,11 +17,7 @@
             <td scope="row" class="text-capitalize">{{ data.Nama }}</td>
             <td scope="row" class="text-uppercase">{{ data.Jurusan }}</td>
             <td scope="row" class="text-capitalize container-hari">
-              <div
-                v-for="(value, i) in data.Hari"
-                :key="i"
-                style="display: inline"
-              >
+              <div v-for="(value, i) in data.Hari" :key="i" style="display: inline">
                 <div class="btn-group btn-group-sm px-1 py-1 list-hari">
                   <div class="btn btn-secondary disabled">
                     <span>{{ value }}</span>
@@ -30,12 +26,16 @@
               </div>
             </td>
             <td class="text-end">
-              <a href="javascript:;" @click="editItem(i)"
-                ><i class="bx bx-edit text-primary"></i
-              ></a>
-              <a href="javascript:;" @click="deleteItem(data.SK)"
-                ><i class="bx bx-trash text-danger"></i
-              ></a>
+              <a href="javascript:;" @click="editItem(data.SK)">
+                <button class="btn btn-sm btn-warning">
+                  <i class="bx bx-pencil"></i>
+                </button>
+              </a>
+              <a href="javascript:;" @click="deleteItem(data.SK)">
+                <button class="btn btn-sm btn-danger">
+                  <i class="bx bx-trash text-white"></i>
+                </button>
+              </a>
             </td>
           </tr>
         </tbody>
@@ -56,7 +56,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("mapel", ["mapel"]),
+    ...mapState("mapel", ["mapel", 'listKelas']),
   },
   methods: {
     async deleteItem(key) {
@@ -73,8 +73,7 @@ export default {
       if (result.isConfirmed) {
         const program = localStorage.getItem("program");
         const result = await this.$axios.$delete(
-          `delete-database?subject=mapel&program=${program}&code=${
-            key.split("#")[2]
+          `delete-database?subject=mapel&program=${program}&code=${key.split("#")[2]
           }&kelas=${key.split("#")[1]}`
         );
         this.$store.commit("mapel/deleteMapel", key);
