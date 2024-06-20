@@ -9,4 +9,6 @@ export default () => ({
     santriSubList: false,
     pegawaiSubList: false,
     databaseSubList: false,
+
+    isSidebar: true
 })

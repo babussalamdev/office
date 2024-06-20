@@ -1,6 +1,6 @@
 <template>
   <main>
-    <Sidebar :isSidebar="isSidebar" />
+    <Sidebar />
     <!-- menu mobile  -->
     <div class="menu-mobile" :class="!isSidebar ? 'menu-mobile-open' : ''">
       <div
@@ -9,7 +9,7 @@
         <img src="~/assets/img/logo-1.png" />
         <span @click="toggleSidebar">
           <i v-if="isSidebar" class="bx bx-menu-alt-right"></i>
-          <i v-else class="bx bx-window-close"></i>
+          <i v-else class="material-icons text-dark"> close </i>
         </span>
       </div>
     </div>
@@ -42,23 +42,16 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 
 export default {
-  data() {
-    return {
-      isSidebar: true,
-    };
-  },
-
   methods: {
-    toggleSidebar() {
-      this.isSidebar = !this.isSidebar;
-    },
+    ...mapMutations('sidebar', ['toggleSidebar'])
   },
 
   computed: {
     ...mapState("mainkelas", ["overlay"]),
+    ...mapState('sidebar', ['isSidebar'])
   },
 };
 </script>

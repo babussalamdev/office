@@ -2,7 +2,7 @@ import Swal from "sweetalert2";
 export default {
   async getAbsensi({ commit }, data) {
     const result = await this.$axios.$get(
-      `settings-get-absensi?sk=${data}`
+      `get-settings?sk=${data}&type=absensi`
     );
     commit('setAbsensi', result);
   },
@@ -19,7 +19,7 @@ export default {
     data["Permissions"] = state.value.map((x) => x.name).join(",");
     try {
       const result = await this.$axios.$post(
-        `settings-input-absensi`,
+        `input-settings?type=absensi`,
         data
       );
       Swal.fire({
@@ -50,7 +50,7 @@ export default {
     try {
       console.log(data)
       const result = await this.$axios.$put(
-        `settings-update-absensi?sk=${key}`,
+        `update-settings?sk=${key}&type=absensi`,
         data
       );
       if (result) {
@@ -77,7 +77,7 @@ export default {
   },
   async deleteItem({ commit, state }, sk) {
     const i = state.absensi.findIndex((x) => x.SK === sk)
-    const name = state.absensi[i].Nama
+    const name = state.absensi[i].Struktur
     const key = state.absensi[i].SK.replace('#', '%23')
     const result = await Swal.fire({
       title: name,
@@ -90,7 +90,7 @@ export default {
     });
     if (result.isConfirmed) {
       await this.$axios.$delete(
-        `settings-delete-absensi?sk=${key}`
+        `delete-settings?sk=${key}&type=absensi`
       );
       commit('deleteStruktur', key);
       if (result) {

@@ -379,11 +379,11 @@ import "animate.css";
 import { mapState, mapMutations } from "vuex";
 
 export default {
-  props: ["isSidebar"],
+  // props: ["isSidebar"],
   computed: {
     ...mapState("index", ["unit", "permissions", "pengajar", "pengampu", "personalia",]),
     ...mapState("sidebar", ["activeMenu", "listAsrama", "listTahfidz", "listSettings", "listKelas", "listReport",
-      "absensiSubList", "santriSubList", "pegawaiSubList", "databaseSubList",]),
+      "absensiSubList", "santriSubList", "pegawaiSubList", "databaseSubList", 'isSidebar']),
   },
 
   methods: {

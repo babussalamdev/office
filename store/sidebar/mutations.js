@@ -9,4 +9,7 @@ export default {
         state.databaseSubList = false;
         state[list + 'SubList'] = !state[list + 'SubList'];
     },
+    toggleSidebar(state) {
+      state.isSidebar = state.isSidebar ? false : true;
+    },
 }

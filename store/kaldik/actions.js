@@ -2,17 +2,18 @@ import Swal from "sweetalert2";
 export default {
   async changeUnit({ commit }, data) {
     const result = await this.$axios.$get(
-      `settings-get-kaldik?sk=${data}`
+      `get-settings?sk=${data}&type=kaldik`
     );
     commit('setkaldik', result);
   },
   async inputKaldik({ commit, state }, event) {
     commit('btn')
     const data = Object.fromEntries(new FormData(event.target));
-    data["Program"] = localStorage.getItem("program");
+    const program = localStorage.getItem('program')
+    data["Program"] = program
     try {
       const result = await this.$axios.$post(
-        `settings-input-kaldik`,
+        `input-settings?sk=${program}&type=kaldik`,
         data
       );
       Swal.fire({
@@ -40,7 +41,7 @@ export default {
     const key = state.updateData.SK.replace('#', '%23');
     try {
       const result = await this.$axios.$put(
-        `settings-update-kaldik?sk=${key}`,
+        `update-settings?sk=${key}&type=kaldik`,
         data
       );
       if(result) {
@@ -81,9 +82,9 @@ export default {
 
     if (result.isConfirmed) {
       await this.$axios.$delete(
-        `settings-delete-kaldik?sk=${key}`
+        `delete-settings?sk=${key}&type=kaldik`
       );
-      commit('deleteKaldik', key);
+      commit('deleteKaldik', sk);
       Swal.fire({
         position: "center",
         icon: "success",

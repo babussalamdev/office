@@ -2,23 +2,26 @@ import Swal from "sweetalert2";
 export default {
   async changeUnitHalaqah({ commit }, data) {
     const result = await this.$axios.$get(
-      `settings-get-halaqah?sk=${data}`
+      `get-settings?sk=${data}&type=halaqah`
     );
     commit('setDataHalaqah', result);
   },
   async changeUnitAsrama({ commit }, data) {
     const result = await this.$axios.$get(
-      `settings-get-asrama?sk=${data}`
+      `get-settings?sk=${data}&type=asrama`
     );
     commit('setDataAsrama', result);
   },
+
+  // halaqah
   async inputHalaqah({ commit, state }, event) {
     commit('btn')
     const data = Object.fromEntries(new FormData(event.target));
-    data["Program"] = localStorage.getItem("program");
+    const program = localStorage.getItem('program')
+    data["Program"] = program
     try {
       const result = await this.$axios.$post(
-        "settings-input-halaqah",
+        `input-settings?sk=${program}&type=halaqah`,
         data
       );
       if (result) {
@@ -45,7 +48,7 @@ export default {
   async deleteHalaqah({ commit, state }, sk) {
     const i = state.halaqah.findIndex((x) => x.SK === sk)
     const name = state.halaqah[i].Nama
-    const key = sk.replace('#', '%23')
+    const key = sk.replace(/#/g, '%23')
     const result = await Swal.fire({
       title: name,
       text: "Data akan dihapus secara permanen!",
@@ -58,7 +61,7 @@ export default {
 
     if (result.isConfirmed) {
       const result = await this.$axios.$delete(
-        `settings-delete-halaqah?sk=${key}`
+        `delete-settings?sk=${key}&type=halaqah`
       );
       if (result) {
         Swal.fire({
@@ -68,17 +71,20 @@ export default {
           showConfirmButton: false,
           timer: 1500,
         });
-        commit('deleteHalaqah', key);
+        commit('deleteHalaqah', sk);
       }
     }
   },
+
+  // asrama
   async inputAsrama({ commit, state }, event) {
     commit('btn')
     const data = Object.fromEntries(new FormData(event.target));
-    data["Program"] = localStorage.getItem("program");
+    const program = localStorage.getItem('program')
+    data["Program"] = program
     try {
       const result = await this.$axios.$post(
-        `settings-input-asrama`,
+        `input-settings?sk=${program}&type=asrama`,
         data
       );
       if (result) {
@@ -105,7 +111,7 @@ export default {
   async deleteItem({ commit, state }, sk) {
     const i = state.asrama.findIndex((x) => x.SK === sk)
     const name = state.asrama[i].Nama
-    const key = sk.replace('#', '%23')
+    const key = sk.replace(/#/g, '%23')
     const result = await Swal.fire({
       title: name,
       text: "Data akan dihapus secara permanen!",
@@ -118,10 +124,10 @@ export default {
 
     if (result.isConfirmed) {
       const result = await this.$axios.$delete(
-        `settings-delete-asrama?sk=${key}`
+        `delete-settings?sk=${key}&type=asrama`
       );
       if (result) {
-        commit('deleteAsrama', key);
+        commit('deleteAsrama', sk);
         Swal.fire({
           position: "center",
           icon: "success",

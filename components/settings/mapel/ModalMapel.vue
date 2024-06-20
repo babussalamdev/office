@@ -4,7 +4,7 @@
     <div class="modal fade" id="updateDataMapel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form @submit.prevent="updateMapel" ref="updateMapel">
+          <form @submit.prevent="updateMapel" id="updateMapel">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">
                 Update Mapel
@@ -14,15 +14,15 @@
             <div class="modal-body">
               <div class="mb-3">
                 <label for="sort" class="form-label">Sort</label>
-                <input name="Sort" type="number" class="form-control" id="sort" :value="updateData.Sort" required />
+                <input name="Sort" type="number" class="form-control" id="sort" :value="updateData?.Sort" required />
               </div>
               <div class="mb-3">
                 <label for="nama" class="form-label">Nama Mapel</label>
-                <input name="Nama" type="text" class="form-control" id="nama" :value="updateData.Nama" required />
+                <input name="Nama" type="text" class="form-control" id="nama" :value="updateData?.Nama" required />
               </div>
               <div class="mb-3">
                 <label for="jurusan" class="form-label">Jurusan</label>
-                <select name="Jurusan" id="jurusan" class="form-select" :value="updateData.Jurusan" required>
+                <select name="Jurusan" id="jurusan" class="form-select" :value="updateData?.Jurusan" required>
                   <option value="non-jurusan" selected>Non-Jurusan</option>
                   <option v-for="(value, index) in jurusan" :key="index" :value="value.Nama">
                     {{ value.Nama }}
@@ -59,7 +59,7 @@
     <div class="modal fade" id="InputDataMapel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form @submit.prevent="inputMapel" ref="inputMapel">
+          <form @submit.prevent="inputMapel" id="inputMapel">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">
                 Input Mapel
@@ -114,45 +114,25 @@
 
 <script>
 import Swal from "sweetalert2";
-import { mapState } from "vuex";
+import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
 import Multiselect from "vue-multiselect";
 
 export default {
-  props: ["updateData"],
   components: {
     Multiselect,
   },
 
   computed: {
-    ...mapState("mapel", ["kelas", "jurusan", "selectKelas"]),
-  },
-
-  data() {
-    return {
-      btn: true,
-      unit: "",
-      value: [],
-      options: [
-        { name: "senin-1", code: 0 },
-        { name: "senin-2", code: 1 },
-        { name: "senin-3", code: 2 },
-        { name: "selasa-1", code: 3 },
-        { name: "selasa-2", code: 4 },
-        { name: "selasa-3", code: 5 },
-        { name: "rabu-1", code: 6 },
-        { name: "rabu-2", code: 7 },
-        { name: "rabu-3", code: 8 },
-        { name: "kamis-1", code: 9 },
-        { name: "kamis-2", code: 10 },
-        { name: "kamis-3", code: 11 },
-        { name: "jumat-1", code: 12 },
-        { name: "jumat-2", code: 13 },
-        { name: "jumat-3", code: 14 },
-        { name: "sabtu-1", code: 15 },
-        { name: "sabtu-2", code: 16 },
-        { name: "sabtu-3", code: 17 },
-      ],
-    };
+    ...mapState("mapel", ["kelas", "jurusan", "selectKelas", 'btn', 'value', 'options', 'updateData']),
+    ...mapGetters('mapel', ['getValue']),
+    value: {
+      get() {
+        return this.getValue
+      },
+      set(value) {
+        this.$store.commit('mapel/setValue', value)
+      }
+    }
   },
   mounted() {
     document
@@ -166,94 +146,7 @@ export default {
   },
 
   methods: {
-    async inputMapel(event) {
-      this.btn = false;
-      const data = Object.fromEntries(new FormData(event.target));
-      data["Kelas"] = this.selectKelas;
-      data["Program"] = localStorage.getItem("program");
-      data["Hari"] = this.value.map((x) => x.name);
-      try {
-        const result = await this.$axios.$post(
-          `/input-database?subject=mapel`,
-          data
-        );
-        this.btn = true;
-        if (result.message === "Kelas terisi dengan mapel lain") {
-          Swal.fire({
-            position: "center",
-            icon: "warning",
-            text: result.message,
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        } else {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            text: "Data berhasil di input",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          this.$refs.inputMapel.reset();
-          this.value = [];
-          this.$store.commit("mapel/inputMapel", result);
-          $("#InputDataMapel").modal("hide");
-        }
-      } catch (error) {
-        this.btn = true;
-        Swal.fire({
-          icon: "warning",
-          text: error,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    },
-    async updateMapel(event) {
-      this.btn = false;
-      const data = Object.fromEntries(new FormData(event.target));
-      data["Hari"] = this.value.map((x) => x.name);
-      const key = this.updateData.SK;
-      try {
-        const result = await this.$axios.$put(
-          `/update-database?subject=mapel&program=${key.split("#")[0]}&kelas=${key.split("#")[1]
-          }&code=${key.split("#")[2]}`,
-          data
-        );
-        this.btn = true;
-        if (result.message === "Kelas terisi dengan mapel lain") {
-          Swal.fire({
-            position: "center",
-            icon: "warning",
-            text: result.message,
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        } else {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            text: "Data berhasil di input",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          data["SK"] = key;
-          this.$refs.updateMapel.reset();
-          this.value = [];
-          this.$store.commit("mapel/updateMapel", data);
-          $("#updateDataMapel").modal("hide");
-        }
-      } catch (error) {
-        this.btn = true;
-        Swal.fire({
-          icon: "warning",
-          text: error,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    },
-
+    ...mapActions('mapel', ['inputMapel', 'updateMapel']),
     addTag(newTag) {
       const tag = {
         name: newTag,

@@ -32,8 +32,7 @@ export default {
 
   },
   deleteKaldik(state, value) {
-    const sk = value.replace('%23', '#')
-    const i = state.kaldik.findIndex((x) => x.SK === sk);
+    const i = state.kaldik.findIndex((x) => x.SK === value);
     state.kaldik.splice(i, 1);
   },
 

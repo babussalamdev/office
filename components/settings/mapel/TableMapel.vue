@@ -41,57 +41,26 @@
         </tbody>
       </table>
     </div>
-    <ModalMapel :updateData="updateData" />
+    <ModalMapel />
   </div>
 </template>
 
 <script>
 import Swal from "sweetalert2";
-import { mapState } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 
 export default {
-  data() {
-    return {
-      updateData: "",
-    };
-  },
+  // data() {
+  //   return {
+  //     updateData: "",
+  //   };
+  // },
   computed: {
     ...mapState("mapel", ["mapel", 'listKelas']),
   },
   methods: {
-    async deleteItem(key) {
-      const result = await Swal.fire({
-        title: "Apakah anda yakin?",
-        text: "Data akan dihapus secara permanen!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
-      });
-
-      if (result.isConfirmed) {
-        const program = localStorage.getItem("program");
-        const result = await this.$axios.$delete(
-          `delete-database?subject=mapel&program=${program}&code=${key.split("#")[2]
-          }&kelas=${key.split("#")[1]}`
-        );
-        this.$store.commit("mapel/deleteMapel", key);
-        if (result) {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            text: "Data berhasil dihapus!",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-      }
-    },
-    async editItem(index) {
-      $("#updateDataMapel").modal("show");
-      this.updateData = this.mapel[index];
-    },
+    ...mapActions('mapel', ['deleteItem']),
+    ...mapMutations('mapel', ['editItem']),
   },
 };
 </script>

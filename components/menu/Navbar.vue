@@ -18,6 +18,13 @@
       </div>
       <!-- menu profil melayang -->
       <div class="d-flex align-items-center gap-3">
+        <div class="hamburger-menu">
+          <span @click="toggleSidebar">
+          <i v-if="isSidebar" class="bx bx-menu-alt-right"></i>
+          <i v-else class="material-icons text-dark"> close </i>
+        </span>
+        </div>
+
         <select class="form-select select" @change="setUnit(unit)" v-model="unit" required>
           <option value="" selected disabled>Unit</option>
           <option v-for="(program, i) in $auth.user.Program?.split(',')" :key="i" :value="program"
@@ -62,6 +69,7 @@ import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 export default {
   computed: {
     ...mapState('navbar', ['profile', 'notif', 'notifications', 'notificationOpened', 'userType']),
+    ...mapState('sidebar', ['isSidebar']),
     ...mapGetters('navbar', ['getUnit']),
     unit: {
       get() {
@@ -90,6 +98,7 @@ export default {
   },
   methods: {
     ...mapMutations('navbar', ['changeUnit', 'viewProfile', 'falseData', 'toggleNotification']),
+    ...mapMutations('sidebar', ['toggleSidebar']),
     // ...mapActions('navbar', ['setUnit']),
     async setUnit() {
       const program = localStorage.getItem('program')
@@ -110,4 +119,15 @@ export default {
 
 <style scoped>
 @import url(~/assets/css/navbar.css);
+
+.hamburger-menu {
+  display: none
+}
+
+@media only screen and (min-width: 576px) and (max-width: 1200px){
+  .hamburger-menu {
+    display: block;
+    cursor: pointer
+  }
+}
 </style>

@@ -2,14 +2,15 @@ import Swal from "sweetalert2";
 export default {
   async changeUnit({ commit }, data) {
     const result = await this.$axios.$get(
-      `settings-get-periode?sk=${data}`
+      `get-settings?sk=${data}&type=periode`
     );
     commit('setPeriode', result);
   },
   async inputUtama({ commit, state }, event) {
     commit('btn')
     const data = Object.fromEntries(new FormData(event.target));
-    data["Program"] = localStorage.getItem("program");
+    const program = localStorage.getItem('program')
+    data["Program"] = program
 
     let label = "";
     if (data.Semester.toLowerCase() === "ganjil") {
@@ -22,7 +23,7 @@ export default {
     data["Label"] = label;
     try {
       const result = await this.$axios.$post(
-        `settings-input-periode`,
+        `input-settings?sk=${program}&type=periode`,
         data
       );
       Swal.fire({
@@ -48,8 +49,10 @@ export default {
     const i = state.periode.findIndex((x) => x.SK === sk)
     const key = state.periode[i].SK.replace('#', '%23')
     const status = state.periode[i].Status
+    const semester = state.periode[i].Semester
+    const tahun = state.periode[i].Tahun
     const result = await Swal.fire({
-      title: "Apakah anda yakin?",
+      title: `Semester ${semester} TH. ${tahun}`,
       text: `Subject akan di ${status === "active" ? "Non-Aktif" : "Aktif"
         }kan`,
       icon: "warning",
@@ -65,14 +68,14 @@ export default {
 
     if (result.isConfirmed) {
       const request = await this.$axios.$put(
-        `settings-update-periode?sk=${key}`,
+        `update-settings?sk=${key}&type=periode`,
         data
       );
       if (request) {
         Swal.fire({
           position: "center",
           icon: "success",
-          text: "Data berhasil dinonaktifkan!",
+          text: `Data berhasil di ${status === "active" ? "Non-Aktifkan" : "Aktifkan"}!`,
           showConfirmButton: false,
           timer: 1500,
         });

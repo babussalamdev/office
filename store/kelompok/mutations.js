@@ -15,8 +15,7 @@ export default {
         $("#InputDataHalaqoh").modal("hide");
     },
     deleteHalaqah(state, value) {
-        const sk = value.replace('%23', '#')
-        const i = state.halaqah.findIndex((x) => x.SK === sk);
+        const i = state.halaqah.findIndex((x) => x.SK === value);
         state.halaqah.splice(i, 1);
     },
     updateAsrama(state, value) {
@@ -30,8 +29,7 @@ export default {
 
     },
     deleteAsrama(state, value) {
-        const sk = value.replace('%23', '#')
-        const i = state.asrama.findIndex((x) => x.SK === sk);
+        const i = state.asrama.findIndex((x) => x.SK === value);
         state.asrama.splice(i, 1);
     },
 

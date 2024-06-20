@@ -2,7 +2,7 @@ import Swal from "sweetalert2";
 export default {
     async getPelanggaran({ commit }, data) {
         const result = await this.$axios.$get(
-            `settings-get-pelanggaran?sk=${data}`
+            `get-settings?sk=${data}&type=pelanggaran`
         );
         commit('setPelanggaran', result);
     },
@@ -25,9 +25,9 @@ export default {
       if (result.isConfirmed) {
         const key = sk.replace('#', '%23')
         await this.$axios.$delete(
-          `settings-delete-pelanggaran?sk=${key}`
+          `delete-settings?sk=${key}&type=pelanggaran`
         );
-        commit('deleteStruktur', key);
+        commit('deleteStruktur', sk);
         if (result) {
           Swal.fire({
             position: "center",

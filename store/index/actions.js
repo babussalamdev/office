@@ -1,7 +1,7 @@
 export default {
     async changeUnit({ commit }, data) {
         const result = await this.$axios.$get(
-            `get-database?subject=permissions&program=${data}`
+            `get-settings?sk=${data}&type=permissions`
         );
         const datas = {
             result, program: data

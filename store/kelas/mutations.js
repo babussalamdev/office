@@ -14,8 +14,7 @@ export default {
     $("#inputKelas").modal("hide");
   },
   deleteKelas(state, value) {
-    const sk = value.replace('%23', '#')
-    const i = state.kelas.findIndex((x) => x.SK === sk);
+    const i = state.kelas.findIndex((x) => x.SK === value);
     state.kelas.splice(i, 1);
   },
   updateJurusan(state, value) {
@@ -28,8 +27,7 @@ export default {
     $("#inputJurusan").modal("hide");
   },
   deleteJurusan(state, value) {
-    const sk = value.replace('%23', '#')
-    const i = state.jurusan.findIndex((x) => x.SK === sk);
+    const i = state.jurusan.findIndex((x) => x.SK === value);
     state.jurusan.splice(i, 1);
   },
   updateEkskull(state, value) {
@@ -42,8 +40,7 @@ export default {
     $("#inputEkskull").modal("hide");
   },
   deleteEkskull(state, value) {
-    const sk = value.replace('%23', '#')
-    const i = state.ekskull.findIndex((x) => x.SK === sk);
+    const i = state.ekskull.findIndex((x) => x.SK === value);
     state.ekskull.splice(i, 1);
   },
 

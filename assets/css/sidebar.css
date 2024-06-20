@@ -133,18 +133,7 @@
 } */
 
 /* desain tambahan sidebar link */
-
-@media screen and (max-width: 1200px) {
-  .menu ul li span,
-  .logo span {
-    display: none;
-  }
-  .sidebar {
-    width: 58px;
-  }
-}
-
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 576px) {
   /*ini awalnya 576px*/
   .sidebar {
     position: absolute;
@@ -154,6 +143,7 @@
     height: 111vh !important;
     padding: 0 20px;
     background: #176b87;
+    border-radius: 0px !important;
     color: #fff;
     z-index: 99;
     transform: translateX(-100%);
@@ -173,6 +163,45 @@
 
   .menu ul li .nuxt-link-exact-active {
     border-radius: 30px;
+  }
+  .menu ul li .nuxt-link-exact-active::before,
+  .menu ul li .nuxt-link-exact-active::after {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 1200px) {
+  /* Masukkan kode CSS Anda di sini */
+  .sidebar {
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    min-height: calc(100vh - 14px);
+
+    /* width: max-content; */
+    /* height: 111vh !important; */
+    padding: 40px 20px 0;
+    background: #176b87;
+    border-radius: 10px;
+    color: #fff;
+    z-index: 9999;
+    transform: translateX(calc(-100% - 7px));
+    transition: transform 0.3s ease;
+  }
+  .sidebar-open {
+    transform: translateX(0);
+  }
+  /* .logo {
+    display: none;
+  } */
+  .menu ul li span {
+    display: block;
+  }
+
+  /* menu list */
+
+  .menu ul li .nuxt-link-exact-active {
+    border-radius: 5px;
   }
   .menu ul li .nuxt-link-exact-active::before,
   .menu ul li .nuxt-link-exact-active::after {

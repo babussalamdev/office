@@ -2,18 +2,19 @@ import Swal from "sweetalert2";
 export default {
   async changeUnit({ commit }, data) {
     const result = await this.$axios.$get(
-      `settings-get-struktur?sk=${data}`
+      `get-settings?sk=${data}&type=struktur`
     );
     commit('setStruktur', result);
   },
   async inputStruktur({ commit, state }, event) {
     commit('btn')
     const data = Object.fromEntries(new FormData(event.target));
-    data["Program"] = localStorage.getItem("program");
+    const program = localStorage.getItem('program')
+    data["Program"] = program
     data["Permissions"] = state.value.map((x) => x.name).join(",");
     try {
       const result = await this.$axios.$post(
-        `settings-input-struktur`,
+        `input-settings?sk=${program}&type=struktur`,
         data
       );
       Swal.fire({
@@ -42,7 +43,7 @@ export default {
     const key = state.updateData.SK.replace('#', '%23');
     try {
       const result = await this.$axios.$put(
-        `settings-update-struktur?sk=${key}`,
+        `update-settings?sk=${key}&type=struktur`,
         data
       );
       if (result) {
@@ -55,7 +56,6 @@ export default {
         });
         commit('btn')
         data["SK"] = key;
-        console.log(data)
         commit('updateDataStruktur', data);
       }
     } catch (error) {
@@ -84,7 +84,7 @@ export default {
 
     if (result.isConfirmed) {
       const response = await this.$axios.$delete(
-        `settings-delete-struktur?sk=${key}`
+        `delete-settings?sk=${key}&type=struktur`
       );
       if (response) {
         Swal.fire({
