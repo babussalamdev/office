@@ -9,17 +9,27 @@ export default {
     state.pelanggaran.sort((a, b) => {
       return a.Sort - b.Sort;
     });
+
+    state.value = [];
+    $("#inputPelanggaran")[0].reset()
+    $("#inputDataPelanggaran").modal("hide");
+
   },
   deleteStruktur(state, value) {
     const i = state.pelanggaran.findIndex((x) => x.SK === value);
     state.pelanggaran.splice(i, 1);
   },
-  updateStruktur(state, value) {
-    const sk = value.SK.replace('%23', '#')
-    const i = state.pelanggaran.findIndex((x) => x.SK === sk)
+  editItem(state, value) {
+    const index = state.pelanggaran.findIndex((x) => x.SK === value)
+    $("#updateDataPelanggaran").modal("show");
+    state.updateData = state.pelanggaran[index];
+  },
 
-    const data = state.pelanggaran[i];
-    data.Struktur = value.Struktur
-    data.Permissions = value.Permissions
+
+  setValue(state, value) {
+    state.value = value
+  },
+  btn(state) {
+    state.btn = state.btn ? false : true
   },
 }

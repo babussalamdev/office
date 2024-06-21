@@ -38,9 +38,11 @@
     }
     .table-responsive {
       overflow-x: auto;
-      width: 100%;
+      border-radius: 7px !important;
+      box-shadow: 0 0 15px #b1b1b166;
       .table {
         width: 100%;
+        margin-bottom: 0 !important;
         .table-hover {
           width: 100%;
         }
@@ -60,10 +62,12 @@
               padding: 15px 20px;
               margin: auto;
               font-size: 12px;
-              .power {
-                font-size: 12px;
-                padding: 5px;
-                border-radius: 3px;
+              button {
+                padding: 2px 5px 0.5px !important;
+                i {
+                  font-size: 14px !important;
+                  padding: -5px !important;
+                }
               }
             }
           }
@@ -105,9 +109,11 @@
     }
     .table-responsive {
       overflow-x: auto;
-      width: 100%;
+      border-radius: 7px !important;
+      box-shadow: 0 0 15px #b1b1b166;
       .table {
         width: 100%;
+        margin-bottom: 0 !important;
         .table-hover {
           width: 100%;
         }

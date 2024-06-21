@@ -38,10 +38,12 @@
 }
 #santri .santri .table-responsive {
   overflow-x: auto;
-  width: 100%;
+  border-radius: 7px !important;
+  box-shadow: 0 0 15px rgba(177, 177, 177, 0.4);
 }
 #santri .santri .table-responsive .table {
   width: 100%;
+  margin-bottom: 0 !important;
 }
 #santri .santri .table-responsive .table .table-hover {
   width: 100%;
@@ -57,10 +59,12 @@
   margin: auto;
   font-size: 12px;
 }
-#santri .santri .table-responsive .table tbody tr td .power {
-  font-size: 12px;
-  padding: 5px;
-  border-radius: 3px;
+#santri .santri .table-responsive .table tbody tr td button {
+  padding: 2px 5px 0.5px !important;
+}
+#santri .santri .table-responsive .table tbody tr td button i {
+  font-size: 14px !important;
+  padding: -5px !important;
 }
 @media screen and (max-width: 576px) {
   #santri .santri .table-responsive .table thead tr th {
@@ -85,10 +89,12 @@
 }
 #settings .settings .table-responsive {
   overflow-x: auto;
-  width: 100%;
+  border-radius: 7px !important;
+  box-shadow: 0 0 15px rgba(177, 177, 177, 0.4);
 }
 #settings .settings .table-responsive .table {
   width: 100%;
+  margin-bottom: 0 !important;
 }
 #settings .settings .table-responsive .table .table-hover {
   width: 100%;

@@ -5,7 +5,7 @@
       aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form @submit.prevent="inputDataPelanggaran" ref="inputDataPelanggaran">
+          <form @submit.prevent="inputDataPelanggaran" id="inputPelanggaran">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">
                 Input Permissions Pelanggaran
@@ -63,7 +63,7 @@
       aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form @submit.prevent="updateDataPelanggaran" ref="updateDataPelanggaran">
+          <form @submit.prevent="updateDataPelanggaran" id="updatePelanggaran">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">
                 Update Setup Pelanggaran
@@ -71,9 +71,8 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              {{ updateData }}
               <div class="mb-3">
-                <select class="form-select" name="Struktur" :value="updateData.Struktur">
+                <select class="form-select" name="Struktur" :value="updateData?.Struktur">
                   <option selected>-- Pilih Struktur --</option>
                   <option v-for="(data, index) in struktur" :key="index" :value="data.Nama">
                     {{ data.Nama }}
@@ -110,26 +109,14 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
 import Swal from "sweetalert2";
 import Multiselect from "vue-multiselect";
 
 export default {
-  props: ["updateData"],
   components: {
     Multiselect,
   },
-  data() {
-    return {
-      btn: true,
-      value: [],
-      options: [
-        { name: "input", code: 0 },
-        { name: "edit", code: 1 },
-      ],
-    };
-  },
-
   mounted() {
     document
       .getElementById("updateDataPelanggaran")
@@ -138,83 +125,23 @@ export default {
       });
   },
   computed: {
-    ...mapState("setuppelanggaran", ["struktur"]),
+    ...mapState("setuppelanggaran", ["struktur", 'btn', 'options', 'updateData']),
+    ...mapGetters('setuppelanggaran', ['getValue']),
+    value: {
+      get() {
+        return this.getValue
+      },
+      set(value) {
+        this.$store.commit('setuppelanggaran/setValue', value)
+      }
+    }
   },
   watch: {
     updateData: "valueUpdate",
   },
 
   methods: {
-    async inputDataPelanggaran(event) {
-      this.btn = false;
-      const data = Object.fromEntries(new FormData(event.target));
-      data["Program"] = localStorage.getItem("program");
-      data["Permissions"] = this.value.map((x) => x.name).join(",");
-      try {
-        const result = await this.$axios.$post(
-          `input-settings?type=pelanggaran`,
-          data
-        );
-        this.btn = true;
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          text: "Data berhasil di input",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        this.$refs.inputDataPelanggaran.reset();
-        this.value = [];
-        this.$store.commit("setuppelanggaran/inputStruktur", result);
-        $("#inputDataPelanggaran").modal("hide");
-      } catch (error) {
-        this.btn = true;
-        Swal.fire({
-          icon: "warning",
-          text: error,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    },
-
-    async updateDataPelanggaran(event) {
-      this.btn = false;
-      const data = Object.fromEntries(new FormData(event.target));
-      data["Permissions"] = this.value.map((x) => x.name).join(",");
-      const key = this.updateData.SK.replace('#', '%23');
-      try {
-        const program = localStorage.getItem("program");
-        const result = await this.$axios.$put(
-          `update-settings?sk=${key}&type=pelanggaran`,
-          data
-        );
-        if (result) {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            text: "Data berhasil diupdate",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          this.btn = true;
-          result["SK"] = key;
-          this.$refs.updateDataPelanggaran.reset();
-          this.value = [];
-          this.$store.commit("setuppelanggaran/updateStruktur", result);
-          $("#updateDataPelanggaran").modal("hide");
-        }
-      } catch (error) {
-        this.btn = true;
-        Swal.fire({
-          icon: "warning",
-          text: error,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    },
-
+    ...mapActions('setuppelanggaran', ['inputDataPelanggaran', 'updateDataPelanggaran']),
     addTag(newTag) {
       const tag = {
         name: newTag,

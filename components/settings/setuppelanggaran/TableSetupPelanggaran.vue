@@ -43,7 +43,7 @@
               {{ data.Database }}
             </td>
             <td class="text-end align-middle">
-              <a href="javascript:;" @click="editItem(i)">
+              <a href="javascript:;" @click="editItem(data.SK)">
                 <button class="btn btn-sm btn-warning">
                   <i class="bx bx-pencil text-dark"></i>
                 </button>
@@ -59,7 +59,7 @@
       </table>
     </div>
     <!-- modal -->
-    <ModalSetupPelanggaran :updateData="updateData" />
+    <ModalSetupPelanggaran />
   </div>
 </template>
 
@@ -68,20 +68,12 @@ import Swal from "sweetalert2";
 import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
 
 export default {
-  data() {
-    return {
-      updateData: "",
-    };
-  },
   computed: {
     ...mapState("setuppelanggaran", ["pelanggaran", "struktur"]),
   },
   methods: {
     ...mapActions('setuppelanggaran', ['deleteItem']),
-    async editItem(index) {
-      $("#updateDataPelanggaran").modal("show");
-      this.updateData = this.pelanggaran[index];
-    },
+    ...mapMutations('setuppelanggaran', ['editItem']),
   },
 };
 </script>

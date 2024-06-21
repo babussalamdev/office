@@ -1,35 +1,81 @@
+import { v4 as uuidv4 } from "uuid";
+import Swal from "sweetalert2";
 export default {
-    setDatabase(state, value) {
-        state.santri = value.Santri
-    },
-    inputSantriBulk(state, value) {
-        state.santri = [...state.santri, ...value];
-        state.santri.sort((a, b) => {
-            return a.Nama - b.Nama;
-        });
-    },
-    inputSantriSingle(state, value) {
-        state.santri.push(value)
-        state.santri.sort((a, b) => {
-            return a.Nama - b.Nama;
-        });
-    },
-    updateSantri(state, value) {
-        const i = state.santri.findIndex((x) => x.SK === value.SK)
+  setDatabase(state, value) {
+    state.santri = value.Santri
 
-        const data = state.santri[i]
-        data.Nama = value.Nama;
-        data.Nisn = value.Nisn;
-        data.Orangtua = value.Orangtua;
-        data.Alamat = value.Alamat;
+    const tahunMulai = 2018;
+    const tahunSekarang = new Date().getFullYear();
+    state.years = Array.from(
+      { length: tahunSekarang - tahunMulai + 2 },
+      (_, index) => tahunMulai + index
+    );
+  },
+  inputSantriBulk(state, value) {
+    state.santri = [...state.santri, ...value];
+    state.santri.sort((a, b) => {
+      return a.Nama - b.Nama;
+    });
+  },
+  inputSantriSingle(state, value) {
+    state.santri.push(value)
+    state.santri.sort((a, b) => {
+      return a.Nama - b.Nama;
+    });
 
+    state.password = "";
+    $("#inputSantri")[0].reset();
+    $("#InputDataSantri").modal("hide");
 
-        // if (i !== -1) {
-        //     state.mapel[i] = { ...state.mapel[i], ...value };
-        // }
-    },
-    deleteSantri(state, value) {
-        const i = state.santri.findIndex((x) => x.SK === value);
-        state.santri.splice(i, 1);
-    },
+  },
+  editItem(state, value) {
+    const index = state.santri.findIndex((x) => x.SK === value)
+    $("#updateDataSantri").modal("show");
+    state.updateData = state.santri[index];
+  },
+
+  updateSantri(state, value) {
+    const i = state.santri.findIndex((x) => x.SK === value.SK)
+
+    const data = state.santri[i]
+    data.Nama = value.Nama;
+    data.Nisn = value.Nisn;
+    data.Orangtua = value.Orangtua;
+    data.Alamat = value.Alamat;
+
+    $("#updateSantri")[0].reset();
+    $("#updateDataSantri").modal("hide");
+  },
+  deleteItem(state, value) {
+    const index = state.santri.findIndex((x) => x.SK === value )
+    if (state.santri[index].Status !== "active") {
+      Swal.fire({
+        icon: "warning",
+        text: "Data tidak bisa diubah",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else {
+      $("#deleteDataSantri").modal("show");
+      state.deleteData = state.santri[index];
+    }
+  },
+  deleteSantri(state, value) {
+    const i = state.santri.findIndex((x) => x.SK === value);
+    state.santri.splice(i, 1);
+
+    $("#deleteSantri")[0].reset();
+    $("#deleteDataSantri").modal("hide");
+  },
+  generatePassword(state) {
+    state.btn = false;
+    state.password = uuidv4().substr(0, 6);
+    state.btn = true;
+  },
+  setAngkatan(state, value) {
+    state.angkatan = value
+  },
+  btn(state, value) {
+    state.btn = state.btn ? false : true
+  }
 }

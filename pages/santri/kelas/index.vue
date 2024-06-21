@@ -9,13 +9,7 @@
 <script>
 export default {
   async asyncData({ store }) {
-    const program = localStorage.getItem("program");
-    const angkatan = new Date().getFullYear();
-    const data = {
-      program: program,
-      angkatan: angkatan,
-    };
-    store.dispatch(`santri/kelas/changeUnit`, data);
+    store.dispatch(`santri/kelas/changeUnit`);
   },
 };
 </script>

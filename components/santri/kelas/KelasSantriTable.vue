@@ -9,22 +9,12 @@
         </div>
         <div class="col-12 col-md-3 d-flex justify-content-end">
           <div class="input-group">
-            <button
-              type="button"
-              class="btn btn-primary btn-sm"
-              @click="editBulk"
-              :disabled="data.length > 0 ? false : true"
-            >
+            <button type="button" class="btn btn-primary btn-sm" @click="editBulk(data)"
+              :disabled="data.length > 0 ? false : true">
               Edit
             </button>
-            <select
-              name="Kelas"
-              id="kelas"
-              v-model="angkatan"
-              @change="angkatanLoad"
-              class="form-select select"
-              required
-            >
+            <select name="Kelas" id="kelas" v-model="angkatan" @change="changeUnit" class="form-select select"
+              required>
               <option value="" selected disabled>Angkatan</option>
               <option v-for="(data, index) in years" :key="index" :value="data">
                 {{ data }}
@@ -35,17 +25,13 @@
       </div>
       <div class="table-responsive">
         <!-- Modal -->
-        <KelasSantriModal :updateData="updateData" @resetSelect="resetSelect" />
+        <!-- <KelasSantriModal @resetSelect="resetSelect" /> -->
+        <KelasSantriModal />
         <table class="table table-hover table-striped">
           <thead>
             <tr>
               <th scope="col">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  v-model="selectAll"
-                  @change="selectAllCheckbox"
-                />
+                <input class="form-check-input" type="checkbox" v-model="selectAll" @change="selectAllCheckbox" />
               </th>
               <th scope="col">Nama Santri</th>
               <th scope="col">Kelas</th>
@@ -58,21 +44,14 @@
           <tbody>
             <tr v-for="(data, index) in santri" :key="index">
               <td>
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  v-model="selectedItems[data.SK]"
-                  @change="getCheckedNames"
-                />
+                <input class="form-check-input" type="checkbox" v-model="selectedItems[data.SK]"
+                  @change="getCheckedNames" />
               </td>
               <td class="text-capitalize align-middle">
                 <h1>{{ data.Nama }}</h1>
                 <p class="text-secondary mt-1">{{ data.Nip }}</p>
               </td>
-              <td
-                class="text-capitalize align-middle text-white"
-                style="background: #176b87"
-              >
+              <td class="text-capitalize align-middle text-white" style="background: #176b87">
                 {{ data.Kelas ? data.Kelas : "-" }}
               </td>
               <td class="text-capitalize align-middle">
@@ -84,13 +63,6 @@
               <td class="text-capitalize align-middle">
                 {{ data.Ekskull ? data.Ekskull : "-" }}
               </td>
-              <!-- <td class="text-capitalize align-middle">
-                {{
-                  data.Halaqah[unit] === "off"
-                    ? "belum dipilih"
-                    : data.Halaqah[unit]
-                }}
-              </td> -->
             </tr>
           </tbody>
         </table>
@@ -100,16 +72,10 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-
+import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
 export default {
   data() {
     return {
-      btn: true,
-      years: [],
-      angkatan: "",
-      updateData: "",
-      unit: "",
       selection: false,
       data: [],
       selectAll: false,
@@ -117,32 +83,24 @@ export default {
       isDataEmpty: true,
     };
   },
-  mounted() {
-    this.unit = localStorage.getItem("program");
-    const tahunMulai = 2018;
-    const tahunSekarang = new Date().getFullYear();
-    this.years = Array.from(
-      { length: tahunSekarang - tahunMulai + 2 },
-      (_, index) => tahunMulai + index
-    );
-    this.angkatan = new Date().getFullYear();
+  watch: {
+    santri: 'resetSelect',
   },
   computed: {
-    ...mapState("santri/kelas", ["santri"]),
+    ...mapState("santri/kelas", ["santri", 'years']),
+    ...mapGetters('santri/kelas', ['getAngkatan']),
+    angkatan: {
+      get() {
+        return this.getAngkatan
+      },
+      set(value) {
+        this.$store.commit('santri/kelas/setAngkatan', value)
+      }
+    }
   },
   methods: {
-    angkatanLoad() {
-      const program = localStorage.getItem("program");
-      const data = {
-        program: program,
-        angkatan: this.angkatan,
-      };
-      this.$store.dispatch(`santri/kelas/changeUnit`, data);
-    },
-    async editItem(index) {
-      $("#updateDataSantriKelas").modal("show");
-      this.updateData = this.santri[index];
-    },
+    ...mapActions('santri/kelas', ['changeUnit']),
+    ...mapMutations('santri/kelas', ['editBulk']),
     selectAllCheckbox() {
       for (const item of this.santri) {
         this.$set(this.selectedItems, item.SK, this.selectAll);
@@ -154,10 +112,6 @@ export default {
         (key) => this.selectedItems[key]
       );
       this.data = checkedNames;
-    },
-    async editBulk(index) {
-      $("#updateDataSantriKelas").modal("show");
-      this.updateData = this.data;
     },
     resetSelect() {
       this.data = [];

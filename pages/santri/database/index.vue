@@ -4,14 +4,8 @@
       <div class="mt-3">
         <div class="database-santri mb-3">
           <div class="left">
-            <select
-              name="Kelas"
-              id="kelas"
-              v-model="angkatan"
-              @change="angkatanLoad"
-              class="form-select select"
-              required
-            >
+            <select name="Kelas" id="kelas" v-model="angkatan" @change="changeUnit" class="form-select select"
+              required>
               <option value="" selected disabled>Angkatan</option>
               <option v-for="(data, index) in years" :key="index" :value="data">
                 {{ data }}
@@ -22,45 +16,22 @@
             <!-- Button trigger modal -->
 
             <div class="button-santri">
-              <button
-                type="button"
-                class="btn btn-primary btn-sm"
-                data-bs-toggle="modal"
-                data-bs-target="#InputDataSantri"
-              >
+              <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                data-bs-target="#InputDataSantri">
                 Tambah
                 <!-- <i class="material-icons"> add </i> -->
               </button>
             </div>
             <div class="upload-data-santri input-group">
-              <input
-                type="file"
-                class="form-control form-control-sm"
-                id="inputGroupFile04"
-                aria-describedby="inputGroupFileAddon04"
-                aria-label="Upload"
-                ref="fileInput"
-              />
+              <input type="file" class="form-control form-control-sm" id="inputGroupFile04"
+                aria-describedby="inputGroupFileAddon04" aria-label="Upload" ref="fileInput" />
               <span>
-                <button
-                  v-if="btn"
-                  class="btn btn-sm btn-success"
-                  type="button"
-                  id="inputGroupFileAddon04"
-                  @click="handleUpload"
-                >
+                <button v-if="btn" class="btn btn-sm btn-success" type="button" id="inputGroupFileAddon04"
+                  @click="handleUpload">
                   Tambah
                 </button>
-                <button
-                  v-else
-                  class="btn btn-success btn-sm"
-                  type="button"
-                  disabled
-                >
-                  <span
-                    class="spinner-border spinner-border-sm"
-                    aria-hidden="true"
-                  ></span>
+                <button v-else class="btn btn-success btn-sm" type="button" disabled>
+                  <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
                   <span class="visually-hidden" role="status">Loading...</span>
                 </button>
               </span>
@@ -70,7 +41,7 @@
       </div>
 
       <!-- table -->
-      <TableSantri :years="years" />
+      <TableSantri />
     </div>
 
     <!-- Modal -->
@@ -80,46 +51,26 @@
 
 <script>
 import Swal from "sweetalert2";
-
+import { mapGetters, mapActions, mapMutations, mapState } from 'vuex'
 export default {
-  data() {
-    return {
-      btn: true,
-      years: [],
-      angkatan: "",
-    };
+  computed: {
+    ...mapState('santri/database', ['angkatan', 'btn', 'years']),
+    ...mapGetters('santri/database', ['getAngkatan']),
+    angkatan: {
+      get() {
+        return this.getAngkatan
+      },
+      set(value) {
+        this.$store.commit('santri/database/setAngkatan', value)
+      }
+    }
   },
-
-  mounted() {
-    const tahunMulai = 2018;
-    const tahunSekarang = new Date().getFullYear();
-    this.years = Array.from(
-      { length: tahunSekarang - tahunMulai + 2 },
-      (_, index) => tahunMulai + index
-    );
-  },
-
   async asyncData({ store }) {
-    const program = localStorage.getItem("program");
-    const angkatan = new Date().getFullYear();
-    const data = {
-      program: program,
-      angkatan: angkatan,
-    };
-    store.dispatch(`santri/database/changeUnit`, data);
-    return { angkatan };
+    store.dispatch(`santri/database/changeUnit`);
   },
 
   methods: {
-    angkatanLoad() {
-      const program = localStorage.getItem("program");
-      const data = {
-        program: program,
-        angkatan: this.angkatan,
-      };
-      this.$store.dispatch(`santri/database/changeUnit`, data);
-    },
-
+    ...mapActions('santri/database', ['changeUnit']),
     async handleUpload() {
       const file = this.$refs.fileInput.files[0]; // Dapatkan file dari input file
       const reader = new FileReader();
@@ -128,7 +79,7 @@ export default {
       if (
         file &&
         file.type !==
-          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
       ) {
         // Tampilkan notifikasi menggunakan Sweet Alert jika jenis file tidak sesuai
         Swal.fire({

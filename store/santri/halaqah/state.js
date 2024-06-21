@@ -1,5 +1,9 @@
 export default () => ({
     santri: [],
     selectHalaqah: [],
-    select: []
+    select: [],
+    btn: true,
+    kelas: '',
+    updateData: '',
+    asramaShow: ''
 })

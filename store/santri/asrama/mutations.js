@@ -1,70 +1,45 @@
 export default {
-    setSelectKelas(state, value) {
-        state.select = value
-    },
-    setSantri(state, value) {
-        state.santri = value.Santri
-        state.selectAsrama = value.Select
-    },
-    updateAsramaSantri(state, data) {
-        const updatedData = state.santri.map(item => {
-            // Cari objek dalam state.santri yang memiliki SK yang sama dengan yang ada di data.sort
-            if (data.sort.includes(item.SK)) {
-                // Salin objek agar tidak memodifikasi state langsung
-                const updatedItem = { ...item };
-                // Perbarui nilai 'Kelas' dari objek yang ditemukan
-                updatedItem['Asrama'] = data.value;
-                return updatedItem;
-            }
-            return item; // Kembalikan objek tanpa modifikasi jika tidak ada yang sesuai
-        });
+  setSelectKelas(state, value) {
+    state.santri = []
+    state.select = value
+    state.kelas = ''
+  },
+  setSantri(state, value) {
+    state.santri = value.Santri
+    state.selectAsrama = value.Select
+  },
+  setKelas(state, value) {
+    state.kelas = value
+  },
+  editBulk(state, value) {
+    $("#updateDataSantriAsrama").modal("show");
+    state.updateData = value;
+  },
+  setAsramaShow(state, value) {
+    console.log('done')
+    state.asramaShow = value
+  },
+  updateAsramaSantri(state, data) {
+    const updatedData = state.santri.map(item => {
+      // Cari objek dalam state.santri yang memiliki SK yang sama dengan yang ada di data.sort
+      if (data.sort.includes(item.SK)) {
+        // Salin objek agar tidak memodifikasi state langsung
+        const updatedItem = { ...item };
+        // Perbarui nilai 'Kelas' dari objek yang ditemukan
+        updatedItem['Asrama'] = data.value;
+        return updatedItem;
+      }
+      return item; // Kembalikan objek tanpa modifikasi jika tidak ada yang sesuai
+    });
 
-        // Perbarui state dengan data yang diperbarui
-        state.santri = updatedData;
-    },
-    // inputSantriBulk(state, value) {
-    //     state.santri = [...state.santri, ...value];
-    //     state.santri.sort((a, b) => {
-    //         return a.Nama - b.Nama;
-    //     });
-    // },
-    // inputSantriSingle(state, value) {
-    //     state.santri.push(value)
-    //     state.santri.sort((a, b) => {
-    //         return a.Nama - b.Nama;
-    //     });
-    // },
+    // Perbarui state dengan data yang diperbarui
+    state.santri = updatedData;
 
-    // setPengajar(state, value) {
-    //     const i = state.mapel.findIndex((x) => x.SK === value.SK)
-    //     const data = state.mapel[i];
-    //     data['GSIPK1'] = value.GSIPK1
+    state.asramaShow = "";
+    $("#updateDataSantriAsrama").modal("hide");
+  },
 
-    //     const updatedData = state.mapel.map((item, index) => {
-    //         if (index === i) {
-    //             return data;
-    //         }
-    //         return item;
-    //     });
-
-    //     state.mapel = updatedData
-    // },
-    // updateSantri(state, value) {
-    //     const i = state.santri.findIndex((x) => x.SK === value.SK)
-
-    //     const data = state.santri[i]
-    //     data.Nama = value.Nama;
-    //     data.Nisn = value.Nisn;
-    //     data.Orangtua = value.Orangtua;
-    //     data.Alamat = value.Alamat;
-
-
-    //     // if (i !== -1) {
-    //     //     state.mapel[i] = { ...state.mapel[i], ...value };
-    //     // }
-    // },
-    // deleteSantri(state, value) {
-    //     const i = state.santri.findIndex((x) => x.SK === value);
-    //     state.santri.splice(i, 1);
-    // },
+  btn(state) {
+    state.btn = state.btn ? false : true
+  }
 }

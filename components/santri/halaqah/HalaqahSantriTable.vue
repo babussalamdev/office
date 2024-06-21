@@ -9,28 +9,13 @@
         </div>
         <div class="col-12 col-md-3 d-flex justify-content-end">
           <div class="input-group">
-            <button
-              type="button"
-              class="btn btn-primary btn-sm"
-              @click="editBulk"
-              :disabled="data.length > 0 ? false : true"
-            >
+            <button type="button" class="btn btn-primary btn-sm" @click="editBulk(data)"
+              :disabled="data.length > 0 ? false : true">
               Edit
             </button>
-            <select
-              name="Kelas"
-              id="kelas"
-              v-model="kelas"
-              @change="kelasLoad"
-              class="form-select select"
-              required
-            >
+            <select name="Kelas" id="kelas" v-model="kelas" @change="loadHalaqah" class="form-select select" required>
               <option value="" selected disabled>Kelas</option>
-              <option
-                v-for="(data, index) in select"
-                :key="index"
-                :value="data"
-              >
+              <option v-for="(data, index) in select" :key="index" :value="data">
                 {{ data }}
               </option>
             </select>
@@ -39,20 +24,12 @@
       </div>
       <div class="table-responsive">
         <!-- Modal -->
-        <HalaqahSantriModal
-          :updateData="updateData"
-          @resetSelect="resetSelect"
-        />
+        <HalaqahSantriModal />
         <table class="table table-hover table-striped">
           <thead>
             <tr>
               <th scope="col">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  v-model="selectAll"
-                  @change="selectAllCheckbox"
-                />
+                <input class="form-check-input" type="checkbox" v-model="selectAll" @change="selectAllCheckbox" />
               </th>
               <th scope="col">Nama Santri</th>
               <th scope="col">Kelas</th>
@@ -65,12 +42,8 @@
           <tbody>
             <tr v-for="(data, index) in santri" :key="index">
               <td>
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  v-model="selectedItems[data.SK]"
-                  @change="getCheckedNames"
-                />
+                <input class="form-check-input" type="checkbox" v-model="selectedItems[data.SK]"
+                  @change="getCheckedNames" />
               </td>
               <td class="text-capitalize align-middle">
                 <h1>{{ data.Nama }}</h1>
@@ -82,22 +55,12 @@
               <td class="text-capitalize align-middle">
                 {{ data.Asrama ? data.Asrama : "-" }}
               </td>
-              <td
-                class="text-capitalize align-middle text-white"
-                style="background: #176b87"
-              >
+              <td class="text-capitalize align-middle text-white" style="background: #176b87">
                 {{ data.Halaqah ? data.Halaqah : "-" }}
               </td>
               <td class="text-capitalize align-middle">
                 {{ data.Ekskull ? data.Ekskull : "-" }}
               </td>
-              <!-- <td class="text-capitalize align-middle">
-                  {{
-                    data.Halaqah[unit] === "off"
-                      ? "belum dipilih"
-                      : data.Halaqah[unit]
-                  }}
-                </td> -->
             </tr>
           </tbody>
         </table>
@@ -107,14 +70,10 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-
+import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
 export default {
   data() {
     return {
-      btn: true,
-      updateData: "",
-      kelas: "",
       unit: "",
       selection: false,
       data: [],
@@ -125,20 +84,22 @@ export default {
   },
   computed: {
     ...mapState("santri/halaqah", ["santri", "select", "selectHalaqah"]),
+    ...mapGetters('santri/halaqah', ['getKelas']),
+    kelas: {
+      get() {
+        return this.getKelas
+      },
+      set(value) {
+        this.$store.commit('santri/halaqah/setKelas', value)
+      }
+    }
+  },
+  watch: {
+    santri: 'resetSelect'
   },
   methods: {
-    kelasLoad() {
-      const program = localStorage.getItem("program");
-      const data = {
-        program: program,
-        kelas: this.kelas,
-      };
-      this.$store.dispatch(`santri/halaqah/loadHalaqah`, data);
-    },
-    async editItem(index) {
-      $("#updateDataSantriHalaqah").modal("show");
-      this.updateData = this.santri[index];
-    },
+    ...mapActions('santri/halaqah', ['loadHalaqah']),
+    ...mapMutations('santri/halaqah', ['editBulk']),
     selectAllCheckbox() {
       for (const item of this.santri) {
         this.$set(this.selectedItems, item.SK, this.selectAll);
@@ -150,10 +111,6 @@ export default {
         (key) => this.selectedItems[key]
       );
       this.data = checkedNames;
-    },
-    async editBulk(index) {
-      $("#updateDataSantriHalaqah").modal("show");
-      this.updateData = this.data;
     },
     resetSelect() {
       this.data = [];

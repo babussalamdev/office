@@ -1,4 +1,9 @@
 export default () => ({
-    santri: [],
-    select: []
+  santri: [],
+  select: [],
+  angkatan: new Date().getFullYear(),
+  years: [],
+  updateData: '',
+  btn: true,
+  kelasShow: ''
 })

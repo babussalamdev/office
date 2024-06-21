@@ -1,59 +1,32 @@
 <template>
   <div>
     <!-- update database pegawai  -->
-    <div
-      class="modal fade"
-      id="updateDataSantriEkskull"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="updateDataSantriEkskull" tabindex="-1" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form
-            @submit.prevent="updateDataSantriEkskull"
-            ref="updateDataSantriEkskull"
-          >
+          <form @submit.prevent="updateDataSantriEkskull" ref="updateDataSantriEkskull">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">
                 Bulk Update Ekskull
               </h1>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <div class="mb-3">
                 <label for="Kelas" class="form-label">Ekskull</label>
-                <select
-                  name="value"
-                  id="Kelas"
-                  class="form-select"
-                  v-model="ekskullShow"
-                  required
-                >
+                <select name="value" id="Kelas" class="form-select" v-model="ekskullShow" required>
                   <option value="" selected disabled>
                     -- Pilih Ekskull --
                   </option>
-                  <option
-                    v-for="(value, index) in selectEkskull"
-                    :value="value"
-                    :key="index"
-                  >
+                  <option v-for="(value, index) in selectEkskull" :value="value" :key="index">
                     {{ value }}
                   </option>
                 </select>
               </div>
             </div>
             <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                 Close
               </button>
               <span>
@@ -61,10 +34,7 @@
                   simpan
                 </button>
                 <button v-else class="btn btn-primary" type="button" disabled>
-                  <span
-                    class="spinner-border spinner-border-sm"
-                    aria-hidden="true"
-                  ></span>
+                  <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
                   <span role="status">Loading...</span>
                 </button>
               </span>
@@ -101,7 +71,7 @@ export default {
       data["sort"] = this.updateData;
       try {
         const result = await this.$axios.$put(
-          `update-santri?subject=none&code=none&program=${program}&bulk=Ekskull`,
+          `update-santri?sk&program=${program}&bulk=Ekskull`,
           data
         );
         if (result) {

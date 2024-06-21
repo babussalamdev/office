@@ -1,7 +1,7 @@
 export default {
     async changeUnit({ commit }, data) {
         const result = await this.$axios.$get(
-            `get-database?subject=options&program=${data}&category=kelas`
+            `get-settings?type=options&sk=${data}&category=kelas`
         );
         commit('setSelectKelas', result);
     },
