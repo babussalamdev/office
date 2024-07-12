@@ -47,10 +47,6 @@ export default {
     const program = localStorage.getItem('program')
     store.dispatch(`home/setMainChart`, program);
   },
-
-  // mounted() {
-  //   console.log(this.unit);
-  // },
 };
 </script>
 

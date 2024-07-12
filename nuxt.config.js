@@ -44,7 +44,8 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: '~/plugins/bootstrap.js', mode: 'client' },
-    { src: '~/plugins/cookies.client.js', mode: 'client' }
+    { src: '~/plugins/cookies.client.js', mode: 'client' },
+    { src: '~/plugins/axios-instances.js' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -96,10 +97,17 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: development === 'production' ? process.env.API_BASE_PRO : process.env.API_BASE_DEV,
-    mode: "cors"
+    baseURL: development ? process.env.API_BASE_DEV : process.env.API_BASE_PRO,
   },
+  publicRuntimeConfig: {
+    axios: {
+      baseURL: development ? process.env.API_BASE_DEV : process.env.API_BASE_PRO,
+    },
+    base: development ? process.env.API_BASE_DEV : process.env.API_BASE_PRO,
+    santri: development ? process.env.API_SANTRI_DEV : process.env.API_SANTRI_PRO,
+    card: development ? process.env.API_CARD_DEV : process.env.API_CARD_PRO,
+  },
+
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
