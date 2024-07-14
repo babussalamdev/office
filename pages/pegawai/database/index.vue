@@ -7,45 +7,22 @@
             <!-- Button trigger modal -->
 
             <div class="button-santri">
-              <button
-                type="button"
-                class="btn btn-primary btn-sm"
-                data-bs-toggle="modal"
-                data-bs-target="#InputDataPegawai"
-              >
+              <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                data-bs-target="#InputDataPegawai">
                 Tambah
                 <!-- <i class="material-icons"> add </i> -->
               </button>
             </div>
             <div class="upload-data-santri input-group">
-              <input
-                type="file"
-                class="form-control form-control-sm"
-                id="inputGroupFile04"
-                aria-describedby="inputGroupFileAddon04"
-                aria-label="Upload"
-                ref="fileInput"
-              />
+              <input type="file" class="form-control form-control-sm" id="inputGroupFile04"
+                aria-describedby="inputGroupFileAddon04" aria-label="Upload" ref="fileInput" />
               <span>
-                <button
-                  v-if="btn"
-                  class="btn btn-sm btn-success"
-                  type="button"
-                  id="inputGroupFileAddon04"
-                  @click="handleUpload"
-                >
+                <button v-if="btn" class="btn btn-sm btn-success" type="button" id="inputGroupFileAddon04"
+                  @click="handleUpload">
                   Tambah
                 </button>
-                <button
-                  v-else
-                  class="btn btn-success btn-sm"
-                  type="button"
-                  disabled
-                >
-                  <span
-                    class="spinner-border spinner-border-sm"
-                    aria-hidden="true"
-                  ></span>
+                <button v-else class="btn btn-success btn-sm" type="button" disabled>
+                  <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
                   <span class="visually-hidden" role="status">Loading...</span>
                 </button>
               </span>
@@ -56,6 +33,7 @@
 
       <!-- table -->
       <TablePegawaiAdmin />
+
     </div>
 
     <div v-else class="pegawai">
@@ -75,6 +53,9 @@ export default {
   data() {
     return {
       btn: true,
+      page: 1,
+      perPage: 10,
+      table: "",
     };
   },
 
@@ -93,7 +74,7 @@ export default {
       if (
         file &&
         file.type !==
-          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
       ) {
         // Tampilkan notifikasi menggunakan Sweet Alert jika jenis file tidak sesuai
         Swal.fire({
@@ -108,10 +89,9 @@ export default {
         this.btn = false;
         try {
           const base64String = reader.result.split(",")[1];
-          const program = localStorage.getItem("program");
           const base64 = base64String;
-          const data = await this.$axios.$post(
-            `/input-pegawai?method=bulk&program=${program}`,
+          const data = await this.$apiBase.$post(
+            `input-pegawai?method=bulk`,
             base64
           );
           console.log(base64);

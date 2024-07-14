@@ -10,5 +10,7 @@ export default () => ({
       { name: "sma", code: 3 },
       { name: "tahfidz", code: 4 },
     ],
-    updateData: ''
+    updateData: '',
+    jabatanShow: '',
+    program: localStorage.getItem('program')
 })

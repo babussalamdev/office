@@ -26,7 +26,7 @@
               <input type="file" class="form-control form-control-sm" id="inputGroupFile04"
                 aria-describedby="inputGroupFileAddon04" aria-label="Upload" ref="fileInput" />
               <span>
-                <button v-if="btn" class="btn btn-sm btn-success" type="button" id="inputGroupFileAddon04"
+                <button v-if="btn2" class="btn btn-sm btn-success" type="button" id="inputGroupFileAddon04"
                   @click="handleUpload">
                   Tambah
                 </button>
@@ -53,6 +53,11 @@
 import Swal from "sweetalert2";
 import { mapGetters, mapActions, mapMutations, mapState } from 'vuex'
 export default {
+  data() {
+    return {
+      btn2: true
+    }
+  },
   computed: {
     ...mapState('santri/database', ['angkatan', 'btn', 'years']),
     ...mapGetters('santri/database', ['getAngkatan']),
@@ -91,16 +96,15 @@ export default {
       }
 
       reader.onload = async () => {
-        this.btn = false;
+        this.btn2 = false;
         try {
           const base64String = reader.result.split(",")[1];
           const program = localStorage.getItem("program");
           const base64 = base64String;
-          const data = await this.$axios.$post(
-            `/input-santri?method=bulk&program=${program}`,
+          const data = await this.$apiSantri.$post(
+            `input-santri-sisalam?method=bulk`,
             base64
           );
-          console.log(data);
           Swal.fire({
             position: "center",
             icon: "success",
@@ -109,7 +113,7 @@ export default {
             timer: 1500,
           });
           this.$store.commit("santri/database/inputSantriBulk", data);
-          this.btn = true;
+          this.btn2 = true;
         } catch (error) {
           Swal.fire({
             position: "center",
@@ -118,7 +122,7 @@ export default {
             showConfirmButton: false,
             timer: 2000,
           });
-          this.btn = true;
+          this.btn2 = true;
           console.error(error);
         }
       };

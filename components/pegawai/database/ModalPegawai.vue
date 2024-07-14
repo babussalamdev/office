@@ -95,11 +95,11 @@
             <div class="modal-body">
               <div class="mb-3">
                 <label for="nama" class="form-label">Nama</label>
-                <input name="Nama" type="text" class="form-control" id="nama" :value="updateData.Nama" />
+                <input name="Nama" type="text" class="form-control" id="nama" :value="updateData?.Nama" />
               </div>
               <div class="mb-3">
                 <label for="lulusan" class="form-label">Lulusan</label>
-                <select name="Lulusan" id="lulusan" class="form-select" :value="updateData.Lulusan" required>
+                <select name="Lulusan" id="lulusan" class="form-select" :value="updateData?.Lulusan" required>
                   <option value="" selected disabled>
                     -- Pilih Lulusan --
                   </option>
@@ -114,7 +114,7 @@
               </div>
               <div class="mb-3">
                 <label for="nip" class="form-label">NIP</label>
-                <input name="Nip" type="text" class="form-control" id="nip" :value="updateData.Nip" />
+                <input name="Nip" type="text" class="form-control" id="nip" :value="updateData?.Nip" />
               </div>
               <div class="mb-3">
                 <label class="typo__label mb-2">Program</label>
@@ -127,14 +127,14 @@
                 <div class="d-flex gap-4">
                   <div class="form-check d-flex align-items-center justify-content-center gap-2">
                     <input value="off" class="form-check-input" type="radio" name="Personalia" id="flexRadioDefault2"
-                      :checked="updateData.Personalia === 'on' ? false : true" />
+                      :checked="updateData?.Personalia === 'on' ? false : true" />
                     <label class="form-check-label mt-1" for="flexRadioDefault2">
                       Off
                     </label>
                   </div>
                   <div class="form-check d-flex align-items-center justify-content-center gap-2">
                     <input value="on" class="form-check-input" type="radio" name="Personalia" id="flexRadioDefault1"
-                      :checked="updateData.Personalia === 'on' ? true : false" />
+                      :checked="updateData?.Personalia === 'on' ? true : false" />
                     <label class="form-check-label mt-1" for="flexRadioDefault1">
                       On
                     </label>
@@ -161,57 +161,32 @@
       </div>
     </div>
     <!-- update database pegawai  -->
-    <!-- <div
-      class="modal fade"
-      id="updateDataPegawai"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="updateDataPegawai" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form @submit.prevent="updatePegawai" ref="updateDataPegawai">
+          <form @submit.prevent="updatePegawai" id="updatePegawaiJabatan">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">
                 Update Data Pegawai
               </h1>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <div class="mb-3">
                 <label for="jabatan" class="form-label">Jabatan</label>
-                <select
-                  name="Jabatan"
-                  id="jabatan"
-                  class="form-select"
-                  v-model="jabatanShow"
-                  :value="updateData.Lulusan"
-                  required
-                >
-                  <option value="" selected disabled>
+                <select name="Value" id="jabatan" class="form-select"
+                  :value="updateData.Jabatan" required>
+                  <option value="off" selected disabled>
                     -- Pilih Jabatan --
                   </option>
-                  <option
-                    v-for="(value, index) in select"
-                    :value="value"
-                    :key="index"
-                  >
+                  <option v-for="(value, index) in select" :value="value" :key="index">
                     {{ value }}
                   </option>
                 </select>
               </div>
             </div>
             <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                 Close
               </button>
               <span>
@@ -219,10 +194,7 @@
                   simpan
                 </button>
                 <button v-else class="btn btn-primary" type="button" disabled>
-                  <span
-                    class="spinner-border spinner-border-sm"
-                    aria-hidden="true"
-                  ></span>
+                  <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
                   <span role="status">Loading...</span>
                 </button>
               </span>
@@ -230,7 +202,7 @@
           </form>
         </div>
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -240,20 +212,23 @@ import Multiselect from "vue-multiselect";
 import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 
 export default {
-  data() {
-    return {
-      jabatanShow: "",
-    };
-  },
   computed: {
-    ...mapState('pegawai/database', ["select", 'btn', 'value', 'password', 'options', 'updateData']),
-    ...mapGetters('pegawai/database', ['getValue']),
+    ...mapState('pegawai/database', ["select", 'btn', 'value', 'password', 'options', 'updateData', 'jabatanShow', 'program']),
+    ...mapGetters('pegawai/database', ['getValue', 'getJabatan']),
     value: {
       get() {
         return this.getValue
       },
       set(value) {
         this.$store.commit('pegawai/database/setValue', value)
+      }
+    },
+    jabatanShow: {
+      get() {
+        return this.getValue
+      },
+      set(value) {
+        this.$store.commit('pegawai/database/setJabatan', value)
       }
     }
   },
@@ -263,7 +238,7 @@ export default {
   watch: {
     updateData: {
       handler(data) {
-        const program = data.Program;
+        const program = data?.Program;
         if (program && program.length > 0) {
           const programArray = program.split(","); // Memisahkan string menjadi array dan menghapus spasi ekstra
           const mappedArray = programArray.map((x) => {
@@ -278,46 +253,8 @@ export default {
   },
 
   methods: {
-    ...mapActions('pegawai/database', ['inputPegawai', 'updatePegawaiAdmin']),
+    ...mapActions('pegawai/database', ['inputPegawai', 'updatePegawaiAdmin', 'updatePegawai']),
     ...mapMutations('pegawai/database', ['generatePassword']),
-    async updatePegawai(event) {
-      this.btn = false;
-      const data = {};
-      const program = localStorage.getItem("program");
-      data["Program"] = program;
-      data["Value"] = this.jabatanShow;
-      try {
-        const username = this.updateData.Username;
-        const id = this.updateData.SK;
-        const result = await this.$axios.$put(
-          `update-pegawai?subject=Jabatan&username=${username}&id=${id}`,
-          data
-        );
-        this.btn = true;
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          text: "Data berhasil di input",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        result["SK"] = id;
-        this.$refs.updateDataPegawai.reset();
-        this.value = [];
-        this.$emit("deleteUpdateData");
-        this.$store.commit("pegawai/database/updatePegawaiJabatan", result);
-        $("#updateDataPegawai").modal("hide");
-      } catch (error) {
-        this.btn = true;
-        Swal.fire({
-          icon: "warning",
-          text: error,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    },
-
     addTag(newTag) {
       const tag = {
         name: newTag,

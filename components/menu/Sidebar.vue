@@ -33,7 +33,7 @@
             </nuxt-link>
           </li>
           <!-- Kelas-->
-          <li>
+          <li v-if="$auth.user.role !== 'root'">
             <div @click="notClick('listKelas')"
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
@@ -66,7 +66,7 @@
             </ul>
           </li>
           <!-- Asrama -->
-          <li>
+          <li v-if="$auth.user.role !== 'root'">
             <div @click="notClick('listAsrama')"
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
@@ -95,7 +95,7 @@
             </ul>
           </li>
           <!-- Tahfidz -->
-          <li>
+          <li v-if="$auth.user.role !== 'root'">
             <div @click="notClick('listTahfidz')"
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
@@ -130,7 +130,7 @@
             </ul>
           </li>
           <!-- Pelanggaran -->
-          <li>
+          <li v-if="$auth.user.role !== 'root'">
             <nuxt-link to="/pelanggaran" class="text-decoration-none d-flex align-items-center gap-2">
               <i class="material-icons animate__animated animate__fadeInRight">
                 privacy_tip
@@ -139,7 +139,7 @@
             </nuxt-link>
           </li>
           <!-- Report -->
-          <li>
+          <li v-if="$auth.user.role !== 'root'">
             <div @click="notClick('listReport')"
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
@@ -195,12 +195,12 @@
             </div>
             <ul v-if="listSettings" class="dropdown-list">
               <!-- Absensi Menu -->
-              <li v-if="$auth.user.role !== 'root'">
+              <li v-if="$auth.user.role !== 'root' && permissions?.includes('setup absensi')">
                 <nuxt-link to="/settings/absensi" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Absensi</span>
                 </nuxt-link>
               </li>
-              <li v-if="$auth.user.role !== 'root'">
+              <li v-if="$auth.user.role !== 'root' && permissions?.includes('setup pelanggaran')">
                 <nuxt-link to="/settings/pelanggaran"
                   class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Pelanggaran</span>
@@ -218,34 +218,34 @@
                 <!-- sub menu santri -->
                 <ul v-if="santriSubList" class="dropdown-list">
                   <!-- data -->
-                  <li>
+                  <li v-if="permissions?.includes('data santri')">
                     <nuxt-link to="/santri/database"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Data</span>
                     </nuxt-link>
                   </li>
                   <!-- kelas -->
-                  <li>
+                  <li v-if="permissions?.includes('kelas')">
                     <nuxt-link to="/santri/kelas" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Kelas</span>
                     </nuxt-link>
                   </li>
                   <!-- asrama -->
-                  <li>
+                  <li v-if="permissions?.includes('asrama')">
                     <nuxt-link to="/santri/asrama"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Asrama</span>
                     </nuxt-link>
                   </li>
                   <!-- halaqah -->
-                  <li>
+                  <li v-if="permissions?.includes('halaqah')">
                     <nuxt-link to="/santri/halaqoh"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Halaqah</span>
                     </nuxt-link>
                   </li>
                   <!-- ekskull -->
-                  <li>
+                  <li v-if="permissions?.includes('ekskull')">
                     <nuxt-link to="/santri/ekskull"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Ekskull</span>

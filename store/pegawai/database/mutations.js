@@ -40,11 +40,28 @@ export default {
         $("#updatePegawaiAdmin")[0].reset()
         $("#updateDataPegawaiAdmin").modal("hide");
     },
+
+    editJabatan(state, value) {
+      const i = state.pegawai.findIndex((x) => x.SK === value)
+      const program = localStorage.getItem('program')
+      const object = {
+        Jabatan: state.pegawai[i].Jabatan[program],
+        Username: state.pegawai[i].Username,
+        SK: state.pegawai[i].SK
+      }
+      state.updateData = object
+      $("#updateDataPegawai").modal("show");
+    },
     updatePegawaiJabatan(state, value) {
         const i = state.pegawai.findIndex((x) => x.SK === value.SK)
 
         const data = state.pegawai[i]
         data.Jabatan = value.Jabatan
+        state.updateData = ''
+
+        $("#updatePegawaiJabatan")[0].reset()
+        $("#updateDataPegawai").modal("hide");
+        state.value = [];
 
 
         // if (i !== -1) {
@@ -77,6 +94,9 @@ export default {
     },
     setValue(state, value) {
       state.value = value
+    },
+    setJabatan(state, value) {
+      state.jabatanShow = value
     },
     generatePassword(state, value) {
       state.btn = false;

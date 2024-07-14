@@ -7,7 +7,7 @@ export default {
       );
       commit('setDatabaseAll', result);
     } else {
-      const result = await this.$axios.$get(
+      const result = await this.$apiBase.$get(
         `get-pegawai?program=${data}&opsi=struktur`
       );
       commit('setDatabase', result);
@@ -20,7 +20,7 @@ export default {
     data["Program"] = program.join();
     data["Password"] = state.password;
     try {
-      const result = await this.$axios.$post(
+      const result = await this.$apiBase.$post(
         `input-pegawai?method=single`,
         data
       );
@@ -45,7 +45,7 @@ export default {
       });
     }
   },
-  async updatePegawaiAdmin({commit, state}, event) {
+  async updatePegawaiAdmin({ commit, state }, event) {
     commit('btn')
     const data = Object.fromEntries(new FormData(event.target));
     const program = state.value.map((x) => x.name);
@@ -53,7 +53,7 @@ export default {
     try {
       const username = state.updateData.Username;
       const sk = state.updateData.SK;
-      const result = await this.$axios.$put(
+      const result = await this.$apiBase.$put(
         `update-pegawai?subject=root&username=${username}&sk=${sk}`,
         data
       );
@@ -79,7 +79,39 @@ export default {
       });
     }
   },
-  async updateItem({commit, state}, sk) {
+  async updatePegawai({ commit, state }, event) {
+    commit('btn')
+    const data = Object.fromEntries(new FormData(event.target));
+    const program = localStorage.getItem("program");
+    data["Program"] = program;
+    try {
+      const username = state.updateData.Username;
+      const id = state.updateData.SK;
+      const result = await this.$axios.$put(
+        `update-pegawai?subject=Jabatan&username=${username}&sk=${id}`,
+        data
+      );
+      commit('btn')
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        text: "Data berhasil di input",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      result["SK"] = id;
+      commit('updatePegawaiJabatan', result);
+    } catch (error) {
+      commit('btn')
+      Swal.fire({
+        icon: "warning",
+        text: error,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  },
+  async updateItem({ commit, state }, sk) {
     const i = state.pegawai.findIndex((x) => x.SK === sk)
     const status = state.pegawai[i].Status
     const user = state.pegawai[i].Username
@@ -97,7 +129,7 @@ export default {
         }`,
     });
     if (result.isConfirmed) {
-      await this.$axios.$delete(
+      await this.$apiBase.$delete(
         `delete-pegawai?username=${user}&sk=${key}&status=${status}`
       );
       if (result) {
@@ -124,7 +156,7 @@ export default {
       Program: value.unit,
       Value: value.condition
     }
-    const result = await this.$axios.$put(
+    const result = await this.$apiBase.$put(
       `update-pegawai?subject=Pengajar&username=${user}&id=${key}`,
       data
     );
@@ -137,7 +169,7 @@ export default {
       Program: value.unit,
       Value: value.condition
     }
-    const result = await this.$axios.$put(
+    const result = await this.$apiBase.$put(
       `update-pegawai?subject=Pengampu&username=${user}&id=${key}`,
       data
     );

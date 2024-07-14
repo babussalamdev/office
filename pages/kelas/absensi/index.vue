@@ -2,6 +2,7 @@
   <section id="absensi">
     <div class="absensi">
       <h1>Absensi Page</h1>
+      {{ $auth.user}}
     </div>
   </section>
 </template>
