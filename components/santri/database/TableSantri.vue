@@ -59,7 +59,7 @@ import { mapState, mapMutations } from "vuex";
 import Swal from "sweetalert2";
 export default {
   computed: {
-    ...mapState("santri/database", ["santri", 'years']),
+    ...mapState("santri/database", ["santri", 'years', 'select']),
   },
   methods: {
     ...mapMutations('santri/database', ['editItem', 'deleteItem']),

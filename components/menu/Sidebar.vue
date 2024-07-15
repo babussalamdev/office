@@ -6,9 +6,8 @@
         <a href="/">
           <img src="~/assets/img/logo-1.png" />
         </a>
-        <span>Sistem Ma'had</span>
+        <span>Sisalam {{ version }}</span>
       </div>
-      <hr class="mb-3" />
       <!-- Menu -->
       <nav class="menu">
         <!-- Menu Utama -->
@@ -152,13 +151,13 @@
             </div>
             <ul v-if="listReport" class="dropdown-list">
               <!-- mapel -->
-              <li v-if="permissions.includes('report mapel')">
+              <li v-if="permissions?.includes('report mapel')">
                 <nuxt-link to="/report/mapel" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Nilai Mapel</span>
                 </nuxt-link>
               </li>
               <!-- tahfidz -->
-              <li v-if="permissions.includes('report tahfidz')">
+              <li v-if="permissions?.includes('report tahfidz')">
                 <nuxt-link to="/report/tahfidz"
                   class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Tahfidz</span>
@@ -172,7 +171,7 @@
                 </nuxt-link>
               </li>
               <!-- pelanggaran -->
-              <li v-if="permissions.includes('report pelanggaran')">
+              <li v-if="permissions?.includes('report pelanggaran')">
                 <nuxt-link to="/report/pelanggaran"
                   class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Pelanggaran</span>
@@ -376,10 +375,19 @@
 
 <script>
 import "animate.css";
+import { version } from "uuid";
 import { mapState, mapMutations } from "vuex";
 
 export default {
   // props: ["isSidebar"],
+  data() {
+    return {
+      version: 0
+    }
+  },
+  created () {
+    this.version = process.env.version;
+  },
   computed: {
     ...mapState("index", ["unit", "permissions", "pengajar", "pengampu", "personalia",]),
     ...mapState("sidebar", ["activeMenu", "listAsrama", "listTahfidz", "listSettings", "listKelas", "listReport",

@@ -87,7 +87,7 @@ export default {
     santri: 'resetSelect',
   },
   computed: {
-    ...mapState("santri/kelas", ["santri", 'years']),
+    ...mapState("santri/kelas", ["santri", 'years', 'select']),
     ...mapGetters('santri/kelas', ['getAngkatan']),
     angkatan: {
       get() {

@@ -49,7 +49,7 @@
 
         <!-- profile -->
         <div class="profile">
-          <img @click="viewProfile()" src="~/assets/img/foto.jpeg" alt="foto profil" class="rounded-circle"
+          <img @click="viewProfile()" src="~/assets/img/foto.png" alt="foto profil" class="rounded-circle"
             ref="profile" />
           <transition name="slide-fade">
             <div v-if="profile" class="menu-profile">

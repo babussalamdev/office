@@ -41,7 +41,7 @@
   font-size: 22px;
 }
 img {
-  height: 35px;
+  height: 25px;
   transition: all 0.2s ease-in;
   filter: grayscale(100%);
 }

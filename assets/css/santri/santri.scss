@@ -62,6 +62,7 @@
               padding: 15px 20px;
               margin: auto;
               font-size: 12px;
+              line-height: 16px;
               button {
                 padding: 2px 5px 0.5px !important;
                 i {
@@ -166,10 +167,11 @@
   .rekaptahfidz {
     .table-responsive {
       overflow-x: auto;
+      border-radius: 7px !important;
+      box-shadow: 0 0 15px #b1b1b166;
       .table {
         width: 100%;
-        border-collapse: collapse;
-        width: 100%;
+        margin-bottom: 0 !important;
         thead {
           tr {
             th {

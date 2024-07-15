@@ -20,9 +20,8 @@ export default () => ({
     { name: "report tahfidz", code: 14 },
     { name: "report absensi", code: 15 },
     { name: "report pelanggaran", code: 16 },
-    { name: "report pelanggaran", code: 17 },
-    { name: "setup pelanggaran", code: 18 },
-    { name: "setup absensi", code: 19 },
+    { name: "setup pelanggaran", code: 17 },
+    { name: "setup absensi", code: 18 },
   ],
 
   // partikel

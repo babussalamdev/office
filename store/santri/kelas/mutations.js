@@ -1,7 +1,6 @@
 export default {
-  setDatabase(state, value) {
+  setSantri(state, value) {
     state.santri = value.Santri
-    state.select = value.Select
 
     const tahunMulai = 2018;
     const tahunSekarang = new Date().getFullYear();
@@ -9,6 +8,9 @@ export default {
       { length: tahunSekarang - tahunMulai + 2 },
       (_, index) => tahunMulai + index
     );
+  },
+  setKelas(state, value) {
+    state.select = value.kelas
   },
   setAngkatan(state, value) {
     state.angkatan = value

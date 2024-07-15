@@ -2,10 +2,14 @@ import Swal from "sweetalert2";
 export default {
   async changeUnit({ commit, state }, data) {
     const program = localStorage.getItem('program')
-    const result = await this.$axios.$get(
-      `get-santri?subject=${state.angkatan}&program=${program}&opsi=kelas`
+    const reqSantri = this.$apiSantri.$get(
+      `get-santri-sisalam?subject=${state.angkatan}&program=${program}&opsi=kelas`
     );
-    commit('setDatabase', result);
+    const reqKelas = this.$apiBase.$get(`get-settings?sk=${program}&type=kelas`)
+    const [resSantri, resKelas] = await Promise.all([reqSantri, reqKelas])
+
+    commit('setSantri', resSantri);
+    commit('setKelas', resKelas);
   },
   async updateDataSantriKelas({ commit, state }, event) {
     commit('btn')
@@ -14,8 +18,8 @@ export default {
     data["value"] = state.kelasShow;
     data["sort"] = state.updateData;
     try {
-      const result = await this.$axios.$put(
-        `update-santri?sk&program=${program}&bulk=Kelas`,
+      const result = await this.$apiSantri.$put(
+        `update-santri-sisalam?sk&program=${program}&bulk=Kelas`,
         data
       );
       if (result) {

@@ -5,7 +5,7 @@
       <h1 class="text-white fw-semibold mb-2 text-capitalize">
         {{ $auth.user.name }}
       </h1>
-      <p class="text-white fw-light mb-4 text-uppercase">
+      <p class="text-white fw-light mb-4 text-capitalize">
         {{ $auth.user.role.split(',').join(', ') }}
       </p>
       <hr class="text-white" />

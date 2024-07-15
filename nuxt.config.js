@@ -1,5 +1,8 @@
 let development = process.env.NODE_ENV !== 'production'
 export default {
+  env: {
+    version: require('./package.json').version,
+  },
   server: {
     host: "0.0.0.0",
     port: 3000

@@ -17,8 +17,8 @@
                 <label for="Kelas" class="form-label">Kelas</label>
                 <select name="value" id="Kelas" class="form-select" v-model="kelasShow" required>
                   <option value="" selected disabled>-- Pilih Kelas --</option>
-                  <option v-for="(value, index) in select" :value="value" :key="index">
-                    {{ value }}
+                  <option v-for="(value, index) in select" :value="value.Nama" :key="index">
+                    {{ value.Nama }}
                   </option>
                 </select>
               </div>

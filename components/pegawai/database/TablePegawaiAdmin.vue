@@ -3,7 +3,7 @@
     <div>
       <div class="table-responsive">
         <!-- Modal -->
-        <ModalPegawai />
+        <ModalPegawaiAdmin />
         <table class="table table-hover table-striped">
           <thead>
             <tr>

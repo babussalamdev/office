@@ -126,7 +126,7 @@ export default {
       data["accessToken"] = token;
       delete data.passConfirm;
       try {
-        const result = await this.$axios.$put(`change-password`, data);
+        const result = await this.$apiBase.$put(`change-password`, data);
         if (result) {
           this.btn = true;
           Swal.fire({

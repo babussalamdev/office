@@ -3,8 +3,8 @@ import Swal from "sweetalert2";
 export default {
   async changeUnit({ commit, state }, data) {
     const program = localStorage.getItem('program')
-    const result = await this.$axios.$get(
-      `get-santri?subject=${state.angkatan}&program=${program}&opsi=none`
+    const result = await this.$apiSantri.$get(
+      `get-santri-sisalam?subject=${state.angkatan}&program=${program}&opsi=none`
     );
     commit('setDatabase', result);
   },

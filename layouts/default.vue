@@ -6,11 +6,16 @@
       <div
         class="logo justify-content-between animate__animated animate__zoomIn"
       >
-        <img src="~/assets/img/logo-1.png" />
-        <span @click="toggleSidebar">
-          <i v-if="isSidebar" class="bx bx-menu-alt-right"></i>
-          <i v-else class="material-icons text-dark"> close </i>
-        </span>
+        <div class="d-flex gap-3 align-items-center">
+          <img src="~/assets/img/logo-1.png" />
+          <h5 class="text-white">Sisalam {{ version }}</h5>
+        </div>
+        <div>
+          <span @click="toggleSidebar">
+            <i v-if="isSidebar" class="bx bx-menu-alt-right"></i>
+            <i v-else class="material-icons text-dark"> close </i>
+          </span>
+        </div>
       </div>
     </div>
 
@@ -45,6 +50,14 @@
 import { mapState, mapMutations } from "vuex";
 
 export default {
+  data() {
+    return {
+      version: 0
+    }
+  },
+  created () {
+    this.version = process.env.version;
+  },
   methods: {
     ...mapMutations('sidebar', ['toggleSidebar'])
   },
@@ -124,7 +137,7 @@ main {
     z-index: 88;
     width: 100%;
     padding: 0 20px;
-    background: #176b87d7;
+    background: #176b87;
   }
   .fix {
     height: 75vh !important;
