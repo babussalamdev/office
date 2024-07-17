@@ -116,7 +116,6 @@ export default {
   },
   methods: {
     ...mapActions('kaldik', ['inputKaldik', 'updateKaldik']),
-    ...mapMutations('kaldik'),
   },
 };
 </script>

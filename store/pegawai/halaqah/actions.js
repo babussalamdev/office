@@ -1,6 +1,6 @@
 export default {
-    async showHalaqah({ commit }, data) {
-        const result = await this.$axios.get(`get-pegawai?program=${data}&opsi=halaqah&position=pengampu`)
+    async changeUnit({ commit }, data) {
+        const result = await this.$axios.get(`get-pegawai?program=${data}&opsi=halaqah&position=Pengampu`)
         commit('setMusyrif', result)
         // if (data === 'admin') {
         //     const result = await this.$axios.$get(

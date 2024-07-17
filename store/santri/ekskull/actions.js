@@ -6,8 +6,8 @@ export default {
         commit('setSelectKelas', result);
     },
     async loadEkskull({ commit }, data) {
-        const result = await this.$axios.$get(
-            `get-santri?subject=kelas&program=${data.program}&opsi=ekskull&filter=${data.kelas}`
+        const result = await this.$apiSantri.$get(
+            `get-santri-sisalam?subject=kelas&program=${data.program}&opsi=ekskull&filter=${data.kelas}`
         );
         commit('setSantri', result);
     },

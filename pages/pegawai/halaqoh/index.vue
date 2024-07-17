@@ -1,6 +1,6 @@
 <template>
-  <section id="musyrif">
-    <div class="musyrif">
+  <section id="pegawai">
+    <div class="pegawai">
       <HalaqahTable />
     </div>
   </section>
@@ -10,7 +10,7 @@
 export default {
   async asyncData({ store }) {
     const program = localStorage.getItem("program");
-    store.dispatch(`pegawai/halaqah/showHalaqah`, program);
+    store.dispatch(`pegawai/halaqah/changeUnit`, program);
   },
 };
 </script>

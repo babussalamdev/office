@@ -60,10 +60,12 @@
               <td class="text-end align-middle">
                 <div class="action">
                   <a href="javascript:;" @click="editJabatan(data.SK)">
-                    <i class="bx bx-pencil text-success"></i>
+                    <button class="btn btn-sm btn-warning">
+                      <i class="bx bx-pencil text-dark"></i>
+                    </button>
                   </a>
                   <a href="javascript:;" @click="updateItem(data.Username, data.SK, data.Status)"><button
-                      class="btn btn-sm ms-2" :class="data.Status === 'active'
+                      class="btn btn-sm" :class="data.Status === 'active'
                           ? 'btn-primary'
                           : 'btn-secondary'
                         ">

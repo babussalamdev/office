@@ -157,7 +157,7 @@ export default {
       Value: value.condition
     }
     const result = await this.$apiBase.$put(
-      `update-pegawai?subject=Pengajar&username=${user}&id=${key}`,
+      `update-pegawai?subject=Pengajar&username=${user}&sk=${key}`,
       data
     );
     commit('setStatusPengajar', result)
@@ -170,7 +170,7 @@ export default {
       Value: value.condition
     }
     const result = await this.$apiBase.$put(
-      `update-pegawai?subject=Pengampu&username=${user}&id=${key}`,
+      `update-pegawai?subject=Pengampu&username=${user}&sk=${key}`,
       data
     );
     result['unit'] = value.unit

@@ -9,28 +9,13 @@
         </div>
         <div class="col-12 col-md-3 d-flex justify-content-end">
           <div class="input-group">
-            <button
-              type="button"
-              class="btn btn-primary btn-sm"
-              @click="editBulk"
-              :disabled="data.length > 0 ? false : true"
-            >
+            <button type="button" class="btn btn-primary btn-sm" @click="editBulk"
+              :disabled="data.length > 0 ? false : true">
               Edit
             </button>
-            <select
-              name="Kelas"
-              id="kelas"
-              v-model="kelas"
-              @change="kelasLoad"
-              class="form-select select"
-              required
-            >
+            <select name="Kelas" id="kelas" v-model="kelas" @change="kelasLoad" class="form-select select" required>
               <option value="" selected disabled>Kelas</option>
-              <option
-                v-for="(data, index) in select"
-                :key="index"
-                :value="data"
-              >
+              <option v-for="(data, index) in select" :key="index" :value="data">
                 {{ data }}
               </option>
             </select>
@@ -39,20 +24,12 @@
       </div>
       <div class="table-responsive">
         <!-- Modal -->
-        <EkskullSantriModal
-          :updateData="updateData"
-          @resetSelect="resetSelect"
-        />
+        <EkskullSantriModal :updateData="updateData" @resetSelect="resetSelect" />
         <table class="table table-hover table-striped">
           <thead>
             <tr>
               <th scope="col">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  v-model="selectAll"
-                  @change="selectAllCheckbox"
-                />
+                <input class="form-check-input" type="checkbox" v-model="selectAll" @change="selectAllCheckbox" />
               </th>
               <th scope="col">Nama Santri</th>
               <th scope="col">Kelas</th>
@@ -65,12 +42,8 @@
           <tbody>
             <tr v-for="(data, index) in santri" :key="index">
               <td>
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  v-model="selectedItems[data.SK]"
-                  @change="getCheckedNames"
-                />
+                <input class="form-check-input" type="checkbox" v-model="selectedItems[data.SK]"
+                  @change="getCheckedNames" />
               </td>
               <td class="text-capitalize align-middle">
                 <h1>{{ data.Nama }}</h1>
@@ -85,10 +58,7 @@
               <td class="text-capitalize align-middle">
                 {{ data.Halaqah ? data.Halaqah : "-" }}
               </td>
-              <td
-                class="text-capitalize align-middle text-white"
-                style="background: #176b87"
-              >
+              <td class="text-capitalize align-middle text-white" style="background: #176b87">
                 {{ data.Ekskull ? data.Ekskull : "-" }}
               </td>
               <!-- <td class="text-capitalize align-middle">

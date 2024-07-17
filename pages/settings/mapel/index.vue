@@ -44,7 +44,6 @@ export default {
     store.dispatch(`mapel/changeUnit`, program);
   },
   methods: {
-    ...mapActions('mapel'),
     kelasLoad() {
       const program = localStorage.getItem("program");
       const data = {

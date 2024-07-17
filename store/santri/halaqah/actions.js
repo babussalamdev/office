@@ -9,9 +9,14 @@ export default {
   },
   async loadHalaqah({ commit, state }, data) {
     const program = localStorage.getItem('program')
-    const result = await this.$axios.$get(
-      `get-santri?subject=kelas&program=${program}&opsi=halaqah&filter=${state.kelas}`
+    const reqSantri = this.$apiSantri.$get(
+      `get-santri-sisalam?subject=kelas&program=${program}&opsi=halaqah&filter=${state.kelas}`
     );
+    const reqSelect = this.$apiBase.$get(`get-settings?type=options&sk=${program}&category=halaqah`)
+    const [resSantri, resSelect] = await Promise.all([reqSantri, reqSelect])
+    const result = {
+      resSantri, resSelect
+    }
     commit('setSantri', result);
   },
   async updateDataSantriHalaqah({ commit, state }, event) {
@@ -21,8 +26,8 @@ export default {
     data["value"] = state.asramaShow;
     data["sort"] = state.updateData;
     try {
-      const result = await this.$axios.$put(
-        `update-santri?sk&program=${program}&bulk=Halaqah`,
+      const result = await this.$apiSantri.$put(
+        `update-santri-sisalam?sk&program=${program}&bulk=Halaqah`,
         data
       );
       if (result) {

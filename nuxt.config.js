@@ -63,6 +63,7 @@ export default {
       '~/components/pelanggaran/record',
       '~/components/tahfidz',
       '~/components/tahfidz/mutabaah',
+      '~/components/tahfidz/modalmutabaah',
       '~/components/santri',
       '~/components/santri/database',
       '~/components/santri/halaqah',

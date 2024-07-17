@@ -32,7 +32,7 @@
             </nuxt-link>
           </li>
           <!-- Kelas-->
-          <li v-if="$auth.user.role !== 'root'">
+          <li v-if="$auth.user.role !== 'root' && $auth.user.Pengajar[unit] !== 'off'">
             <div @click="notClick('listKelas')"
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
@@ -94,7 +94,7 @@
             </ul>
           </li>
           <!-- Tahfidz -->
-          <li v-if="$auth.user.role !== 'root'">
+          <li v-if="$auth.user.role !== 'root' && $auth.user.Pengampu[unit] !== 'off'">
             <div @click="notClick('listTahfidz')"
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
@@ -273,28 +273,28 @@
                     </nuxt-link>
                   </li>
                   <!-- halaqah -->
-                  <li v-if="$auth.user.role !== 'root'">
+                  <li v-if="$auth.user.role !== 'root' && permissions?.includes('pengampu')">
                     <nuxt-link to="/pegawai/halaqoh"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Halaqah</span>
                     </nuxt-link>
                   </li>
                   <!-- wali kelas -->
-                  <li v-if="$auth.user.role !== 'root'">
+                  <li v-if="$auth.user.role !== 'root' && permissions?.includes('wali kelas')">
                     <nuxt-link to="/pegawai/walas"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Wali Kelas</span>
                     </nuxt-link>
                   </li>
                   <!-- musyrif -->
-                  <li v-if="$auth.user.role !== 'root'">
+                  <li v-if="$auth.user.role !== 'root' && permissions?.includes('musyrif')">
                     <nuxt-link to="/pegawai/musyrif"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Musyrif</span>
                     </nuxt-link>
                   </li>
                   <!-- mapel -->
-                  <li v-if="$auth.user.role !== 'root'">
+                  <li v-if="$auth.user.role !== 'root' && permissions?.includes('mata pelajaran')">
                     <nuxt-link to="/pegawai/mapel"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Mapel</span>
@@ -328,28 +328,28 @@
                     </nuxt-link>
                   </li>
                   <!-- Halaqah -->
-                  <li>
+                  <li v-if="permissions?.includes('setup halaqah')">
                     <nuxt-link to="/settings/halaqah"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Halaqah</span>
                     </nuxt-link>
                   </li>
                   <!-- Asrama -->
-                  <li>
+                  <li v-if="permissions?.includes('setup asrama')">
                     <nuxt-link to="/settings/asrama"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Asrama</span>
                     </nuxt-link>
                   </li>
                   <!-- Kelas -->
-                  <li>
+                  <li v-if="permissions?.includes('setup kelas')">
                     <nuxt-link to="/settings/kelas"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Kelas</span>
                     </nuxt-link>
                   </li>
                   <!-- Mapel -->
-                  <li>
+                  <li v-if="permissions?.includes('setup mapel')">
                     <nuxt-link to="/settings/mapel"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Mapel</span>
@@ -375,14 +375,13 @@
 
 <script>
 import "animate.css";
-import { version } from "uuid";
 import { mapState, mapMutations } from "vuex";
 
 export default {
   // props: ["isSidebar"],
   data() {
     return {
-      version: 0
+      version: 0,
     }
   },
   created () {

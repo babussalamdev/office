@@ -16,30 +16,24 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(data, index) in dummy" :key="index">
+          <tr v-for="(data, index) in santri" :key="index">
             <td class="text-capitalize align-middle">
               <h1>{{ data.Nama }}</h1>
               <p class="text-secondary mt-1">{{ data.Nis }}</p>
             </td>
             <td class="text-center">
-              <i class="material-icons bg-primary p-2 text-white rounded-circle"
-                >library_add</i
-              >
+              <a href="javascript:;" @click="showDetail(data.SK)">
+                <i class="material-icons bg-primary p-2 text-white rounded-circle">library_add</i>
+              </a>
             </td>
             <td class="text-center">
-              <i class="material-icons bg-warning p-2 text-white rounded-circle"
-                >restart_alt</i
-              >
+              <i class="material-icons bg-warning p-2 text-white rounded-circle">restart_alt</i>
             </td>
             <td class="text-center">
-              <i class="material-icons bg-success p-2 text-white rounded-circle"
-                >auto_stories</i
-              >
+              <i class="material-icons bg-success p-2 text-white rounded-circle">auto_stories</i>
             </td>
             <td class="text-center align-middle">
-              <i class="material-icons bg-danger p-2 text-white rounded-circle"
-                >mic</i
-              >
+              <i class="material-icons bg-danger p-2 text-white rounded-circle">mic</i>
             </td>
             <td>-</td>
           </tr>
@@ -50,6 +44,7 @@
 </template>
 
 <script>
+import { mapState, mapMutations, mapActions} from 'vuex'
 export default {
   data() {
     return {
@@ -60,6 +55,12 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    ...mapState('mutabaah', ['santri'])
+  },
+  methods: {
+    ...mapMutations('mutabaah', ['showDetail'])
   },
 };
 </script>

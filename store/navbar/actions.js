@@ -27,6 +27,8 @@ export default {
             dispatch(`santri/database/changeUnit`, state.unit, { root: true });
         } else if (name === "pegawai-database") {
             dispatch(`pegawai/database/changeUnit`, state.unit, { root: true });
+        } else if (name === "santri-kelas") {
+            dispatch(`santri/kelas/changeUnit`, state.unit, { root: true });
         }
     },
 }

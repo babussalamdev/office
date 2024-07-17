@@ -9,8 +9,8 @@ export default {
   },
   async kelasLoad({ commit, state }) {
     const program = localStorage.getItem('program')
-    const result = await this.$axios.$get(
-      `get-santri?subject=kelas&program=${program}&opsi=asrama&filter=${state.kelas}`
+    const result = await this.$apiSantri.$get(
+      `get-santri-sisalam?subject=kelas&program=${program}&opsi=asrama&filter=${state.kelas}`
     );
     commit('setSantri', result);
   },

@@ -5,8 +5,8 @@ export default {
     state.kelas = ''
   },
   setSantri(state, value) {
-    state.santri = value.Santri
-    state.selectHalaqah = value.Select
+    state.santri = value.resSantri
+    state.selectHalaqah = value.resSelect
   },
   editBulk(state, value) {
     $("#updateDataSantriHalaqah").modal("show");

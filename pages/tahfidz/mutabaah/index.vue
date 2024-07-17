@@ -10,6 +10,9 @@
 <script>
 export default {
   name: "mutabaah",
+  async asyncData({ store }) {
+    store.dispatch('mutabaah/changeUnit')
+  }
 };
 </script>
 
