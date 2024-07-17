@@ -10,10 +10,10 @@ export default {
   },
   async getDetailZiyadah({commit}, data) {
     const halaqah = data.replace('#', '%23') + '%23halaqah'
-    console.log(halaqah)
-    // const reqDetail = this.$apiSantri.$get(`get-logs?subject=halaqah&sk=2023%23065c3d%23halaqah`)
+    const reqDetail = this.$apiSantri.$get(`get-logs?subject=halaqah&sk=${halaqah}`)
     const reqSurah = this.$apiBase.$get(`get-quran?subject=surah`)
-    const [resSurah] = await Promise.all([reqSurah])
+    const [resSurah, resDetail] = await Promise.all([reqSurah, reqDetail])
+    commit('setDetailSantri', resDetail)
     commit('setSurah', resSurah)
   },
   // async kelasLoad({ commit, state }) {

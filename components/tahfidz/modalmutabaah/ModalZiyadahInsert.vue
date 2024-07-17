@@ -1,11 +1,12 @@
 <template>
   <div>
-    <!-- Modal update -->
-    <div class="modal fade" id="ziyadahupdate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    <!-- Modal -->
+    <div class="modal fade" id="ziyadah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
       aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form @submit.prevent="submit" ref="ziyadahupdate">
+          <form @submit.prevent="submit" ref="ziyadah">
+
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -40,12 +41,12 @@
                 </div>
                 <div class="mb-3 col">
                   <label for="score" class="form-label">Nilai</label>
-                  <input type="number" name="Score" id="score" class="form-control" :value="updateData?.Score">
+                  <input type="number" name="Score" id="score" class="form-control" value="0">
                 </div>
               </div>
               <div class="mb-3">
                 <label for="catatan" class="form-label">Catatan</label>
-                <textarea name="Note" id="catatan" class="form-control" :value="updateData?.Note"></textarea>
+                <textarea name="Note" id="catatan" class="form-control"></textarea>
               </div>
             </div>
             <div class="modal-footer">
@@ -58,6 +59,7 @@
                 </button>
               </span>
             </div>
+
           </form>
         </div>
       </div>
@@ -94,21 +96,13 @@ export default {
     }
   },
   computed: {
-    ...mapState('mutabaah', ['surah', 'detail', 'updateData'])
+    ...mapState('mutabaah', ['surah', 'detail'])
   },
   watch: {
-    async updateData(value) {
-      this.page = value.Page
-      this.surahfrom = await this.surah.find(x => x.name === value.From.name)
-      this.surahto = await this.surah.find(x => x.name === value.To.name)
-      this.changeAyat(value)
-      this.ayatfrom = value.From.ayat
-      this.ayatto = value.To.ayat
-    },
     surah(value) {
       this.from = value
     },
-    surahfrom: 'changefrom',
+    surahfrom : 'changefrom',
     surahto: 'changeto',
     ayatto(value) {
       if (this.ayatfrom.page !== '' && value.page !== '') {
@@ -122,31 +116,33 @@ export default {
     }
   },
   methods: {
-    async changeAyat(value) {
-      if ( this.surahfrom && this.surahto) {
-        this.ayatfrom = value.From.ayat
-        this.ayatto = value.To.ayat
-      }
-    },
-    changefrom() {
-      if (this.surahfrom !== null) {
+    changefrom(){
+      if(this.updateData){
+        this.ayatfrom = this.updateData.From.ayat
+      }else{
+        if (this.surahfrom !== null) {
         this.ayatfrom = { number: '', page: '', juz: '' }
       } else {
         this.surahfrom = { name: '', ayat: [] }
       }
+      }
     },
-    changeto() {
-      if (this.surahto !== null) {
+    changeto(){
+      if(this.updateData){
+        this.ayatto = this.updateData.To.ayat
+      }else{
+        if (this.surahto !== null) {
         this.ayatto = { number: '', page: '', juz: '' }
       } else {
         this.surahto = { name: '', ayat: [] }
+      }
       }
     },
     nameWithLang({ name, language }) {
       return `${name} — [${language}]`
     },
     async submit(event) {
-      // this.btn = false
+      this.btn = false
       const data = Object.fromEntries(new FormData(event.target))
       const from = {
         name: this.surahfrom.name,
@@ -160,32 +156,31 @@ export default {
       data['Score'] = +data.Score
       data['From'] = from
       data['To'] = to
-      console.log(data)
-      // try {
-      //   const result = await this.$apiSantri.$post(`input-logs?subject=halaqah&sk=${this.detail.SK.replace('#', '%23')}`, data)
-      //   if (result) {
-      //     Swal.fire({
-      //       position: "center",
-      //       icon: "success",
-      //       text: "Data berhasil di input",
-      //       showConfirmButton: false,
-      //       timer: 1500,
-      //     });
-      //     this.btn = true
-      //     this.$store.commit('mutabaah/pushDetail', result)
-      //     $('#ziyadah').modal('hide')
-      //     this.$refs.ziyadah.reset()
-      //   }
-      // } catch (error) {
-      //   Swal.fire({
-      //     position: "center",
-      //     icon: "error",
-      //     text: error,
-      //     showConfirmButton: false,
-      //     timer: 1500,
-      //   });
-      //   this.btn = true
-      // }
+      try {
+        const result = await this.$apiSantri.$post(`input-logs?subject=halaqah&sk=${this.detail.SK.replace('#', '%23')}`, data)
+        if (result) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            text: "Data berhasil di input",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          this.btn = true
+          this.$store.commit('mutabaah/pushDetail', result)
+          $('#ziyadah').modal('hide')
+          this.$refs.ziyadah.reset()
+        }
+      } catch (error) {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          text: error,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        this.btn = true
+      }
     }
   }
 }

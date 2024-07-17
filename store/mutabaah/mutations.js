@@ -3,6 +3,8 @@ export default {
   setSantri(state, value) {
     state.santri = value
   },
+
+  // mutabaah details
   showDetail(state, value) {
     const i = state.santri.findIndex((x) => x.SK === value)
     state.detail = state.santri[i]
@@ -11,6 +13,17 @@ export default {
   setSurah(state, value) {
     state.surah = value
   },
+  setDetailSantri(state, value) {
+    state.detailZiyadah = value
+  },
+  pushDetail(state, value) {
+    state.detailZiyadah.push(value)
+  },
+  editItem(state, value) {
+    const i = state.detailZiyadah.findIndex((x) => x.SK === value)
+    state.updateData = state.detailZiyadah[i]
+    $('#ziyadahupdate').modal('show')
+  }
   // setSelectKelas(state, value) {
   //   state.santri = []
   //   state.select = value
