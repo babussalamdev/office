@@ -41,7 +41,7 @@
                 </div>
                 <div class="mb-3 col">
                   <label for="score" class="form-label">Nilai</label>
-                  <input type="number" name="Score" id="score" class="form-control" value="0">
+                  <input type="number" name="Score" id="score" class="form-control" value="0" max="100" min="0">
                 </div>
               </div>
               <div class="mb-3">
@@ -102,45 +102,42 @@ export default {
     surah(value) {
       this.from = value
     },
-    surahfrom : 'changefrom',
-    surahto: 'changeto',
-    ayatto(value) {
-      if (this.ayatfrom.page !== '' && value.page !== '') {
-        this.page = Math.abs(this.ayatfrom.page - this.ayatto.page) + 1
-      }
-    },
-    ayatfrom(value) {
-      if (this.ayatto.page !== '' && value.page !== '') {
-        this.page = Math.abs(this.ayatfrom.page - this.ayatto.page) + 1
-      }
-    }
-  },
-  methods: {
-    changefrom(){
-      if(this.updateData){
-        this.ayatfrom = this.updateData.From.ayat
-      }else{
-        if (this.surahfrom !== null) {
+    surahfrom(value) {
+      if (value !== null) {
         this.ayatfrom = { number: '', page: '', juz: '' }
       } else {
         this.surahfrom = { name: '', ayat: [] }
       }
-      }
     },
-    changeto(){
-      if(this.updateData){
-        this.ayatto = this.updateData.To.ayat
-      }else{
-        if (this.surahto !== null) {
+    surahto(value) {
+      if (value !== null) {
         this.ayatto = { number: '', page: '', juz: '' }
       } else {
         this.surahto = { name: '', ayat: [] }
       }
+    },
+    ayatto(value) {
+      if ( value !== null ) {
+        if (this.ayatfrom.page !== '' && value.page !== '') {
+          this.page = Math.abs(this.ayatfrom.page - this.ayatto.page) + 1
+        }
       }
     },
-    nameWithLang({ name, language }) {
-      return `${name} — [${language}]`
-    },
+    ayatfrom(value) {
+      if ( value !== null ) {
+        if (this.ayatto.page !== '' && value.page !== '') {
+          this.page = Math.abs(this.ayatfrom.page - this.ayatto.page) + 1
+        }
+      }
+    }
+  },
+  methods: {
+    // changefrom(){
+
+    // },
+    // changeto(){
+
+    // },
     async submit(event) {
       this.btn = false
       const data = Object.fromEntries(new FormData(event.target))
@@ -157,7 +154,7 @@ export default {
       data['From'] = from
       data['To'] = to
       try {
-        const result = await this.$apiSantri.$post(`input-logs?subject=halaqah&sk=${this.detail.SK.replace('#', '%23')}`, data)
+        const result = await this.$apiSantri.$post(`input-logs?subject=halaqah&sksantri=${this.detail.SK.replace('#', '%23')}`, data)
         if (result) {
           Swal.fire({
             position: "center",

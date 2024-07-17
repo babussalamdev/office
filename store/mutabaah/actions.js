@@ -10,7 +10,7 @@ export default {
   },
   async getDetailZiyadah({commit}, data) {
     const halaqah = data.replace('#', '%23') + '%23halaqah'
-    const reqDetail = this.$apiSantri.$get(`get-logs?subject=halaqah&sk=${halaqah}`)
+    const reqDetail = this.$apiSantri.$get(`get-logs?subject=halaqah&sksantri=${halaqah}`)
     const reqSurah = this.$apiBase.$get(`get-quran?subject=surah`)
     const [resSurah, resDetail] = await Promise.all([reqSurah, reqDetail])
     commit('setDetailSantri', resDetail)

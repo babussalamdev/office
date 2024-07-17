@@ -22,8 +22,48 @@ export default {
   editItem(state, value) {
     const i = state.detailZiyadah.findIndex((x) => x.SK === value)
     state.updateData = state.detailZiyadah[i]
-    $('#ziyadahupdate').modal('show')
+    if (state.updateData) {
+      $('#ziyadahupdate').modal('show')
+    }
+    // state.mt++
+  },
+  updateDetail(state, value) {
+    const i = state.detailZiyadah.findIndex((x) => x.SK === value.SK)
+    const data = state.detailZiyadah[i]
+    data.Score = value.Score
+    data.Page = value.Page
+
+  },
+  deleteDetail(state, value) {
+    const i = state.detailZiyadah.findIndex((x) => x.SK === value)
+    state.detailZiyadah.splice(i, 1)
+  },
+
+  // modal
+  setSurahFrom(state, value) {
+    state.updateData.From.name = value.name
+    state.updateData.From.ayat = { number: '', page: '', juz: '' }
+  },
+  setSurahTo(state, value) {
+    state.updateData.To.name = value.name
+    state.updateData.To.ayat = { number: '', page: '', juz: '' }
+  },
+  setAyatFrom(state, value) {
+    state.updateData.From.ayat = value
+  },
+  setAyatTo(state, value) {
+    state.updateData.To.ayat = value
+  },
+  setNote(state, value) {
+    state.updateData.Note = value
   }
+
+  // resetmt(state) {
+  //   state.mt = 0
+  // },
+  // addmt(state) {
+  //   state.mt++
+  // }
   // setSelectKelas(state, value) {
   //   state.santri = []
   //   state.select = value

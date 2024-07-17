@@ -45,29 +45,29 @@
           </thead>
           <tbody>
             <tr v-for="(data, index) in detailZiyadah" :key="index">
-                <td>{{ data.SK }}</td>
-                <td class="text-center">{{ data.From.ayat.juz }}</td>
-                <td class="text-center">{{ data.From.name }}</td>
-                <td class="text-center">{{ data.From.ayat.number }}</td>
-                <td class="text-center">{{ data.From.ayat.page }}</td>
-                <td class="text-center">{{ data.To.ayat.juz }}</td>
-                <td class="text-center">{{ data.To.name }}</td>
-                <td class="text-center">{{ data.To.ayat.number }}</td>
-                <td class="text-center">{{ data.To.ayat.page }}</td>
-                <td class="text-center">{{ data.Score }}</td>
-                <td class="text-center">{{ data.Page }}</td>
-                <td class="text-end">
-                  <a href="javascript:;" @click="showNote(data.Note)">
-                    <i class='bx bx-message-alt-detail text-white btn btn-sm btn-primary'></i>
-                  </a>
-                  <a href="javascript:;" @click="editItem(data.SK)">
-                    <i class="bx bx-pencil text-dark btn btn-sm btn-warning"></i>
-                  </a>
-                  <a href="#">
-                    <i class="bx bx-trash text-white btn btn-sm btn-danger"></i>
-                  </a>
-                </td>
-              </tr>
+              <td>{{ data.SK }}</td>
+              <td class="text-center">{{ data.From.ayat.juz }}</td>
+              <td class="text-center" style="font-family: 'Noto Kufi Arabic', sans-serif;">{{ data.From.name }}</td>
+              <td class="text-center">{{ data.From.ayat.number }}</td>
+              <td class="text-center">{{ data.From.ayat.page }}</td>
+              <td class="text-center">{{ data.To.ayat.juz }}</td>
+              <td class="text-center" style="font-family: 'Noto Kufi Arabic', sans-serif;">{{ data.To.name }}</td>
+              <td class="text-center">{{ data.To.ayat.number }}</td>
+              <td class="text-center">{{ data.To.ayat.page }}</td>
+              <td class="text-center">{{ data.Score }}</td>
+              <td class="text-center">{{ data.Page }}</td>
+              <td class="text-end">
+                <a href="javascript:;" @click="showNote(data.Note)">
+                  <i class='bx bx-message-alt-detail text-white btn btn-sm btn-primary'></i>
+                </a>
+                <a href="javascript:;" @click="editItem(data.SK)">
+                  <i class="bx bx-pencil text-dark btn btn-sm btn-warning"></i>
+                </a>
+                <a href="javascript:;" @click="deleteItem(data.SK)">
+                  <i class="bx bx-trash text-white btn btn-sm btn-danger"></i>
+                </a>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -82,7 +82,7 @@ export default {
   name: "mutabaah",
   async asyncData({ store, route, redirect }) {
     const detail = store.state.mutabaah.detail;
-    if ( detail === '') {
+    if (detail === '') {
       return redirect('/tahfidz/mutabaah')
     } else {
       store.dispatch('mutabaah/getDetailZiyadah', route.params.id)
@@ -101,16 +101,49 @@ export default {
         showConfirmButton: false,
         text: note
       });
-    }
+    },
+    async deleteItem(sk) {
+      const i = this.detailZiyadah.findIndex((x) => x.SK === sk)
+      const data = this.detailZiyadah[i]
+      const skSantri = data.PK.replace(/#/g, '%23')
+      const result = await Swal.fire({
+        title: data.SK,
+        text: "Data akan dihapus secara permanen!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
+
+      if (result.isConfirmed) {
+        const result = await this.$apiSantri.$delete(
+          `delete-logs?subject=halaqah&sksantri=${skSantri}&createdat=${data.SK}`
+        );
+        if (result) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            text: "Data berhasil dihapus!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          this.$store.commit('mutabaah/deleteDetail', data.SK);
+        }
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
 @import url(~/assets/css/santri/santri.css);
+@import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&display=swap');
+
 i {
   cursor: pointer;
 }
+
 /* tr th {
   border: 1px solid white !important;
 } */

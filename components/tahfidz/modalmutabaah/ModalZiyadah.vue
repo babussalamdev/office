@@ -40,12 +40,12 @@
                 </div>
                 <div class="mb-3 col">
                   <label for="score" class="form-label">Nilai</label>
-                  <input type="number" name="Score" id="score" class="form-control" :value="updateData?.Score">
+                  <input type="number" step="any" name="Score" id="score" class="form-control" :value="updateData?.Score" min='0' max="100">
                 </div>
               </div>
               <div class="mb-3">
                 <label for="catatan" class="form-label">Catatan</label>
-                <textarea name="Note" id="catatan" class="form-control" :value="updateData?.Note"></textarea>
+                <textarea name="Note" id="catatan" class="form-control" v-model="note"></textarea>
               </div>
             </div>
             <div class="modal-footer">
@@ -68,17 +68,13 @@
 <script>
 import Swal from 'sweetalert2';
 import Multiselect from 'vue-multiselect'
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapGetters } from 'vuex'
 export default {
   components: {
     Multiselect
   },
   data() {
     return {
-      surahfrom: { name: '', ayat: [] },
-      surahto: { name: '', ayat: [] },
-      ayatfrom: { number: '', page: '', juz: '' },
-      ayatto: { name: '', page: '', juz: '' },
       from: [
         {
           name: "", ayat: [
@@ -94,59 +90,79 @@ export default {
     }
   },
   computed: {
-    ...mapState('mutabaah', ['surah', 'detail', 'updateData'])
+    ...mapState('mutabaah', ['surah', 'detail', 'updateData']),
+    ...mapGetters('mutabaah', ['getSurahFrom', 'getSurahTo', 'getAyatFrom', 'getAyatTo', 'getNote']),
+    surahfrom: {
+      get() {
+        return this.getSurahFrom
+      },
+      set(value) {
+        if (value !== null) {
+          this.$store.commit('mutabaah/setSurahFrom', value)
+        }
+      }
+    },
+    surahto: {
+      get() {
+        return this.getSurahTo
+      },
+      set(value) {
+        if (value !== null) {
+          this.$store.commit('mutabaah/setSurahTo', value)
+        }
+      }
+    },
+    ayatfrom: {
+      get() {
+        return this.getAyatFrom
+      },
+      set(value) {
+        if ( value !== null ) {
+          this.$store.commit('mutabaah/setAyatFrom', value)
+        }
+      }
+    },
+    ayatto: {
+      get() {
+        return this.getAyatTo
+      },
+      set(value) {
+        if ( value !== null ) {
+          this.$store.commit('mutabaah/setAyatTo', value)
+        }
+      }
+    },
+    note: {
+      get() {
+        return this.getNote
+      },
+      set(value) {
+        this.$store.commit('mutabaah/setNote', value)
+      }
+    }
   },
   watch: {
-    async updateData(value) {
+    updateData(value) {
       this.page = value.Page
-      this.surahfrom = await this.surah.find(x => x.name === value.From.name)
-      this.surahto = await this.surah.find(x => x.name === value.To.name)
-      this.changeAyat(value)
-      this.ayatfrom = value.From.ayat
-      this.ayatto = value.To.ayat
+      // this.changefrom()
+      // this.changeto()
     },
     surah(value) {
       this.from = value
     },
-    surahfrom: 'changefrom',
-    surahto: 'changeto',
-    ayatto(value) {
-      if (this.ayatfrom.page !== '' && value.page !== '') {
-        this.page = Math.abs(this.ayatfrom.page - this.ayatto.page) + 1
-      }
-    },
-    ayatfrom(value) {
-      if (this.ayatto.page !== '' && value.page !== '') {
-        this.page = Math.abs(this.ayatfrom.page - this.ayatto.page) + 1
-      }
-    }
+    // surahfrom : 'changefrom',
+    // surahto: 'changeto',
+    ayatto:'countPage',
+    ayatfrom: 'countPage'
   },
   methods: {
-    async changeAyat(value) {
-      if ( this.surahfrom && this.surahto) {
-        this.ayatfrom = value.From.ayat
-        this.ayatto = value.To.ayat
+    countPage() {
+      if (this.ayatto.page !== '' && this.ayatfrom.page !== '') {
+        this.page = Math.abs(this.ayatfrom.page - this.ayatto.page) + 1
       }
-    },
-    changefrom() {
-      if (this.surahfrom !== null) {
-        this.ayatfrom = { number: '', page: '', juz: '' }
-      } else {
-        this.surahfrom = { name: '', ayat: [] }
-      }
-    },
-    changeto() {
-      if (this.surahto !== null) {
-        this.ayatto = { number: '', page: '', juz: '' }
-      } else {
-        this.surahto = { name: '', ayat: [] }
-      }
-    },
-    nameWithLang({ name, language }) {
-      return `${name} — [${language}]`
     },
     async submit(event) {
-      // this.btn = false
+      this.btn = false
       const data = Object.fromEntries(new FormData(event.target))
       const from = {
         name: this.surahfrom.name,
@@ -160,32 +176,33 @@ export default {
       data['Score'] = +data.Score
       data['From'] = from
       data['To'] = to
-      console.log(data)
-      // try {
-      //   const result = await this.$apiSantri.$post(`input-logs?subject=halaqah&sk=${this.detail.SK.replace('#', '%23')}`, data)
-      //   if (result) {
-      //     Swal.fire({
-      //       position: "center",
-      //       icon: "success",
-      //       text: "Data berhasil di input",
-      //       showConfirmButton: false,
-      //       timer: 1500,
-      //     });
-      //     this.btn = true
-      //     this.$store.commit('mutabaah/pushDetail', result)
-      //     $('#ziyadah').modal('hide')
-      //     this.$refs.ziyadah.reset()
-      //   }
-      // } catch (error) {
-      //   Swal.fire({
-      //     position: "center",
-      //     icon: "error",
-      //     text: error,
-      //     showConfirmButton: false,
-      //     timer: 1500,
-      //   });
-      //   this.btn = true
-      // }
+      const sk = this.updateData.SK.replace(' ', '%20')
+      const sksantri = this.detail.SK.replace('#', '%23')
+      try {
+        const result = await this.$apiSantri.$put(`update-logs?subject=halaqah&sksantri=${sksantri}%23halaqah&sk=${sk}`, data)
+        if (result) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            text: "Data berhasil di update",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          this.btn = true
+          this.$store.commit('mutabaah/updateDetail', result)
+          $('#ziyadahupdate').modal('hide')
+          this.$refs.ziyadahupdate.reset()
+        }
+      } catch (error) {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          text: error,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        this.btn = true
+      }
     }
   }
 }

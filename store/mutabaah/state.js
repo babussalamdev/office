@@ -1,9 +1,10 @@
 export default () => ({
   santri: [],
   detail: '',
-  surah: '',
+  surah: [],
   detailZiyadah: '',
   updateData: '',
+  mt: 0
   // selectAsrama: [],
   // select: [],
   // kelas: '',
