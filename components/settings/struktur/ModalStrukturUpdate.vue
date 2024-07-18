@@ -1,35 +1,36 @@
 <template>
   <div>
-    <!-- modal input -->
-    <div class="modal fade" id="inputDataStruktur" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- modal update -->
+    <div class="modal fade" id="updateDataStruktur" tabindex="-1" aria-labelledby="staticBackdropLabel"
+      aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form @submit.prevent="inputStruktur" id="inputStruktur">
+          <form @submit.prevent="updateStruktur" id="updateStruktur">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">
-                Input Struktur
+                Update Struktur
               </h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="deleteValue"></button>
             </div>
             <div class="modal-body">
               <div class="mb-3">
                 <label for="sort" class="form-label">Sort</label>
-                <input name="Sort" type="number" class="form-control" id="sort" required />
+                <input name="Sort" type="number" class="form-control" id="sort" :value="updateData.Sort" required />
               </div>
               <div class="mb-3">
                 <label for="nama" class="form-label">Nama</label>
-                <input name="Nama" type="text" class="form-control" id="nama" required />
+                <input name="Nama" type="text" class="form-control" id="nama" :value="updateData.Nama" required />
               </div>
               <div class="mb-3">
                 <label class="typo__label mb-2">Permissions</label>
-                <multiselect name="Permissions" v-model="value" class="text-capitalize"
-                  tag-placeholder="Add this as new tag" placeholder="Search or add a tag" label="name" track-by="code"
-                  :options="options" :multiple="true" :taggable="true" @tag="addTag" required></multiselect>
+                <multiselect name="Permissions" v-model="value" tag-placeholder="Add this as new tag"
+                  placeholder="Search or add a tag" label="name" track-by="code" :options="options" :multiple="true"
+                  :taggable="true" @tag="addTag" required></multiselect>
                 <!-- <pre class="language-json"><code>{{ value  }}</code></pre> -->
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  @click="deleteValue">
                 Close
               </button>
               <span>
@@ -58,7 +59,7 @@ export default {
     Multiselect,
   },
   computed: {
-    ...mapState('struktur', ['options', 'btn', 'value']),
+    ...mapState('struktur', ['options', 'btn', 'value', 'updateData']),
     ...mapGetters('struktur', ['getValue']),
     value: {
       get() {
@@ -76,9 +77,13 @@ export default {
         this.value = [];
       });
   },
+  watch: {
+    updateData: "valueUpdate",
+  },
 
   methods: {
     ...mapActions('struktur', ['inputStruktur', 'updateStruktur']),
+    ...mapMutations('struktur', ['deleteValue']),
     addTag(newTag) {
       const tag = {
         name: newTag,
@@ -86,6 +91,17 @@ export default {
       };
       this.options.push(tag);
       this.value.push(tag);
+    },
+
+    async valueUpdate() {
+      const permissions = this.updateData.Permissions.split(",");
+      if (permissions && permissions.length > 0) {
+        const mappedArray = permissions.map((x) => {
+          const option = this.options.find((option) => option.name === x);
+          return { name: x, code: option ? option.code : null };
+        });
+        this.value = mappedArray;
+      }
     },
   },
 };

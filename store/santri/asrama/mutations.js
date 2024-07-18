@@ -5,8 +5,9 @@ export default {
     state.kelas = ''
   },
   setSantri(state, value) {
-    state.santri = value.Santri
-    state.selectAsrama = value.Select
+    // state.santri = value
+    state.santri = value.resSantri
+    state.selectAsrama = value.resSelect
   },
   setKelas(state, value) {
     state.kelas = value

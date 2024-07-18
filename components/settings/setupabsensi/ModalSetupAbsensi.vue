@@ -27,7 +27,7 @@
                   :taggable="true" @tag="addTag" required></multiselect>
                 <!-- <pre class="language-json"><code>{{ value  }}</code></pre> -->
               </div>
-              <div class="mb-3">
+              <!-- <div class="mb-3">
                 <label for="" class="mb-3">Database</label>
                 <select class="form-select" name="Database">
                   <option selected>-- Pilih Database --</option>
@@ -36,7 +36,7 @@
                   <option value="halaqah">halaqah</option>
                   <option value="ekskull">ekskull</option>
                 </select>
-              </div>
+              </div> -->
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">

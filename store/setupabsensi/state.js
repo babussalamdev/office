@@ -4,10 +4,10 @@ export default () => ({
   btn: true,
   value: [],
   options: [
-    { name: "hadir", code: 0 },
+    { name: "sekolah", code: 0 },
     { name: "absen", code: 1 },
     { name: "sakit", code: 2 },
-    { name: "pulang", code: 3 },
+    { name: "rumah", code: 3 },
     { name: "izin", code: 4 },
   ],
   updateData: ''

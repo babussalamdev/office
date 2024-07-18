@@ -1,13 +1,13 @@
 import Swal from "sweetalert2";
 export default {
   async getAbsensi({ commit }, data) {
-    const result = await this.$axios.$get(
+    const result = await this.$apiBase.$get(
       `get-settings?sk=${data}&type=absensi`
     );
     commit('setAbsensi', result);
   },
   async changeUnitAsrama({ commit }, data) {
-    const result = await this.$axios.$get(
+    const result = await this.$apiBase.$get(
       `get-database?subject=asrama&program=${data}`
     );
     commit('setDataAsrama', result);
@@ -18,7 +18,7 @@ export default {
     data["Program"] = localStorage.getItem("program");
     data["Permissions"] = state.value.map((x) => x.name).join(",");
     try {
-      const result = await this.$axios.$post(
+      const result = await this.$apiBase.$post(
         `input-settings?type=absensi`,
         data
       );
@@ -49,7 +49,7 @@ export default {
     const key = state.updateData.SK.replace('#', '%23');
     try {
       console.log(data)
-      const result = await this.$axios.$put(
+      const result = await this.$apiBase.$put(
         `update-settings?sk=${key}&type=absensi`,
         data
       );
@@ -89,7 +89,7 @@ export default {
       confirmButtonText: "Yes, delete it!",
     });
     if (result.isConfirmed) {
-      await this.$axios.$delete(
+      await this.$apiBase.$delete(
         `delete-settings?sk=${key}&type=absensi`
       );
       commit('deleteStruktur', key);

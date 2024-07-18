@@ -1,6 +1,26 @@
 <template>
   <div>
-    <div>
+    <div><div class="row mb-3">
+        <div class="col-12 col-md-9 d-flex align-items-center">
+          <h4 class="text-capitalize mb-3 mb-md-0" style="font-size: 14px">
+            data {{ $route.name.replace("-", " ") }}
+          </h4>
+        </div>
+        <div class="col-12 col-md-3 d-flex justify-content-end">
+          <!-- <div class="input-group">
+            <button type="button" class="btn btn-primary btn-sm" @click="editBulk(data)"
+              :disabled="data.length > 0 ? false : true">
+              Edit
+            </button>
+            <select name="Kelas" id="kelas" v-model="kelas" @change="loadHalaqah" class="form-select select" required>
+              <option value="" selected disabled>Kelas</option>
+              <option v-for="(data, index) in select" :key="index" :value="data">
+                {{ data }}
+              </option>
+            </select>
+          </div> -->
+        </div>
+      </div>
       <div class="table-responsive">
         <!-- Modal -->
         <MusyrifModal :updateData="updateData" />
@@ -27,11 +47,11 @@
               </td>
 
               <td class="text-end align-middle">
-                <div class="action">
-                  <a href="javascript:;" @click="editItem(index)">
-                    <i class="bx bx-pencil text-success"></i>
-                  </a>
-                </div>
+                <a href="javascript:;" @click="editItem(index)">
+                  <button class="btn btn-warning">
+                    <i class="bx bx-pencil text-dark"></i>
+                  </button>
+                </a>
               </td>
             </tr>
           </tbody>

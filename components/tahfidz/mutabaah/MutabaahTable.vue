@@ -22,18 +22,24 @@
               <p class="text-secondary mt-1">{{ data.Nis }}</p>
             </td>
             <td class="text-center">
-              <a href="javascript:;" @click="showDetail(data.SK)">
+              <a href="javascript:;" @click="showDetail(data.SK, 'ziyadah')">
                 <i class="material-icons bg-primary p-2 text-white rounded-circle">library_add</i>
               </a>
             </td>
             <td class="text-center">
-              <i class="material-icons bg-warning p-2 text-white rounded-circle">restart_alt</i>
+              <a href="javascript:;" @click="showDetail(data.SK, 'murojaah')">
+                <i class="material-icons bg-warning p-2 text-white rounded-circle">restart_alt</i>
+              </a>
             </td>
             <td class="text-center">
-              <i class="material-icons bg-success p-2 text-white rounded-circle">auto_stories</i>
+              <a href="javascript:;" @click="showDetail(data.SK, 'tilawah')">
+                <i class="material-icons bg-success p-2 text-white rounded-circle">auto_stories</i>
+              </a>
             </td>
             <td class="text-center align-middle">
-              <i class="material-icons bg-danger p-2 text-white rounded-circle">mic</i>
+              <a href="javascript:;" @click="showDetail(data.SK, 'tahsin')">
+                <i class="material-icons bg-danger p-2 text-white rounded-circle">mic</i>
+              </a>
             </td>
             <td>-</td>
           </tr>
@@ -60,7 +66,10 @@ export default {
     ...mapState('mutabaah', ['santri'])
   },
   methods: {
-    ...mapMutations('mutabaah', ['showDetail'])
+    // ...mapMutations('mutabaah', ['showDetail'])
+    showDetail(sk, subject) {
+      this.$store.commit('mutabaah/showDetail', { sk, subject })
+    }
   },
 };
 </script>

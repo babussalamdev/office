@@ -131,10 +131,13 @@
   min-height: 100vh;
 }
 #musyrif .musyrif .table-responsive {
+  border-radius: 7px !important;
+  box-shadow: 0 0 15px rgba(177, 177, 177, 0.4);
   overflow-x: auto;
 }
 #musyrif .musyrif .table-responsive .table {
   width: 100%;
+  margin-bottom: 0 !important;
 }
 #musyrif .musyrif .table-responsive .table thead tr th {
   padding: 15px 20px;

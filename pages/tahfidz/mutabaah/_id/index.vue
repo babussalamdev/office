@@ -12,11 +12,11 @@
       <div class="row mb-3">
         <div class="col-12 col-md-9 d-flex align-items-center">
           <h2 class="text-capitalize mb-3 mb-md-0">
-            Data Ziyadah - <b>{{ detail.Nama }}</b>
+            Data {{ subject }} - <b>{{ detail.Nama }}</b>
           </h2>
         </div>
         <div class="col-12 col-md-3 d-flex justify-content-end">
-          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#ziyadah">
+          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#mutabaah">
             Tambah
           </button>
         </div>
@@ -44,7 +44,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(data, index) in detailZiyadah" :key="index">
+            <tr v-for="(data, index) in detailMutabaah" :key="index">
               <td>{{ data.SK }}</td>
               <td class="text-center">{{ data.From.ayat.juz }}</td>
               <td class="text-center" style="font-family: 'Noto Kufi Arabic', sans-serif;">{{ data.From.name }}</td>
@@ -80,16 +80,21 @@ import Swal from 'sweetalert2';
 import { mapState, mapActions, mapMutations } from 'vuex'
 export default {
   name: "mutabaah",
+  data() {
+    return {
+      subject: localStorage.getItem('subject')
+    }
+  },
   async asyncData({ store, route, redirect }) {
     const detail = store.state.mutabaah.detail;
     if (detail === '') {
       return redirect('/tahfidz/mutabaah')
     } else {
-      store.dispatch('mutabaah/getDetailZiyadah', route.params.id)
+      store.dispatch('mutabaah/getDetail', route.params.id )
     }
   },
   computed: {
-    ...mapState('mutabaah', ['detail', 'detailZiyadah'])
+    ...mapState('mutabaah', ['detail', 'detailMutabaah'])
   },
   methods: {
     ...mapMutations('mutabaah', ['editItem']),
@@ -103,8 +108,8 @@ export default {
       });
     },
     async deleteItem(sk) {
-      const i = this.detailZiyadah.findIndex((x) => x.SK === sk)
-      const data = this.detailZiyadah[i]
+      const i = this.detailMutabaah.findIndex((x) => x.SK === sk)
+      const data = this.detailMutabaah[i]
       const skSantri = data.PK.replace(/#/g, '%23')
       const result = await Swal.fire({
         title: data.SK,
@@ -117,8 +122,9 @@ export default {
       });
 
       if (result.isConfirmed) {
+        const subject = localStorage.getItem('subject')
         const result = await this.$apiSantri.$delete(
-          `delete-logs?subject=halaqah&sksantri=${skSantri}&createdat=${data.SK}`
+          `delete-logs?subject=${subject}&sksantri=${skSantri}&createdat=${data.SK}`
         );
         if (result) {
           Swal.fire({

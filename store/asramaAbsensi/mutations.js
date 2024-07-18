@@ -1,8 +1,8 @@
 export default {
     setSantriAsrama(state, value) {
-        if (value.Santri) {
-            state.santri = value.Santri
-            state.permissions = value.Permissions.split(',')
+        if (value) {
+            state.santri = value.resSantri
+            state.permissions = value.resPermissions.split(',')
             if (value.select) {
                 state.select = value.select
             }

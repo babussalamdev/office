@@ -1,11 +1,11 @@
 <template>
   <div>
     <!-- Modal -->
-    <div class="modal fade" id="ziyadah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    <div class="modal fade" id="mutabaah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
       aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form @submit.prevent="submit" ref="ziyadah">
+          <form @submit.prevent="submit" ref="mutabaah">
 
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
@@ -154,7 +154,9 @@ export default {
       data['From'] = from
       data['To'] = to
       try {
-        const result = await this.$apiSantri.$post(`input-logs?subject=halaqah&sksantri=${this.detail.SK.replace('#', '%23')}`, data)
+        const sk = this.detail.SK.replace('#', '%23')
+        const subject = localStorage.getItem('subject')
+        const result = await this.$apiSantri.$post(`input-logs?subject=${subject}&sksantri=${sk}`, data)
         if (result) {
           Swal.fire({
             position: "center",
@@ -165,8 +167,8 @@ export default {
           });
           this.btn = true
           this.$store.commit('mutabaah/pushDetail', result)
-          $('#ziyadah').modal('hide')
-          this.$refs.ziyadah.reset()
+          $('#mutabaah').modal('hide')
+          this.$refs.mutabaah.reset()
         }
       } catch (error) {
         Swal.fire({

@@ -1,11 +1,11 @@
 <template>
   <div>
     <!-- Modal update -->
-    <div class="modal fade" id="ziyadahupdate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    <div class="modal fade" id="mutabaahupdate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
       aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form @submit.prevent="submit" ref="ziyadahupdate">
+          <form @submit.prevent="submit" ref="mutabaahupdate">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -176,10 +176,12 @@ export default {
       data['Score'] = +data.Score
       data['From'] = from
       data['To'] = to
-      const sk = this.updateData.SK.replace(' ', '%20')
-      const sksantri = this.detail.SK.replace('#', '%23')
+      console.log(data)
       try {
-        const result = await this.$apiSantri.$put(`update-logs?subject=halaqah&sksantri=${sksantri}%23halaqah&sk=${sk}`, data)
+        const sk = this.updateData.SK.replace(' ', '%20')
+        const sksantri = this.detail.SK.replace('#', '%23')
+        const subject = localStorage.getItem('subject')
+        const result = await this.$apiSantri.$put(`update-logs?subject=${subject}&sksantri=${sksantri}&sk=${sk}`, data)
         if (result) {
           Swal.fire({
             position: "center",
@@ -190,8 +192,8 @@ export default {
           });
           this.btn = true
           this.$store.commit('mutabaah/updateDetail', result)
-          $('#ziyadahupdate').modal('hide')
-          this.$refs.ziyadahupdate.reset()
+          $('#mutabaahupdate').modal('hide')
+          this.$refs.mutabaahupdate.reset()
         }
       } catch (error) {
         Swal.fire({

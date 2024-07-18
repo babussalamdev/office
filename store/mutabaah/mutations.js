@@ -6,37 +6,38 @@ export default {
 
   // mutabaah details
   showDetail(state, value) {
-    const i = state.santri.findIndex((x) => x.SK === value)
+    localStorage.setItem("subject", value.subject);
+    const i = state.santri.findIndex((x) => x.SK === value.sk)
     state.detail = state.santri[i]
-    this.$router.push(`/tahfidz/mutabaah/${value.replace('#', '%23')}`)
+    this.$router.push(`/tahfidz/mutabaah/${value.sk.replace('#', '%23')}`)
   },
   setSurah(state, value) {
     state.surah = value
   },
   setDetailSantri(state, value) {
-    state.detailZiyadah = value
+    state.detailMutabaah = value
   },
   pushDetail(state, value) {
-    state.detailZiyadah.push(value)
+    state.detailMutabaah.push(value)
   },
   editItem(state, value) {
-    const i = state.detailZiyadah.findIndex((x) => x.SK === value)
-    state.updateData = state.detailZiyadah[i]
+    const i = state.detailMutabaah.findIndex((x) => x.SK === value)
+    state.updateData = state.detailMutabaah[i]
     if (state.updateData) {
-      $('#ziyadahupdate').modal('show')
+      $('#mutabaahupdate').modal('show')
     }
     // state.mt++
   },
   updateDetail(state, value) {
-    const i = state.detailZiyadah.findIndex((x) => x.SK === value.SK)
-    const data = state.detailZiyadah[i]
+    const i = state.detailMutabaah.findIndex((x) => x.SK === value.SK)
+    const data = state.detailMutabaah[i]
     data.Score = value.Score
     data.Page = value.Page
 
   },
   deleteDetail(state, value) {
-    const i = state.detailZiyadah.findIndex((x) => x.SK === value)
-    state.detailZiyadah.splice(i, 1)
+    const i = state.detailMutabaah.findIndex((x) => x.SK === value)
+    state.detailMutabaah.splice(i, 1)
   },
 
   // modal

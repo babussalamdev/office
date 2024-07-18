@@ -50,6 +50,7 @@
     </div>
     <!-- modal -->
     <ModalStruktur />
+    <ModalStrukturUpdate />
   </div>
 </template>
 

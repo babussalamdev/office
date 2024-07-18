@@ -17,6 +17,9 @@ export default {
     state.updateData = state.struktur[i];
     $("#updateDataStruktur").modal("show");
   },
+  deleteValue(state, value) {
+    state.value = []
+  },
   updateDataStruktur(state, value) {
     const sk = value.SK.replace('%23', '#')
     const i = state.struktur.findIndex((x) => x.SK === sk)

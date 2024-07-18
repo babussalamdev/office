@@ -21,7 +21,7 @@
           <tr>
             <th scope="col">Nama</th>
             <th scope="col">Permission</th>
-            <th scope="col">Database</th>
+            <!-- <th scope="col">Database</th> -->
             <th scope="col" class="text-end">Action</th>
           </tr>
         </thead>
@@ -39,9 +39,9 @@
                 </div>
               </div>
             </td>
-            <td scope="row" class="align-middle">
+            <!-- <td scope="row" class="align-middle">
               {{ data.Database }}
-            </td>
+            </td> -->
             <td class="text-end align-middle">
               <a href="javascript:;" @click="editItem(data.SK)">
                 <button class="btn btn-sm btn-warning">

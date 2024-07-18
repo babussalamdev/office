@@ -9,9 +9,14 @@ export default {
   },
   async kelasLoad({ commit, state }) {
     const program = localStorage.getItem('program')
-    const result = await this.$apiSantri.$get(
+    const reqSantri = this.$apiSantri.$get(
       `get-santri-sisalam?subject=kelas&program=${program}&opsi=asrama&filter=${state.kelas}`
     );
+    const reqSelect = this.$apiBase.$get(`get-settings?type=options&sk=${program}&category=asrama`)
+    const [resSantri, resSelect] = await Promise.all([reqSantri, reqSelect])
+    const result = {
+      resSantri, resSelect
+    }
     commit('setSantri', result);
   },
   async updateDataSantriAsrama({commit, state}, event) {
@@ -21,8 +26,8 @@ export default {
     data["value"] = state.asramaShow;
     data["sort"] = state.updateData;
     try {
-      const result = await this.$axios.$put(
-        `update-santri?sk&program=${program}&bulk=Asrama`,
+      const result = await this.$apiSantri.$put(
+        `update-santri-sisalam?program=${program}&bulk=Asrama`,
         data
       );
       if (result) {
