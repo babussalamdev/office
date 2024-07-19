@@ -16,12 +16,12 @@ export default {
     // const result = await this.$apiSantri.$get(
     //   `get-absensi?subject=${subject}&program=${program}&jabatan=${jabatan}&asrama=${asrama}&halaqah=${halaqah}&kelas=${kelas}&absen=asrama`
     // );
-    const reqSantri = this.$apiSantri.$get(
-      `get-absensi-sisalam?subject=${subject}&program=${program}&value=${asrama}`
+    const reqSantri = await this.$apiSantri.$get(
+      `get-absensi-sisalam?subject=halaqah&program=${program}&value=${halaqah}`
     );
-    const reqPermissions = this.$apiBase.$get(
-      `get-settings?sk=${program}&type=buttonAbsensi&value=${jabatan}`
-    )
+    // const reqPermissions = this.$apiBase.$get(
+    //   `get-settings?sk=${program}&type=buttonAbsensi&value=${jabatan}`
+    // )
     const [resSantri, resPermissions] = await Promise.all([reqSantri, reqPermissions])
 
     // result['select'] = []
@@ -36,5 +36,17 @@ export default {
     );
 
     commit('setSantriAsrama', result);
+  },
+  setStatus({commit, state}, data) {
+    const waktu = data
+    const sk = state[data].split(' ')[1]
+    const type = state[data].split(' ')[0]
+    const obj = {
+      waktu: waktu,
+      sk: sk,
+      type: type
+    }
+    // console.log(data)
+    console.log(obj)
   }
 }

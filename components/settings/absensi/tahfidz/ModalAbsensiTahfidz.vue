@@ -8,33 +8,25 @@
           <form @submit.prevent="santriAbsen" ref="santriAbsen">
             <div class="modal-header">
               <h1 class="modal-title fs-5 text-capitalize" id="staticBackdropLabel">
-                {{ updateData.type }} - {{ updateData.santri?.Nama }}
+                {{ updateData?.type }} - {{ updateData?.santri?.Nama }}
               </h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <div class="form-floating">
-                <textarea name="Note" class="form-control" style="height: 100px" placeholder="Leave a comment here"
-                  id="floatingTextarea"></textarea>
+              ...
+              <!-- <div class="form-floating">
+                <textarea name="NoteAsrama" class="form-control" style="height: 100px"
+                  placeholder="Leave a comment here" id="floatingTextarea"></textarea>
                 <label for="floatingTextarea">Catatan</label>
-              </div>
+              </div> -->
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                 Close
               </button>
               <span>
-                <button v-if="btn" type="submit" class="btn" :class="updateData.type === 'sekolah'
-                  ? 'btn-success'
-                  : updateData.type === 'rumah'
-                    ? 'btn-secondary'
-                    : updateData.type === 'sakit'
-                      ? 'btn-warning'
-                      : updateData.type === 'izin'
-                        ? 'btn-primary'
-                        : 'btn-info'
-                  ">
-                  {{ updateData.type }}
+                <button v-if="btn" type="submit" class="btn btn-primary">
+                  Save Change
                 </button>
                 <button v-else class="btn btn-primary" type="button" disabled>
                   <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
@@ -51,28 +43,27 @@
 
 <script>
 import Swal from "sweetalert2";
-
+import { mapState, mapActions, mapMutations } from 'vuex'
 export default {
-  props: ["updateData"],
-
   data() {
     return {
       btn: true,
     };
   },
-
+  computed: {
+    ...mapState('tahfidzAbsensi', ['updateData'])
+  },
   methods: {
     async santriAbsen() {
       this.btn = false;
       const data = Object.fromEntries(new FormData(event.target));
-      data["Status"] = this.updateData.type;
-      const skSantri = this.updateData.santri.SK.replace('#', '%23')
-      const tahun = this.$auth.user.Label
-      const semester = this.$auth.user.Semester
+      data["StatusAsrama"] = this.updateData.type;
+      const code = this.updateData.santri.SK.split("#")[1];
+      const subject = this.updateData.santri.SK.split("#")[0];
       const program = localStorage.getItem("program");
       try {
-        const result = await this.$apiSantri.$put(
-          `update-absensi-sisalam?sksantri=${skSantri}&type=asrama&thn=${tahun}&smstr=${semester}&program=${program}`,
+        const result = await this.$axios.$post(
+          `input-absensi?subject=${subject}&program=${program}&code=${code}&session=asrama`,
           data
         );
         if (result) {

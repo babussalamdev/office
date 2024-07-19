@@ -83,6 +83,7 @@ export default {
       '~/components/settings/struktur',
       '~/components/settings/absensi',
       '~/components/settings/absensi/asrama',
+      '~/components/settings/absensi/tahfidz',
       '~/components/settings/setupabsensi',
       '~/components/settings/setuppelanggaran',
     ]

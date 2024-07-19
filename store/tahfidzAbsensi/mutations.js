@@ -1,8 +1,8 @@
 export default {
     setSantriAsrama(state, value) {
-        if (value.Santri) {
-            state.santri = value.Santri
-            state.permissions = value.Permissions.split(',')
+        if (value) {
+            state.santri = value.resSantri
+            state.permissions = value.resPermissions.split(',')
             if (value.select) {
                 state.select = value.select
             }
@@ -28,5 +28,17 @@ export default {
         })
 
         state.santri = updateData
+    },
+    // setStatus(state, value) {
+    //   state[value.name] = value.value
+    // },
+    setStatusHalaqah(state, value) {
+      const i = state.santri.findIndex((x) => x.sk === value.SK)
+      const obj = {
+        santri: state.santri[i],
+        type: value.type
+      }
+      state.updateData = obj
+      $("#modalAbsen").modal("show");
     },
 }

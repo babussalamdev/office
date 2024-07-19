@@ -30,52 +30,53 @@
                 <p class="mt-1 text-secondary">{{ data.Nis }}</p>
               </td>
               <td class="text-capitalize align-middle">
-                <i class="material-icons" :class="data.Logs.asrama === 'sekolah'
-                    ? 'text-success'
-                    : data.Logs.asrama === 'rumah'
-                      ? 'text-secondary'
-                      : data.Logs.asrama === 'sakit'
-                        ? 'text-warning'
-                        : data.Logs.asrama === 'izin'
-                          ? 'text-primary'
-                          : 'text-danger'
+                <i class="material-icons" :class="data.Logs?.asrama === 'sekolah'
+                  ? 'text-success'
+                  : data.Logs?.asrama === 'rumah'
+                    ? 'text-secondary'
+                    : data.Logs?.asrama === 'sakit'
+                      ? 'text-warning'
+                      : data.Logs?.asrama === 'izin'
+                        ? 'text-primary'
+                        : 'text-danger'
                   ">{{
-                    data.Logs.asrama === "sekolah"
+                    data.Logs?.asrama === "sekolah"
                       ? " school "
-                      : data.Logs.asrama === "rumah"
+                      : data.Logs?.asrama === "rumah"
                         ? " villa "
-                        : data.Logs.asrama === "sakit"
+                        : data.Logs?.asrama === "sakit"
                           ? " medication "
-                          : data.Logs.asrama === "izin"
+                          : data.Logs?.asrama === "izin"
                             ? "hourglass_top"
                             : " person_off "
                   }}</i>
               </td>
               <td class="text-capitalize align-middle">
-                {{ data.NoteAsrama }}
+                {{ data.Logs?.asramaNote }}
               </td>
               <td class="text-capitalize align-middle">
-                <h1>{{ data.WaktuAsrama?.split(", ")[0] }}</h1>
+                <h1>{{ data.Logs?.asramaTime?.split(", ")[0] }}</h1>
                 <p class="mt-1 text-secondary">
-                  {{ data.WaktuAsrama?.split(", ")[1] }}
+                  {{ data.Logs?.asramaTime?.split(", ")[1] }}
                 </p>
               </td>
               <td class="text-end align-middle">
-                <a href="javasript:;" class="bg-success" v-if="permissions.includes('sekolah')"
+                <a href="javascript:;" class="bg-success"
+                  v-if="permissions.includes('sekolah') && data.Logs?.asrama !== 'sekolah'"
                   @click="absen(index, 'sekolah')">
                   <i class="material-icons"> school </i> Sekolah</a>
-                <a href="javascript:;" class="bg-danger" v-if="permissions.includes('absen')"
-                  @click="absen(index, 'absen')">
+                <a href="javascript:;" class="bg-danger"
+                  v-if="permissions.includes('absen') && data.Logs?.asrama !== 'absen'" @click="absen(index, 'absen')">
                   <i class="material-icons"> person_off </i>
                   Absen</a>
-                <a href="javasript:;" class="bg-warning" v-if="permissions.includes('sakit')"
-                  @click="absen(index, 'sakit')">
+                <a href="javascript:;" class="bg-warning"
+                  v-if="permissions.includes('sakit') && data.Logs?.asrama !== 'sakit'" @click="absen(index, 'sakit')">
                   <i class="material-icons"> medication </i> Sakit</a>
-                <a href="javasript:;" class="bg-secondary" v-if="permissions.includes('rumah')"
-                  @click="absen(index, 'rumah')">
+                <a href="javascript:;" class="bg-secondary"
+                  v-if="permissions.includes('rumah') && data.Logs?.asrama !== 'rumah'" @click="absen(index, 'rumah')">
                   <i class="material-icons"> villa </i> Pulang</a>
-                <a href="javasript:;" class="bg-primary" v-if="permissions.includes('izin')"
-                  @click="absen(index, 'izin')">
+                <a href="javascript:;" class="bg-primary"
+                  v-if="permissions.includes('izin') && data.Logs?.asrama !== 'izin'" @click="absen(index, 'izin')">
                   <i class="material-icons"> villa </i> Izin</a>
               </td>
             </tr>
