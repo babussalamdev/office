@@ -13,12 +13,11 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              ...
-              <!-- <div class="form-floating">
-                <textarea name="NoteAsrama" class="form-control" style="height: 100px"
+              <div class="form-floating">
+                <textarea name="Note" class="form-control" style="height: 100px"
                   placeholder="Leave a comment here" id="floatingTextarea"></textarea>
                 <label for="floatingTextarea">Catatan</label>
-              </div> -->
+              </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -26,7 +25,7 @@
               </button>
               <span>
                 <button v-if="btn" type="submit" class="btn btn-primary">
-                  Save Change
+                  {{ updateData?.type }}
                 </button>
                 <button v-else class="btn btn-primary" type="button" disabled>
                   <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
@@ -57,13 +56,15 @@ export default {
     async santriAbsen() {
       this.btn = false;
       const data = Object.fromEntries(new FormData(event.target));
-      data["StatusAsrama"] = this.updateData.type;
-      const code = this.updateData.santri.SK.split("#")[1];
-      const subject = this.updateData.santri.SK.split("#")[0];
+      data["Status"] = this.updateData.type;
+      const skSantri = this.updateData.santri.SK.replace('#', '%23')
+      const tahun = this.$auth.user.Label
+      const semester = this.$auth.user.Semester
+      const time = this.updateData.time
       const program = localStorage.getItem("program");
       try {
-        const result = await this.$axios.$post(
-          `input-absensi?subject=${subject}&program=${program}&code=${code}&session=asrama`,
+        const result = await this.$apiSantri.$put(
+          `update-absensi-sisalam?sksantri=${skSantri}&type=halaqah${time}&thn=${tahun}&smstr=${semester}&program=${program}`,
           data
         );
         if (result) {
@@ -75,10 +76,11 @@ export default {
             showConfirmButton: false,
             timer: 1500,
           });
-          result["SK"] = this.updateData.santri.SK;
           this.$refs.santriAbsen.reset();
-          this.$store.commit("asramaAbsensi/updateAbsen", result);
           $("#modalAbsen").modal("hide");
+          result['time'] = time
+          result["SK"] = this.updateData.santri.SK;
+          this.$store.commit('tahfidzAbsensi/updateAbsen', result);
         }
       } catch (error) {
         console.log(error);

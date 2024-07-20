@@ -24,56 +24,110 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(data, index) in datas" :key="index">
+            <tr v-for="(data, index) in santri" :key="index">
               <td class="text-capitalize align-middle">
-                <h1>{{ data.name }}</h1>
-                <p class="mt-1 text-secondary">{{ data.nis }}</p>
+                <h1>{{ data.Nama }}</h1>
+                <p class="mt-1 text-secondary">{{ data.Nis }}</p>
               </td>
               <td class="text-capitalize align-middle">
-                pulang
+                {{ data.Logs?.asrama }}
               </td>
+              <!-- pagi -->
               <td class="text-capitalize py-2">
-                <div class="select-input mx-auto">
+                <div v-if="data.Logs?.halaqahPagiTime?.split(', ')[0] === date || !data.Logs?.halaqahPagiTime"
+                  class="select-input mx-auto">
                   <div class="box-radio">
-                    <!-- <label for="absen">Absen</label> -->
-                    <i class="" @click="setAbsensi(data.sk, 'absensi')">Absen</i>
+                    <button @click="setAbsensi(data.SK, 'absen', 'Pagi', data.Logs?.halaqahPagi)"
+                      :class="!data.Logs.halaqahPagi || data.Logs.halaqahPagi === '' ? 'bg-white' : data.Logs.halaqahPagi === 'absen' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="data.Logs.halaqahPagi && (data.Logs.halaqahPagi !== '' && data.Logs.halaqahPagi !== 'absen') ? true : false">Absen</button>
                   </div>
                   <div class="box-radio">
-                    <!-- <input type="checkbox" id="terlambat" v-model="terlambatPagi" hidden>
-                    <label for="terlambat">Terlambat</label> -->
-                    <i class="">Terlambat</i>
+                    <button @click="setAbsensi(data.SK, 'terlambat', 'Pagi', data.Logs?.halaqahPagi)"
+                      :class="!data.Logs.halaqahPagi || data.Logs.halaqahPagi === '' ? 'bg-white' : data.Logs.halaqahPagi === 'terlambat' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="data.Logs.halaqahPagi && (data.Logs.halaqahPagi !== '' && data.Logs.halaqahPagi !== 'terlambat') ? true : false">Terlambat</button>
                   </div>
                   <div class="box-radio">
-                    <!-- <input type="checkbox" id="sakit" v-model="sakitPagi" hidden>
-                    <label for="sakit">Sakit</label> -->
-                    <i class="">Sakit</i>
+                    <button @click="setAbsensi(data.SK, 'sakit', 'Pagi', data.Logs?.halaqahPagi)"
+                      :class="!data.Logs.halaqahPagi || data.Logs.halaqahPagi === '' ? 'bg-white' : data.Logs.halaqahPagi === 'sakit' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="data.Logs.halaqahPagi && (data.Logs.halaqahPagi !== '' && data.Logs.halaqahPagi !== 'sakit') ? true : false">Sakit</button>
                   </div>
                   <div class="box-radio">
-                    <i class="">Izin</i>
-                    <!-- <input type="checkbox" id="izin" v-model="izinPagi" hidden>
-                    <label for="izin">Izin</label> -->
+                    <button @click="setAbsensi(data.SK, 'izin', 'Pagi', data.Logs?.halaqahPagi)"
+                      :class="!data.Logs.halaqahPagi || data.Logs.halaqahPagi === '' ? 'bg-white' : data.Logs.halaqahPagi === 'izin' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="data.Logs.halaqahPagi && (data.Logs.halaqahPagi !== '' && data.Logs.halaqahPagi !== 'izin') ? true : false">Izin</button>
+                  </div>
+                </div>
+                <div v-else class="select-input mx-auto">
+                  <div class="box-radio">
+                    <button @click="setAbsensi(data.SK, 'absen', 'Pagi', data.Logs?.halaqahPagi)"
+                      :class="!data.Logs.halaqahPagi || data.Logs.halaqahPagi === '' ? 'bg-white' : data.Logs.halaqahPagi === 'absen' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="data.Logs.halaqahPagi && (data.Logs.halaqahPagi !== '' && data.Logs.halaqahPagi !== 'absen') ? true : false">Absen</button>
+                  </div>
+                  <div class="box-radio">
+                    <button @click="setAbsensi(data.SK, 'terlambat', 'Pagi', data.Logs?.halaqahPagi)"
+                      :class="!data.Logs.halaqahPagi || data.Logs.halaqahPagi === '' ? 'bg-white' : data.Logs.halaqahPagi === 'terlambat' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="data.Logs.halaqahPagi && (data.Logs.halaqahPagi !== '' && data.Logs.halaqahPagi !== 'terlambat') ? true : false">Terlambat</button>
+                  </div>
+                  <div class="box-radio">
+                    <button @click="setAbsensi(data.SK, 'sakit', 'Pagi', data.Logs?.halaqahPagi)"
+                      :class="!data.Logs.halaqahPagi || data.Logs.halaqahPagi === '' ? 'bg-white' : data.Logs.halaqahPagi === 'sakit' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="data.Logs.halaqahPagi && (data.Logs.halaqahPagi !== '' && data.Logs.halaqahPagi !== 'sakit') ? true : false">Sakit</button>
+                  </div>
+                  <div class="box-radio">
+                    <button @click="setAbsensi(data.SK, 'izin', 'Pagi', data.Logs?.halaqahPagi)"
+                      :class="!data.Logs.halaqahPagi || data.Logs.halaqahPagi === '' ? 'bg-white' : data.Logs.halaqahPagi === 'izin' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="data.Logs.halaqahPagi && (data.Logs.halaqahPagi !== '' && data.Logs.halaqahPagi !== 'izin') ? true : false">Izin</button>
                   </div>
                 </div>
               </td>
+
+              <!-- sore -->
               <td class="text-capitalize py-2">
-                <!-- <div class="select-input mx-auto">
+                <div v-if="data.Logs?.halaqahSoreTime?.split(', ')[0] === date || !data.Logs?.halaqahSoreTime"
+                  class="select-input mx-auto">
                   <div class="box-radio">
-                    <input type="radio" id="absenn" :value="`absen ${data.sk}`" v-model="sore" hidden>
-                    <label for="absenn">Absen</label>
+                    <button @click="setAbsensi(data.SK, 'absen', 'Sore', data.Logs?.halaqahSore)"
+                      :class="!data.Logs.halaqahSore || data.Logs.halaqahSore === '' ? 'bg-white' : data.Logs.halaqahSore === 'absen' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="data.Logs.halaqahSore && (data.Logs.halaqahSore !== '' && data.Logs.halaqahSore !== 'absen') ? true : false">Absen</button>
                   </div>
                   <div class="box-radio">
-                    <input type="radio" id="terlambatt" :value="`terlambat ${data.sk}`" v-model="sore" hidden>
-                    <label for="terlambatt">Terlambat</label>
+                    <button @click="setAbsensi(data.SK, 'terlambat', 'Sore', data.Logs?.halaqahSore)"
+                      :class="!data.Logs.halaqahSore || data.Logs.halaqahSore === '' ? 'bg-white' : data.Logs.halaqahSore === 'terlambat' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="data.Logs.halaqahSore && (data.Logs.halaqahSore !== '' && data.Logs.halaqahSore !== 'terlambat') ? true : false">Terlambat</button>
                   </div>
                   <div class="box-radio">
-                    <input type="radio" id="sakitt" :value="`sakit ${data.sk}`" v-model="sore" hidden>
-                    <label for="sakitt">Sakit</label>
+                    <button @click="setAbsensi(data.SK, 'sakit', 'Sore', data.Logs?.halaqahSore)"
+                      :class="!data.Logs.halaqahSore || data.Logs.halaqahSore === '' ? 'bg-white' : data.Logs.halaqahSore === 'sakit' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="data.Logs.halaqahSore && (data.Logs.halaqahSore !== '' && data.Logs.halaqahSore !== 'sakit') ? true : false">Sakit</button>
                   </div>
                   <div class="box-radio">
-                    <input type="radio" id="izinn" :value="`izin ${data.sk}`" v-model="sore" hidden>
-                    <label for="izinn">Izin</label>
+                    <button @click="setAbsensi(data.SK, 'izin', 'Sore', data.Logs?.halaqahSore)"
+                      :class="!data.Logs.halaqahSore || data.Logs.halaqahSore === '' ? 'bg-white' : data.Logs.halaqahSore === 'izin' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="data.Logs.halaqahSore && (data.Logs.halaqahSore !== '' && data.Logs.halaqahSore !== 'izin') ? true : false">Izin</button>
                   </div>
-                </div> -->
+                </div>
+                <div v-else class="select-input mx-auto">
+                  <div class="box-radio">
+                    <button @click="setAbsensi(data.SK, 'absen', 'Sore', data.Logs?.halaqahSore)"
+                      :class="!data.Logs.halaqahSore || data.Logs.halaqahSore === '' ? 'bg-white' : data.Logs.halaqahSore === 'absen' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="data.Logs.halaqahSore && (data.Logs.halaqahSore !== '' && data.Logs.halaqahSore !== 'absen') ? true : false">Absen</button>
+                  </div>
+                  <div class="box-radio">
+                    <button @click="setAbsensi(data.SK, 'terlambat', 'Sore', data.Logs?.halaqahSore)"
+                      :class="!data.Logs.halaqahSore || data.Logs.halaqahSore === '' ? 'bg-white' : data.Logs.halaqahSore === 'terlambat' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="data.Logs.halaqahSore && (data.Logs.halaqahSore !== '' && data.Logs.halaqahSore !== 'terlambat') ? true : false">Terlambat</button>
+                  </div>
+                  <div class="box-radio">
+                    <button @click="setAbsensi(data.SK, 'sakit', 'Sore', data.Logs?.halaqahSore)"
+                      :class="!data.Logs.halaqahSore || data.Logs.halaqahSore === '' ? 'bg-white' : data.Logs.halaqahSore === 'sakit' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="data.Logs.halaqahSore && (data.Logs.halaqahSore !== '' && data.Logs.halaqahSore !== 'sakit') ? true : false">Sakit</button>
+                  </div>
+                  <div class="box-radio">
+                    <button @click="setAbsensi(data.SK, 'izin', 'Sore', data.Logs?.halaqahSore)"
+                      :class="!data.Logs.halaqahSore || data.Logs.halaqahSore === '' ? 'bg-white' : data.Logs.halaqahSore === 'izin' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="data.Logs.halaqahSore && (data.Logs.halaqahSore !== '' && data.Logs.halaqahSore !== 'izin') ? true : false">Izin</button>
+                  </div>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -89,23 +143,18 @@ import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 export default {
   data() {
     return {
-      absenPagi: false,
-      izinPagi: false,
-      sakitPagi: false,
-      terlambatPagi: false,
-      updateData: "",
       selectKelas: "",
-      datas: [
-        {
-          name: 'Fauzan Gunawan',
-          nis: 154814841,
-          sk: 'santri#21546'
-        }
-      ]
+      // datas: [
+      //   {
+      //     name: 'Fauzan Gunawan',
+      //     nis: 154814841,
+      //     sk: 'santri#21546'
+      //   }
+      // ]
     };
   },
   computed: {
-    ...mapState("tahfidzAbsensi", ["santri", "permissions", "select"]),
+    ...mapState("tahfidzAbsensi", ["santri", "permissions", "select", 'date', 'updateData']),
     // ...mapGetters('tahfidzAbsensi', ['getAbsenPagi', 'getSore']),
     // pagi: {
     //   get() {
@@ -149,17 +198,17 @@ export default {
     // }
   },
   methods: {
-    ...mapActions('tahfidzAbsensi', ['setStatus']),
-    ...mapMutations('tahfidzAbsensi', ['setStatusHalaqah']),
-    setAbsensi(sk, type) {
+    ...mapActions('tahfidzAbsensi', ['setStatus', 'deleteStatus']),
+    ...mapMutations('tahfidzAbsensi', { changeStep: 'setAbsensi' }),
+    setAbsensi(sk, type, time, condition) {
       const obj = {
-        sk, type
+        sk, type, time
       }
-      this.setStatusHalaqah(obj)
-      // this.updateData = {
-      //   santri: this.santri[index],
-      //   type: type,
-      // };
+      if (condition) {
+        this.deleteStatus(obj)
+      } else {
+        this.changeStep(obj)
+      }
     },
     getAbsensi() {
       const kelas = this.selectKelas;
@@ -176,7 +225,8 @@ export default {
   flex-wrap: wrap;
   gap: 2px;
 }
-.box-radio i {
+
+.box-radio button {
   width: 80px;
   height: 25px;
   border: 1px solid grey;
@@ -184,7 +234,7 @@ export default {
   border-radius: 2px;
 }
 
-.box-radio i {
+.box-radio button {
   display: flex;
   justify-content: center;
   align-items: center;

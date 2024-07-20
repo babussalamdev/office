@@ -48,7 +48,8 @@ export default {
   plugins: [
     { src: '~/plugins/bootstrap.js', mode: 'client' },
     { src: '~/plugins/cookies.client.js', mode: 'client' },
-    { src: '~/plugins/axios-instances.js' }
+    { src: '~/plugins/axios-instances.js' },
+    { src: '~/plugins/moment.js', ssr: false },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

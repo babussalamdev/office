@@ -65,7 +65,7 @@
             </ul>
           </li>
           <!-- Asrama -->
-          <li v-if="$auth.user.role !== 'root'">
+          <li v-if="$auth.user.role !== 'root' && permissions?.includes('page asrama')">
             <div @click="notClick('listAsrama')"
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
@@ -129,7 +129,7 @@
             </ul>
           </li>
           <!-- Pelanggaran -->
-          <li v-if="$auth.user.role !== 'root'">
+          <li v-if="$auth.user.role !== 'root' && permissions?.includes('page pelanggaran')">
             <nuxt-link to="/pelanggaran" class="text-decoration-none d-flex align-items-center gap-2">
               <i class="material-icons animate__animated animate__fadeInRight">
                 privacy_tip
@@ -163,8 +163,15 @@
                   <span class="text animate__animated animate__fadeInRight">Tahfidz</span>
                 </nuxt-link>
               </li>
+              <!-- tahfidz -->
+              <li v-if="permissions?.includes('report ekskull')">
+                <nuxt-link to="/report/ekskull"
+                  class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Ekskull</span>
+                </nuxt-link>
+              </li>
               <!-- absensi -->
-              <li>
+              <li v-if="permissions?.includes('report absensi')">
                 <nuxt-link to="/report/absensi"
                   class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Absensi</span>
