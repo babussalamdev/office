@@ -1,17 +1,19 @@
 export default {
   setSantriAsrama(state, value) {
-    if (value) {
-      state.santri = value.resSantri
-      state.permissions = value.resPermissions.split(',')
-      if (value.select) {
-        state.select = value.select
-      }
-    } else {
-      state.select = value
+    // console.log(value)
+    if (value.resSelect) {
+      state.select = value.resSelect
       state.santri = []
       state.permissions = []
+    } else {
+      state.santri = value.resSantri
+      state.permissions = value.resPermissions.split(',')
+      state.select = []
     }
-
+  },
+  setSantriAsramaManual(state, value) {
+    state.santri = value.resSantri
+    state.permissions = value.resPermissions.split(',')
   },
   updateAbsen(state, value) {
     const i = state.santri.findIndex((x) => x.SK === value.SK)

@@ -27,11 +27,13 @@
               </td>
 
               <td class="text-end align-middle">
-                <div class="action">
-                  <a href="javascript:;" @click="editItem(index)">
-                    <i class="bx bx-pencil text-success"></i>
+                <button class="btn btn-warning" @click="editItem(index)">
+                  <i class="bx bx-pencil text-dark"></i>
+                </button>
+                <!-- <div class="action">
+                  <a href="javascript:;"">
                   </a>
-                </div>
+                </div> -->
               </td>
             </tr>
           </tbody>

@@ -7,34 +7,48 @@ export default {
     const kelas = this.$auth.user.Kelas[program]
 
     let subject = ''
-    if (jabatan === 'musyrif') {
+    if (asrama !== 'off' && asrama !== '') {
       subject = 'asrama'
-    } else {
+    } else if (kelas !== 'off' && kelas !== '') {
       subject = 'kelas'
+    }
+    if(subject) {
+      let reqSantri = ''
+      if (subject === 'asrama') {
+        reqSantri = this.$apiSantri.$get(
+          `get-absensi-sisalam?subject=${subject}&program=${program}&value=${asrama}`
+        );
+      } else {
+        reqSantri = this.$apiSantri.$get(
+          `get-absensi-sisalam?subject=${subject}&program=${program}&value=${kelas}`
+        );
+      }
+      const reqPermissions = this.$apiBase.$get(
+        `get-settings?sk=${program}&type=buttonAbsensi&value=${jabatan}`
+      )
+      const [resSantri, resPermissions] = await Promise.all([reqSantri, reqPermissions])
+      commit('setSantriAsrama', { resSantri, resPermissions});
+    } else {
+      const reqSelect = await this.$apiBase.$get(
+        `get-settings?type=options&sk=${program}&category=kelas`
+      );
+      commit('setSantriAsrama', { resSelect: reqSelect });
     }
 
     // const result = await this.$apiSantri.$get(
-    //   `get-absensi?subject=${subject}&program=${program}&jabatan=${jabatan}&asrama=${asrama}&halaqah=${halaqah}&kelas=${kelas}&absen=asrama`
-    // );
-    const reqSantri = this.$apiSantri.$get(
-      `get-absensi-sisalam?subject=${subject}&program=${program}&value=${asrama}`
-    );
-    const reqPermissions = this.$apiBase.$get(
-      `get-settings?sk=${program}&type=buttonAbsensi&value=${jabatan}`
-    )
-    const [resSantri, resPermissions] = await Promise.all([reqSantri, reqPermissions])
-
-    // result['select'] = []
-
-    commit('setSantriAsrama', { resSantri, resPermissions});
-  },
-  async getAbsensi({ commit }, data) {
-    const program = localStorage.getItem('program')
-    const jabatan = this.$auth.user.Jabatan[program]
-    const result = await this.$axios.$get(
-      `get-absensi?subject=kelas&program=${program}&kelas=${data}&absen=asrama&name=${jabatan}`
-    );
-
-    commit('setSantriAsrama', result);
+      //   `get-absensi?subject=${subject}&program=${program}&jabatan=${jabatan}&asrama=${asrama}&halaqah=${halaqah}&kelas=${kelas}&absen=asrama`
+      // );
+    },
+    async getAbsensi({ commit }, data) {
+      const program = localStorage.getItem('program')
+      const jabatan = this.$auth.user.Jabatan[program]
+      const reqSantri = this.$apiSantri.$get(
+        `get-absensi-sisalam?subject=kelas&program=${program}&value=${data}`
+      );
+      const reqPermissions = this.$apiBase.$get(
+        `get-settings?sk=${program}&type=buttonAbsensi&value=${jabatan}`
+      )
+      const [resSantri, resPermissions ] = await Promise.all([reqSantri, reqPermissions])
+    commit('setSantriAsramaManual', { resSantri, resPermissions });
   }
 }
