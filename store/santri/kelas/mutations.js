@@ -1,6 +1,7 @@
 export default {
   setSantri(state, value) {
-    state.santri = value.Santri
+    // state.santri = value.
+    state.santri = value
 
     const tahunMulai = 2018;
     const tahunSekarang = new Date().getFullYear();

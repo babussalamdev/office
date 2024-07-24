@@ -4,6 +4,8 @@ export default () => ({
   jurusan: [],
   selectKelas: '',
   updateData: '',
+  updateDataPenilaian: '',
+  Penilaian: [],
   btn: true,
   value: [],
   options: [

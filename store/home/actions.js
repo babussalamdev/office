@@ -1,17 +1,20 @@
 export default {
-    async setMainChart({ commit }, data) {
-        if (data) {
-            const result = await this.$axios.$get(
-                `get-dashboard?program=${data}`
-            );
-            commit('setChart', result);
-        } else {
-            const program = localStorage.getItem('program')
-            console.log(program)
-            const result = await this.$axios.$get(
-                `get-dashboard?program=${program}`
-            );
-            commit('setChart', result);
-        }
-    },
+  async setMainChart({ commit }, data) {
+    if (data === 'root') {
+      const result = await this.$apiBase.$get(
+        `get-dashboard?program=${data}`
+      );
+      commit('setChartAdmin', result);
+    } else {
+      const result = await this.$apiSantri.$get(
+        `get-dashboard-sisalam?program=${data}`
+      );
+      commit('setChart', result);
+      // const program = localStorage.getItem('program')
+      // const result = await this.$apiBase.$get(
+      //   `get-dashboard?program=${program}`
+      // );
+      // commit('setChart', result);
+    }
+  },
 }

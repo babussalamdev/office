@@ -35,4 +35,7 @@ export default {
 
 <style scoped>
 @import url(~/assets/css/dashboard/chart-admin.css);
+h2 {
+  font-size: 14px;
+}
 </style>

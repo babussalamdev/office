@@ -1,10 +1,9 @@
 <template>
   <div>
-    <div class=" mb-3 d-flex justify-content-between animate__animated animate__fadeInUp">
-      <h2 class="text-capitalize">
-        Highlight Santri
-      </h2>
-      <nuxt-link class="text-decoration-none" to="/dashboard/TableHighlight">Lihat Semua</nuxt-link>
+    <div class="row mb-3">
+      <div class="col-12 col-md-9 d-flex align-items-center">
+        <i class="bi bi-arrow-left bg-primary p-2 rounded-circle text-white cursor-pointer" @click="backPage"></i>
+      </div>
     </div>
     <div class="table-responsive animate__animated animate__fadeInUp">
       <table class="table table-sm table-striped table-hover">
@@ -14,25 +13,27 @@
             <th>Kelas</th>
             <th>Status</th>
             <th>Note</th>
+            <th>Date / Time</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(data, index) in filteredData" :key="index">
-            <td class="ps-3 align-middle">
+          <tr v-for="(data, index) in highlight" :key="index">
+            <td class="ps-3">
               {{ data.Nama }}
             </td>
-            <td class="align-middle">{{ data.Kelas }}</td>
-            <td class="align-middle">
+            <td>{{ data.Kelas }}</td>
+            <td>
               <span class="badge" :class="{
                 'bg-danger': data?.Logs?.asrama === 'absen',
                 'bg-primary': data?.Logs?.asrama === 'izin',
                 'bg-warning': data?.Logs?.asrama === 'sakit',
               }">
-              <!-- <span class="bg-danger"> -->
+                <!-- <span class="bg-danger"> -->
                 {{ data?.Logs?.asrama }}
               </span>
             </td>
-            <td class="align-middle">{{ data?.Logs?.asramaNote }}</td>
+            <td>{{ data?.Logs?.asramaNote }}</td>
+            <td>{{ data?.Logs?.asramaTime }}</td>
           </tr>
         </tbody>
       </table>
@@ -43,20 +44,28 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 export default {
+  async asyncData({ store, route, redirect }) {
+    const detail = store.state.home.highlight;
+    if (detail === '') {
+      return redirect('/')
+    }
+    return { detail }
+  },
   computed: {
-    ...mapState('home', ['highlight']),
-    filteredData() {
-      const data = this.highlight;
-      // const limit = this.$route.path === "/card" ? 5 : data.length;
-      return data.slice(0, 7);
+    ...mapState('home', ['highlight'])
+  },
+  methods: {
+    backPage() {
+      this.$router.push('/')
     },
   },
-};
+}
 </script>
 
 <style scoped>
 @import url(~/assets/css/dashboard/violation.css);
-h2, a {
-  font-size: 14px;
+
+.bi-arrow-left {
+  cursor: pointer;
 }
 </style>

@@ -8,6 +8,7 @@
             <th scope="col">Nama Mapel</th>
             <th scope="col">Jurusan</th>
             <th scope="col">Hari</th>
+            <th scope="col">Penilaian</th>
             <th scope="col" class="text-end">Action</th>
           </tr>
         </thead>
@@ -25,7 +26,23 @@
                 </div>
               </div>
             </td>
+            <td scope="row" class="">
+              <div v-for="(value, index) in Penilaian[i]" :key="index" style="display: inline">
+                <div class="btn-group btn-group-sm px-0 py-0 me-1">
+                  <div class="btn btn-secondary btn-sm disabled fs-6 align-middle">{{ value }}
+                  </div>
+                  <div class="btn btn-secondary btn-sm" @click="delScore(index, data.SK)">
+                    <i class="material-icons fs-6">close</i>
+                  </div>
+                </div>
+              </div>
+            </td>
             <td class="text-end">
+              <a href="javascript:;" @click="inputScore(data.SK)">
+                <button class="btn btn-sm btn-primary">
+                  <i class="bx bx-plus"></i>
+                </button>
+              </a>
               <a href="javascript:;" @click="editItem(data.SK)">
                 <button class="btn btn-sm btn-warning">
                   <i class="bx bx-pencil"></i>
@@ -42,6 +59,7 @@
       </table>
     </div>
     <ModalMapel />
+    <ModalMapelPenilaian />
   </div>
 </template>
 
@@ -56,13 +74,21 @@ export default {
   //   };
   // },
   computed: {
-    ...mapState("mapel", ["mapel", 'listKelas']),
+    ...mapState("mapel", ["mapel", 'listKelas', 'Penilaian']),
   },
   methods: {
-    ...mapActions('mapel', ['deleteItem']),
-    ...mapMutations('mapel', ['editItem']),
+    ...mapActions('mapel', { deleteItem: 'deleteItem', changeStep: 'delScore' }),
+    ...mapMutations('mapel', ['editItem', 'inputScore']),
+    delScore(index, sk) {
+      const obj = { index, sk }
+      this.changeStep(obj)
+    },
   },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.fs-6 {
+  font-size: 12px !important;
+}
+</style>
