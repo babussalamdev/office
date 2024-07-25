@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 import Swal from "sweetalert2";
 export default {
   setDatabase(state, value) {
-    state.santri = value.Santri
+    state.santri = value
 
     const tahunMulai = 2018;
     const tahunSekarang = new Date().getFullYear();

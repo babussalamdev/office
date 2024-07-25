@@ -117,7 +117,7 @@ export default {
     // chart
     let sample
     sample = pegawaiData.map((item, index) => {
-      const percentage = value.total === 0 ? 0 : (item.jumlah / value.total_santri) * 100;
+      const percentage = value.total_santri === 0 ? 0 : (item.jumlah / value.total_santri) * 100;
       return {
         series: [percentage.toFixed(0)],
         chartOptions: {

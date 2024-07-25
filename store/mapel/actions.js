@@ -1,13 +1,13 @@
 import Swal from "sweetalert2";
 export default {
   async changeUnit({ commit }, data) {
-    const result = await this.$axios.$get(
+    const result = await this.$apiBase.$get(
       `get-settings?sk=${data}&type=opsimapel`
     );
     commit('setMapel', result);
   },
   async getKelas({ commit }, data) {
-    const result = await this.$axios.$get(
+    const result = await this.$apiBase.$get(
       `get-settings?sk=${data.program}%23${data.kelas}&type=mapel`
     )
     commit('setKelas', result)

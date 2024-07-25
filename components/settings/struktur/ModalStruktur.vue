@@ -92,5 +92,5 @@ export default {
 </script>
 
 <style scoped>
-@import url("https://unpkg.com/vue-multiselect@2.1.6/dist/vue-multiselect.min.css");
+/* @import url("https://unpkg.com/vue-multiselect@2.1.6/dist/vue-multiselect.min.css"); */
 </style>

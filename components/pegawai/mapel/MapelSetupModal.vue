@@ -13,6 +13,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
+                {{ pengajarShow }}
                 <div class="mb-3">
                   <label for="kelas" class="form-label">Halaqah</label>
                   <select name="Asrama" id="Asrama" class="form-select" v-model="pengajarShow" required>
@@ -48,20 +49,27 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
 import Swal from "sweetalert2";
 
 export default {
-  props: ["updateData"],
   data() {
     return {
-      btn: true,
-      pengajarShow: "",
       unit: localStorage.getItem("program"),
     };
   },
   computed: {
-    ...mapState("pegawai/mapel", ["pengajar"]),
+    ...mapState("pegawai/mapel", ["pengajar", 'btn']),
+    ...mapGetters('pegawai/mapel', ['getPengajarShow']),
+    pengajarShow: {
+      get() {
+        return this.getPengajarShow
+      },
+      set(value) {
+        const obj = { key: 'pengajarShow', value }
+        this.$store.commit('pegawai/mapel/setState', obj)
+      }
+    }
   },
   // watch: {
   //   updateData: {
@@ -71,54 +79,7 @@ export default {
   //   },
   // },
   methods: {
-    async updateMapelSetup(event) {
-      this.btn = false;
-      const data = {};
-      data["GSIPK1"] = this.pengajarShow.SK;
-      data["Hari"] = this.updateData.Hari;
 
-      try {
-        const key = this.updateData.SK;
-        const result = await this.$axios.$put(
-          `/update-database?subject=setpengajar&program=${key.split("#")[0]
-          }&kelas=${key.split("#")[1]}&code=${key.split("#")[2]}`,
-          data
-        );
-        if (result.message === "Terjadi Bentrok Jam Mengajar") {
-          Swal.fire({
-            position: "center",
-            icon: "warning",
-            text: result.message,
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        } else {
-          data["GSIPK1"] = this.pengajarShow.Nama;
-          data["SK"] = key;
-          this.btn = true;
-          this.$store.commit("pegawai/mapel/setPengajar", data);
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            text: "Your work has been saved",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          this.$refs.updateMapelSetup.reset();
-          $("#mapelSetupModal").modal("hide");
-        }
-      } catch (error) {
-        this.btn = true;
-        console.log(error);
-        Swal.fire({
-          text: error,
-          icon: "error",
-          timer: 3000,
-          timerProgressBar: false,
-          showConfirmButton: false,
-        });
-      }
-    },
   },
 };
 </script>

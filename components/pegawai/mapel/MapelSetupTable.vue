@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <MapelSetupModal :updateData="updateData" @update="updateItem" />
+      <MapelSetupModal />
       <div class="table-responsive">
         <!-- Modal -->
         <table class="table table-hover table-striped">
@@ -19,14 +19,8 @@
                 {{ data.Nama }}
               </td>
               <td scope="row" class="text-capitalize">
-                <div
-                  v-for="(value, i) in data.Hari"
-                  :key="i"
-                  style="display: inline"
-                >
-                  <div
-                    class="btn-group btn-group-sm px-1 py-1 list-permissions"
-                  >
+                <div v-for="(value, i) in data.Hari" :key="i" style="display: inline">
+                  <div class="btn-group btn-group-sm px-1 py-1 list-permissions">
                     <div class="btn btn-dark disabled">
                       <span style="font-size: 12px">{{ value }}</span>
                     </div>
@@ -43,13 +37,15 @@
                     : data.Halaqah[unit]
                 }}
               </td> -->
-
+              <!-- <a href="javascript:;" @click="editItem(index)">
+                <button class="btn btn-sm btn-warning">
+                  <i class="bx bx-pencil text-dark"></i>
+                </button>
+              </a> -->
               <td class="text-end align-middle">
-                <div class="action">
-                  <a href="javascript:;" @click="editItem(index)">
-                    <i class="bx bx-pencil text-success"></i>
-                  </a>
-                </div>
+                <button class="btn btn-sm btn-warning">
+                  <i class="bx bx-pencil text-dark" @click="editItem(index)"></i>
+                </button>
               </td>
             </tr>
           </tbody>
@@ -60,12 +56,10 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-
+import { mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {
-      updateData: "",
       unit: "",
     };
   },
@@ -76,10 +70,7 @@ export default {
     ...mapState("pegawai/mapel", ["mapel"]),
   },
   methods: {
-    async editItem(index) {
-      $("#mapelSetupModal").modal("show");
-      this.updateData = this.mapel[index];
-    },
+    ...mapMutations('pegawai/mapel', ['editItem']),
   },
 };
 </script>

@@ -2,5 +2,8 @@ export default () => ({
     kelas: [],
     jurusan: [],
     mapel: [],
-    pengajar: []
+    pengajar: [],
+    updateData: '',
+    pengajarShow: '',
+    btn: true
 })
