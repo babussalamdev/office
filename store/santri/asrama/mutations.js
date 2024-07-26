@@ -17,7 +17,6 @@ export default {
     state.updateData = value;
   },
   setAsramaShow(state, value) {
-    console.log('done')
     state.asramaShow = value
   },
   updateAsramaSantri(state, data) {

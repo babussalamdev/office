@@ -18,9 +18,10 @@ export default {
     commit('btn')
     const data = Object.fromEntries(new FormData(event.target));
     const program = localStorage.getItem('program')
+    const hari = state.value.map((x) => x.name)
     data["Program"] = program
     data["Kelas"] = state.selectKelas;
-    data["Hari"] = state.value.map((x) => x.name);
+    data["Hari"] = hari.join(', ');
     try {
       const result = await this.$axios.$post(
         `input-settings?sk=${program}&type=mapel`,
@@ -59,7 +60,8 @@ export default {
   async updateMapel({ commit, state }, event) {
     commit('btn')
     const data = Object.fromEntries(new FormData(event.target));
-    data["Hari"] = state.value.map((x) => x.name);
+    const hari = state.value.map((x) => x.name);
+    data["Hari"] = hari.join(', ')
     const key = state.updateData.SK.replace(/#/g, "%23");
     try {
       const result = await this.$axios.$put(
@@ -146,6 +148,8 @@ export default {
     }, {});
     data['Penilaian'] = transformedObject;
     data['Nama'] = state.updateDataPenilaian.Nama
+    delete data.bobot
+    delete data.nama
     try {
       const result = await this.$apiBase.$put(`update-settings?sk=${sk}&type=mapel`, data)
       commit('updateScore')

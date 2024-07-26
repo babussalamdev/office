@@ -15,8 +15,8 @@ export default {
     data["Password"] = state.password;
     data['Program'] = program
     try {
-      const result = await this.$axios.$post(
-        `input-santri?method=single`,
+      const result = await this.$apiSantri.$post(
+        `input-santri-sisalam?method=single`,
         data
       );
       if (result) {
@@ -48,8 +48,8 @@ export default {
     const program = localStorage.getItem("program");
     data['Program'] = program
     try {
-      const result = await this.$axios.$put(
-        `update-santri?sk=${key}`,
+      const result = await this.$apiSantri.$put(
+        `update-santri-sisalam?sk=${key}`,
         data
       );
       if(result) {
@@ -83,8 +83,8 @@ export default {
     const user = state.deleteData.Username;
     const program = localStorage.getItem("program");
     try {
-      const result = await this.$axios.$delete(
-        `delete-santri?username=${user}&sk=${key}&program=${program}&status=${status}&note=${note}`
+      const result = await this.$apiSantri.$delete(
+        `delete-santri-sisalam?username=${user}&sk=${key}&program=${program}&status=${status}&note=${note}`
       );
       if (result) {
         Swal.fire({

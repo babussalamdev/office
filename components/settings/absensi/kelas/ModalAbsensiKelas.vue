@@ -1,28 +1,22 @@
 <template>
   <div>
-    <!-- update database pegawai  -->
-    <div class="modal fade" id="updateDataSantriEkskull" tabindex="-1" aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
+    <!-- Modal -->
+    <div class="modal fade" id="modalAbsen" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+      aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form @submit.prevent="updateDataSantriEkskull" ref="updateDataSantriEkskull">
+          <form @submit.prevent="santriAbsen" ref="santriAbsen">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">
-                Bulk Update Ekskull
+              <h1 class="modal-title fs-5 text-capitalize" id="staticBackdropLabel">
+                {{ updateData?.type }} - {{ updateData?.santri?.Nama }}
               </h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <div class="mb-3">
-                <label for="Kelas" class="form-label">Ekskull</label>
-                <select name="value" id="Kelas" class="form-select" v-model="ekskullShow" required>
-                  <option value="" selected disabled>
-                    -- Pilih Ekskull --
-                  </option>
-                  <option v-for="(value, index) in selectEkskull" :value="value" :key="index">
-                    {{ value }}
-                  </option>
-                </select>
+              <div class="form-floating">
+                <textarea name="Note" class="form-control" style="height: 100px"
+                  placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                <label for="floatingTextarea">Catatan</label>
               </div>
             </div>
             <div class="modal-footer">
@@ -31,7 +25,7 @@
               </button>
               <span>
                 <button v-if="btn" type="submit" class="btn btn-primary">
-                  simpan
+                  {{ updateData?.type }}
                 </button>
                 <button v-else class="btn btn-primary" type="button" disabled>
                   <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
@@ -47,31 +41,30 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
 import Swal from "sweetalert2";
-
+import { mapState, mapActions, mapMutations } from 'vuex'
 export default {
-  props: ["updateData"],
   data() {
     return {
       btn: true,
-      ekskullShow: "",
-      // unit: localStorage.getItem("program"),
     };
   },
   computed: {
-    ...mapState("santri/ekskull", ["selectEkskull"]),
+    ...mapState('tahfidzAbsensi', ['updateData'])
   },
   methods: {
-    async updateDataSantriEkskull(event) {
+    async santriAbsen() {
       this.btn = false;
-      const data = {};
+      const data = Object.fromEntries(new FormData(event.target));
+      data["Status"] = this.updateData.type;
+      const skSantri = this.updateData.santri.SK.replace('#', '%23')
+      const tahun = this.$auth.user.Label
+      const semester = this.$auth.user.Semester
+      const time = this.updateData.time
       const program = localStorage.getItem("program");
-      data["value"] = this.ekskullShow;
-      data["sort"] = this.updateData;
       try {
         const result = await this.$apiSantri.$put(
-          `update-santri-sisalam?sk&program=${program}&bulk=Ekskull`,
+          `update-absensi-sisalam?sksantri=${skSantri}&type=halaqah${time}&thn=${tahun}&smstr=${semester}&program=${program}`,
           data
         );
         if (result) {
@@ -79,25 +72,26 @@ export default {
           Swal.fire({
             position: "center",
             icon: "success",
-            text: "Your work has been saved",
+            text: "Data berhasil diupdate",
             showConfirmButton: false,
             timer: 1500,
           });
-          this.$emit("resetSelect");
-          this.$store.commit("santri/ekskull/updateEkskullSantri", data);
-          this.ekskullShow = "";
-          $("#updateDataSantriEkskull").modal("hide");
+          this.$refs.santriAbsen.reset();
+          $("#modalAbsen").modal("hide");
+          result['time'] = time
+          result["SK"] = this.updateData.santri.SK;
+          this.$store.commit('tahfidzAbsensi/updateAbsen', result);
         }
       } catch (error) {
-        this.btn = true;
         console.log(error);
         Swal.fire({
-          text: error,
+          position: "center",
           icon: "error",
-          timer: 3000,
-          timerProgressBar: false,
+          text: error,
           showConfirmButton: false,
+          timer: 1500,
         });
+        this.btn = true;
       }
     },
   },

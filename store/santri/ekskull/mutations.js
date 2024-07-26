@@ -4,8 +4,8 @@ export default {
         state.santri = []
     },
     setSantri(state, value) {
-        state.santri = value.Santri
-        state.selectEkskull = value.Select
+        state.santri = value.resSantri
+        state.selectEkskull = value.resSelect
     },
     updateEkskullSantri(state, data) {
         const updatedData = state.santri.map(item => {

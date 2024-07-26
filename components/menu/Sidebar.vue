@@ -301,7 +301,7 @@
                     </nuxt-link>
                   </li>
                   <!-- mapel -->
-                  <li v-if="$auth.user.role !== 'root' && permissions?.includes('mata pelajaran')">
+                  <li v-if="$auth.user.role !== 'root' && permissions?.includes('pengajar')">
                     <nuxt-link to="/pegawai/mapel"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Mapel</span>

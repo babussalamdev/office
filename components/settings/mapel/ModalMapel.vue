@@ -157,7 +157,7 @@ export default {
     },
 
     async valueUpdate() {
-      const hari = this.updateData.Hari;
+      const hari = this.updateData.Hari.split(', ');
       if (hari && hari.length > 0) {
         const mappedArray = hari.map((x) => {
           const option = this.options.find((option) => option.name === x);

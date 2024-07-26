@@ -33,7 +33,7 @@
           </option>
         </select>
 
-        <!-- notification -->
+        <!-- notification
         <div class="notification-bell" :class="{ active: notifications.length > 0 && !notificationOpened }"
           @click="toggleNotification()" ref="notif">
           <div class="bell-icon">
@@ -45,7 +45,7 @@
               <Notification />
             </div>
           </transition>
-        </div>
+        </div> -->
 
         <!-- profile -->
         <div class="profile">

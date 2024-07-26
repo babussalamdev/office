@@ -5,7 +5,7 @@
       <div class="modal fade" id="mapelSetupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
-            <form @submit.prevent="updateMapelSetup" ref="updateMapelSetup">
+            <form @submit.prevent="updateMapelSetup" id="updateMapel">
               <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">
                   Update Mapel Setup
@@ -13,7 +13,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                {{ pengajarShow }}
                 <div class="mb-3">
                   <label for="kelas" class="form-label">Halaqah</label>
                   <select name="Asrama" id="Asrama" class="form-select" v-model="pengajarShow" required>
@@ -59,7 +58,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("pegawai/mapel", ["pengajar", 'btn']),
+    ...mapState("pegawai/mapel", ["pengajar", 'btn', 'updateData']),
     ...mapGetters('pegawai/mapel', ['getPengajarShow']),
     pengajarShow: {
       get() {
@@ -71,6 +70,9 @@ export default {
       }
     }
   },
+  methods: {
+    ...mapActions('pegawai/mapel', ['updateMapelSetup'])
+  },
   // watch: {
   //   updateData: {
   //     handler(data) {
@@ -78,9 +80,6 @@ export default {
   //     },
   //   },
   // },
-  methods: {
-
-  },
 };
 </script>
 

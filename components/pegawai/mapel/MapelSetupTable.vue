@@ -19,7 +19,7 @@
                 {{ data.Nama }}
               </td>
               <td scope="row" class="text-capitalize">
-                <div v-for="(value, i) in data.Hari" :key="i" style="display: inline">
+                <div v-for="(value, i) in data.Hari.split(', ')" :key="i" style="display: inline">
                   <div class="btn-group btn-group-sm px-1 py-1 list-permissions">
                     <div class="btn btn-dark disabled">
                       <span style="font-size: 12px">{{ value }}</span>
@@ -43,8 +43,8 @@
                 </button>
               </a> -->
               <td class="text-end align-middle">
-                <button class="btn btn-sm btn-warning">
-                  <i class="bx bx-pencil text-dark" @click="editItem(index)"></i>
+                <button class="btn btn-sm btn-warning" @click="editItem(data.SK)">
+                  <i class="bx bx-pencil text-dark"></i>
                 </button>
               </td>
             </tr>

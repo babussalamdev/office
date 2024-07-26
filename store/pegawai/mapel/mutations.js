@@ -13,23 +13,20 @@ export default {
     state.pengajar = value.pengajar
   },
   setPengajar(state, value) {
+    console.log(value)
     const i = state.mapel.findIndex((x) => x.SK === value.SK)
     const data = state.mapel[i];
-    data['GSIPK1'] = value.GSIPK1
+    data.GSIPK1 = value.Pengajar
+    $("#updateMapel")[0].reset();
+    $("#mapelSetupModal").modal("hide");
 
-    const updatedData = state.mapel.map((item, index) => {
-      if (index === i) {
-        return data;
-      }
-      return item;
-    });
-
-    state.mapel = updatedData
   },
   editItem(state, data) {
     const index = state.mapel.findIndex((x) => x.SK === data)
     $("#mapelSetupModal").modal("show");
     state.updateData = state.mapel[index];
+    const i = state.pengajar.findIndex((x) => x.SK === state.updateData.skpengajar)
+    state.pengajarShow = state.pengajar[i]
   },
 
 

@@ -9,8 +9,7 @@
 <script>
 export default {
   async asyncData({ store }) {
-    const program = localStorage.getItem("program");
-    store.dispatch(`santri/ekskull/changeUnit`, program);
+    store.dispatch(`santri/ekskull/changeUnit`);
   },
 };
 </script>

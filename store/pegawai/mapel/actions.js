@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 export default {
   async changeUnit({ commit }, data) {
     const result = await this.$apiBase.$get(
@@ -16,13 +17,13 @@ export default {
     commit('btn')
     const data = {};
     data["GSIPK1"] = state.pengajarShow.SK;
-    data["Hari"] = state.updateData.Hari;
-
+    data['Pengajar'] = state.pengajarShow.Nama
+    data['Hari'] = state.updateData.Hari
+    data['Nama'] = state.updateData.Nama
     try {
-      const key = state.updateData.SK;
+      const key = state.updateData.SK.replace(/#/g, '%23');
       const result = await this.$apiBase.$put(
-        `/update-database?subject=setpengajar&program=${key.split("#")[0]
-        }&kelas=${key.split("#")[1]}&code=${key.split("#")[2]}`,
+        `update-settings?type=mapel&sk=${key}`,
         data
       );
       if (result.message === "Terjadi Bentrok Jam Mengajar") {
@@ -34,10 +35,8 @@ export default {
           timer: 1500,
         });
       } else {
-        data["GSIPK1"] = state.pengajarShow.Nama;
-        data["SK"] = key;
         commit('btn')
-        this.$store.commit("pegawai/mapel/setPengajar", data);
+        commit("setPengajar", result);
         Swal.fire({
           position: "center",
           icon: "success",
@@ -45,8 +44,6 @@ export default {
           showConfirmButton: false,
           timer: 1500,
         });
-        this.$refs.updateMapelSetup.reset();
-        $("#mapelSetupModal").modal("hide");
       }
     } catch (error) {
       commit('btn')

@@ -86,6 +86,7 @@ export default {
       '~/components/settings/absensi',
       '~/components/settings/absensi/asrama',
       '~/components/settings/absensi/tahfidz',
+      '~/components/settings/absensi/kelas',
       '~/components/settings/setupabsensi',
       '~/components/settings/setuppelanggaran',
     ]

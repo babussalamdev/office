@@ -1,14 +1,20 @@
 <template>
   <section id="absensi">
     <div class="absensi">
-      <h1>Absensi Page</h1>
-      {{ $auth.user}}
+      <!-- table -->
+      <TableAbsensiKelas />
     </div>
   </section>
 </template>
 
 <script>
-export default {};
+export default {
+  async asyncData({ store }) {
+    store.dispatch(`kelasAbsensi/changeUnit`);
+  },
+};
 </script>
 
-<style lang="scss" scoped></style>
+<style>
+@import url(~/assets/css/absensi/absensi.css);
+</style>
