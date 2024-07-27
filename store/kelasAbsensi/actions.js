@@ -24,23 +24,22 @@ export default {
     // const reqPermissions = this.$apiBase.$get(
     //   `get-settings?sk=${program}&type=buttonAbsensi&value=${jabatan}`
     // )
-    const reqPermissions = this.$apiBase.$get(
+    const resSelect = await this.$apiBase.$get(
       `get-settings?type=absensikelas`
     )
     // const [resSantri, resPermissions] = await Promise.all([reqSantri, reqPermissions])
 
     // result['select'] = []
 
-    commit('setKelas', reqSantri);
+    commit('setSelect', resSelect);
   },
-  async getAbsensi({ commit }, data) {
+  async getDataSantri({ commit }, data) {
     const program = localStorage.getItem('program')
-    const jabatan = this.$auth.user.Jabatan[program]
-    const result = await this.$axios.$get(
-      `get-absensi?subject=kelas&program=${program}&kelas=${data}&absen=asrama&name=${jabatan}`
+    const result = await this.$apiSantri.$get(
+      `get-absensi-sisalam?subject=kelas&program=${program}&value=${data}`
     );
 
-    commit('setSantriAsrama', result);
+    commit('setDataSantri', result);
   },
   setStatus({ commit, state }, data) {
     const waktu = data
@@ -59,17 +58,19 @@ export default {
     const data = state.santri[i]
     const time = datas.time
     let sk = ''
-    if (time === 'Pagi') {
-      sk = data.Logs.halaqahPagiTime
+    if (time === 'mapelSatu') {
+      sk = data.Logs.mapelSatuTime
+    } else if (time === 'mapelDua') {
+      sk = data.Logs.mapelDuaTime
     } else {
-      sk = data.Logs.halaqahSoreTime
+      sk = data.Logs.mapelTigaTime
     }
     const skSantri = datas.sk.replace('#', '%23')
     const tahun = this.$auth.user.Label
     const semester = this.$auth.user.Semester
     const program = localStorage.getItem("program");
     const req = await this.$apiSantri.$delete(
-      `delete-absensi-sisalam?sksantri=${skSantri}&type=halaqah${time}&thn=${tahun}&smstr=${semester}&program=${program}&sk=${sk}`
+      `delete-absensi-sisalam?sksantri=${skSantri}&type=${time}&thn=${tahun}&smstr=${semester}&program=${program}&sk=${sk}`
     );
     req['time'] = time
     req["SK"] = datas.sk;

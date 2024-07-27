@@ -1,7 +1,6 @@
 export default {
   setState(state, value) {
     state[value.key] = value.value
-    console.log(state[value.key])
   },
   setMain(state, value) {
     state.kelas = value.kelas
@@ -13,7 +12,6 @@ export default {
     state.pengajar = value.pengajar
   },
   setPengajar(state, value) {
-    console.log(value)
     const i = state.mapel.findIndex((x) => x.SK === value.SK)
     const data = state.mapel[i];
     data.GSIPK1 = value.Pengajar

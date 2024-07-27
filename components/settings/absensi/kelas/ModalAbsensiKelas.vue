@@ -2,7 +2,7 @@
   <div>
     <!-- Modal -->
     <div class="modal fade" id="modalAbsen" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      aria-labelledby="staticBackdropLabel">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <form @submit.prevent="santriAbsen" ref="santriAbsen">
@@ -13,6 +13,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+              {{ updateData }}
               <div class="form-floating">
                 <textarea name="Note" class="form-control" style="height: 100px"
                   placeholder="Leave a comment here" id="floatingTextarea"></textarea>
@@ -28,7 +29,7 @@
                   {{ updateData?.type }}
                 </button>
                 <button v-else class="btn btn-primary" type="button" disabled>
-                  <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                  <span class="spinner-border spinner-border-sm"></span>
                   <span role="status">Loading...</span>
                 </button>
               </span>
@@ -50,11 +51,11 @@ export default {
     };
   },
   computed: {
-    ...mapState('tahfidzAbsensi', ['updateData'])
+    ...mapState('kelasAbsensi', ['updateData'])
   },
   methods: {
     async santriAbsen() {
-      this.btn = false;
+      // this.btn = false;
       const data = Object.fromEntries(new FormData(event.target));
       data["Status"] = this.updateData.type;
       const skSantri = this.updateData.santri.SK.replace('#', '%23')
@@ -64,7 +65,7 @@ export default {
       const program = localStorage.getItem("program");
       try {
         const result = await this.$apiSantri.$put(
-          `update-absensi-sisalam?sksantri=${skSantri}&type=halaqah${time}&thn=${tahun}&smstr=${semester}&program=${program}`,
+          `update-absensi-sisalam?sksantri=${skSantri}&type=${time}&thn=${tahun}&smstr=${semester}&program=${program}`,
           data
         );
         if (result) {
@@ -80,7 +81,7 @@ export default {
           $("#modalAbsen").modal("hide");
           result['time'] = time
           result["SK"] = this.updateData.santri.SK;
-          this.$store.commit('tahfidzAbsensi/updateAbsen', result);
+          this.$store.commit('kelasAbsensi/updateAbsen', result);
         }
       } catch (error) {
         console.log(error);

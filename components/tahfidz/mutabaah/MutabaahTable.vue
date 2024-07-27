@@ -12,7 +12,6 @@
             <th scope="col">Murojaah</th>
             <th scope="col">Tilawah / Murojaah mandiri</th>
             <th scope="col">Tahsin</th>
-            <th scope="col" class="text-start">Catatan</th>
           </tr>
         </thead>
         <tbody>
@@ -41,7 +40,6 @@
                 <i class="material-icons bg-danger p-2 text-white rounded-circle">mic</i>
               </a>
             </td>
-            <td>-</td>
           </tr>
         </tbody>
       </table>

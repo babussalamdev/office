@@ -1,4 +1,10 @@
 export default {
+  getSelectedMapel(state) {
+    return state.selectedMapel
+  },
+  getSantri(state) {
+    return state.santri
+  }
   // getPagi(state) {
   //   return state.pagi
   // },
