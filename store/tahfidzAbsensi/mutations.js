@@ -16,30 +16,48 @@ export default {
   updateAbsen(state, value) {
     const i = state.santri.findIndex((x) => x.SK === value.SK)
     const data = state.santri[i]
-    if (value.time === 'Pagi') {
-      data.Logs['halaqahPagi'] = value.Logs.halaqahPagi
-      data.Logs['halaqahPagiNote'] = value.Logs.halaqahPagiNote
-      data.Logs['halaqahPagiTime'] = value.Logs.halaqahPagiTime
-    } else {
-      data.Logs['halaqahSore'] = value.Logs.halaqahSore
-      data.Logs['halaqahSoreNote'] = value.Logs.halaqahSoreNote
-      data.Logs['halaqahSoreTime'] = value.Logs.halaqahSoreTime
-    }
-    state.updateData = ''
+    // Membuat salinan data dan memperbarui salinan tersebut
+    const updatedSantri = state.santri.map((item, index) => {
+      if (index === i) {
+        // Salinan data yang diperbarui
+        const updatedItem = { ...item };
+
+        // Memperbarui Logs dengan data baru
+        updatedItem.Logs = {
+          ...item.Logs,
+          ...value.Logs
+        };
+
+        return updatedItem;
+      }
+      return item;
+    });
+
+    // Mengganti data santri lama dengan data yang telah diperbarui
+    state.santri = updatedSantri;
   },
   deleteAbsen(state, value) {
     const i = state.santri.findIndex((x) => x.SK === value.SK)
     const data = state.santri[i]
-    if (value.time === 'Pagi') {
-      data.Logs['halaqahPagi'] = value.Logs.halaqahPagi
-      data.Logs['halaqahPagiNote'] = value.Logs.halaqahPagiNote
-      data.Logs['halaqahPagiTime'] = value.Logs.halaqahPagiTime
-    } else {
-      data.Logs['halaqahSore'] = value.Logs.halaqahSore
-      data.Logs['halaqahSoreNote'] = value.Logs.halaqahSoreNote
-      data.Logs['halaqahSoreTime'] = value.Logs.halaqahSoreTime
-    }
-    state.updateData = ''
+    // Membuat salinan data dan memperbarui salinan tersebut
+    const updatedSantri = state.santri.map((item, index) => {
+      if (index === i) {
+        // Salinan data yang diperbarui
+        const updatedItem = { ...item };
+
+        // Memperbarui Logs dengan data baru
+        updatedItem.Logs = {
+          ...item.Logs,
+          ...value.Logs
+        };
+
+        return updatedItem;
+      }
+      return item;
+    });
+
+    // Mengganti data santri lama dengan data yang telah diperbarui
+    state.santri = updatedSantri;
   },
   // setStatus(state, value) {
   //   state[value.name] = value.value

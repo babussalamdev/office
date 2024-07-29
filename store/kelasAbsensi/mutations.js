@@ -3,6 +3,7 @@ export default {
     state.selectedMapel = value
   },
   setSantri(state, value) {
+    console.log(value)
     state.santri = value
   },
   setSelect(state, value) {
@@ -75,7 +76,7 @@ export default {
   //   state[value.name] = value.value
   // },
   setAbsensi(state, value) {
-    console.log(value)
+    // console.log(value)
     const i = state.santri.findIndex((x) => x.SK === value.sk)
     const obj = {
       santri: state.santri[i],
