@@ -175,12 +175,10 @@ export default {
       acc[nama] = parseInt(bobot); // Menambahkan properti ke objek dengan nama sebagai kunci dan bobot sebagai nilai
       return acc;
     }, {});
-    console.log(transformedObject);
 
     const data = {}
     data['Penilaian'] = transformedObject
     data['Nama'] = state.mapel[i].Nama
-    console.log(data)
     try {
       const sk = datas.sk.replace(/#/g, '%23')
       const result = await this.$apiBase.$put(`update-settings?sk=${sk}&type=mapel`, data)

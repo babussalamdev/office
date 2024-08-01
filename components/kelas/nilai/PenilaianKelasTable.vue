@@ -1,143 +1,75 @@
 <template>
   <div class="animate__animated animate__fadeInUp">
+    {{ selectedMapel }}
     <h2 class="mb-3 mb-md-3">Penilaian Kelas</h2>
     <div class="head row mb-3">
-      <div
-        class="col-12 col-md-7 d-flex flex-column flex-md-row gap-4 gap-md-0 mb-3 mb-md-0"
-      >
+      <div class="col-12 col-md-7 d-flex flex-column flex-md-row gap-4 gap-md-0 mb-3 mb-md-0">
         <div class="input-group w-75">
-          <select
-            class="form-select"
-            aria-label="Default select example"
-            v-model="kelas"
-            @change="selectMapel"
-          >
+          <select class="form-select" aria-label="Default select example" v-model="selectedKelas" @change="applyFilter">
             <option value="" selected>Kelas</option>
-            <option
-              v-for="(data, index) in selectKelas"
-              :key="index"
-              :value="data"
-            >
+            <option v-for="(data, index) in uniqueClasses" :key="index" :value="data">
               {{ data }}
             </option>
           </select>
-          <select
-            class="form-select"
-            aria-label="Default select example"
-            v-model="mapel"
-            @change="selectPeriode"
-          >
+          <select class="form-select" aria-label="Default select example" v-model="selectedMapel" @change="addNewData">
             <option value="" selected>Mapel</option>
-            <option v-for="(value, i) in selectedMapel" :key="i" :value="value">
+            <option v-for="(value, i) in uniqueLesson" :key="i" :value="value">
               {{ value.Nama }}
             </option>
           </select>
           <span class="input-group-text">
-            {{ mapel.Jurusan }}
+            {{ selectedMapel?.Jurusan }}
           </span>
-          <select
-            class="form-select"
-            aria-label="Default select example"
-            v-model="periode"
-            @change="getNilai"
-          >
+          <!-- <select class="form-select" aria-label="Default select example" v-model="periode">
             <option value="" disabled selected>Periode</option>
-            <option
-              v-for="(data, index) in selectedPeriode"
-              :key="index"
-              :value="data"
-            >
+            <option v-for="(data, index) in selectedPeriode" :key="index" :value="data">
               {{ data.periode }} ( {{ data.semester }} )
             </option>
-          </select>
+          </select> -->
         </div>
       </div>
-      <div
-        class="col-12 col-md-5 d-flex align-items-center justify-content-end gap-3"
-      >
-        <div class="form-check d-flex align-items-center mb-0 gap-1">
-          <input
-            v-model="radio"
-            class="form-check-input mb-1"
-            type="radio"
-            value="hadir"
-          />
-          <label class="form-check-label mb-0" for="flexRadioDefault1">
-            Hadir & Akhlak
-          </label>
-        </div>
-        <div class="form-check d-flex align-items-center mb-0 gap-1">
-          <input
-            class="form-check-input mb-1"
-            type="radio"
-            v-model="radio"
-            value="harian"
-          />
-          <label class="form-check-label mb-0" for="flexRadioDefault1">
-            Harian
-          </label>
-        </div>
-        <div class="form-check d-flex align-items-center mb-0 gap-1">
-          <input
-            class="form-check-input mb-1"
-            type="radio"
-            v-model="radio"
-            value="uts"
-          />
-          <label class="form-check-label mb-0" for="flexRadioDefault1">
-            UTS
-          </label>
-        </div>
-        <div class="form-check d-flex align-items-center mb-0 gap-1">
-          <input
-            class="form-check-input mb-1"
-            type="radio"
-            v-model="radio"
-            value="uas"
-          />
-          <label class="form-check-label mb-0" for="flexRadioDefault1">
-            UAS
-          </label>
-        </div>
-        <div class="form-check d-flex align-items-center mb-0 gap-1">
-          <input
-            v-model="radio"
-            class="form-check-input mb-1"
-            type="radio"
-            value="none"
-            checked
-          />
-          <label class="form-check-label mb-0" for="flexRadioDefault2">
-            None
-          </label>
-        </div>
+      <div class="col-12 col-md-5 d-flex align-items-center justify-content-end gap-3">
+        <!-- <d. -->
       </div>
     </div>
+    {{ nilai }}
     <div class="table-responsive">
       <table class="table table-hover table-striped">
         <thead>
           <tr>
-            <th scope="col">Nama</th>
+            <th class="text-uppercase" v-for="(value, key) in th" :key="key">{{ key }}</th>
+            <!-- <th scope="col">Nama</th>
             <th scope="col">Hadir & Akhlak</th>
             <th scope="col">Nilai Harian</th>
             <th scope="col">UTS</th>
             <th scope="col">UAS</th>
-            <th scope="col">Total</th>
+            <th scope="col">Total</th> -->
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(data, index) in nilaiSantri" :key="index">
+          <tr v-for="(data, index) in santri" :key="index">
             <td class="text-capitalize align-middle">
               <h1>{{ data.Nama }}</h1>
             </td>
-            <td class="text-capitalize align-middle">
+            <td v-for="(value, key) in data.Penilaian" :key="key"  ref="input">
+              <div v-if="isNumber(value)" @click.prevent="setEdit(index, value, key)" class="cursor-pointer">
+                {{ value }}</div>
+              <div v-else class="flex items-center gap-1">
+                <input type="number" class="form-control" v-model="nilai" :placeholder="value">
+              </div>
+            </td>
+            <!-- <td> -->
+            <!-- </td> -->
+            <!-- <td>
+              <div v-if="!editPenilaian" @click.prevent="openEdit(index, 'uas')">Ada</div>
+              <div v-else class="flex items-center gap-1">
+                <input type="text" class="form-control">
+              </div>
+            </td> -->
+            <!-- <td class="text-capitalize align-middle">
               <span v-if="radio === 'hadir'">
-                <input
-                  :value="data.Hadir ? data.Hadir : 0"
-                  type="number"
-                  class="form-control"
-                  @change="update(index, 'Hadir')"
-                />
+                <input :value="data.Hadir ? data.Hadir : 0" type="number" class="form-control"
+                  @change="update(index, 'Hadir')" />
               </span>
               <span v-else>
                 {{ data.Hadir ? data.Hadir : "0" }}
@@ -145,12 +77,7 @@
             </td>
             <td class="text-capitalize align-middle">
               <span v-if="radio === 'harian'">
-                <input
-                  type="number"
-                  class="form-control"
-                  v-model="data.Harian"
-                  @change="update(index, 'Harian')"
-                />
+                <input type="number" class="form-control" v-model="data.Harian" @change="update(index, 'Harian')" />
               </span>
               <span v-else>
                 {{ data.Harian ? data.Harian : "0" }}
@@ -158,12 +85,7 @@
             </td>
             <td class="text-capitalize align-middle">
               <span v-if="radio === 'uts'">
-                <input
-                  type="number"
-                  class="form-control"
-                  v-model="data.UTS"
-                  @change="update(index, 'UTS')"
-                />
+                <input type="number" class="form-control" v-model="data.UTS" @change="update(index, 'UTS')" />
               </span>
               <span v-else>
                 {{ data.UTS ? data.UTS : "0" }}
@@ -171,17 +93,12 @@
             </td>
             <td class="text-capitalize align-middle">
               <span v-if="radio === 'uas'">
-                <input
-                  type="number"
-                  class="form-control mb-n4"
-                  v-model="data.UAS"
-                  @change="update(index, 'UAS')"
-                />
+                <input type="number" class="form-control mb-n4" v-model="data.UAS" @change="update(index, 'UAS')" />
               </span>
               <span v-else>
                 {{ data.UAS ? data.UAS : "0" }}
               </span>
-            </td>
+            </td> -->
             <td class="text-capitalize align-middle">
               {{ data.Total ? data.Total : "0" }}
             </td>
@@ -193,83 +110,152 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-
+import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
 export default {
   data() {
     return {
       btn: true,
-      kelas: "",
-      mapel: "",
+      selectedKelas: "",
       periode: "",
       radio: "none",
       hadir: "",
       overlay: false,
-      // dummy: [
-      //   {
-      //     Nama: "Fauzan Gunawan",
-      //     Hadir: "90",
-      //     Harian: "91",
-      //     UTS: "92",
-      //     UAS: "95",
-      //     Total: "92.6",
-      //   },
-      //   {
-      //     Nama: "Fauzan Gunawan",
-      //     Hadir: "90",
-      //     Harian: "91",
-      //     UTS: "92",
-      //     UAS: "95",
-      //     Total: "92.6",
-      //   },
-      //   {
-      //     Nama: "Fauzan Gunawan",
-      //     Hadir: "90",
-      //     Harian: "91",
-      //     UTS: "92",
-      //     UAS: "95",
-      //     Total: "92.6",
-      //   },
-      // ],
+      th: { Nama: '', Total: '' },
+      newData: { uas: 30, uts: 30, ukk: 25 },
+      editPenilaian: true,
     };
   },
+  watch: {
+    // selectedMapel: {
+    //   handler(newValue) {
+    //     // this.addNewData();
+    //   },
+    //   deep: true
+    // }
+  },
+  mounted () {
+    document.addEventListener("click", event => this.setData(event, 'input'));
+  },
+  destroyed () {
+    document.removeEventListener("click", event => this.setData(event, 'input'));
+  },
   computed: {
-    ...mapState("kelas", [
-      "selectKelas",
-      "selectedMapel",
-      "selectedPeriode",
-      "nilaiSantri",
-    ]),
+    ...mapState("kelas/nilai", ['select', 'openEdit']),
+    ...mapGetters('kelas/nilai', ['getSelectedMapel', 'getDataSantri', 'getNilai']),
+    nilai: {
+      get() {
+        return this.getNIlai
+      },
+      set(value) {
+        const obj = { key: 'nilai', value }
+        this.$store.commit('kelas/nilai/setState', obj)
+      }
+    },
+    santri: {
+      get() {
+        return this.getDataSantri
+      },
+      set(value) {
+        const obj = { key: 'santri', value }
+        this.$store.commit('kelas/nilai/setState', obj)
+      }
+    },
+    selectedMapel: {
+      get() {
+        return this.getSelectedMapel
+      },
+      set(value) {
+        const obj = { key: 'selectedMapel', value }
+        this.$store.commit('kelas/nilai/setState', obj)
+      }
+    },
+    uniqueClasses() {
+      // Get unique classes from data
+      const classes = this.select.map(item => item.Kelas);
+      return [...new Set(classes)];
+    },
+    uniqueLesson() {
+      return this.select.filter(item => {
+        const matchesClass = item.Kelas === this.selectedKelas;
+        this.selectedMapel = ''
+        // this.santri = []
+        // const matchesAsrama = item.Logs.asrama === this.selectedAsrama;
+        // return matchesClass && matchesAsrama;
+        return matchesClass
+      });
+    },
+    general() {
+      return this.select.find((x) => x.Nama === this.selectedMapel.Nama)
+    },
   },
   methods: {
-    async getNilai() {
-      const data = {
-        kelas: this.kelas,
-        mapel: this.mapel.Nama,
-        jurusan: this.mapel.Jurusan,
-        periode: `${this.periode.periode} ${this.periode.semester}`,
-      };
-      this.$store.dispatch("kelas/getNilai", data);
+    ...mapActions('kelas/nilai', ['getSantri', 'setPenilaian']),
+    isNumber(val) {
+      // Periksa apakah val adalah angka dan bukan false
+      return typeof val === 'number' && !isNaN(val);
     },
-    async selectPeriode() {
-      this.$store.dispatch("kelas/selectPeriode");
+    applyFilter() {
+      this.filteredData
     },
-    async selectMapel() {
-      this.$store.dispatch("kelas/selectMapel", this.kelas);
+    setData(event, data) {
+      const dataOutside = this.$refs[data];
+
+      // Memeriksa apakah elemen yang diklik berada di luar profile
+      if (dataOutside) {
+        // this.falseData(data);
+        console.log(this.openEdit)
+        console.log
+        console.log('di klik diluar input')
+      }
     },
+    addNewData() {
+      const newData = this.selectedMapel?.Penilaian || {};
+      // Menyiapkan objek header baru
+      const newHeaders = { Nama: '' };
+      // Tambahkan data baru dari selectedMapel.Penilaian
+      for (const [key, value] of Object.entries(newData)) {
+        newHeaders[key] = value;
+      }
+      // Tambahkan 'Total' jika ada sebelumnya
+      if (this.th.hasOwnProperty('Total')) {
+        newHeaders['Total'] = this.th['Total'];
+      }
+      // Update th dengan header baru
+      this.th = newHeaders;
+      this.getSantri()
+    },
+    setEdit(index, i, key) {
+      const obj = { index, i, key }
+      this.setPenilaian(obj)
+    },
+    // async getNilai() {
+    //   const data = {
+    //     kelas: this.kelas,
+    //     mapel: this.mapel.Nama,
+    //     jurusan: this.mapel.Jurusan,
+    //     periode: `${this.periode.periode} ${this.periode.semester}`,
+    //   };
+    //   this.$store.dispatch("kelas/getNilai", data);
+    // },
+    // async selectPeriode() {
+    //   this.$store.dispatch("kelas/selectPeriode");
+    // },
+    // async selectMapel() {
+    //   this.$store.dispatch("kelas/selectMapel", this.kelas);
+    // },
     async input(index) {
       $("#inputModal").modal("show");
       const updateData = this.santri[index];
       this.$store.commit("pelanggaran/updateData", updateData);
     },
-    async update(index, field) {
-      const data = {
-        index: index,
-        field: field,
-        value: this.dummy[index][field],
-      };
-      console.log(data);
-    },
+    // async update(index, field) {
+    //   const data = {
+    //     index: index,
+    //     field: field,
+    //     value: this.dummy[index][field],
+    //   };
+    //   console.log(data);
+    // },
     // kelasLoad() {
     //   const program = localStorage.getItem("program");
     //   const data = {
@@ -311,25 +297,33 @@ export default {
 a {
   font-size: 12px;
 }
+
 select {
   font-size: 12px;
   width: max-content !important;
 }
+
 span {
   font-size: 12px;
 }
+
 button {
   font-size: 12px;
 }
+
 .form-check-label {
   font-size: 12px;
 }
+
 .form-control {
   font-size: 12px;
   width: 60px;
-  margin-block: -15px !important;
-  /* margin-top: -15px; */
 }
+
+input {
+  padding: 5px;
+}
+
 @media screen and (max-width: 576px) {
   select {
     width: 100% !important;
