@@ -1,31 +1,40 @@
+
+import Swal from "sweetalert2"
 export default {
+  globalLoad(state) {
+    state.globalLoad = state.globalLoad ? false : true
+  },
   setState(state, data) {
-    state[data.key] = data.value
+    if (data.key === 'santri') {
+      const remappedData = data.value.map(item => {
+        // Ambil objek Penilaian dari item
+        const penilaian = item.Penilaian;
+
+        // Map setiap key dalam objek Penilaian untuk melakukan split dan konversi
+        const remappedPenilaian = Object.keys(penilaian).reduce((acc, key) => {
+          const [value] = penilaian[key].split('/');
+          acc[key] = Number(value);
+          return acc;
+        }, {});
+
+        // Kembalikan objek dengan Penilaian yang sudah dimodifikasi
+        return {
+          ...item,
+          Penilaian: remappedPenilaian
+        };
+      });
+      state[data.key] = remappedData
+    } else if (data.key === 'selectedMapel') {
+      state[data.key] = data.value
+    } else {
+      state[data.key] = data.value
+    }
   },
   setUnit(state, data) {
     state.select = data
   },
-  // openEdit(state, data) {
-  //   // nutup input lain
-  //   if(state.openEdit) {
-  //     state.santri[state.openEdit.index].Penilaian[state.openEdit.key] = +state.nilai
-  //   }
-  //   if(data['type'] === 'tutup') {
-  //     console.log(data.type)
-  //     // state.santri[state.openEdit.index].Penilaian[state.openEdit.key] = +state.nilai
-  //   } else if (data['type' === 'set']) {
-  //     console.log(data.type)
-  //   }
-
-  //   state.santri[data.index].Penilaian[data.key] = state.santri[data.index].Penilaian[data.key].toString()
-  //   // console.log(state.santri[data.index].Penilaian[data.key])
-  //   state.nilai = state.santri[data.index].Penilaian[data.key]
-  //   if(state.santri[data.index].Penilaian[data.key]) {
-  //     state.openEdit = data
-  //   }
-  //   // console.log(state.santri[data.index].Penilaian[data.key])
-  // },
   setPenilaian(state, data) {
+    console.log(data)
     if (data['type'] === 'set') {
       state.santri[data.index].Penilaian[data.key] = state.santri[data.index].Penilaian[data.key].toString()
       state.nilai = state.santri[data.index].Penilaian[data.key]
@@ -33,8 +42,19 @@ export default {
         state.openEdit = data
       }
     } else if (data['type'] === 'close') {
+      if (state.santri[state.openEdit.index].Penilaian[state.openEdit.key] > 100) {
+        Swal.fire({
+          title: 'Warning!',
+          text: 'Nilai tidak boleh lebih dari 100.',
+          icon: 'warning',
+          confirmButtonText: 'OK'
+        });
+      }
       state.santri[state.openEdit.index].Penilaian[state.openEdit.key] = +state.nilai
       state.nilai = 0
+    } else if (data['type'] === 'button') {
+      state.santri[state.openEdit.index].Penilaian[state.openEdit.key] = +state.nilai
+      state.openEdit = ''
     }
   },
   // setData(state, value) {

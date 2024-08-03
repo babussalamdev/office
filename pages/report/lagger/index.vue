@@ -1,7 +1,7 @@
 <template>
   <section id="nilai-mapel">
     <div class="nilai-mapel">
-      <ReportNilaiMapel />
+      <LaggerMapel />
     </div>
   </section>
 </template>

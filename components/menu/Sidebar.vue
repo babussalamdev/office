@@ -120,10 +120,57 @@
                   <span class="text animate__animated animate__fadeInRight">Mutabaah</span>
                 </nuxt-link>
               </li>
-              <!-- wali kelas -->
+              <!-- nilai -->
               <li>
                 <nuxt-link to="/tahfidz/nilai" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Nilai</span>
+                </nuxt-link>
+              </li>
+              <!-- rekap -->
+              <li>
+                <nuxt-link to="/tahfidz/rekap" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Rekap</span>
+                </nuxt-link>
+              </li>
+            </ul>
+          </li>
+          <!-- Tahfidz -->
+          <li v-if="$auth.user.role !== 'root' && permissions?.includes('laundry')">
+            <div @click="notClick('listLaundry')"
+              class="dropdown d-flex align-items-center justify-content-between gap-2">
+              <span class="d-flex align-items-center gap-2">
+                <i class="material-icons animate__animated animate__fadeInRight">
+                  accessibility
+                </i>
+                <span class="text animate__animated animate__fadeInRight">Laundry</span>
+              </span>
+              <i class="bx bx-chevron-down"></i>
+            </div>
+            <ul v-if="listLaundry" class="dropdown-list">
+              <!-- absensi -->
+              <li>
+                <nuxt-link to="/tahfidz/absensi"
+                  class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Data Santri</span>
+                </nuxt-link>
+              </li>
+              <!-- mutabaah -->
+              <li>
+                <nuxt-link to="/tahfidz/mutabaah"
+                  class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Input Data</span>
+                </nuxt-link>
+              </li>
+              <!-- nilai -->
+              <li>
+                <nuxt-link to="/tahfidz/nilai" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Finance</span>
+                </nuxt-link>
+              </li>
+              <!-- rekap -->
+              <li>
+                <nuxt-link to="/tahfidz/rekap" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Lembur</span>
                 </nuxt-link>
               </li>
             </ul>
@@ -156,6 +203,12 @@
                   <span class="text animate__animated animate__fadeInRight">Nilai Mapel</span>
                 </nuxt-link>
               </li>
+              <!-- mapel -->
+              <li v-if="permissions?.includes('report mapel')">
+                <nuxt-link to="/report/lagger" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Lagger Mapel</span>
+                </nuxt-link>
+              </li>
               <!-- tahfidz -->
               <li v-if="permissions?.includes('report tahfidz')">
                 <nuxt-link to="/report/tahfidz"
@@ -174,7 +227,7 @@
               <li v-if="permissions?.includes('report absensi')">
                 <nuxt-link to="/report/absensi"
                   class="custom-link text-decoration-none d-flex align-items-center gap-2">
-                  <span class="text animate__animated animate__fadeInRight">Absensi</span>
+                  <span class="text animate__animated animate__fadeInRight">Absensi Kelas</span>
                 </nuxt-link>
               </li>
               <!-- pelanggaran -->
@@ -391,12 +444,12 @@ export default {
       version: 0,
     }
   },
-  created () {
+  created() {
     this.version = process.env.version;
   },
   computed: {
     ...mapState("index", ["unit", "permissions", "pengajar", "pengampu", "personalia",]),
-    ...mapState("sidebar", ["activeMenu", "listAsrama", "listTahfidz", "listSettings", "listKelas", "listReport",
+    ...mapState("sidebar", ["activeMenu", "listAsrama", "listTahfidz", "listSettings", "listKelas", "listReport", 'listLaundry',
       "absensiSubList", "santriSubList", "pegawaiSubList", "databaseSubList", 'isSidebar']),
   },
 

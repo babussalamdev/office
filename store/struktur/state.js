@@ -24,6 +24,7 @@ export default () => ({
     { name: "setup absensi", code: 18 },
     { name: "page asrama", code: 19 },
     { name: "page pelanggaran", code: 20 },
+    { name: "laundry", code: 21 },
   ],
 
   // partikel

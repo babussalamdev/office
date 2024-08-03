@@ -1,10 +1,17 @@
 <template>
   <div class="animate__animated animate__fadeInUp">
-    <h2 class="mb-3 mb-md-3">Penilaian Kelas</h2>
+    <h2 class="mb-3 mb-md-3">Nilai Mapel</h2>
     <div class="head row mb-3">
-      <div class="col-12 col-md-7 d-flex flex-column flex-md-row gap-4 gap-md-0 mb-3 mb-md-0">
-        <div class="input-group w-75">
-          <select class="form-select" aria-label="Default select example" v-model="selectedKelas" @change="applyFilter">
+      <div class="col-12 col-md-4 d-flex flex-column flex-md-row gap-4 gap-md-0 mb-3 mb-md-0">
+        <div class="input-group">
+          <select class="form-select" aria-label="Default select example">
+            <option value="" selected>Mapel</option>
+            <option value="fiqh">Fiqh</option>
+            <option value="aqidah">Aqiqah</option>
+            <option value="bahasaarab">Bahasa Arab</option>
+          </select>
+          <button class="btn btn-success border-0">Export</button>
+          <!-- <select class="form-select" aria-label="Default select example" v-model="selectedKelas" @change="applyFilter">
             <option value="" selected>Kelas</option>
             <option v-for="(data, index) in uniqueClasses" :key="index" :value="data">
               {{ data }}
@@ -18,17 +25,8 @@
           </select>
           <span class="input-group-text">
             {{ selectedMapel?.Jurusan }}
-          </span>
-          <!-- <select class="form-select" aria-label="Default select example" v-model="periode">
-            <option value="" disabled selected>Periode</option>
-            <option v-for="(data, index) in selectedPeriode" :key="index" :value="data">
-              {{ data.periode }} ( {{ data.semester }} )
-            </option>
-          </select> -->
+          </span> -->
         </div>
-      </div>
-      <div class="col-12 col-md-5 d-flex align-items-center justify-content-end gap-3">
-        <!-- <d. -->
       </div>
     </div>
     <div class="table-responsive" ref="input">
@@ -262,7 +260,7 @@ a {
 
 select {
   font-size: 12px;
-  width: max-content !important;
+  width: fit-content !important;
 }
 
 span {

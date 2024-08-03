@@ -1,13 +1,19 @@
 <template>
-  <section id="nilai">
-    <div class="nilai">
-      <h1>Nilai Page</h1>
+  <section id="penilaian">
+    <div class="penilaian">
+      <NilaiTahfidzTable />
     </div>
   </section>
 </template>
 
 <script>
-export default {};
+export default {
+  async asyncData({ store }) {
+    store.dispatch("kelas/nilai/changeUnit");
+  },
+};
 </script>
 
-<style lang="scss" scoped></style>
+<style>
+@import url(~/assets/css/kelas/kelas.css);
+</style>

@@ -1,8 +1,9 @@
 <template>
   <section id="report">
     <div class="report">
+      <h2 class="mb-3">Report Absensi</h2>
       <!-- table -->
-      <TableReportAbsensi />
+      <ReportAbsensiKelas />
     </div>
   </section>
 </template>

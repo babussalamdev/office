@@ -4,6 +4,7 @@ export default () => ({
   santri: [],
   openEdit: '',
   nilai: 0,
+  globalLoad: false,
   // kelas: [],
   // jurusan: [],
   // ekskull: [],

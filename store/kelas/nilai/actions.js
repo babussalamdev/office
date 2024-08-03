@@ -24,28 +24,86 @@ export default {
     commit('setState', obj)
   },
   async setPenilaian({ commit, state }, data) {
-    if (state.openEdit) {
-      console.log('close')
-      data['type'] = 'close'
-      commit('setPenilaian', data)
+    if (data.type === 'button') {
+      commit('globalLoad')
+      const skSantri = state.santri[state.openEdit.index].SK.replace('#', '%23')
+      const kelas = state.santri[state.openEdit.index].Kelas
+      const tahun = this.$auth.user.Label
+      const semester = this.$auth.user.Semester
+      try {
+        // "Subject": "fiqh",
+        // "SubAttribute": "uas",
+        // "Fiqh": "10/30" //30 = bobot untuk uas
+        const mapelKey = convertToCapitalizedFormat(state.selectedMapel.Nama)
+        const datas = {}
+        datas['Subject'] = state.selectedMapel.Nama
+        datas['SubAttribute'] = state.openEdit.key
+        datas[mapelKey] = `${state.nilai}/${state.selectedMapel.Penilaian[state.openEdit.key]}`
+        const result = this.$apiSantri.$post(`input-nilai-sisalam?sksantri=${skSantri}&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`, datas)
+        if (result) {
+          commit('globalLoad')
+        }
+        commit('setPenilaian', data)
+      } catch (error) {
+        Swal.fire({
+          icon: "warning",
+          title: "Perubahan tidak tersimpan",
+          showConfirmButton: false,
+          timer: 1500
+        });
+        commit('globalLoad')
+      }
+    } else {
+      if (state.openEdit) {
+        data['type'] = 'close'
+        commit('globalLoad')
+        const skSantri = state.santri[state.openEdit.index].SK.replace('#', '%23')
+        const kelas = state.santri[state.openEdit.index].Kelas
+        const tahun = this.$auth.user.Label
+        const semester = this.$auth.user.Semester
+        try {
+          // "Subject": "fiqh",
+          // "SubAttribute": "uas",
+          // "Fiqh": "10/30" //30 = bobot untuk uas
+          const mapelKey = convertToCapitalizedFormat(state.selectedMapel.Nama)
+          const datas = {}
+          datas['Subject'] = state.selectedMapel.Nama
+          datas['SubAttribute'] = state.openEdit.key
+          datas[mapelKey] = `${state.nilai}/${state.selectedMapel.Penilaian[state.openEdit.key]}`
+          const result = this.$apiSantri.$post(`input-nilai-sisalam?sksantri=${skSantri}&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`, datas)
+          if (result) {
+            commit('globalLoad')
+          }
+          commit('setPenilaian', data)
+        } catch (error) {
+          Swal.fire({
+            icon: "warning",
+            title: "Perubahan tidak tersimpan",
+            showConfirmButton: false,
+            timer: 1500
+          });
+          // commit('globalLoad')
+        }
 
-    }
-    // if (state.openEdit) {
-    //   data['type'] = 'tutup'
-    //   commit('openEdit', data)
-    //   try {
-    //     console.log({ nilai: +state.nilai })
-    //     console.log('panggil api')
-    //   } catch (error) {
-
-    //   }
-    // }
-
-    // close
-    if (data) {
-      console.log(state.openEdit)
-      data['type'] = 'set'
-      commit('setPenilaian', data)
+      }
+      // close
+      if (data) {
+        data['type'] = 'set'
+        commit('setPenilaian', data)
+      }
     }
   }
 }
+
+const convertToCapitalizedFormat = text => {
+  const words = text.split(' ');
+
+  if (words.length === 1) {
+    return words[0].charAt(0).toUpperCase() + words[0].slice(1).toLowerCase();
+  } else {
+    return words.map(word =>
+      word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+    ).join('');
+  }
+};
+
