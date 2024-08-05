@@ -4,11 +4,9 @@
     <div class="head row mb-3">
       <div class="col-12 col-md-4 d-flex flex-column flex-md-row gap-4 gap-md-0 mb-3 mb-md-0">
         <div class="input-group">
-          <select class="form-select" aria-label="Default select example">
-            <option value="" selected>Mapel</option>
-            <option value="fiqh">Fiqh</option>
-            <option value="aqidah">Aqiqah</option>
-            <option value="bahasaarab">Bahasa Arab</option>
+          <select class="form-select" aria-label="Default select example" v-model="selectedMapel" @change="addNewData">
+            <option value="" selected disabled>Mapel</option>
+            <option v-for="(data, index) in mapel" :key="index" :value="data">{{ data.Nama }}</option>
           </select>
           <button class="btn btn-success border-0">Export</button>
           <!-- <select class="form-select" aria-label="Default select example" v-model="selectedKelas" @change="applyFilter">
@@ -34,12 +32,6 @@
         <thead>
           <tr>
             <th class="text-uppercase" v-for="(value, key) in th" :key="key">{{ key }}</th>
-            <!-- <th scope="col">Nama</th>
-            <th scope="col">Hadir & Akhlak</th>
-            <th scope="col">Nilai Harian</th>
-            <th scope="col">UTS</th>
-            <th scope="col">UAS</th>
-            <th scope="col">Total</th> -->
           </tr>
         </thead>
         <tbody>
@@ -48,15 +40,12 @@
               <h1>{{ data.Nama }}</h1>
             </td>
             <td v-for="(value, key) in data.Penilaian" :key="key">
-              <div v-if="isNumber(value)" @click.prevent="setEdit(index, value, key)" class="cursor-pointer">
+              <div class="cursor-pointer">
                 {{ value }}
-              </div>
-              <div v-else class="flex items-center gap-1">
-                <input type="number" class="form-control" v-model="nilai" :placeholder="value" max="100">
               </div>
             </td>
             <td class="text-capitalize align-middle">
-              {{ calculateTotalFromPenilaian(data.Penilaian) }}
+              {{ data.TotalScore }}
             </td>
           </tr>
         </tbody>
@@ -71,23 +60,8 @@ export default {
   data() {
     return {
       btn: true,
-      selectedKelas: "",
-      periode: "",
-      radio: "none",
-      hadir: "",
-      overlay: false,
       th: { Nama: '', Total: '' },
-      newData: { uas: 30, uts: 30, ukk: 25 },
-      editPenilaian: true,
     };
-  },
-  watch: {
-    // selectedMapel: {
-    //   handler(newValue) {
-    //     // this.addNewData();
-    //   },
-    //   deep: true
-    // }
   },
   mounted() {
     document.addEventListener("click", event => this.setData(event, 'input'));
@@ -96,24 +70,15 @@ export default {
     document.removeEventListener("click", event => this.setData(event, 'input'));
   },
   computed: {
-    ...mapState("kelas/nilai", ['select', 'openEdit']),
-    ...mapGetters('kelas/nilai', ['getSelectedMapel', 'getDataSantri', 'getNilai']),
-    nilai: {
-      get() {
-        return this.getNilai
-      },
-      set(value) {
-        const obj = { key: 'nilai', value }
-        this.$store.commit('kelas/nilai/setState', obj)
-      }
-    },
+    ...mapState("report/nilaimapel", ['mapel']),
+    ...mapGetters('report/nilaimapel', ['getSelectedMapel', 'getDataSantri', 'getNilai']),
     santri: {
       get() {
         return this.getDataSantri
       },
       set(value) {
         const obj = { key: 'santri', value }
-        this.$store.commit('kelas/nilai/setState', obj)
+        this.$store.commit('report/nilaimapel/setState', obj)
       }
     },
     selectedMapel: {
@@ -122,30 +87,12 @@ export default {
       },
       set(value) {
         const obj = { key: 'selectedMapel', value }
-        this.$store.commit('kelas/nilai/setState', obj)
+        this.$store.commit('report/nilaimapel/setState', obj)
       }
-    },
-    uniqueClasses() {
-      // Get unique classes from data
-      const classes = this.select.map(item => item.Kelas);
-      return [...new Set(classes)];
-    },
-    uniqueLesson() {
-      return this.select.filter(item => {
-        const matchesClass = item.Kelas === this.selectedKelas;
-        this.selectedMapel = ''
-        // this.santri = []
-        // const matchesAsrama = item.Logs.asrama === this.selectedAsrama;
-        // return matchesClass && matchesAsrama;
-        return matchesClass
-      });
-    },
-    general() {
-      return this.select.find((x) => x.Nama === this.selectedMapel.Nama)
     },
   },
   methods: {
-    ...mapActions('kelas/nilai', ['getSantri', 'setPenilaian']),
+    ...mapActions('report/nilaimapel', ['getSantri']),
     isNumber(val) {
       // Periksa apakah val adalah angka dan bukan false
       return typeof val === 'number' && !isNaN(val);
@@ -188,67 +135,11 @@ export default {
       const obj = { index, i, key }
       this.setPenilaian(obj)
     },
-    // async getNilai() {
-    //   const data = {
-    //     kelas: this.kelas,
-    //     mapel: this.mapel.Nama,
-    //     jurusan: this.mapel.Jurusan,
-    //     periode: `${this.periode.periode} ${this.periode.semester}`,
-    //   };
-    //   this.$store.dispatch("kelas/getNilai", data);
-    // },
-    // async selectPeriode() {
-    //   this.$store.dispatch("kelas/selectPeriode");
-    // },
-    // async selectMapel() {
-    //   this.$store.dispatch("kelas/selectMapel", this.kelas);
-    // },
     async input(index) {
       $("#inputModal").modal("show");
       const updateData = this.santri[index];
       this.$store.commit("pelanggaran/updateData", updateData);
     },
-    // async update(index, field) {
-    //   const data = {
-    //     index: index,
-    //     field: field,
-    //     value: this.dummy[index][field],
-    //   };
-    //   console.log(data);
-    // },
-    // kelasLoad() {
-    //   const program = localStorage.getItem("program");
-    //   const data = {
-    //     program: program,
-    //     kelas: this.kelas,
-    //   };
-    //   this.$store.dispatch(`santri/asrama/loadAsrama`, data);
-    // },
-    // async editItem(index) {
-    //   $("#updateDataSantriKelas").modal("show");
-    //   this.updateData = this.santri[index];
-    // },
-    // selectAllCheckbox() {
-    //   for (const item of this.santri) {
-    //     this.$set(this.selectedItems, item.SK, this.selectAll);
-    //   }
-    //   this.getCheckedNames();
-    // },
-    // getCheckedNames() {
-    //   const checkedNames = Object.keys(this.selectedItems).filter(
-    //     (key) => this.selectedItems[key]
-    //   );
-    //   this.data = checkedNames;
-    // },
-    // async editBulk(index) {
-    //   $("#updateDataSantriAsrama").modal("show");
-    //   this.updateData = this.data;
-    // },
-    // resetSelect() {
-    //   this.data = [];
-    //   this.selectAll = false;
-    //   this.selectedItems = {};
-    // },
   },
 };
 </script>

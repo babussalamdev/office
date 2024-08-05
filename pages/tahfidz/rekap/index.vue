@@ -8,7 +8,11 @@
 </template>
 
 <script>
-export default {};
+export default {
+  async asyncData({ store }) {
+    store.dispatch('rekap/changeUnit')
+  }
+};
 </script>
 
 <style>

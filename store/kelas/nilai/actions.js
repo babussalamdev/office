@@ -8,7 +8,6 @@ export default {
     commit('setUnit', result);
   },
   async getSantri({ commit, state }, data) {
-    console.log('berhasil')
     const program = localStorage.getItem('program')
     const datas = {}
     datas['Filter'] = state.selectedMapel.Jurusan
@@ -31,19 +30,17 @@ export default {
       const tahun = this.$auth.user.Label
       const semester = this.$auth.user.Semester
       try {
-        // "Subject": "fiqh",
-        // "SubAttribute": "uas",
-        // "Fiqh": "10/30" //30 = bobot untuk uas
         const mapelKey = convertToCapitalizedFormat(state.selectedMapel.Nama)
         const datas = {}
         datas['Subject'] = state.selectedMapel.Nama
         datas['SubAttribute'] = state.openEdit.key
         datas[mapelKey] = `${state.nilai}/${state.selectedMapel.Penilaian[state.openEdit.key]}`
-        const result = this.$apiSantri.$post(`input-nilai-sisalam?sksantri=${skSantri}&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`, datas)
+        const result = await this.$apiSantri.$post(`input-nilai-sisalam?sksantri=${skSantri}&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`, datas)
         if (result) {
           commit('globalLoad')
+          data['result'] = result
+          commit('setPenilaian', data)
         }
-        commit('setPenilaian', data)
       } catch (error) {
         Swal.fire({
           icon: "warning",
@@ -55,8 +52,8 @@ export default {
       }
     } else {
       if (state.openEdit) {
-        data['type'] = 'close'
         commit('globalLoad')
+        data['type'] = 'close'
         const skSantri = state.santri[state.openEdit.index].SK.replace('#', '%23')
         const kelas = state.santri[state.openEdit.index].Kelas
         const tahun = this.$auth.user.Label
@@ -70,19 +67,20 @@ export default {
           datas['Subject'] = state.selectedMapel.Nama
           datas['SubAttribute'] = state.openEdit.key
           datas[mapelKey] = `${state.nilai}/${state.selectedMapel.Penilaian[state.openEdit.key]}`
-          const result = this.$apiSantri.$post(`input-nilai-sisalam?sksantri=${skSantri}&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`, datas)
+          const result = await this.$apiSantri.$post(`input-nilai-sisalam?sksantri=${skSantri}&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`, datas)
           if (result) {
+            data['result'] = result
             commit('globalLoad')
+            commit('setPenilaian', data)
           }
-          commit('setPenilaian', data)
         } catch (error) {
+          commit('globalLoad')
           Swal.fire({
             icon: "warning",
             title: "Perubahan tidak tersimpan",
             showConfirmButton: false,
             timer: 1500
           });
-          // commit('globalLoad')
         }
 
       }

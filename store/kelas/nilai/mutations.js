@@ -34,7 +34,6 @@ export default {
     state.select = data
   },
   setPenilaian(state, data) {
-    console.log(data)
     if (data['type'] === 'set') {
       state.santri[data.index].Penilaian[data.key] = state.santri[data.index].Penilaian[data.key].toString()
       state.nilai = state.santri[data.index].Penilaian[data.key]
@@ -51,9 +50,12 @@ export default {
         });
       }
       state.santri[state.openEdit.index].Penilaian[state.openEdit.key] = +state.nilai
+      state.santri[state.openEdit.index].TotalScore = +data.result.Total
+      console.log(data)
       state.nilai = 0
     } else if (data['type'] === 'button') {
       state.santri[state.openEdit.index].Penilaian[state.openEdit.key] = +state.nilai
+      state.santri[state.openEdit.index].TotalScore = +data.result.Total
       state.openEdit = ''
     }
   },

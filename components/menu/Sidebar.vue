@@ -134,7 +134,7 @@
               </li>
             </ul>
           </li>
-          <!-- Tahfidz -->
+          <!-- Laundry -->
           <li v-if="$auth.user.role !== 'root' && permissions?.includes('laundry')">
             <div @click="notClick('listLaundry')"
               class="dropdown d-flex align-items-center justify-content-between gap-2">
@@ -149,27 +149,27 @@
             <ul v-if="listLaundry" class="dropdown-list">
               <!-- absensi -->
               <li>
-                <nuxt-link to="/tahfidz/absensi"
+                <nuxt-link to="/laundry/datasantri"
                   class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Data Santri</span>
                 </nuxt-link>
               </li>
               <!-- mutabaah -->
               <li>
-                <nuxt-link to="/tahfidz/mutabaah"
+                <nuxt-link to="/laundry/inputdata"
                   class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Input Data</span>
                 </nuxt-link>
               </li>
               <!-- nilai -->
               <li>
-                <nuxt-link to="/tahfidz/nilai" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                <nuxt-link to="/laundry/finance" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Finance</span>
                 </nuxt-link>
               </li>
               <!-- rekap -->
               <li>
-                <nuxt-link to="/tahfidz/rekap" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                <nuxt-link to="/laundry/lembur" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Lembur</span>
                 </nuxt-link>
               </li>

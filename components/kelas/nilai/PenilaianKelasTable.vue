@@ -5,13 +5,13 @@
       <div class="col-12 col-md-7 d-flex flex-column flex-md-row gap-4 gap-md-0 mb-3 mb-md-0">
         <div class="input-group w-75">
           <select class="form-select" aria-label="Default select example" v-model="selectedKelas" @change="applyFilter">
-            <option value="" selected>Kelas</option>
+            <option value="" disabled selected>Kelas</option>
             <option v-for="(data, index) in uniqueClasses" :key="index" :value="data">
               {{ data }}
             </option>
           </select>
           <select class="form-select" aria-label="Default select example" v-model="selectedMapel" @change="addNewData">
-            <option value="" selected>Mapel</option>
+            <option value="" disabled selected>Mapel</option>
             <option v-for="(value, i) in uniqueLesson" :key="i" :value="value">
               {{ value.Nama }}
             </option>
@@ -19,12 +19,6 @@
           <span class="input-group-text">
             {{ selectedMapel?.Jurusan }}
           </span>
-          <!-- <select class="form-select" aria-label="Default select example" v-model="periode">
-            <option value="" disabled selected>Periode</option>
-            <option v-for="(data, index) in selectedPeriode" :key="index" :value="data">
-              {{ data.periode }} ( {{ data.semester }} )
-            </option>
-          </select> -->
         </div>
       </div>
       <div class="col-12 col-md-5 d-flex align-items-center justify-content-end gap-3">
@@ -36,12 +30,6 @@
         <thead>
           <tr>
             <th class="text-uppercase" v-for="(value, key) in th" :key="key">{{ key }}</th>
-            <!-- <th scope="col">Nama</th>
-            <th scope="col">Hadir & Akhlak</th>
-            <th scope="col">Nilai Harian</th>
-            <th scope="col">UTS</th>
-            <th scope="col">UAS</th>
-            <th scope="col">Total</th> -->
           </tr>
         </thead>
         <tbody>
@@ -58,7 +46,7 @@
               </div>
             </td>
             <td class="text-capitalize align-middle">
-              {{ calculateTotalFromPenilaian(data.Penilaian) }}
+              {{ data.TotalScore }}
             </td>
           </tr>
         </tbody>
@@ -83,14 +71,6 @@ export default {
       editPenilaian: true,
     };
   },
-  watch: {
-    // selectedMapel: {
-    //   handler(newValue) {
-    //     // this.addNewData();
-    //   },
-    //   deep: true
-    // }
-  },
   mounted() {
     document.addEventListener("click", event => this.setData(event, 'input'));
   },
@@ -98,7 +78,7 @@ export default {
     document.removeEventListener("click", event => this.setData(event, 'input'));
   },
   computed: {
-    ...mapState("kelas/nilai", ['select', 'openEdit']),
+    ...mapState("kelas/nilai", ['select', 'openEdit', 'globalLoad']),
     ...mapGetters('kelas/nilai', ['getSelectedMapel', 'getDataSantri', 'getNilai']),
     nilai: {
       get() {

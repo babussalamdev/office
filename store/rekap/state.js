@@ -6,4 +6,5 @@ const end = moment().tz("Asia/Jakarta").format("YYYY-MM-DD");
 export default () => ({
   start: start,
   end: end,
+  santri: []
 })
