@@ -9,7 +9,7 @@
           Pelanggaran
         </h2>
         <nuxt-link to="/pelanggaran" class="text-dark text-decoration-none"
-          >< Back</nuxt-link
+          > Back</nuxt-link
         >
         <!-- <select
           v-if="select.length > 0"

@@ -4,10 +4,14 @@
 #laundry .laundry h2 {
   font-size: 14px;
 }
+#laundry .laundry p {
+  font-size: 14px;
+}
 #laundry .laundry .table-responsive {
   overflow-x: auto;
   border-radius: 7px !important;
   box-shadow: 0 0 15px rgba(177, 177, 177, 0.4);
+  padding-bottom: 0 !important;
 }
 #laundry .laundry .table-responsive .table {
   width: 100%;
@@ -34,12 +38,4 @@
 #laundry .laundry .table-responsive .table tbody tr td button i {
   font-size: 14px !important;
   padding: -5px !important;
-}
-@media screen and (max-width: 576px) {
-  #laundry .laundry .table-responsive .table thead tr th {
-    font-size: 12px;
-  }
-  #laundry .laundry .table-responsive .table tbody tr td {
-    font-size: 12px;
-  }
 }/*# sourceMappingURL=laundry.css.map */

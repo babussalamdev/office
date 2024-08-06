@@ -4,10 +4,14 @@
     h2 {
       font-size: 14px;
     }
+    p {
+      font-size: 14px;
+    }
     .table-responsive {
       overflow-x: auto;
       border-radius: 7px !important;
       box-shadow: 0 0 15px #b1b1b166;
+      padding-bottom: 0 !important;
       .table {
         width: 100%;
         margin-bottom: 0 !important;
@@ -37,22 +41,6 @@
                   font-size: 14px !important;
                   padding: -5px !important;
                 }
-              }
-            }
-          }
-        }
-        @media screen and (max-width: 576px) {
-          thead {
-            tr {
-              th {
-                font-size: 12px;
-              }
-            }
-          }
-          tbody {
-            tr {
-              td {
-                font-size: 12px;
               }
             }
           }

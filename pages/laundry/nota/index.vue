@@ -2,7 +2,7 @@
   <section id="laundry">
     <div class="laundry">
       <!-- table -->
-      <LaundryInputDataTable />
+      <LaundryNotaTable />
     </div>
   </section>
 </template>
