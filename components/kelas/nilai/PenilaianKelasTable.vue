@@ -78,7 +78,7 @@ export default {
     document.removeEventListener("click", event => this.setData(event, 'input'));
   },
   computed: {
-    ...mapState("kelas/nilai", ['select', 'openEdit', 'globalLoad']),
+    ...mapState("kelas/nilai", ['select', 'openEdit']),
     ...mapGetters('kelas/nilai', ['getSelectedMapel', 'getDataSantri', 'getNilai']),
     nilai: {
       get() {

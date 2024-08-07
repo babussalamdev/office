@@ -22,9 +22,9 @@ export default {
     const obj = { key: 'santri', value: result.data }
     commit('setState', obj)
   },
-  async setPenilaian({ commit, state }, data) {
+  async setPenilaian({ commit, state, dispatch }, data) {
     if (data.type === 'button') {
-      commit('globalLoad')
+      dispatch('index/submitLoad', null, { root: true })
       const skSantri = state.santri[state.openEdit.index].SK.replace('#', '%23')
       const kelas = state.santri[state.openEdit.index].Kelas
       const tahun = this.$auth.user.Label
@@ -37,7 +37,7 @@ export default {
         datas[mapelKey] = `${state.nilai}/${state.selectedMapel.Penilaian[state.openEdit.key]}`
         const result = await this.$apiSantri.$post(`input-nilai-sisalam?sksantri=${skSantri}&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`, datas)
         if (result) {
-          commit('globalLoad')
+          dispatch('index/submitLoad', null, { root: true })
           data['result'] = result
           commit('setPenilaian', data)
         }
@@ -48,11 +48,11 @@ export default {
           showConfirmButton: false,
           timer: 1500
         });
-        commit('globalLoad')
+        dispatch('index/submitLoad', null, { root: true })
       }
     } else {
       if (state.openEdit) {
-        commit('globalLoad')
+        dispatch('index/submitLoad', null, { root: true })
         data['type'] = 'close'
         const skSantri = state.santri[state.openEdit.index].SK.replace('#', '%23')
         const kelas = state.santri[state.openEdit.index].Kelas
@@ -70,11 +70,11 @@ export default {
           const result = await this.$apiSantri.$post(`input-nilai-sisalam?sksantri=${skSantri}&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`, datas)
           if (result) {
             data['result'] = result
-            commit('globalLoad')
+            dispatch('index/submitLoad', null, { root: true })
             commit('setPenilaian', data)
           }
         } catch (error) {
-          commit('globalLoad')
+          dispatch('index/submitLoad', null, { root: true })
           Swal.fire({
             icon: "warning",
             title: "Perubahan tidak tersimpan",

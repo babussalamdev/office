@@ -7,6 +7,7 @@
           <button class="btn btn-success border-0">Export</button>
         </div>
       </div>
+      {{ start }}
       <div class="col-12 col-md-6 d-flex justify-content-end">
         <div class="input-group">
           <span class="input-group-text" id="basic-addon1">From</span>
@@ -32,17 +33,18 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(data, index) in dummy" :key="index">
+          <tr v-for="(data, index) in santri" :key="index">
             <td class="text-capitalize align-middle">{{ data.Nama }}</td>
-            <td class="text-capitalize align-middle text-center">{{ data.T }}</td>
-            <td class="text-capitalize align-middle text-center">{{ data.S }}</td>
-            <td class="text-capitalize align-middle text-center">{{ data.I }}</td>
-            <td class="text-capitalize align-middle text-center">{{ data.A }}</td>
-            <td class="text-capitalize align-middle text-center">{{ data.T + data.S + data.A + data.I }}</td>
+            <td class="text-capitalize align-middle text-center">{{ data.terlambat }}</td>
+            <td class="text-capitalize align-middle text-center">{{ data.sakit }}</td>
+            <td class="text-capitalize align-middle text-center">{{ data.izin }}</td>
+            <td class="text-capitalize align-middle text-center">{{ data.absen }}</td>
+            <td class="text-capitalize align-middle text-center">{{ data.terlambat + data.sakit + data.izin + data.absen }}</td>
           </tr>
         </tbody>
       </table>
     </div>
+    {{ santri }}
   </div>
 </template>
 
@@ -75,16 +77,24 @@ export default {
       ],
     };
   },
+  watch: {
+    start() {
+      this.changeUnit()
+    },
+    end() {
+      this.changeUnit()
+    }
+  },
   computed: {
-    ...mapState('rekap', ['santri']),
-    ...mapGetters('rekap', ['getStart', 'getEnd']),
+    ...mapState('report/absensi', ['santri']),
+    ...mapGetters('report/absensi', ['getStart', 'getEnd']),
     start: {
       get() {
         return this.getStart
       },
       set(value) {
         const obj = { key: 'start', value}
-        this.$store.commit('rekap/setState', obj)
+        this.$store.commit('report/absensi/setState', obj)
       }
     },
     end: {
@@ -93,11 +103,12 @@ export default {
       },
       set(value) {
         const obj = { key: 'end', value}
-        this.$store.commit('rekap/setState', obj)
+        this.$store.commit('report/absensi/setState', obj)
       }
     }
   },
   methods: {
+    ...mapActions('report/absensi', ['changeUnit']),
     // ...mapMutations('mutabaah', ['showDetail'])
     showDetail(sk, subject) {
       this.$store.commit('mutabaah/showDetail', { sk, subject })

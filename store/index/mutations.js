@@ -16,5 +16,8 @@ export default {
         state.pengajar = ''
         state.pengampu = ''
         state.personalia = ''
+    },
+    globalLoad(state) {
+        state.globalLoad = state.globalLoad ? false : true
     }
 }

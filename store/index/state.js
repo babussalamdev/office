@@ -3,5 +3,6 @@ export default () => ({
     permissions: '',
     pengajar: '',
     pengampu: '',
-    personalia: ''
+    personalia: '',
+    globalLoad: false,
 })

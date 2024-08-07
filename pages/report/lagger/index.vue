@@ -8,9 +8,9 @@
 
 <script>
 export default {
-  // async asyncData({ store }) {
-  //   store.dispatch("kelas/nilai/changeUnit");
-  // },
+  async asyncData({ store }) {
+    store.dispatch('report/lagger/changeUnit');
+  },
 };
 </script>
 

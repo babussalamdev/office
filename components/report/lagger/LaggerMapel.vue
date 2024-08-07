@@ -1,41 +1,15 @@
 <template>
   <div class="animate__animated animate__fadeInUp">
-    <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex justify-content-between align-items-center mb-3">
       <h2 class="mb-0">Lagger Mapel</h2>
       <button class="btn btn-success border-0">Export</button>
-    </div>
-    <div class="head row mb-3">
-      <div class="col-12 col-md-4 d-flex flex-column flex-md-row gap-4 gap-md-0 mb-3 mb-md-0">
-        <div class="input-group">
-          <!-- <select class="form-select" aria-label="Default select example" v-model="selectedKelas" @change="applyFilter">
-            <option value="" selected>Kelas</option>
-            <option v-for="(data, index) in uniqueClasses" :key="index" :value="data">
-              {{ data }}
-            </option>
-          </select>
-          <select class="form-select" aria-label="Default select example" v-model="selectedMapel" @change="addNewData">
-            <option value="" selected>Mapel</option>
-            <option v-for="(value, i) in uniqueLesson" :key="i" :value="value">
-              {{ value.Nama }}
-            </option>
-          </select>
-          <span class="input-group-text">
-            {{ selectedMapel?.Jurusan }}
-          </span> -->
-        </div>
-      </div>
     </div>
     <div class="table-responsive" ref="input">
       <table class="table table-hover table-striped">
         <thead>
           <tr>
-            <th class="text-uppercase" v-for="(value, key) in th" :key="key">{{ key }}</th>
-            <!-- <th scope="col">Nama</th>
-            <th scope="col">Hadir & Akhlak</th>
-            <th scope="col">Nilai Harian</th>
-            <th scope="col">UTS</th>
-            <th scope="col">UAS</th>
-            <th scope="col">Total</th> -->
+            <th scope="col">Nama</th>
+            <th class="text-uppercase text-center" v-for="(value, key) in dynamicKeys" :key="key">{{ value }}</th>
           </tr>
         </thead>
         <tbody>
@@ -43,17 +17,7 @@
             <td class="text-capitalize align-middle">
               <h1>{{ data.Nama }}</h1>
             </td>
-            <td v-for="(value, key) in data.Penilaian" :key="key">
-              <div v-if="isNumber(value)" @click.prevent="setEdit(index, value, key)" class="cursor-pointer">
-                {{ value }}
-              </div>
-              <div v-else class="flex items-center gap-1">
-                <input type="number" class="form-control" v-model="nilai" :placeholder="value" max="100">
-              </div>
-            </td>
-            <td class="text-capitalize align-middle">
-              {{ calculateTotalFromPenilaian(data.Penilaian) }}
-            </td>
+            <td class="text-center" v-for="key in dynamicKeys" :key="key">{{ data[key] }}</td>
           </tr>
         </tbody>
       </table>
@@ -64,36 +28,9 @@
 <script>
 import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
 export default {
-  data() {
-    return {
-      btn: true,
-      selectedKelas: "",
-      periode: "",
-      radio: "none",
-      hadir: "",
-      overlay: false,
-      th: { Nama: '', Total: '' },
-      newData: { uas: 30, uts: 30, ukk: 25 },
-      editPenilaian: true,
-    };
-  },
-  watch: {
-    // selectedMapel: {
-    //   handler(newValue) {
-    //     // this.addNewData();
-    //   },
-    //   deep: true
-    // }
-  },
-  mounted() {
-    document.addEventListener("click", event => this.setData(event, 'input'));
-  },
-  destroyed() {
-    document.removeEventListener("click", event => this.setData(event, 'input'));
-  },
   computed: {
-    ...mapState("kelas/nilai", ['select', 'openEdit']),
-    ...mapGetters('kelas/nilai', ['getSelectedMapel', 'getDataSantri', 'getNilai']),
+    ...mapState('report/lagger', ['select', 'openEdit']),
+    ...mapGetters('report/lagger', ['getSelectedMapel', 'getDataSantri', 'getNilai']),
     nilai: {
       get() {
         return this.getNilai
@@ -109,142 +46,26 @@ export default {
       },
       set(value) {
         const obj = { key: 'santri', value }
-        this.$store.commit('kelas/nilai/setState', obj)
+        this.$store.commit('report/lagger/setState', obj)
       }
     },
-    selectedMapel: {
-      get() {
-        return this.getSelectedMapel
-      },
-      set(value) {
-        const obj = { key: 'selectedMapel', value }
-        this.$store.commit('kelas/nilai/setState', obj)
+
+    dynamicKeys() {
+      const excludeKeys = ["Nama", "SK"];
+      // Pastikan data santri tidak kosong
+      if (this.santri.length === 0) {
+        return [];
       }
-    },
-    uniqueClasses() {
-      // Get unique classes from data
-      const classes = this.select.map(item => item.Kelas);
-      return [...new Set(classes)];
-    },
-    uniqueLesson() {
-      return this.select.filter(item => {
-        const matchesClass = item.Kelas === this.selectedKelas;
-        this.selectedMapel = ''
-        // this.santri = []
-        // const matchesAsrama = item.Logs.asrama === this.selectedAsrama;
-        // return matchesClass && matchesAsrama;
-        return matchesClass
-      });
-    },
-    general() {
-      return this.select.find((x) => x.Nama === this.selectedMapel.Nama)
-    },
+      
+      const firstObject = this.santri[0];
+      const allKeys = Object.keys(firstObject);
+      // Filter key untuk menghilangkan "Nama" dan "SK"
+      return allKeys.filter(key => !excludeKeys.includes(key));
+    }
+
   },
   methods: {
     ...mapActions('kelas/nilai', ['getSantri', 'setPenilaian']),
-    isNumber(val) {
-      // Periksa apakah val adalah angka dan bukan false
-      return typeof val === 'number' && !isNaN(val);
-    },
-    calculateTotalFromPenilaian(penilaian) {
-      // Hitung jumlah semua nilai dalam objek Penilaian
-      return Object.values(penilaian).reduce((sum, value) => sum + value, 0);
-    },
-    applyFilter() {
-      this.filteredData
-    },
-    setData(event, data) {
-      const dataOutside = this.$refs[data];
-
-      // Memeriksa apakah elemen yang diklik berada di luar profile
-      if (dataOutside && !dataOutside.contains(event.target)) {
-        // this.falseData(data);
-        if (this.nilai && this.openEdit) {
-          this.setPenilaian({ type: 'button' })
-        }
-      }
-    },
-    addNewData() {
-      const newData = this.selectedMapel?.Penilaian || {};
-      // Menyiapkan objek header baru
-      const newHeaders = { Nama: '' };
-      // Tambahkan data baru dari selectedMapel.Penilaian
-      for (const [key, value] of Object.entries(newData)) {
-        newHeaders[key] = value;
-      }
-      // Tambahkan 'Total' jika ada sebelumnya
-      if (this.th.hasOwnProperty('Total')) {
-        newHeaders['Total'] = this.th['Total'];
-      }
-      // Update th dengan header baru
-      this.th = newHeaders;
-      this.getSantri()
-    },
-    setEdit(index, i, key) {
-      const obj = { index, i, key }
-      this.setPenilaian(obj)
-    },
-    // async getNilai() {
-    //   const data = {
-    //     kelas: this.kelas,
-    //     mapel: this.mapel.Nama,
-    //     jurusan: this.mapel.Jurusan,
-    //     periode: `${this.periode.periode} ${this.periode.semester}`,
-    //   };
-    //   this.$store.dispatch("kelas/getNilai", data);
-    // },
-    // async selectPeriode() {
-    //   this.$store.dispatch("kelas/selectPeriode");
-    // },
-    // async selectMapel() {
-    //   this.$store.dispatch("kelas/selectMapel", this.kelas);
-    // },
-    async input(index) {
-      $("#inputModal").modal("show");
-      const updateData = this.santri[index];
-      this.$store.commit("pelanggaran/updateData", updateData);
-    },
-    // async update(index, field) {
-    //   const data = {
-    //     index: index,
-    //     field: field,
-    //     value: this.dummy[index][field],
-    //   };
-    //   console.log(data);
-    // },
-    // kelasLoad() {
-    //   const program = localStorage.getItem("program");
-    //   const data = {
-    //     program: program,
-    //     kelas: this.kelas,
-    //   };
-    //   this.$store.dispatch(`santri/asrama/loadAsrama`, data);
-    // },
-    // async editItem(index) {
-    //   $("#updateDataSantriKelas").modal("show");
-    //   this.updateData = this.santri[index];
-    // },
-    // selectAllCheckbox() {
-    //   for (const item of this.santri) {
-    //     this.$set(this.selectedItems, item.SK, this.selectAll);
-    //   }
-    //   this.getCheckedNames();
-    // },
-    // getCheckedNames() {
-    //   const checkedNames = Object.keys(this.selectedItems).filter(
-    //     (key) => this.selectedItems[key]
-    //   );
-    //   this.data = checkedNames;
-    // },
-    // async editBulk(index) {
-    //   $("#updateDataSantriAsrama").modal("show");
-    //   this.updateData = this.data;
-    // },
-    // resetSelect() {
-    //   this.data = [];
-    //   this.selectAll = false;
-    //   this.selectedItems = {};
-    // },
   },
 };
 </script>

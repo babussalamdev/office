@@ -9,7 +9,11 @@
 </template>
 
 <script>
-export default {};
+export default {
+  async asyncData({ store }) {
+    store.dispatch('report/absensi/changeUnit')
+  },
+};
 </script>
 
 <style>

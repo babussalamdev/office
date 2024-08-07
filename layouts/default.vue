@@ -73,7 +73,7 @@ export default {
   computed: {
     ...mapState("mainkelas", ["overlay"]),
     ...mapState('sidebar', ['isSidebar']),
-    ...mapState('kelas/nilai', ['globalLoad'])
+    ...mapState('index', ['globalLoad'])
   },
 };
 </script>

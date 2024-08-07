@@ -8,5 +8,7 @@ export default {
         }
         commit('setUnit', datas);
     },
-
+    async submitLoad({ commit, state }) {
+        commit('globalLoad')
+    },
 }
