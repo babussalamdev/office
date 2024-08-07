@@ -11,9 +11,9 @@
       <div class="col-12 col-md-6 d-flex justify-content-end">
         <div class="input-group">
           <span class="input-group-text" id="basic-addon1">From</span>
-          <input type="date" class="form-control" aria-label="Username" aria-describedby="basic-addon1" v-model="start">
+          <input type="date" class="form-control" v-model="start">
           <span class="input-group-text" id="basic-addon1">To</span>
-          <input type="date" class="form-control" aria-label="Username" aria-describedby="basic-addon1" v-model="end">
+          <input type="date" class="form-control" v-model="end">
         </div>
       </div>
     </div>
@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import { formatDate } from '@fullcalendar/core';
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 export default {
   data() {

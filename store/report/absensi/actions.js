@@ -7,6 +7,5 @@ export default {
         const result = await this.$apiSantri.$get(`get-recapabsensi-sisalam?value=${kelas}&program=${program}&tahun=${tahun}&semester=${semester}&startdate=${state.start}&enddate=${state.end}`)
         const obj = { key: 'santri', value: result }
         commit('setState', obj)
-        alert('done')
     }
 }
