@@ -11,6 +11,10 @@ body {
 ::-webkit-scrollbar {
   width: 0px;
 }
+
+tr th, tr td {
+  white-space: nowrap;
+}
 /* * {
   scrollbar-width: 0px;
   scrollbar-color: #f1f5f9 #f1f5f9;

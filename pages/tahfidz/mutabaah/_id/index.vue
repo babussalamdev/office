@@ -150,7 +150,8 @@ i {
   cursor: pointer;
 }
 
-/* tr th {
-  border: 1px solid white !important;
-} */
+tr th, tr td {
+  white-space: nowrap;
+}
+
 </style>

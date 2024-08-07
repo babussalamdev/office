@@ -1,12 +1,14 @@
 import state from "./state";
 import Swal from "sweetalert2";
 export default {
-  async changeUnit({ commit, state }, data) {
+  async changeUnit({ commit, state, dispatch }, data) {
+    dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
     const result = await this.$apiSantri.$get(
       `get-santri-sisalam?subject=${state.angkatan}&program=${program}&opsi=none`
     );
     commit('setDatabase', result);
+    dispatch('index/submitLoad', null, { root: true })
   },
   async inputSantri({ commit, state }, event) {
     commit('btn')

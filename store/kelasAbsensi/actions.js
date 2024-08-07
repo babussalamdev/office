@@ -1,7 +1,8 @@
 import Swal from "sweetalert2"
 
 export default {
-  async changeUnit({ commit }, data) {
+  async changeUnit({ commit, dispatch }, data) {
+    dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
     const jabatan = this.$auth.user.Jabatan[program]
     const asrama = this.$auth.user.Asrama[program]
@@ -14,24 +15,13 @@ export default {
     } else {
       subject = 'kelas'
     }
-
-    // const result = await this.$apiSantri.$get(
-    //   `get-absensi?subject=${subject}&program=${program}&jabatan=${jabatan}&asrama=${asrama}&halaqah=${halaqah}&kelas=${kelas}&absen=asrama`
-    // );
-    // const reqSantri = await this.$apiSantri.$get(
-    //   `get-absensi-sisalam?subject=kelas&program=${program}&value=${kelas}`
-    // );
-    // const reqPermissions = this.$apiBase.$get(
-    //   `get-settings?sk=${program}&type=buttonAbsensi&value=${jabatan}`
-    // )
     const resSelect = await this.$apiBase.$get(
       `get-settings?type=absensikelas`
     )
-    // const [resSantri, resPermissions] = await Promise.all([reqSantri, reqPermissions])
-
-    // result['select'] = []
-
-    commit('setSelect', resSelect);
+    if( resSelect ) {
+      commit('setSelect', resSelect);
+      dispatch('index/submitLoad', null, { root: true })
+    }
   },
   async getDataSantri({ commit }, data) {
     const program = localStorage.getItem('program')
@@ -75,36 +65,5 @@ export default {
     req['time'] = time
     req["SK"] = datas.sk;
     commit('deleteAbsen', req);
-    // const result = await Swal.fire({
-    //   title: datas.type + '-' + data.Nama.replace(/\b\w/g, (char) => char.toUpperCase()),
-    //   text: `Subject akan dihapus`,
-    //   icon: "warning",
-    //   showCancelButton: true,
-    //   confirmButtonColor: "#3085d6",
-    //   cancelButtonColor: "#d33",
-    //   confirmButtonText: `Ya, Hapus!`,
-    // });
-    // if (result.isConfirmed) {
-    //   const req = await this.$apiSantri.$delete(
-    //     `delete-absensi-sisalam?sksantri=${skSantri}&type=halaqah${time}&thn=${tahun}&smstr=${semester}&program=${program}&sk=${sk}`
-    //   );
-    //   if (req) {
-    //     Swal.fire({
-    //       position: "center",
-    //       icon: "success",
-    //       text: `Data Berhasil dihapus`,
-    //       showConfirmButton: false,
-    //       timer: 1500,
-    //     });
-    //     req['time'] = time
-    //     req["SK"] = datas.sk;
-    //     commit('deleteAbsen', req);
-    //     // const response = {
-    //     //   key,
-    //     //   Status: status === "active" ? "inactive" : "active",
-    //     // };
-    //     // commit("updateSubject", response);
-    //   }
-    // }
   },
 }

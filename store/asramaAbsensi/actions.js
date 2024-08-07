@@ -1,5 +1,6 @@
 export default {
-  async changeUnit({ commit }, data) {
+  async changeUnit({ commit, dispatch }, data) {
+    dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
     const jabatan = this.$auth.user.Jabatan[program]
     const asrama = this.$auth.user.Asrama[program]
@@ -28,11 +29,13 @@ export default {
       )
       const [resSantri, resPermissions] = await Promise.all([reqSantri, reqPermissions])
       commit('setSantriAsrama', { resSantri, resPermissions});
+      dispatch('index/submitLoad', null, { root: true })
     } else {
       const reqSelect = await this.$apiBase.$get(
         `get-settings?type=options&sk=${program}&category=kelas`
       );
       commit('setSantriAsrama', { resSelect: reqSelect });
+      dispatch('index/submitLoad', null, { root: true })
     }
 
     // const result = await this.$apiSantri.$get(

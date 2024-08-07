@@ -1,16 +1,15 @@
 <template>
   <main>
     <div class="global-loader" v-if="globalLoad">
-      <div class="loading-area">
-        <div class="loader">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
+      <!-- <section class="dots-container">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </section> -->
+      <div class="loader">
+        <div class="justify-content-center jimu-primary-loading"></div>
       </div>
     </div>
     <Sidebar />
@@ -97,7 +96,7 @@ main {
 .overlay {
   position: absolute;
   background: #00000077;
-  top: 0;
+  top: z;
   left: 0;
   width: 100vw;
   height: 100vh;
@@ -110,61 +109,89 @@ main {
   z-index: 9999;
   width: 100%;
   height: 100%;
-  background: rgba(40, 40, 40, 0.312);
+  background: rgba(255, 255, 255, 0.79);
   left: 0;
+  top: 0;
 }
 
-.loading-area {
-	display: grid;
-	place-items: center;
-	height: 100vh;
+/* From Uiverse.io by Donewenfu */
+.loader {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
-.loader div {
-	height: 30px;
-	width: 30px;
-	border-radius: 50%;
-	transform: scale(0);
-	animation: animate 1.5s ease-in-out infinite;
-	display: inline-block;
-	margin: .5rem;
+
+.jimu-primary-loading:before,
+.jimu-primary-loading:after {
+  position: absolute;
+  top: 0;
+  content: '';
 }
-.loader div:nth-child(0) {
-	animation-delay: 0s;
+
+.jimu-primary-loading:before {
+  left: -19.992px;
 }
-.loader div:nth-child(1) {
-	animation-delay: 0.2s;
+
+.jimu-primary-loading:after {
+  left: 19.992px;
+  -webkit-animation-delay: 0.32s !important;
+  animation-delay: 0.32s !important;
 }
-.loader div:nth-child(2) {
-	animation-delay: 0.4s;
+
+.jimu-primary-loading:before,
+.jimu-primary-loading:after,
+.jimu-primary-loading {
+  background: #076fe5;
+  -webkit-animation: loading-keys-app-loading 0.8s infinite ease-in-out;
+  animation: loading-keys-app-loading 0.8s infinite ease-in-out;
+  width: 13.6px;
+  height: 32px;
 }
-.loader div:nth-child(3) {
-	animation-delay: 0.6s;
+
+.jimu-primary-loading {
+  text-indent: -9999em;
+  margin: auto;
+  position: absolute;
+  right: calc(50% - 6.8px);
+  top: calc(50% - 16px);
+  -webkit-animation-delay: 0.16s !important;
+  animation-delay: 0.16s !important;
 }
-.loader div:nth-child(4) {
-	animation-delay: 0.8s;
+
+@-webkit-keyframes loading-keys-app-loading {
+
+  0%,
+  80%,
+  100% {
+    opacity: .75;
+    box-shadow: 0 0 #076fe5;
+    height: 32px;
+  }
+
+  40% {
+    opacity: 1;
+    box-shadow: 0 -8px #076fe5;
+    height: 40px;
+  }
 }
-.loader div:nth-child(5) {
-	animation-delay: 1s;
-}
-.loader div:nth-child(6) {
-	animation-delay: 1.2s;
-}
-.loader div:nth-child(7) {
-	animation-delay: 1.4s;
-}
-@keyframes animate {
-	0%, 100% {
-		transform: scale(0.2);
-		background-color: #96C9F4;
-	}
-	40% {
-		transform: scale(1);
-		background-color: #3FA2F6;
-	}
-	50% {
-		transform: scale(1);
-		background-color: #3FA2F6;
-	}
+
+@keyframes loading-keys-app-loading {
+
+  0%,
+  80%,
+  100% {
+    opacity: .75;
+    box-shadow: 0 0 #076fe5;
+    height: 32px;
+  }
+
+  40% {
+    opacity: 1;
+    box-shadow: 0 -8px #076fe5;
+    height: 40px;
+  }
 }
 
 

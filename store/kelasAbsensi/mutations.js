@@ -3,7 +3,6 @@ export default {
     state.selectedMapel = value
   },
   setSantri(state, value) {
-    console.log(value)
     state.santri = value
   },
   setSelect(state, value) {

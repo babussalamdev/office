@@ -91,4 +91,11 @@ export default {
 .fs-6 {
   font-size: 12px !important;
 }
+
+tr th {
+  white-space: nowrap;
+}
+tr td {
+  white-space: nowrap;
+}
 </style>

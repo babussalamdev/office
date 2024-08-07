@@ -47,7 +47,7 @@
             <td class="text-capitalize align-middle text-center">{{ data.S ? data.S : '-' }}</td>
             <td class="text-capitalize align-middle text-center">{{ data.I ? data.I : '-' }}</td>
             <td class="text-capitalize align-middle text-center">{{ data.A ? data.A : '-' }}</td>
-            <td class="text-capitalize align-middle text-center">{{ data.T + data.S + data.A + data.I }}</td>
+            <td class="text-capitalize align-middle text-center">{{ data.T + data.S + data.A + data.I  }}</td>
           </tr>
         </tbody>
       </table>
@@ -99,4 +99,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+tr th, tr td {
+  white-space: nowrap;
+}
+</style>

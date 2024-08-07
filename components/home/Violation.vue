@@ -28,7 +28,7 @@
                 'bg-primary': data?.Logs?.asrama === 'izin',
                 'bg-warning': data?.Logs?.asrama === 'sakit',
               }">
-              <!-- <span class="bg-danger"> -->
+                <!-- <span class="bg-danger"> -->
                 {{ data?.Logs?.asrama }}
               </span>
             </td>
@@ -56,7 +56,13 @@ export default {
 
 <style scoped>
 @import url(~/assets/css/dashboard/violation.css);
-h2, a {
+
+h2,
+a {
   font-size: 14px;
+}
+
+tr th, tr td {
+  white-space: nowrap;
 }
 </style>

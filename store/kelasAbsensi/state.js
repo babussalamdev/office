@@ -1,13 +1,13 @@
-// Mendapatkan tanggal hari ini
 const sekarang = new Date();
 
 // Mendapatkan tanggal, bulan, dan tahun
-const tanggal = sekarang.getDate();
-const bulan = sekarang.getMonth() + 1; // Perlu ditambah 1 karena bulan dimulai dari 0
+const tanggal = sekarang.getDate().toString().padStart(2, '0');
+const bulan = (sekarang.getMonth() + 1).toString().padStart(2, '0');
 const tahun = sekarang.getFullYear();
 
 // Membuat string untuk tanggal dengan format "DD/MM/YYYY"
-const tanggalDalamFormat = `${tanggal}/${bulan}/${tahun}`;
+const date = `${tahun}-${bulan}-${tanggal}`;
+
 export default () => ({
     santri: [],
     permissions: [],
@@ -15,6 +15,6 @@ export default () => ({
     pagi: '',
     sore: '',
     updateData: '',
-    date: tanggalDalamFormat,
+    date: date,
     selectedMapel: ''
 })

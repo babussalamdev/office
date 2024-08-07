@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
 export default {
-  async changeUnit({ commit, state }, data) {
+  async changeUnit({ commit, state, dispatch }, data) {
+    dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
     const reqSantri = this.$apiSantri.$get(
       `get-santri-sisalam?subject=${state.angkatan}&program=${program}&opsi=kelas`
@@ -10,6 +11,7 @@ export default {
 
     commit('setSantri', resSantri);
     commit('setKelas', resKelas);
+    dispatch('index/submitLoad', null, { root: true })
   },
   async updateDataSantriKelas({ commit, state }, event) {
     commit('btn')

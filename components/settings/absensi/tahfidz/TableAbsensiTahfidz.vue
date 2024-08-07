@@ -34,127 +34,61 @@
               </td>
               <!-- pagi -->
               <td class="text-capitalize py-2">
-                <!-- <div v-if="data.Logs?.halaqahPagiTime?.split(', ')[0] === date || !data.Logs?.halaqahPagiTime"
-                  class="select-input mx-auto">
-                  <div class="box-radio">
-                    <button @click="setAbsensi(data.SK, 'absen', 'Pagi', data.Logs?.halaqahPagi)"
-                      :class="!data.Logs.halaqahPagi || data.Logs.halaqahPagi === '' ? 'bg-white' : data.Logs.halaqahPagi === 'absen' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="data.Logs.halaqahPagi && (data.Logs.halaqahPagi !== '' && data.Logs.halaqahPagi !== 'absen') ? true : false">Absen</button>
-                  </div>
-                  <div class="box-radio">
-                    <button @click="setAbsensi(data.SK, 'terlambat', 'Pagi', data.Logs?.halaqahPagi)"
-                      :class="!data.Logs.halaqahPagi || data.Logs.halaqahPagi === '' ? 'bg-white' : data.Logs.halaqahPagi === 'terlambat' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="data.Logs.halaqahPagi && (data.Logs.halaqahPagi !== '' && data.Logs.halaqahPagi !== 'terlambat') ? true : false">Terlambat</button>
-                  </div>
-                  <div class="box-radio">
-                    <button @click="setAbsensi(data.SK, 'sakit', 'Pagi', data.Logs?.halaqahPagi)"
-                      :class="!data.Logs.halaqahPagi || data.Logs.halaqahPagi === '' ? 'bg-white' : data.Logs.halaqahPagi === 'sakit' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="data.Logs.halaqahPagi && (data.Logs.halaqahPagi !== '' && data.Logs.halaqahPagi !== 'sakit') ? true : false">Sakit</button>
-                  </div>
-                  <div class="box-radio">
-                    <button @click="setAbsensi(data.SK, 'izin', 'Pagi', data.Logs?.halaqahPagi)"
-                      :class="!data.Logs.halaqahPagi || data.Logs.halaqahPagi === '' ? 'bg-white' : data.Logs.halaqahPagi === 'izin' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="data.Logs.halaqahPagi && (data.Logs.halaqahPagi !== '' && data.Logs.halaqahPagi !== 'izin') ? true : false">Izin</button>
-                  </div>
-                </div> -->
                 <div class="select-input mx-auto">
                   <div class="box-radio">
                     <button
-                      @click="setAbsensi(data.SK, 'absen', 'Pagi', data.Logs?.halaqahPagi, data.Logs?.halaqahPagiTime?.split(', ')[0])"
-                      :class="(!data.Logs?.halaqahPagi || (data.Logs?.halaqahPagi === '' && data.Logs?.halaqahPagiTime?.split(', ')[0] === date)) ? 'bg-white' : (data.Logs?.halaqahPagi && data.Logs?.halaqahPagiTime?.split(', ')[0] !== date) ? 'bg-white' : data.Logs?.halaqahPagi === 'absen' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.Logs?.halaqahPagi && data.Logs?.halaqahPagiTime?.split(', ')[0] === date && (data.Logs?.halaqahPagi !== '' && data.Logs?.halaqahPagi !== 'absen')) ? true : false">Absen</button>
+                      @click="setAbsensi(data.SK, 'absen', 'Pagi', data.Logs?.halaqahPagi, data.Logs?.halaqahPagiTime?.split(' ')[0])"
+                      :class="(!data.Logs?.halaqahPagi || (data.Logs?.halaqahPagi === '' && data.Logs?.halaqahPagiTime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.halaqahPagi && data.Logs?.halaqahPagiTime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.halaqahPagi === 'absen' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="(data.Logs?.halaqahPagi && data.Logs?.halaqahPagiTime?.split(' ')[0] === date && (data.Logs?.halaqahPagi !== '' && data.Logs?.halaqahPagi !== 'absen')) ? true : false">Absen</button>
                   </div>
                   <div class="box-radio">
                     <button
-                      @click="setAbsensi(data.SK, 'terlambat', 'Pagi', data.Logs?.halaqahPagi, data.Logs?.halaqahPagiTime?.split(', ')[0])"
-                      :class="(!data.Logs?.halaqahPagi || (data.Logs?.halaqahPagi === '' && data.Logs?.halaqahPagiTime?.split(', ')[0] === date)) ? 'bg-white' : (data.Logs?.halaqahPagi && data.Logs?.halaqahPagiTime?.split(', ')[0] !== date) ? 'bg-white' : data.Logs?.halaqahPagi === 'terlambat' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.Logs?.halaqahPagi && data.Logs?.halaqahPagiTime?.split(', ')[0] === date && (data.Logs?.halaqahPagi !== '' && data.Logs?.halaqahPagi !== 'terlambat')) ? true : false">Terlambat</button>
+                      @click="setAbsensi(data.SK, 'terlambat', 'Pagi', data.Logs?.halaqahPagi, data.Logs?.halaqahPagiTime?.split(' ')[0])"
+                      :class="(!data.Logs?.halaqahPagi || (data.Logs?.halaqahPagi === '' && data.Logs?.halaqahPagiTime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.halaqahPagi && data.Logs?.halaqahPagiTime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.halaqahPagi === 'terlambat' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="(data.Logs?.halaqahPagi && data.Logs?.halaqahPagiTime?.split(' ')[0] === date && (data.Logs?.halaqahPagi !== '' && data.Logs?.halaqahPagi !== 'terlambat')) ? true : false">Terlambat</button>
                   </div>
                   <div class="box-radio">
                     <button
-                      @click="setAbsensi(data.SK, 'sakit', 'Pagi', data.Logs?.halaqahPagi, data.Logs?.halaqahPagiTime?.split(', ')[0])"
-                      :class="(!data.Logs?.halaqahPagi || (data.Logs?.halaqahPagi === '' && data.Logs?.halaqahPagiTime?.split(', ')[0] === date)) ? 'bg-white' : (data.Logs?.halaqahPagi && data.Logs?.halaqahPagiTime?.split(', ')[0] !== date) ? 'bg-white' : data.Logs?.halaqahPagi === 'sakit' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.Logs?.halaqahPagi && data.Logs?.halaqahPagiTime?.split(', ')[0] === date && (data.Logs?.halaqahPagi !== '' && data.Logs?.halaqahPagi !== 'sakit')) ? true : false">Sakit</button>
+                      @click="setAbsensi(data.SK, 'sakit', 'Pagi', data.Logs?.halaqahPagi, data.Logs?.halaqahPagiTime?.split(' ')[0])"
+                      :class="(!data.Logs?.halaqahPagi || (data.Logs?.halaqahPagi === '' && data.Logs?.halaqahPagiTime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.halaqahPagi && data.Logs?.halaqahPagiTime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.halaqahPagi === 'sakit' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="(data.Logs?.halaqahPagi && data.Logs?.halaqahPagiTime?.split(' ')[0] === date && (data.Logs?.halaqahPagi !== '' && data.Logs?.halaqahPagi !== 'sakit')) ? true : false">Sakit</button>
                   </div>
                   <div class="box-radio">
                     <button
-                      @click="setAbsensi(data.SK, 'izin', 'Pagi', data.Logs?.halaqahPagi, data.Logs?.halaqahPagiTime?.split(', ')[0])"
-                      :class="(!data.Logs?.halaqahPagi || (data.Logs?.halaqahPagi === '' && data.Logs?.halaqahPagiTime?.split(', ')[0] === date)) ? 'bg-white' : (data.Logs?.halaqahPagi && data.Logs?.halaqahPagiTime?.split(', ')[0] !== date) ? 'bg-white' : data.Logs?.halaqahPagi === 'izin' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.Logs?.halaqahPagi && data.Logs?.halaqahPagiTime?.split(', ')[0] === date && (data.Logs?.halaqahPagi !== '' && data.Logs?.halaqahPagi !== 'izin')) ? true : false">Izin</button>
+                      @click="setAbsensi(data.SK, 'izin', 'Pagi', data.Logs?.halaqahPagi, data.Logs?.halaqahPagiTime?.split(' ')[0])"
+                      :class="(!data.Logs?.halaqahPagi || (data.Logs?.halaqahPagi === '' && data.Logs?.halaqahPagiTime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.halaqahPagi && data.Logs?.halaqahPagiTime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.halaqahPagi === 'izin' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="(data.Logs?.halaqahPagi && data.Logs?.halaqahPagiTime?.split(' ')[0] === date && (data.Logs?.halaqahPagi !== '' && data.Logs?.halaqahPagi !== 'izin')) ? true : false">Izin</button>
                   </div>
                 </div>
               </td>
 
               <!-- sore -->
               <td class="text-capitalize py-2">
-                <!-- <div v-if="data.Logs?.halaqahSoreTime?.split(', ')[0] === date || !data.Logs?.halaqahSoreTime"
-                  class="select-input mx-auto">
-                  <div class="box-radio">
-                    <button @click="setAbsensi(data.SK, 'absen', 'Sore', data.Logs?.halaqahSore)"
-                      :class="!data.Logs.halaqahSore || data.Logs.halaqahSore === '' ? 'bg-white' : data.Logs.halaqahSore === 'absen' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="data.Logs.halaqahSore && (data.Logs.halaqahSore !== '' && data.Logs.halaqahSore !== 'absen') ? true : false">Absen</button>
-                  </div>
-                  <div class="box-radio">
-                    <button @click="setAbsensi(data.SK, 'terlambat', 'Sore', data.Logs?.halaqahSore)"
-                      :class="!data.Logs.halaqahSore || data.Logs.halaqahSore === '' ? 'bg-white' : data.Logs.halaqahSore === 'terlambat' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="data.Logs.halaqahSore && (data.Logs.halaqahSore !== '' && data.Logs.halaqahSore !== 'terlambat') ? true : false">Terlambat</button>
-                  </div>
-                  <div class="box-radio">
-                    <button @click="setAbsensi(data.SK, 'sakit', 'Sore', data.Logs?.halaqahSore)"
-                      :class="!data.Logs.halaqahSore || data.Logs.halaqahSore === '' ? 'bg-white' : data.Logs.halaqahSore === 'sakit' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="data.Logs.halaqahSore && (data.Logs.halaqahSore !== '' && data.Logs.halaqahSore !== 'sakit') ? true : false">Sakit</button>
-                  </div>
-                  <div class="box-radio">
-                    <button @click="setAbsensi(data.SK, 'izin', 'Sore', data.Logs?.halaqahSore)"
-                      :class="!data.Logs.halaqahSore || data.Logs.halaqahSore === '' ? 'bg-white' : data.Logs.halaqahSore === 'izin' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="data.Logs.halaqahSore && (data.Logs.halaqahSore !== '' && data.Logs.halaqahSore !== 'izin') ? true : false">Izin</button>
-                  </div>
-                </div> -->
                 <div class="select-input mx-auto">
                   <div class="box-radio">
                     <button
-                      @click="setAbsensi(data.SK, 'absen', 'Sore', data.Logs?.halaqahSore, data.Logs?.halaqahSoreTime?.split(', ')[0])"
-                      :class="(!data.Logs?.halaqahSore || (data.Logs?.halaqahSore === '' && data.Logs?.halaqahSoreTime?.split(', ')[0] === date)) ? 'bg-white' : (data.Logs?.halaqahSore && data.Logs?.halaqahSoreTime?.split(', ')[0] !== date) ? 'bg-white' : data.Logs?.halaqahSore === 'absen' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      @click="setAbsensi(data.SK, 'absen', 'Sore', data.Logs?.halaqahSore, data.Logs?.halaqahSoreTime?.split(' ')[0])"
+                      :class="(!data.Logs?.halaqahSore || (data.Logs?.halaqahSore === '' && data.Logs?.halaqahSoreTime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.halaqahSore && data.Logs?.halaqahSoreTime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.halaqahSore === 'absen' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
                       :disabled="(data.Logs?.halaqahSore && data.Logs?.halaqahSoreTime?.split(', ')[0] === date && (data.Logs?.halaqahSore !== '' && data.Logs?.halaqahSore !== 'absen')) ? true : false">Absen</button>
                   </div>
                   <div class="box-radio">
                     <button
-                      @click="setAbsensi(data.SK, 'terlambat', 'Sore', data.Logs?.halaqahSore, data.Logs?.halaqahSoreTime?.split(', ')[0])"
-                      :class="(!data.Logs?.halaqahSore || (data.Logs?.halaqahSore === '' && data.Logs?.halaqahSoreTime?.split(', ')[0] === date)) ? 'bg-white' : (data.Logs?.halaqahSore && data.Logs?.halaqahSoreTime?.split(', ')[0] !== date) ? 'bg-white' : data.Logs?.halaqahSore === 'terlambat' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      @click="setAbsensi(data.SK, 'terlambat', 'Sore', data.Logs?.halaqahSore, data.Logs?.halaqahSoreTime?.split(' ')[0])"
+                      :class="(!data.Logs?.halaqahSore || (data.Logs?.halaqahSore === '' && data.Logs?.halaqahSoreTime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.halaqahSore && data.Logs?.halaqahSoreTime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.halaqahSore === 'terlambat' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
                       :disabled="(data.Logs?.halaqahSore && data.Logs?.halaqahSoreTime?.split(', ')[0] === date && (data.Logs?.halaqahSore !== '' && data.Logs?.halaqahSore !== 'terlambat')) ? true : false">Terlambat</button>
                   </div>
                   <div class="box-radio">
                     <button
-                      @click="setAbsensi(data.SK, 'sakit', 'Sore', data.Logs?.halaqahSore, data.Logs?.halaqahSoreTime?.split(', ')[0])"
-                      :class="(!data.Logs?.halaqahSore || (data.Logs?.halaqahSore === '' && data.Logs?.halaqahSoreTime?.split(', ')[0] === date)) ? 'bg-white' : (data.Logs?.halaqahSore && data.Logs?.halaqahSoreTime?.split(', ')[0] !== date) ? 'bg-white' : data.Logs?.halaqahSore === 'sakit' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      @click="setAbsensi(data.SK, 'sakit', 'Sore', data.Logs?.halaqahSore, data.Logs?.halaqahSoreTime?.split(' ')[0])"
+                      :class="(!data.Logs?.halaqahSore || (data.Logs?.halaqahSore === '' && data.Logs?.halaqahSoreTime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.halaqahSore && data.Logs?.halaqahSoreTime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.halaqahSore === 'sakit' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
                       :disabled="(data.Logs?.halaqahSore && data.Logs?.halaqahSoreTime?.split(', ')[0] === date && (data.Logs?.halaqahSore !== '' && data.Logs?.halaqahSore !== 'sakit')) ? true : false">Sakit</button>
                   </div>
                   <div class="box-radio">
                     <button
-                      @click="setAbsensi(data.SK, 'izin', 'Sore', data.Logs?.halaqahSore, data.Logs?.halaqahSoreTime?.split(', ')[0])"
-                      :class="(!data.Logs?.halaqahSore || (data.Logs?.halaqahSore === '' && data.Logs?.halaqahSoreTime?.split(', ')[0] === date)) ? 'bg-white' : (data.Logs?.halaqahSore && data.Logs?.halaqahSoreTime?.split(', ')[0] !== date) ? 'bg-white' : data.Logs?.halaqahSore === 'izin' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      @click="setAbsensi(data.SK, 'izin', 'Sore', data.Logs?.halaqahSore, data.Logs?.halaqahSoreTime?.split(' ')[0])"
+                      :class="(!data.Logs?.halaqahSore || (data.Logs?.halaqahSore === '' && data.Logs?.halaqahSoreTime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.halaqahSore && data.Logs?.halaqahSoreTime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.halaqahSore === 'izin' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
                       :disabled="(data.Logs?.halaqahSore && data.Logs?.halaqahSoreTime?.split(', ')[0] === date && (data.Logs?.halaqahSore !== '' && data.Logs?.halaqahSore !== 'izin')) ? true : false">Izin</button>
                   </div>
-                  <!-- <div class="box-radio">
-                    <button @click="setAbsensi(data.SK, 'absen', 'Sore', data.Logs?.halaqahSore)"
-                      :class="!data.Logs.halaqahSore || data.Logs.halaqahSore === '' ? 'bg-white' : data.Logs.halaqahSore === 'absen' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="data.Logs.halaqahSore && (data.Logs.halaqahSore !== '' && data.Logs.halaqahSore !== 'absen') ? true : false">Absen</button>
-                  </div>
-                  <div class="box-radio">
-                    <button @click="setAbsensi(data.SK, 'terlambat', 'Sore', data.Logs?.halaqahSore)"
-                      :class="!data.Logs.halaqahSore || data.Logs.halaqahSore === '' ? 'bg-white' : data.Logs.halaqahSore === 'terlambat' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="data.Logs.halaqahSore && (data.Logs.halaqahSore !== '' && data.Logs.halaqahSore !== 'terlambat') ? true : false">Terlambat</button>
-                  </div>
-                  <div class="box-radio">
-                    <button @click="setAbsensi(data.SK, 'sakit', 'Sore', data.Logs?.halaqahSore)"
-                      :class="!data.Logs.halaqahSore || data.Logs.halaqahSore === '' ? 'bg-white' : data.Logs.halaqahSore === 'sakit' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="data.Logs.halaqahSore && (data.Logs.halaqahSore !== '' && data.Logs.halaqahSore !== 'sakit') ? true : false">Sakit</button>
-                  </div>
-                  <div class="box-radio">
-                    <button @click="setAbsensi(data.SK, 'izin', 'Sore', data.Logs?.halaqahSore)"
-                      :class="!data.Logs.halaqahSore || data.Logs.halaqahSore === '' ? 'bg-white' : data.Logs.halaqahSore === 'izin' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="data.Logs.halaqahSore && (data.Logs.halaqahSore !== '' && data.Logs.halaqahSore !== 'izin') ? true : false">Izin</button>
-                  </div> -->
                 </div>
               </td>
             </tr>
@@ -172,58 +106,10 @@ export default {
   data() {
     return {
       selectKelas: "",
-      // datas: [
-      //   {
-      //     name: 'Fauzan Gunawan',
-      //     nis: 154814841,
-      //     sk: 'santri#21546'
-      //   }
-      // ]
     };
   },
   computed: {
     ...mapState("tahfidzAbsensi", ["santri", "permissions", "select", 'date', 'updateData']),
-    // ...mapGetters('tahfidzAbsensi', ['getAbsenPagi', 'getSore']),
-    // pagi: {
-    //   get() {
-    //     return this.getAbsenPagi
-    //   },
-    //   set(value) {
-    //     const obj = {
-    //       name: 'pagi',
-    //       value
-    //     }
-    //     this.$store.commit('tahfidzAbsensi/setStatus', obj)
-    //   }
-    // },
-    // sore: {
-    //   get() {
-    //     return this.getSore
-    //   },
-    //   set(value) {
-    //     const obj = {
-    //       name: 'sore',
-    //       value
-    //     }
-    //     this.$store.commit('tahfidzAbsensi/setStatus', obj)
-    //   }
-    // }
-  },
-  watch: {
-    // absenPagi() {
-    //   // this.setStatus('pagi')
-    //   // absen(index, type) {
-    //   this.absenPagi = false
-    //   $("#modalAbsen").modal("show");
-    //   // this.updateData = {
-    //   //   santri: this.santri[index],
-    //   //   type: type,
-    //   // };
-    // // },
-    // },
-    // sore() {
-    //   this.setStatus('sore')
-    // }
   },
   methods: {
     ...mapActions('tahfidzAbsensi', ['setStatus', 'deleteStatus']),

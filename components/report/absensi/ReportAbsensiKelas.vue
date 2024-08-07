@@ -3,11 +3,10 @@
     <div class="row mb-3">
       <div class="col-12 col-md-6 mb-2 mb-md-0">
         <div class="input-group d-flex align-items-center">
-          <span class="input-group-text bg-secondary text-white" id="basic-addon1">{{ dummy.length }} Santri</span>
+          <span class="input-group-text bg-secondary text-white" id="basic-addon1">{{ santri.length }} Santri</span>
           <button class="btn btn-success border-0">Export</button>
         </div>
       </div>
-      {{ start }}
       <div class="col-12 col-md-6 d-flex justify-content-end">
         <div class="input-group">
           <span class="input-group-text" id="basic-addon1">From</span>
@@ -44,7 +43,6 @@
         </tbody>
       </table>
     </div>
-    {{ santri }}
   </div>
 </template>
 
@@ -52,32 +50,6 @@
 import { formatDate } from '@fullcalendar/core';
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 export default {
-  data() {
-    return {
-      dummy: [
-        {
-          Nama: "Muhammad Fauzan Gunawan",
-          Awal: 'Annaba:30',
-          Akhir: 'Annaziat:30',
-          Baru: '23',
-          T: 0,
-          S: 2,
-          I: 1,
-          A: 3,
-        },
-        {
-          Nama: "Yazid Gunawan",
-          Awal: 'Annaba:29',
-          Akhir: 'Annaziat:40',
-          Baru: '42',
-          T: 1,
-          S: 3,
-          I: 1,
-          A: 0,
-        },
-      ],
-    };
-  },
   watch: {
     start() {
       this.changeUnit()
@@ -122,4 +94,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+tr th, tr td {
+  white-space: nowrap;
+}
+</style>

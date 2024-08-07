@@ -1,31 +1,12 @@
 <template>
   <div class="animate__animated animate__fadeInUp">
     <h2 class="mb-3 mb-md-3">Nilai Mapel</h2>
-    <div class="head row mb-3">
-      <div class="col-12 col-md-4 d-flex flex-column flex-md-row gap-4 gap-md-0 mb-3 mb-md-0">
-        <div class="input-group">
-          <select class="form-select" aria-label="Default select example" v-model="selectedMapel" @change="addNewData">
-            <option value="" selected disabled>Mapel</option>
-            <option v-for="(data, index) in mapel" :key="index" :value="data">{{ data.Nama }}</option>
-          </select>
-          <button class="btn btn-success border-0">Export</button>
-          <!-- <select class="form-select" aria-label="Default select example" v-model="selectedKelas" @change="applyFilter">
-            <option value="" selected>Kelas</option>
-            <option v-for="(data, index) in uniqueClasses" :key="index" :value="data">
-              {{ data }}
-            </option>
-          </select>
-          <select class="form-select" aria-label="Default select example" v-model="selectedMapel" @change="addNewData">
-            <option value="" selected>Mapel</option>
-            <option v-for="(value, i) in uniqueLesson" :key="i" :value="value">
-              {{ value.Nama }}
-            </option>
-          </select>
-          <span class="input-group-text">
-            {{ selectedMapel?.Jurusan }}
-          </span> -->
-        </div>
-      </div>
+    <div class="d-flex justify-content-between mb-3 w-auto">
+      <select class="form-select" aria-label="Default select example" v-model="selectedMapel" @change="addNewData">
+        <option value="" selected disabled>Mapel</option>
+        <option v-for="(data, index) in mapel" :key="index" :value="data">{{ data.Nama }}</option>
+      </select>
+      <button class="btn btn-success border-0">Export</button>
     </div>
     <div class="table-responsive" ref="input">
       <table class="table table-hover table-striped">
@@ -149,9 +130,9 @@ a {
   font-size: 12px;
 }
 
-select {
+.form-select {
   font-size: 12px;
-  width: fit-content !important;
+  width: max-content !important;
 }
 
 span {
@@ -173,11 +154,5 @@ button {
 
 input {
   padding: 5px;
-}
-
-@media screen and (max-width: 576px) {
-  select {
-    width: 100% !important;
-  }
 }
 </style>
