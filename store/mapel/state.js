@@ -8,6 +8,7 @@ export default () => ({
   Penilaian: [],
   btn: true,
   value: [],
+  statusNilai: '',
   options: [
     { name: "senin-1", code: 0 },
     { name: "senin-2", code: 1 },

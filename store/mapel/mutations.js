@@ -100,4 +100,7 @@ export default {
   //     state.mapel[i].Penilaian = penilaianArray
   //   }
   // }
+  setState(state, value) {
+    state[value.key] = value.value
+  }
 }

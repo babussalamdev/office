@@ -13,8 +13,8 @@ export default {
       subject = 'kelas'
     }
 
-    const result = await this.$axios.$get(
-      `get-pelanggaran?subject=${subject}&program=${program}&jabatan=${jabatan}&asrama=${asrama}&kelas=${kelas}`
+    const result = await this.$apiSantri.$get(
+      `get-pelanggaran-sisalam?subject=${subject}&program=${program}&jabatan=${jabatan}&asrama=${asrama}&kelas=${kelas}`
     );
 
     result['select'] = []

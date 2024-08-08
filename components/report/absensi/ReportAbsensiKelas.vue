@@ -7,14 +7,14 @@
           <button class="btn btn-success border-0">Export</button>
         </div>
       </div>
-      <div class="col-12 col-md-6 d-flex justify-content-end">
+      <!-- <div class="col-12 col-md-6 d-flex justify-content-end">
         <div class="input-group">
           <span class="input-group-text" id="basic-addon1">From</span>
           <input type="date" class="form-control" v-model="start">
           <span class="input-group-text" id="basic-addon1">To</span>
           <input type="date" class="form-control" v-model="end">
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="table-responsive animate__animated animate__fadeInUp">
       <table class="table table-hover table-striped">

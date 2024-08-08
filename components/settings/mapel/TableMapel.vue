@@ -9,6 +9,7 @@
             <th scope="col">Jurusan</th>
             <th scope="col">Hari</th>
             <th scope="col">Penilaian</th>
+            <th scope="col">Status</th>
             <th scope="col" class="text-end">Action</th>
           </tr>
         </thead>
@@ -37,7 +38,13 @@
                 </div>
               </div>
             </td>
+            <td scope="row">{{ data.Status }}</td>
             <td class="text-end">
+              <a href="javascript:;" v-if="data.Status === 'close'">
+                <button class="btn btn-sm btn-success">
+                  <i class='bx bx-download'></i>
+                </button>
+              </a>
               <a href="javascript:;" @click="inputScore(data.SK)">
                 <button class="btn btn-sm btn-primary">
                   <i class="bx bx-plus"></i>
@@ -95,7 +102,9 @@ export default {
 tr th {
   white-space: nowrap;
 }
+
 tr td {
   white-space: nowrap;
 }
+
 </style>

@@ -2,13 +2,7 @@
   <div class="animate__animated animate__fadeInUp">
     <div class="head d-flex align-items-center mb-3 justify-content-between">
       <h2 class="mb-3 mb-md-0">Table Data Pelanggaran</h2>
-      <select
-        v-if="select.length > 0"
-        class="form-select"
-        name="Kelas"
-        @change="getAbsensi"
-        v-model="selectKelas"
-      >
+      <select v-if="select.length > 0" class="form-select" name="Kelas" @change="getAbsensi" v-model="selectKelas">
         <option value="" selected>-- Kelas --</option>
         <option v-for="(data, index) in select" :key="index" :value="data">
           {{ data }}
@@ -46,21 +40,15 @@
               {{ data.JumlahPelanggaran ? data.JumlahPelanggaran : "-" }}
             </td>
             <td class="text-capitalize align-middle text-end">
-              <nuxt-link
-                :to="`pelanggaran/${data.SK.split('#')[1]}`"
-                class="btn btn-sm btn-warning text-xss me-1 text-white rounded-2"
-              >
+              <nuxt-link :to="`pelanggaran/${data.SK.split('#')[1]}`"
+                class="btn btn-sm btn-warning text-xss me-1 text-white rounded-2">
                 Record
               </nuxt-link>
               <!-- <i
                 class="btn btn-sm btn-warning text-xs me-1 text-white rounded-2"
                 >Record</i
               > -->
-              <i
-                @click="input(index)"
-                class="btn btn-sm btn-primary text-xs text-white rounded-2"
-                >Input</i
-              >
+              <i @click="input(index)" class="btn btn-sm btn-primary text-xs text-white rounded-2">Input</i>
             </td>
           </tr>
         </tbody>
@@ -129,10 +117,12 @@ export default {
 a {
   font-size: 12px;
 }
+
 select {
   font-size: 12px;
   width: 100px;
 }
+
 @media screen and (max-width: 576px) {
   select {
     width: 100% !important;

@@ -35,6 +35,20 @@
                   placeholder="Search or add a tag" label="name" track-by="code" :options="options" :multiple="true"
                   :taggable="true" @tag="addTag" required></multiselect>
               </div>
+              <div class="mb-3">
+                <label for="nilai" class="form-label">Status Input Nilai</label>{{ status }}
+                <input name="Status" type="text" class="form-control" id="nilai" :value="updateData?.Status" required />
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="status"
+                    value="open">
+                  <label class="form-check-label" for="inlineRadio1">1</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" v-model="status"
+                    value="close">
+                  <label class="form-check-label" for="inlineRadio2">2</label>
+                </div>
+              </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -122,15 +136,30 @@ export default {
     Multiselect,
   },
 
+  data() {
+    return {
+      status: ''
+    }
+  },
+
   computed: {
     ...mapState("mapel", ["kelas", "jurusan", "selectKelas", 'btn', 'value', 'options', 'updateData']),
-    ...mapGetters('mapel', ['getValue']),
+    ...mapGetters('mapel', ['getValue', 'getStatus']),
     value: {
       get() {
         return this.getValue
       },
       set(value) {
         this.$store.commit('mapel/setValue', value)
+      }
+    },
+    status: {
+      get() {
+        return this.getStatus
+      },
+      set(value) {
+        const obj = { key: 'statusNilai', value}
+        this.$store.commit('mapel/setState', obj)
       }
     }
   },
