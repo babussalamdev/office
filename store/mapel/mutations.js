@@ -42,6 +42,7 @@ export default {
 
     $("#updateDataMapel").modal("show");
     state.updateData = state.mapel[i];
+    state.statusNilai = state.updateData.Status
   },
   updateMapel(state, value) {
     const sk = value.SK.replace(/%23/g, "#")
@@ -53,6 +54,7 @@ export default {
     data.Kelas = value.Kelas;
     data.Jurusan = value.Jurusan;
     data.Hari = value.Hari
+    data.Status = value.Status
 
     state.value = [];
     $("#updateMapel")[0].reset();

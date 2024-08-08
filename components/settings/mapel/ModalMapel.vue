@@ -37,16 +37,17 @@
               </div>
               <div class="mb-3">
                 <label for="nilai" class="form-label">Status Input Nilai</label>{{ status }}
-                <input name="Status" type="text" class="form-control" id="nilai" :value="updateData?.Status" required />
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="status"
-                    value="open">
-                  <label class="form-check-label" for="inlineRadio1">1</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" v-model="status"
-                    value="close">
-                  <label class="form-check-label" for="inlineRadio2">2</label>
+                <div class="mb-3 d-flex">
+                  <div class="form-check form-check-inline d-flex align-items-center gap-1 p-0">
+                    <input class="form-check-input m-0" type="radio" name="Status" id="inlineRadio1" :checked="updateData.Status === 'open'"
+                      value="open">
+                    <label class="form-check-label" for="inlineRadio1">Open</label>
+                  </div>
+                  <div class="form-check form-check-inline  d-flex align-items-center gap-1  p-0">
+                    <input class="form-check-input m-0" type="radio" name="Status" id="inlineRadio2" :checked="updateData.Status === 'close'"
+                      value="close">
+                    <label class="form-check-label" for="inlineRadio2">Close</label>
+                  </div>
                 </div>
               </div>
             </div>
@@ -135,15 +136,8 @@ export default {
   components: {
     Multiselect,
   },
-
-  data() {
-    return {
-      status: ''
-    }
-  },
-
   computed: {
-    ...mapState("mapel", ["kelas", "jurusan", "selectKelas", 'btn', 'value', 'options', 'updateData']),
+    ...mapState("mapel", ["kelas", "jurusan", "selectKelas", 'btn', 'value', 'options', 'updateData', 'statusNilai']),
     ...mapGetters('mapel', ['getValue', 'getStatus']),
     value: {
       get() {

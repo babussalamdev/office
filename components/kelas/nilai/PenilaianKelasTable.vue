@@ -22,9 +22,19 @@
         </div>
       </div>
       <div class="col-12 col-md-5 d-flex align-items-center justify-content-end gap-3">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Recipient's username">
-          <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
+        <div  v-if="selectedMapel.Status === 'close'" class="input-group input-excel">
+          <input type="file" class="form-control form-control-sm" id="inputGroupFile04"
+            aria-describedby="inputGroupFileAddon04" aria-label="Upload" ref="fileInput" />
+          <span>
+            <button v-if="btn2" class="btn btn-sm btn-success" type="button" id="inputGroupFileAddon04"
+              @click="handleUpload(selectedMapel)">
+              Tambah
+            </button>
+            <button v-else class="btn btn-success btn-sm" type="button" disabled>
+              <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+              <span class="visually-hidden" role="status">Loading...</span>
+            </button>
+          </span>
         </div>
 
       </div>
@@ -36,7 +46,7 @@
             <th class="text-uppercase" v-for="(value, key) in th" :key="key">{{ key }}</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody v-if="selectedMapel.Status !== 'close'">
           <tr v-for="(data, index) in santri" :key="index">
             <td class="text-capitalize align-middle">
               <h1>{{ data.Nama }}</h1>
@@ -60,11 +70,13 @@
 </template>
 
 <script>
+import Swal from "sweetalert2";
 import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
 export default {
   data() {
     return {
       btn: true,
+      btn2: true,
       selectedKelas: "",
       periode: "",
       radio: "none",
@@ -174,67 +186,76 @@ export default {
       const obj = { index, i, key }
       this.setPenilaian(obj)
     },
-    // async getNilai() {
-    //   const data = {
-    //     kelas: this.kelas,
-    //     mapel: this.mapel.Nama,
-    //     jurusan: this.mapel.Jurusan,
-    //     periode: `${this.periode.periode} ${this.periode.semester}`,
-    //   };
-    //   this.$store.dispatch("kelas/getNilai", data);
-    // },
-    // async selectPeriode() {
-    //   this.$store.dispatch("kelas/selectPeriode");
-    // },
-    // async selectMapel() {
-    //   this.$store.dispatch("kelas/selectMapel", this.kelas);
-    // },
     async input(index) {
       $("#inputModal").modal("show");
       const updateData = this.santri[index];
       this.$store.commit("pelanggaran/updateData", updateData);
     },
-    // async update(index, field) {
-    //   const data = {
-    //     index: index,
-    //     field: field,
-    //     value: this.dummy[index][field],
-    //   };
-    //   console.log(data);
-    // },
-    // kelasLoad() {
-    //   const program = localStorage.getItem("program");
-    //   const data = {
-    //     program: program,
-    //     kelas: this.kelas,
-    //   };
-    //   this.$store.dispatch(`santri/asrama/loadAsrama`, data);
-    // },
-    // async editItem(index) {
-    //   $("#updateDataSantriKelas").modal("show");
-    //   this.updateData = this.santri[index];
-    // },
-    // selectAllCheckbox() {
-    //   for (const item of this.santri) {
-    //     this.$set(this.selectedItems, item.SK, this.selectAll);
-    //   }
-    //   this.getCheckedNames();
-    // },
-    // getCheckedNames() {
-    //   const checkedNames = Object.keys(this.selectedItems).filter(
-    //     (key) => this.selectedItems[key]
-    //   );
-    //   this.data = checkedNames;
-    // },
-    // async editBulk(index) {
-    //   $("#updateDataSantriAsrama").modal("show");
-    //   this.updateData = this.data;
-    // },
-    // resetSelect() {
-    //   this.data = [];
-    //   this.selectAll = false;
-    //   this.selectedItems = {};
-    // },
+    async handleUpload(selected) {
+      const file = this.$refs.fileInput.files[0]; // Dapatkan file dari input file
+      const reader = new FileReader();
+
+      // Validasi jenis file
+      if (
+        file &&
+        file.type !==
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      ) {
+        // Tampilkan notifikasi menggunakan Sweet Alert jika jenis file tidak sesuai
+        Swal.fire({
+          icon: "error",
+          title: "Invalid File Type",
+          text: "Only .xlsx files are allowed",
+        });
+        return; // Hentikan eksekusi jika jenis file tidak sesuai
+      }
+
+      reader.onload = async () => {
+        this.btn2 = false;
+        try {
+          const base64String = reader.result.split(",")[1];
+          const program = localStorage.getItem("program");
+          const request = { formData: base64String }
+          const subject = selected.Nama
+          const sk = selected.SK.replace(/#/g, '%23')
+          const kelas = selected.Kelas
+          const data = await this.$apiBase.$put(
+            `upload-mapel?type=mapel&subject=${subject}&sk=${sk}&program=${program}&kelas=${kelas}`, request
+          )
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            text: "Data berhasil diinput",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          // this.$store.commit("santri/database/inputSantriBulk", data);
+          this.btn2 = true;
+        } catch (error) {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            text: "Data gagal diinput, Mohon periksa kembali!",
+            showConfirmButton: false,
+            timer: 2000,
+          });
+          this.btn2 = true;
+          console.log(error);
+        }
+      };
+
+      // Periksa apakah file telah dipilih
+      if (file) {
+        reader.readAsDataURL(file); // Baca konten file sebagai data URL
+      } else {
+        // Tampilkan notifikasi jika file belum dipilih
+        Swal.fire({
+          icon: "error",
+          title: "File Not Selected",
+          text: "Please select a file",
+        });
+      }
+    },
   },
 };
 </script>
@@ -268,6 +289,10 @@ button {
 
 input {
   padding: 5px;
+}
+
+.input-excel input {
+  padding: 6px 12px;
 }
 
 @media screen and (max-width: 576px) {

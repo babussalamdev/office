@@ -40,7 +40,7 @@
             </td>
             <td scope="row">{{ data.Status }}</td>
             <td class="text-end">
-              <a href="javascript:;" v-if="data.Status === 'close'">
+              <a :href="`${urlXlsx}/${data.XLSX}`" v-if="data.XLSX" download>
                 <button class="btn btn-sm btn-success">
                   <i class='bx bx-download'></i>
                 </button>
@@ -71,17 +71,22 @@
 </template>
 
 <script>
-import Swal from "sweetalert2";
 import { mapState, mapMutations, mapActions } from "vuex";
-
 export default {
-  // data() {
-  //   return {
-  //     updateData: "",
-  //   };
-  // },
+  data() {
+    return {
+      urlXlsx: ''
+    };
+  },
   computed: {
     ...mapState("mapel", ["mapel", 'listKelas', 'Penilaian']),
+  },
+  created () {
+    if(process.env.NODE_ENV !== 'production') {
+      this.urlXlsx = process.env.XlsxDev
+    } else {
+      this.urlXlsx = process.env.XlsxPro
+    };
   },
   methods: {
     ...mapActions('mapel', { deleteItem: 'deleteItem', changeStep: 'delScore' }),

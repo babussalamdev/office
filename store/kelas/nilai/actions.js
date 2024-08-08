@@ -3,7 +3,7 @@ export default {
   async changeUnit({ commit }, data) {
     const program = localStorage.getItem('program')
     const result = await this.$apiBase.$get(
-      `get-nilai?subject=pengajar&program=${program}`
+      `get-mapel?subject=pengajar&program=${program}`
     );
     commit('setUnit', result);
   },
