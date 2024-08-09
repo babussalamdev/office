@@ -12,7 +12,7 @@
       </div>
       <div class="table-responsive">
         <!-- Modal -->
-        <ModalAbsensiAsrama :updateData="updateData" />
+        <ModalAbsensiAsrama />
         <table class="table table-hover table-striped">
           <thead>
             <tr>
@@ -24,7 +24,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(data, index) in santri" :key="index">
+            <tr v-for="(data, index) in filteredDatas" :key="index">
               <td class="text-capitalize align-middle">
                 <h1>{{ data.Nama }}</h1>
                 <p class="mt-1 text-secondary">{{ data.Nis }}</p>
@@ -55,9 +55,9 @@
                 {{ data.Logs?.asramaNote }}
               </td>
               <td class="text-capitalize align-middle">
-                <h1>{{ data.Logs?.asramaTime?.split(", ")[0] }}</h1>
+                <h1>{{ data.Logs?.asramaTime?.split(" ")[0] }}</h1>
                 <p class="mt-1 text-secondary">
-                  {{ data.Logs?.asramaTime?.split(", ")[1] }}
+                  {{ data.Logs?.asramaTime?.split(" ")[1] }}
                 </p>
               </td>
               <td class="text-end align-middle">
@@ -84,37 +84,72 @@
         </table>
       </div>
     </div>
+    <div class="btn-group text-center float-end mt-3 mb-5" role="group">
+      <button @click="page = 1" :disabled="page === 1" type="button" class="btn btn-primary btn-sm">
+        &laquo;
+      </button>
+      <button @click="page--" :disabled="page === 1" type="button" class="btn btn-primary  btn-sm">
+        Prev
+      </button>
+      <button class="btn btn-dark  btn-sm disabled">{{ `${page}` }}</button>
+      <button @click="page++" :disabled="page >= Math.ceil(table.length / perPage)" class="btn btn-primary  btn-sm">
+        Next
+      </button>
+      <button @click="page = Math.ceil(table.length / perPage)" :disabled="page >= Math.ceil(table.length / perPage)"
+        type="button" class="btn btn-primary  btn-sm">
+        &raquo;
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations, mapGetters } from "vuex";
 
 export default {
   data() {
     return {
-      updateData: "",
-      selectKelas: "",
+      page: 1,
+      perPage: 10,
+      table: "",
+      search: ''
     };
   },
   computed: {
     ...mapState("asramaAbsensi", ["santri", "permissions", "select"]),
+    ...mapGetters('asramaAbsensi', ['getSelectKelas', 'filteredDatas']),
+    selectKelas: {
+      get() {
+        return this.getSelectKelas
+      },
+      set(value) {
+        const obj = { key: 'selectKelas', value }
+        this.$store.commit('setState', obj)
+      }
+    }
   },
 
   methods: {
+    ...mapMutations('asramaAbsensi', ['setState']),
     absen(index, type) {
       $("#modalAbsen").modal("show");
-      this.updateData = {
+      const data = {
         santri: this.santri[index],
         type: type,
       };
+      const obj = { key: 'updateData', value: data }
+      this.setState(obj)
     },
     getAbsensi() {
-      const kelas = this.selectKelas;
-      this.$store.dispatch("asramaAbsensi/getAbsensi", kelas);
+      this.$store.dispatch("asramaAbsensi/getAbsensi");
     },
   },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+tr th,
+tr td {
+  white-space: nowrap;
+}
+</style>

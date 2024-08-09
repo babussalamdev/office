@@ -1,4 +1,10 @@
 export default {
+  setState(state, data) {
+    state[data.key] = data.value
+  },
+  setLoad(state, data) {
+    state.btn = state.btn ? false : true
+  },
   setSantriAsrama(state, value) {
     // console.log(value)
     if (value.resSelect) {
@@ -17,8 +23,27 @@ export default {
   },
   updateAbsen(state, value) {
     const i = state.santri.findIndex((x) => x.SK === value.SK)
-    const data = state.santri[i]
-    data['Logs'] = value.Logs
+    const updatedSantri = state.santri.map((item, index) => {
+      if (index === i) {
+        // Salinan data yang diperbarui
+        const updatedItem = { ...item };
+
+        // Memperbarui Logs dengan data baru
+        updatedItem.Logs = {
+          ...item.Logs,
+          ...value.Logs
+        };
+
+        return updatedItem;
+      }
+      return item;
+    });
+
+    // Mengganti data santri lama dengan data yang telah diperbarui
+    state.santri = updatedSantri;
+
+    $("#santriAbsenInput")[0].reset()
+    $("#modalAbsen").modal("hide");
     // data['asrama'] = value.Logs.asrama
     // data['asramaNote'] = value.Logs.asramaNote
     // data['asramaTime'] = value.Logs.asramaTime

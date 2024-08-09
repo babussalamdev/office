@@ -1,5 +1,8 @@
 export default () => ({
     santri: [],
     permissions: [],
-    select: []
+    select: [],
+    updateData: '',
+    selectKelas: '',
+    btn: true
 })
