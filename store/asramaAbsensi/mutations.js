@@ -7,6 +7,9 @@ export default {
   },
   setSantriAsrama(state, value) {
     // console.log(value)
+    state.santri = []
+    state.search = ''
+    state.selectKelas = ''
     if (value.resSelect) {
       state.select = value.resSelect
       state.santri = []

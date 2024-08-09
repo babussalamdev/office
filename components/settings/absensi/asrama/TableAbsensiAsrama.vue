@@ -1,14 +1,24 @@
 <template>
   <div>
     <div>
-      <div class="head d-flex align-items-center mb-3 justify-content-between">
-        <h2 class="mb-3 mb-md-0">Absensi Asrama</h2>
-        <select v-if="select.length > 0" class="form-select" name="Kelas" @change="getAbsensi" v-model="selectKelas">
-          <option value="" selected>-- Kelas --</option>
-          <option v-for="(data, index) in select" :key="index" :value="data">
-            {{ data }}
-          </option>
-        </select>
+      <div class="row mb-3">
+        <div class="col-12 col-md-6 mb-3 mb-md-0 d-flex align-items-center">
+          <h2>Absensi Asrama</h2>
+        </div>
+        <div class="col-12 col-md-6 d-flex flex-wrap flex-md-nowrap gap-2 gap-md-0 justify-content-end">
+          <div class="input-group order-2 order-md-1" v-if="santri.length > 0">
+            <label for="search" class="input-group-text">
+              <i class="material-icons" >search</i>
+            </label>
+            <input id="search" type="text" class="form-control" v-model="search">
+          </div>
+          <select v-if="select.length > 0" class="form-select w-25 order-1 order-md-2" name="Kelas" @change="getAbsensi" v-model="selectKelas">
+            <option value="" selected>-- Kelas --</option>
+            <option v-for="(data, index) in select" :key="index" :value="data">
+              {{ data }}
+            </option>
+          </select>
+        </div>
       </div>
       <div class="table-responsive">
         <!-- Modal -->
@@ -40,16 +50,16 @@
                         ? 'text-primary'
                         : 'text-danger'
                   ">{{
-                    data.Logs?.asrama === "sekolah"
-                      ? " school "
-                      : data.Logs?.asrama === "rumah"
-                        ? " villa "
-                        : data.Logs?.asrama === "sakit"
-                          ? " medication "
-                          : data.Logs?.asrama === "izin"
-                            ? "hourglass_top"
-                            : " person_off "
-                  }}</i>
+                  data.Logs?.asrama === "sekolah"
+                    ? " school "
+                    : data.Logs?.asrama === "rumah"
+                      ? " villa "
+                      : data.Logs?.asrama === "sakit"
+                        ? " medication "
+                        : data.Logs?.asrama === "izin"
+                          ? "hourglass_top"
+                          : " person_off "
+                }}</i>
               </td>
               <td class="text-capitalize align-middle">
                 {{ data.Logs?.asramaNote }}
@@ -91,11 +101,11 @@
       <button @click="page--" :disabled="page === 1" type="button" class="btn btn-primary  btn-sm">
         Prev
       </button>
-      <button class="btn btn-dark  btn-sm disabled">{{ `${page}` }}</button>
-      <button @click="page++" :disabled="page >= Math.ceil(table.length / perPage)" class="btn btn-primary  btn-sm">
+      <button class="btn btn-dark  btn-sm disabled">{{ `${page ? page : 1}` }}</button>
+      <button @click="page++" :disabled="page >= Math.ceil(santri?.length / perPage)" class="btn btn-primary  btn-sm">
         Next
       </button>
-      <button @click="page = Math.ceil(table.length / perPage)" :disabled="page >= Math.ceil(table.length / perPage)"
+      <button @click="page = Math.ceil(santri.length / perPage)" :disabled="page >= Math.ceil(santri.length / perPage)"
         type="button" class="btn btn-primary  btn-sm">
         &raquo;
       </button>
@@ -107,24 +117,34 @@
 import { mapState, mapMutations, mapGetters } from "vuex";
 
 export default {
-  data() {
-    return {
-      page: 1,
-      perPage: 10,
-      table: "",
-      search: ''
-    };
-  },
   computed: {
-    ...mapState("asramaAbsensi", ["santri", "permissions", "select"]),
-    ...mapGetters('asramaAbsensi', ['getSelectKelas', 'filteredDatas']),
+    ...mapState("asramaAbsensi", ["santri", "permissions", "select", 'table', 'perPage']),
+    ...mapGetters('asramaAbsensi', ['getSelectKelas', 'filteredDatas', 'getPage', 'getSearch']),
+    search: {
+      get() {
+        return this.getSearch
+      },
+      set(value) {
+        const obj = { key: 'search', value }
+        this.$store.commit('asramaAbsensi/setState', obj)
+      }
+    },
+    page: {
+      get() {
+        return this.getPage
+      },
+      set(value) {
+        const obj = { key: 'page', value }
+        this.$store.commit('asramaAbsensi/setState', obj)
+      }
+    },
     selectKelas: {
       get() {
         return this.getSelectKelas
       },
       set(value) {
         const obj = { key: 'selectKelas', value }
-        this.$store.commit('setState', obj)
+        this.$store.commit('asramaAbsensi/setState', obj)
       }
     }
   },
@@ -151,5 +171,8 @@ export default {
 tr th,
 tr td {
   white-space: nowrap;
+}
+.input-group label, .input-group input, .input-group i {
+  font-size: 12px !important;
 }
 </style>

@@ -43,7 +43,7 @@ export default {
     //   `get-absensi?subject=${subject}&program=${program}&jabatan=${jabatan}&asrama=${asrama}&halaqah=${halaqah}&kelas=${kelas}&absen=asrama`
     // );
   },
-  async getAbsensi({ commit }) {
+  async getAbsensi({ commit, state }) {
     const program = localStorage.getItem('program')
     const jabatan = this.$auth.user.Jabatan[program]
     const reqSantri = this.$apiSantri.$get(
@@ -58,7 +58,6 @@ export default {
   async santriAbsen({ commit, state}, event) {
     commit('setLoad')
     const data = Object.fromEntries(new FormData(event.target));
-    console.log(data)
     data["Status"] = state.updateData.type;
     const skSantri = state.updateData.santri.SK.replace('#', '%23')
     const tahun = this.$auth.user.Label
@@ -79,7 +78,7 @@ export default {
           timer: 1500,
         });
         result["SK"] = state.updateData.santri.SK;
-        commit("asramaAbsensi/updateAbsen", result);
+        commit("updateAbsen", result);
       }
     } catch (error) {
       console.log(error);

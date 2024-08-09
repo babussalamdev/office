@@ -3,5 +3,6 @@ export default () => ({
     permissions: [],
     select: [],
     updateData: [],
-    record: []
+    record: [],
+    selectKelas: ''
 })

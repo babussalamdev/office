@@ -2,7 +2,7 @@
   <div class="animate__animated animate__fadeInUp">
     <div class="head d-flex align-items-center mb-3 justify-content-between">
       <h2 class="mb-3 mb-md-0">Table Data Pelanggaran</h2>
-      <select v-if="select.length > 0" class="form-select" name="Kelas" @change="getAbsensi" v-model="selectKelas">
+      <select v-if="select.length > 0" class="form-select" name="Kelas" @change="getPelanggaran" v-model="selectKelas">
         <option value="" selected>-- Kelas --</option>
         <option v-for="(data, index) in select" :key="index" :value="data">
           {{ data }}
@@ -58,19 +58,29 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 
 export default {
   data() {
     return {
       btn: true,
-      selectKelas: "",
     };
   },
   computed: {
     ...mapState("pelanggaran", ["santri", "select", "permissions"]),
+    ...mapGetters('pelanggaran', ['getSelectKelas']),
+    selectKelas: {
+      get() {
+        return this.getSelectKelas
+      },
+      set(value) {
+        const obj = { key: 'selectKelas', value }
+        this.$store.commit('pelanggaran/setState', obj)
+      }
+    }
   },
   methods: {
+    ...mapActions('pelanggaran', ['getPelanggaran']),
     async input(index) {
       $("#inputModal").modal("show");
       const updateData = this.santri[index];

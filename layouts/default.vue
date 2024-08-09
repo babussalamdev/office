@@ -1,13 +1,6 @@
 <template>
   <main>
     <div class="global-loader" v-if="globalLoad">
-      <!-- <section class="dots-container">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-      </section> -->
       <div class="loader">
         <div class="justify-content-center jimu-primary-loading"></div>
       </div>
@@ -82,14 +75,18 @@ export default {
 @import url(~/assets/css/style.css);
 
 main {
-  background-color: #f1f5f9;
+  /* background-color: #f1f5f9; */
   padding-left: 208px;
   padding-left: 213px;
 }
 
+/* .nuxt {
+  background: #000 !;
+} */
+
 .content {
-  background: #f1f5f9;
-  min-height: 100vh;
+  /* background: #f1f5f9; */
+  min-height: 100vh !important;
   padding: 10px 15px 10px 20px;
 }
 
