@@ -32,6 +32,7 @@ export default {
   },
   setUnit(state, data) {
     state.select = data
+    state.santri = []
   },
   setPenilaian(state, data) {
     if (data['type'] === 'set') {

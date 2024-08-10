@@ -31,8 +31,8 @@ export default {
   updatePelanggaran(state, value) {
     const i = state.santri.findIndex((x) => x.SK === value.key)
     const data = state.santri[i]
-    data['JumlahPelanggaran'] = value.JumlahPelanggaran
-    data['PoinPelanggaran'] = value.PoinPelanggaran
+    data['Pelanggaran'] = value.Pelanggaran
+    data['Poin'] = value.Poin
     // data['WaktuAsrama'] = value.WaktuAsrama
 
     const updateData = state.santri.map((item, index) => {
@@ -43,6 +43,8 @@ export default {
     })
 
     state.santri = updateData
+    $("#inputForm")[0].reset()
+    $("#inputModal").modal("hide");
   },
 
   // record

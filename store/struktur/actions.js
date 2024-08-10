@@ -1,10 +1,12 @@
 import Swal from "sweetalert2";
 export default {
-  async changeUnit({ commit }, data) {
+  async changeUnit({ commit, dispatch }, data) {
+    dispatch('index/submitLoad', null, { root: true })
     const result = await this.$axios.$get(
       `get-settings?sk=${data}&type=struktur`
     );
     commit('setStruktur', result);
+    dispatch('index/submitLoad', null, { root: true })
   },
   async inputStruktur({ commit, state }, event) {
     commit('btn')

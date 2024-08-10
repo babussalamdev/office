@@ -1,10 +1,12 @@
 import Swal from "sweetalert2";
 export default {
-  async getAbsensi({ commit }, data) {
+  async getAbsensi({ commit, dispatch }, data) {
+    dispatch('index/submitLoad', null, { root: true })
     const result = await this.$apiBase.$get(
       `get-settings?sk=${data}&type=absensi`
     );
     commit('setAbsensi', result);
+    dispatch('index/submitLoad', null, { root: true })
   },
   async changeUnitAsrama({ commit }, data) {
     const result = await this.$apiBase.$get(

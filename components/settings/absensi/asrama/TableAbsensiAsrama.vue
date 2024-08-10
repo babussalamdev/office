@@ -10,7 +10,7 @@
             <label for="search" class="input-group-text">
               <i class="material-icons" >search</i>
             </label>
-            <input id="search" type="text" class="form-control" v-model="search">
+            <input id="search" type="text" class="form-control" v-model="search" placeholder="Cari Nama Santri">
           </div>
           <select v-if="select.length > 0" class="form-select w-25 order-1 order-md-2" name="Kelas" @change="getAbsensi" v-model="selectKelas">
             <option value="" selected>-- Kelas --</option>

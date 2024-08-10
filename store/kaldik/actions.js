@@ -1,10 +1,14 @@
 import Swal from "sweetalert2";
 export default {
-  async changeUnit({ commit }, data) {
+  async changeUnit({ commit, dispatch }, data) {
+    dispatch('index/submitLoad', null, { root: true })
     const result = await this.$axios.$get(
       `get-settings?sk=${data}&type=kaldik`
     );
-    commit('setkaldik', result);
+    if (result) {
+      commit('setkaldik', result);
+      dispatch('index/submitLoad', null, { root: true })
+    }
   },
   async inputKaldik({ commit, state }, event) {
     commit('btn')
@@ -44,7 +48,7 @@ export default {
         `update-settings?sk=${key}&type=kaldik`,
         data
       );
-      if(result) {
+      if (result) {
         Swal.fire({
           position: "center",
           icon: "success",
@@ -66,7 +70,7 @@ export default {
       });
     }
   },
-  async deleteItem({commit, state}, sk) {
+  async deleteItem({ commit, state }, sk) {
     const i = state.kaldik.findIndex((x) => x.SK === sk)
     const name = state.kaldik[i].Nama
     const key = sk.replace('#', '%23')

@@ -265,7 +265,7 @@ export default {
 
 <style scoped>
 .select-input {
-  max-width: 162px;
+  width: 162px !important;
   display: flex;
   flex-wrap: wrap;
   gap: 2px;
@@ -283,6 +283,10 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+tr th, tr td {
+  white-space: nowrap;
 }
 
 /* .box-radio input:checked+label {

@@ -1,13 +1,16 @@
 import Swal from "sweetalert2";
 export default {
-  async changeUnit({ commit }, data) {
+  async changeUnit({ commit, dispatch }, data) {
+    dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
     const result = await this.$axios.$get(
       `get-settings?type=options&sk=${program}&category=kelas`
     );
     commit('setSelectKelas', result);
+    dispatch('index/submitLoad', null, { root: true })
   },
-  async loadHalaqah({ commit, state }, data) {
+  async loadHalaqah({ commit, state, dispatch }, data) {
+    dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
     const reqSantri = this.$apiSantri.$get(
       `get-santri-sisalam?subject=kelas&program=${program}&opsi=halaqah&filter=${state.kelas}`
@@ -18,6 +21,7 @@ export default {
       resSantri, resSelect
     }
     commit('setSantri', result);
+    dispatch('index/submitLoad', null, { root: true })
   },
   async updateDataSantriHalaqah({ commit, state }, event) {
     commit('btn')

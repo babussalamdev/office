@@ -1,10 +1,12 @@
 import Swal from "sweetalert2";
 export default {
-  async changeUnitHalaqah({ commit }, data) {
+  async changeUnitHalaqah({ commit, dispatch }, data) {
+    dispatch('index/submitLoad', null, { root: true })
     const result = await this.$axios.$get(
       `get-settings?sk=${data}&type=halaqah`
     );
     commit('setDataHalaqah', result);
+    dispatch('index/submitLoad', null, { root: true })
   },
   async changeUnitAsrama({ commit }, data) {
     const result = await this.$axios.$get(

@@ -222,14 +222,16 @@ export default {
           const data = await this.$apiBase.$put(
             `upload-mapel?type=mapel&subject=${subject}&sk=${sk}&program=${program}&kelas=${kelas}`, request
           )
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            text: "Data berhasil diinput",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          // this.$store.commit("santri/database/inputSantriBulk", data);
+          if(data) {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              text: "Data berhasil diinput",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            $('#inputGroupFile04').val('');
+          }
           this.btn2 = true;
         } catch (error) {
           Swal.fire({

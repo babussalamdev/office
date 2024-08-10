@@ -1,12 +1,16 @@
 import Swal from "sweetalert2";
 export default {
-  async changeUnit({ commit }, data) {
+  async changeUnit({ commit, dispatch }, data) {
+    dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
     const halaqah = this.$auth.user.Halaqah[program]
     const result = await this.$apiSantri.$get(
       `get-santri-sisalam?subject=halaqah&program=${program}&filter=${halaqah}`
     );
-    commit('setSantri', result);
+    if ( result ) {
+      commit('setSantri', result);
+      dispatch('index/submitLoad', null, { root: true })
+    }
   },
   async getDetail({commit}, data) {
     const sk = data.replace('#', '%23')

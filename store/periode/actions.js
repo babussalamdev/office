@@ -1,9 +1,11 @@
 import Swal from "sweetalert2";
 export default {
-  async changeUnit({ commit }, data) {
+  async changeUnit({ commit, dispatch }, data) {
+    dispatch('index/submitLoad', null, { root: true })
     const result = await this.$axios.$get(
       `get-settings?sk=${data}&type=periode`
     );
+    dispatch('index/submitLoad', null, { root: true })
     commit('setPeriode', result);
   },
   async inputUtama({ commit, state }, event) {

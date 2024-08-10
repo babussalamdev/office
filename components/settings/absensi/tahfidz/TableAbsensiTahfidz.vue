@@ -136,7 +136,7 @@ export default {
 
 <style scoped>
 .select-input {
-  max-width: 162px;
+  width: 162px !important;
   display: flex;
   flex-wrap: wrap;
   gap: 2px;

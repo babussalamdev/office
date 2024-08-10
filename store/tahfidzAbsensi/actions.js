@@ -1,7 +1,8 @@
 import Swal from "sweetalert2"
 
 export default {
-  async changeUnit({ commit }, data) {
+  async changeUnit({ commit, dispatch }, data) {
+    dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
     const jabatan = this.$auth.user.Jabatan[program]
     const asrama = this.$auth.user.Asrama[program]
@@ -14,21 +15,13 @@ export default {
     } else {
       subject = 'kelas'
     }
-
-    // const result = await this.$apiSantri.$get(
-    //   `get-absensi?subject=${subject}&program=${program}&jabatan=${jabatan}&asrama=${asrama}&halaqah=${halaqah}&kelas=${kelas}&absen=asrama`
-    // );
     const reqSantri = await this.$apiSantri.$get(
       `get-absensi-sisalam?subject=halaqah&program=${program}&value=${halaqah}`
     );
-    // const reqPermissions = this.$apiBase.$get(
-    //   `get-settings?sk=${program}&type=buttonAbsensi&value=${jabatan}`
-    // )
-    // const [resSantri, resPermissions] = await Promise.all([reqSantri, reqPermissions])
-
-    // result['select'] = []
-
-    commit('setSantriTahfidz', reqSantri);
+    if ( reqSantri ) {
+      commit('setSantriTahfidz', reqSantri);
+      dispatch('index/submitLoad', null, { root: true })
+    }
   },
   async getAbsensi({ commit }, data) {
     const program = localStorage.getItem('program')

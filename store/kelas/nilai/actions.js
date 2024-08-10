@@ -1,11 +1,15 @@
 import Swal from "sweetalert2";
 export default {
-  async changeUnit({ commit }, data) {
+  async changeUnit({ commit, dispatch }, data) {
+    dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
     const result = await this.$apiBase.$get(
       `get-mapel?subject=pengajar&program=${program}`
     );
-    commit('setUnit', result);
+    if ( result ) {
+      commit('setUnit', result);
+      dispatch('index/submitLoad', null, { root: true })
+    }
   },
   async getSantri({ commit, state }, data) {
     const program = localStorage.getItem('program')

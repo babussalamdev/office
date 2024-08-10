@@ -1,13 +1,24 @@
 <template>
   <div class="animate__animated animate__fadeInUp">
-    <div class="head d-flex align-items-center mb-3 justify-content-between">
-      <h2 class="mb-3 mb-md-0">Table Data Pelanggaran</h2>
-      <select v-if="select.length > 0" class="form-select" name="Kelas" @change="getPelanggaran" v-model="selectKelas">
-        <option value="" selected>-- Kelas --</option>
-        <option v-for="(data, index) in select" :key="index" :value="data">
-          {{ data }}
-        </option>
-      </select>
+    <div class="row mb-3">
+      <div class="col-12 col-md-6 mb-3 mb-md-0 d-flex align-items-center">
+        <h2>Table Data Pelanggaran</h2>
+      </div>
+      <div class="col-12 col-md-6 d-flex flex-wrap flex-md-nowrap gap-2 gap-md-0 justify-content-end">
+        <div class="input-group order-2 order-md-1" v-if="santri.length > 0">
+          <label for="search" class="input-group-text">
+            <i class="material-icons">search</i>
+          </label>
+          <input id="search" type="text" class="form-control" v-model="search" placeholder="Cari Nama Santri">
+        </div>
+        <select v-if="select.length > 0" class="form-select" name="Kelas" @change="getPelanggaran"
+          v-model="selectKelas">
+          <option value="" selected>-- Kelas --</option>
+          <option v-for="(data, index) in select" :key="index" :value="data">
+            {{ data }}
+          </option>
+        </select>
+      </div>
     </div>
     <div class="table-responsive">
       <table class="table table-hover table-striped">
@@ -22,7 +33,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(data, index) in santri" :key="index">
+          <tr v-for="(data, index) in filteredDatas" :key="index">
             <td class="text-capitalize align-middle">
               <h1>{{ data.Nama }}</h1>
               <p class="text-secondary mt-1">{{ data.Nis }}</p>
@@ -34,10 +45,10 @@
               {{ data.Asrama ? data.Asrama : "-" }}
             </td>
             <td class="text-capitalize align-middle">
-              {{ data.PoinPelanggaran ? data.PoinPelanggaran : "-" }}
+              {{ data.Poin ? data.Poin : "-" }}
             </td>
             <td class="text-capitalize align-middle">
-              {{ data.JumlahPelanggaran ? data.JumlahPelanggaran : "-" }}
+              {{ data.Pelanggaran ? data.Pelanggaran : "-" }}
             </td>
             <td class="text-capitalize align-middle text-end">
               <nuxt-link :to="`pelanggaran/${data.SK.split('#')[1]}`"
@@ -54,6 +65,22 @@
         </tbody>
       </table>
     </div>
+    <div class="btn-group text-center float-end mt-3 mb-5" role="group">
+      <button @click="page = 1" :disabled="page === 1" type="button" class="btn btn-primary btn-sm">
+        &laquo;
+      </button>
+      <button @click="page--" :disabled="page === 1" type="button" class="btn btn-primary  btn-sm">
+        Prev
+      </button>
+      <button class="btn btn-dark  btn-sm disabled">{{ `${page ? page : 1}` }}</button>
+      <button @click="page++" :disabled="page >= Math.ceil(santri?.length / perPage)" class="btn btn-primary  btn-sm">
+        Next
+      </button>
+      <button @click="page = Math.ceil(santri.length / perPage)" :disabled="page >= Math.ceil(santri.length / perPage)"
+        type="button" class="btn btn-primary  btn-sm">
+        &raquo;
+      </button>
+    </div>
   </div>
 </template>
 
@@ -67,8 +94,8 @@ export default {
     };
   },
   computed: {
-    ...mapState("pelanggaran", ["santri", "select", "permissions"]),
-    ...mapGetters('pelanggaran', ['getSelectKelas']),
+    ...mapState("pelanggaran", ["santri", "select", "permissions", 'perPage']),
+    ...mapGetters('pelanggaran', ['getSelectKelas', 'filteredDatas', 'getSearch', 'getPage']),
     selectKelas: {
       get() {
         return this.getSelectKelas
@@ -77,7 +104,25 @@ export default {
         const obj = { key: 'selectKelas', value }
         this.$store.commit('pelanggaran/setState', obj)
       }
-    }
+    },
+    page: {
+      get() {
+        return this.getPage
+      },
+      set(value) {
+        const obj = { key: 'page', value }
+        this.$store.commit('pelanggaran/setState', obj)
+      }
+    },
+    search: {
+      get() {
+        return this.getSearch
+      },
+      set(value) {
+        const obj = { key: 'search', value }
+        this.$store.commit('pelanggaran/setState', obj)
+      }
+    },
   },
   methods: {
     ...mapActions('pelanggaran', ['getPelanggaran']),
@@ -131,6 +176,10 @@ a {
 select {
   font-size: 12px;
   width: 100px;
+}
+
+.input-group label, .input-group input, .input-group i {
+  font-size: 12px !important;
 }
 
 @media screen and (max-width: 576px) {

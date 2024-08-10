@@ -51,10 +51,9 @@ export default {
     const [resSantri, resPermissions] = await Promise.all([reqSantri, reqPermissions])
     commit('setSantriManual', { resSantri, resPermissions });
   },
-  async inputForm({ commit, state}, event) {
-    // this.btn = false;
+  async inputForm({ commit, state }, event) {
+    commit('setLoad')
     const data = Object.fromEntries(new FormData(event.target));
-    console.log(data)
     const skSantri = state.updateData.SK.replace('#', '%23')
     const program = localStorage.getItem("program");
     const tahun = this.$auth.user.Label
@@ -64,9 +63,7 @@ export default {
         `input-pelanggaran-sisalam?program=${program}&sksantri=${skSantri}&thn=${tahun}&smstr=${semester}`,
         data
       );
-      console.log(result)
       if (result) {
-        // this.btn = true;
         Swal.fire({
           position: "center",
           icon: "success",
@@ -74,16 +71,12 @@ export default {
           showConfirmButton: false,
           timer: 1500,
         });
-        // result["key"] = this.updateData.SK;
-        // this.$store.commit("pelanggaran/updatePelanggaran", result);
-        // this.$refs.inputForm.reset();
-        // this.asramaShow = "";
-        // this.$emit("resetSelect");
-        // $("#inputModal").modal("hide");
+        result["key"] = state.updateData.SK;
+        commit("updatePelanggaran", result);
+        commit('setLoad')
       }
     } catch (error) {
-      // this.btn = true;
-      console.log(error);
+      commit('setLoad')
       Swal.fire({
         text: error,
         icon: "error",

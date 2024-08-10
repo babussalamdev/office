@@ -5,7 +5,7 @@
       aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form @submit.prevent="inputForm" ref="inputForm">
+          <form @submit.prevent="inputForm" id="inputForm">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">
                 Input Data Pelanggaran
@@ -63,20 +63,13 @@
 <script>
 import { mapState, mapActions } from "vuex";
 export default {
-  data() {
-    return {
-      btn: true,
-      asramaShow: "",
-      // unit: localStorage.getItem("program"),
-    };
-  },
   computed: {
-    ...mapState("pelanggaran", ["updateData"]),
+    ...mapState("pelanggaran", ["updateData", 'btn']),
   },
   methods: {
     ...mapActions('pelanggaran', ['inputForm']),
     resetForm() {
-      this.$refs.inputForm.reset();
+      $("#inputForm")[0].reset()
     },
   },
 };
