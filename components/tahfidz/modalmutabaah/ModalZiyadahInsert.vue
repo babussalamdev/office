@@ -154,9 +154,13 @@ export default {
       data['From'] = from
       data['To'] = to
       try {
+        const program = localStorage.getItem('program')
         const sk = this.detail.SK.replace('#', '%23')
         const subject = localStorage.getItem('subject')
-        const result = await this.$apiSantri.$post(`input-logs?subject=${subject}&sksantri=${sk}`, data)
+        const tahun = this.$auth.user.Label
+        const semester = this.$auth.user.Semester
+        const halaqah = this.$auth.user.Halaqah[program]
+        const result = await this.$apiSantri.$post(`input-logs?subject=${subject}&sksantri=${sk}&halaqah=${halaqah}&thn=${tahun}&smstr=${semester}`, data)
         if (result) {
           Swal.fire({
             position: "center",

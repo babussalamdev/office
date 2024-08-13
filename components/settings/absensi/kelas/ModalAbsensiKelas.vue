@@ -13,6 +13,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+              {{ updateData }}
               <div class="form-floating">
                 <textarea name="Note" class="form-control" style="height: 100px"
                   placeholder="Leave a comment here" id="floatingTextarea"></textarea>
@@ -54,18 +55,18 @@ export default {
   },
   methods: {
     async santriAbsen() {
-      this.btn = false;
+      // this.btn = false;
       const data = Object.fromEntries(new FormData(event.target));
       data["Status"] = this.updateData.type;
       const skSantri = this.updateData.santri.SK.replace('#', '%23')
       const tahun = this.$auth.user.Label
       const semester = this.$auth.user.Semester
       const time = this.updateData.time
-      const namakelas = this.updateData.Kelas
+      const namakelas = this.updateData.santri.Kelas
       const program = localStorage.getItem("program");
       try {
         const result = await this.$apiSantri.$put(
-          `update-absensi-sisalam?sksantri=${skSantri}&type=${time}&thn=${tahun}&smstr=${semester}&program=${program}&namakelas=${namakelas}`,
+          `update-absensi-sisalam?sksantri=${skSantri}&type=${time}&thn=${tahun}&smstr=${semester}&program=${program}&subject=${namakelas}`,
           data
         );
         if (result) {
