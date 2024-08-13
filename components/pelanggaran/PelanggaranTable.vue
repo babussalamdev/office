@@ -51,7 +51,7 @@
               {{ data.Pelanggaran ? data.Pelanggaran : "-" }}
             </td>
             <td class="text-capitalize align-middle text-end">
-              <nuxt-link :to="`pelanggaran/${data.SK.split('#')[1]}`"
+              <nuxt-link :to="`pelanggaran/${data.SK.replace('#', '%23')}`"
                 class="btn btn-sm btn-warning text-xss me-1 text-white rounded-2">
                 Record
               </nuxt-link>
@@ -178,7 +178,9 @@ select {
   width: 100px;
 }
 
-.input-group label, .input-group input, .input-group i {
+.input-group label,
+.input-group input,
+.input-group i {
   font-size: 12px !important;
 }
 

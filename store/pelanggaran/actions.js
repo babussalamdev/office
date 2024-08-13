@@ -86,9 +86,88 @@ export default {
       });
     }
   },
-  async getRecord({ commit }, data) {
-    const result = await this.$axios.$get(`get-pelanggaran?code=${data.code}&key=${data.key}`)
-    commit('setRecord', result)
+  async getRecord({ dispatch, commit }, data) {
+    dispatch('index/submitLoad', null, { root: true })
+    const program = localStorage.getItem('program')
+    const skSantri = data.replace('#', '%23')
+    const tahun = this.$auth.user.Label
+    const result = await this.$apiSantri.$get(`get-pelanggaran-sisalam?program=${program}&sksantri=${skSantri}&tahun=${tahun}`)
+    if (result) {
+      commit('setRecord', result)
+      dispatch('index/submitLoad', null, { root: true })
+    }
   },
-
+  async updateForm({ commit, state }, value) {
+    commit('setLoad')
+    const data = Object.fromEntries(new FormData(value.event.target));
+    const program = localStorage.getItem('program')
+    const key = {
+      PK: `${value.id}#pelanggaran`,
+      SK: state.updateRecord.SK
+    }
+    const datas = {
+      program, key, data
+    }
+    try {
+      const result = await this.$apiSantri.$put(`update-pelanggaran-sisalam?type=update`, datas);
+      if (result) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          text: "Your work has been saved",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        result["key"] = state.updateRecord.SK;
+        commit("updateRecordPelanggaran", result);
+        commit('setLoad')
+      }
+    } catch (error) {
+      console.log(error);
+      commit('setLoad')
+      Swal.fire({
+        text: error,
+        icon: "error",
+        timer: 3000,
+        timerProgressBar: false,
+        showConfirmButton: false,
+      });
+    }
+  },
+  async deleteItem({ commit, state }, data) {
+    const i = state.record.findIndex((x) => x.SK === data.sk)
+    const name = state.record[i].Nama
+    const result = await Swal.fire({
+      title: name,
+      text: "Data akan dihapus secara permanen!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+    if (result.isConfirmed) {
+      const program = localStorage.getItem('program')
+      const key = {
+        PK: `${data.id}#pelanggaran`,
+        SK: data.sk
+      }
+      const datas = {
+        program, key
+      }
+      await this.$apiSantri.$put(
+        `update-pelanggaran-sisalam?type=delete`, datas
+      );
+      commit('deleteRecord', data.sk);
+      if (result) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          text: "Data berhasil dihapus!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    }
+  }
 }

@@ -14,16 +14,10 @@ export default {
       return redirect("/pelanggaran");
     }
     const i = store.state.pelanggaran.santri.findIndex(
-      (x) => x.SK?.split("#")[1] === params.id
+      (x) => x.SK === params.id
     );
-    const code = store.state.pelanggaran.santri[i].SK?.split("#")[0];
-    const data = {
-      code: code,
-      key: params.id,
-    };
     const nama = store.state.pelanggaran.santri[i].Nama;
-    // this.nama = store.state.pelanggaran.santri[i].Nama;
-    store.dispatch(`pelanggaran/getRecord`, data);
+    store.dispatch(`pelanggaran/getRecord`, params.id);
     return { nama };
   },
 };

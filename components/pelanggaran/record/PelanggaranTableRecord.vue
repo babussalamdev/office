@@ -1,28 +1,12 @@
 <template>
   <div>
     <div class="">
-      <div
-        class="head d-flex align-items-center mb-3 justify-content-between animate__animated animate__fadeInUp"
-      >
+      <div class="head d-flex align-items-center mb-3 justify-content-between animate__animated animate__fadeInUp">
         <h2 class="mb-3 mb-md-0">
           <strong class="text-capitalize fw-bold">{{ nama }}</strong> - Record
           Pelanggaran
         </h2>
-        <nuxt-link to="/pelanggaran" class="text-dark text-decoration-none"
-          > Back</nuxt-link
-        >
-        <!-- <select
-          v-if="select.length > 0"
-          class="form-select"
-          name="Kelas"
-          @change="getAbsensi"
-          v-model="selectKelas"
-        >
-          <option value="" selected>-- Kelas --</option>
-          <option v-for="(data, index) in select" :key="index" :value="data">
-            {{ data }}
-          </option>
-        </select> -->
+        <nuxt-link to="/pelanggaran" class="text-dark text-decoration-none"> Back</nuxt-link>
       </div>
       <div class="table-responsive animate__animated animate__fadeInUp">
         <table class="table table-hover table-striped">
@@ -39,11 +23,11 @@
           <tbody>
             <tr v-for="(data, index) in record" :key="index">
               <td class="text-capitalize align-middle">
-                <h1>{{ data.Tanggal }}</h1>
-                <p class="text-secondary mt-1">{{ data.Waktu }}</p>
+                <h1>{{ data.Date }}</h1>
+                <p class="text-secondary mt-1">{{ data.Time }}</p>
               </td>
               <td class="text-capitalize align-middle">
-                {{ data.Pelanggaran ? data.Pelanggaran : "-" }}
+                {{ data.Nama ? data.Nama : "-" }}
               </td>
               <td class="text-capitalize align-middle">
                 {{ data.Level ? data.Level : "-" }}
@@ -52,48 +36,36 @@
                 {{ data.Poin ? data.Poin : "-" }}
               </td>
               <td class="text-capitalize align-middle">
-                {{ data.Tindakan ? data.Tindakan : "-" }}
+                {{ data.Solusi ? data.Solusi : "-" }}
               </td>
               <td class="text-capitalize align-middle text-end">
-                <i
-                  @click="editItem(index)"
-                  class="btn btn-sm btn-warning text-xs me-1 text-white rounded-2"
-                  >Edit</i
-                >
-                <i class="btn btn-sm btn-danger text-xs text-white rounded-2"
-                  >Delete</i
-                >
+                <i @click="editItem(data.SK)" class="btn btn-sm btn-warning text-xs me-1 text-white rounded-2">Edit</i>
+                <i @click="deleteItem(data.SK)" class="btn btn-sm btn-danger text-xs text-white rounded-2">Delete</i>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-      <PelanggaranModalRecord :updateRecord="updateRecord" />
+      <PelanggaranModalRecord />
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 
 export default {
   props: ["nama"],
-  data() {
-    return {
-      btn: true,
-      selectKelas: "",
-      updateRecord: "",
-    };
-  },
   computed: {
-    ...mapState("pelanggaran", ["santri", "select", "permissions", "record"]),
+    ...mapState("pelanggaran", ["santri", "select", "permissions", "record", 'updateData']),
   },
   methods: {
-    async editItem(index) {
-      $("#updateModal").modal("show");
-      this.updateRecord = this.record[index];
-      // this.$store.commit("pelanggaran/updateData", updateData);
-    },
+    ...mapActions('pelanggaran', { changeAction: 'deleteItem' }),
+    ...mapMutations('pelanggaran', ['editItem']),
+    deleteItem(sk) {
+      const obj = { sk, id: this.$route.params.id }
+      this.changeAction(obj)
+    }
     // kelasLoad() {
     //   const program = localStorage.getItem("program");
     //   const data = {
@@ -135,6 +107,7 @@ export default {
 a {
   font-size: 12px;
 }
+
 a:hover {
   color: red;
 }
@@ -143,6 +116,7 @@ select {
   font-size: 12px;
   width: 100px;
 }
+
 @media screen and (max-width: 576px) {
   select {
     width: 100% !important;

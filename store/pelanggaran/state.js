@@ -3,6 +3,7 @@ export default () => ({
   permissions: [],
   select: [],
   updateData: [],
+  updateRecord: '',
   record: [],
   selectKelas: '',
   btn: true,

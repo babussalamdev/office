@@ -14,7 +14,6 @@
                 aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              {{ updateData }}
               <div class="mb-3 input-group">
                 <select name="Level" id="Kelas" class="form-select" required>
                   <option value="" selected disabled>Level</option>
@@ -25,8 +24,8 @@
                 <input type="number" class="form-control" placeholder="Poin" name="Poin" />
               </div>
               <div class="form-floating mb-3">
-                <textarea name="Nama" class="form-control" placeholder="Leave a comment here"
-                  id="floatingTextarea2" style="height: 100px"></textarea>
+                <textarea name="Nama" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                  style="height: 100px"></textarea>
                 <label for="floatingTextarea2">Jenis Pelanggaran</label>
               </div>
               <div class="form-floating mb-3">

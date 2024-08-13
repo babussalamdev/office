@@ -51,11 +51,11 @@
                 </nuxt-link>
               </li>
               <!-- jurnal -->
-              <li>
+              <!-- <li>
                 <nuxt-link to="/kelas/jurnal" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Jurnal</span>
                 </nuxt-link>
-              </li>
+              </li> -->
               <!-- nilai -->
               <li>
                 <nuxt-link to="/kelas/nilai" class="custom-link text-decoration-none d-flex align-items-center gap-2">
@@ -121,11 +121,11 @@
                 </nuxt-link>
               </li>
               <!-- nilai -->
-              <li>
+              <!-- <li>
                 <nuxt-link to="/tahfidz/nilai" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Nilai</span>
                 </nuxt-link>
-              </li>
+              </li> -->
               <!-- rekap -->
               <li>
                 <nuxt-link to="/tahfidz/rekap" class="custom-link text-decoration-none d-flex align-items-center gap-2">
@@ -149,8 +149,7 @@
             <ul v-if="listLaundry" class="dropdown-list">
               <!-- nota -->
               <li>
-                <nuxt-link to="/laundry/nota"
-                  class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                <nuxt-link to="/laundry/nota" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Nota</span>
                 </nuxt-link>
               </li>
@@ -169,13 +168,15 @@
               </li>
               <!-- nilai -->
               <li>
-                <nuxt-link to="/laundry/finance" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                <nuxt-link to="/laundry/finance"
+                  class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Finance</span>
                 </nuxt-link>
               </li>
               <!-- rekap -->
               <li>
-                <nuxt-link to="/laundry/lembur" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                <nuxt-link to="/laundry/lembur"
+                  class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Lembur</span>
                 </nuxt-link>
               </li>

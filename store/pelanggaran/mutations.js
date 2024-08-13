@@ -51,12 +51,28 @@ export default {
   setRecord(state, value) {
     state.record = value
   },
+  editItem(state, value) {
+    const index = state.record.findIndex((x) => x.SK === value)
+    $("#updateModal").modal("show");
+    state.updateRecord = state.record[index];
+  },
+
   updateRecordPelanggaran(state, value) {
     const i = state.record.findIndex((x) => x.SK === value.key)
     const data = state.record[i]
-    data.Pelanggaran = value.Pelanggaran
+    data.Nama = value.Nama
     data.Level = value.Level
     data.Poin = value.Poin
-    data.Tindakan = value.Tindakan
+    data.Solusi = value.Solusi
+
+    $("#updateModal").modal("hide");
+    $("#updateForm")[0].reset()
+    state.updateRecord = ''
+    state.updateData = []
+  },
+
+  deleteRecord(state, value) {
+    const i = state.record.findIndex((x) => x.SK === value);
+    state.record.splice(i, 1);
   }
 }
