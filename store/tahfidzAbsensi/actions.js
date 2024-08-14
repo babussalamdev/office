@@ -45,21 +45,22 @@ export default {
     console.log(obj)
   },
   async deleteStatus({ commit, state }, datas) {
+    console.log(datas)
     const i = state.santri.findIndex((x) => x.SK === datas.sk)
     const data = state.santri[i]
     const time = datas.time
     let sk = ''
     if (time === 'Pagi') {
-      sk = data.Logs.halaqahPagiTime
+      sk = data.Logs.halaqahpagitime
     } else {
-      sk = data.Logs.halaqahSoreTime
+      sk = data.Logs.halaqahsoretime
     }
     const skSantri = datas.sk.replace('#', '%23')
     const tahun = this.$auth.user.Label
     const semester = this.$auth.user.Semester
     const program = localStorage.getItem("program");
     const req = await this.$apiSantri.$delete(
-      `delete-absensi-sisalam?sksantri=${skSantri}&type=halaqah${time}&thn=${tahun}&smstr=${semester}&program=${program}&sk=${sk}`
+      `delete-absensi-sisalam?sksantri=${skSantri}&type=halaqah${time}&thn=${tahun}&smstr=${semester}&program=${program}&sk=${sk}&status=${datas.condition}`
     );
     req['time'] = time
     req["SK"] = datas.sk;

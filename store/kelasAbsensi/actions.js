@@ -43,27 +43,29 @@ export default {
     // console.log(data)
     console.log(obj)
   },
-  async deleteStatus({ commit, state }, datas) {
+  async deleteStatus({ commit, state, dispatch }, datas) {
+    dispatch('index/submitLoad', null, { root: true })
     const i = state.santri.findIndex((x) => x.SK === datas.sk)
     const data = state.santri[i]
     const time = datas.time
     let sk = ''
     if (time === 'mapelSatu') {
-      sk = data.Logs.mapelSatuTime
+      sk = data.Logs.mapelsatutime
     } else if (time === 'mapelDua') {
-      sk = data.Logs.mapelDuaTime
+      sk = data.Logs.mapelduatime
     } else {
-      sk = data.Logs.mapelTigaTime
+      sk = data.Logs.mapeltigatime
     }
     const skSantri = datas.sk.replace('#', '%23')
     const tahun = this.$auth.user.Label
     const semester = this.$auth.user.Semester
     const program = localStorage.getItem("program");
     const req = await this.$apiSantri.$delete(
-      `delete-absensi-sisalam?sksantri=${skSantri}&type=${time}&thn=${tahun}&smstr=${semester}&program=${program}&sk=${sk}`
+      `delete-absensi-sisalam?sksantri=${skSantri}&type=${time}&thn=${tahun}&smstr=${semester}&program=${program}&sk=${skSantri}&status=${datas.condition}`
     );
     req['time'] = time
     req["SK"] = datas.sk;
     commit('deleteAbsen', req);
+    dispatch('index/submitLoad', null, { root: true })
   },
 }

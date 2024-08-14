@@ -13,7 +13,6 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              {{ updateData }}
               <div class="form-floating">
                 <textarea name="Note" class="form-control" style="height: 100px"
                   placeholder="Leave a comment here" id="floatingTextarea"></textarea>

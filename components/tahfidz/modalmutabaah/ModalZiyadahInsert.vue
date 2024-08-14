@@ -117,14 +117,14 @@ export default {
       }
     },
     ayatto(value) {
-      if ( value !== null ) {
+      if (value !== null) {
         if (this.ayatfrom.page !== '' && value.page !== '') {
           this.page = Math.abs(this.ayatfrom.page - this.ayatto.page) + 1
         }
       }
     },
     ayatfrom(value) {
-      if ( value !== null ) {
+      if (value !== null) {
         if (this.ayatto.page !== '' && value.page !== '') {
           this.page = Math.abs(this.ayatfrom.page - this.ayatto.page) + 1
         }
@@ -173,6 +173,11 @@ export default {
           this.$store.commit('mutabaah/pushDetail', result)
           $('#mutabaah').modal('hide')
           this.$refs.mutabaah.reset()
+          this.surahfrom = { name: '', ayat: [] }
+          this.surahto = { name: '', ayat: [] }
+          this.ayatfrom = { number: '', page: '', juz: '' }
+          this.ayatto = { name: '', page: '', juz: '' }
+          this.page = 0
         }
       } catch (error) {
         Swal.fire({

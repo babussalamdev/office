@@ -59,27 +59,27 @@
                 <div class="select-input mx-auto">
                   <div class="box-radio">
                     <button
-                      @click="setAbsensi(data.SK, 'absen', 'mapelsatu', data.Logs?.mapelSatu, data.Logs?.mapelSatuTime?.split(' ')[0])"
-                      :class="(!data.Logs?.mapelSatu || (data.Logs?.mapelSatu === '' && data.Logs?.mapelSatuTime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapelSatu && data.Logs?.mapelSatuTime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapelSatu === 'absen' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.Logs?.mapelSatu && data.Logs?.mapelSatuTime?.split(' ')[0] === date && (data.Logs?.mapelSatu !== '' && data.Logs?.mapelSatu !== 'absen')) ? true : false">Absen</button>
+                      @click="setAbsensi(data.SK, 'absen', 'mapelsatu', data.Logs?.mapelsatu, data.Logs?.mapelsatutime?.split(' ')[0])"
+                      :class="(!data.Logs?.mapelsatu || (data.Logs?.mapelsatu === '' && data.Logs?.mapelsatutime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapelsatu && data.Logs?.mapelsatutime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapelsatu === 'absen' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="(data.Logs?.mapelsatu && data.Logs?.mapelsatutime?.split(' ')[0] === date && (data.Logs?.mapelsatu !== '' && data.Logs?.mapelsatu !== 'absen')) ? true : false">Absen</button>
                   </div>
                   <div class="box-radio">
                     <button
-                      @click="setAbsensi(data.SK, 'terlambat', 'mapelsatu', data.Logs?.mapelSatu, data.Logs?.mapelSatuTime?.split(' ')[0])"
-                      :class="(!data.Logs?.mapelSatu || (data.Logs?.mapelSatu === '' && data.Logs?.mapelSatuTime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapelSatu && data.Logs?.mapelSatuTime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapelSatu === 'terlambat' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.Logs?.mapelSatu && data.Logs?.mapelSatuTime?.split(' ')[0] === date && (data.Logs?.mapelSatu !== '' && data.Logs?.mapelSatu !== 'terlambat')) ? true : false">Terlambat</button>
+                      @click="setAbsensi(data.SK, 'terlambat', 'mapelsatu', data.Logs?.mapelsatu, data.Logs?.mapelsatutime?.split(' ')[0])"
+                      :class="(!data.Logs?.mapelsatu || (data.Logs?.mapelsatu === '' && data.Logs?.mapelsatutime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapelsatu && data.Logs?.mapelsatutime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapelsatu === 'terlambat' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="(data.Logs?.mapelsatu && data.Logs?.mapelsatutime?.split(' ')[0] === date && (data.Logs?.mapelsatu !== '' && data.Logs?.mapelsatu !== 'terlambat')) ? true : false">Terlambat</button>
                   </div>
                   <div class="box-radio">
                     <button
-                      @click="setAbsensi(data.SK, 'sakit', 'mapelsatu', data.Logs?.mapelSatu, data.Logs?.mapelSatuTime?.split(' ')[0])"
-                      :class="(!data.Logs?.mapelSatu || (data.Logs?.mapelSatu === '' && data.Logs?.mapelSatuTime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapelSatu && data.Logs?.mapelSatuTime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapelSatu === 'sakit' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.Logs?.mapelSatu && data.Logs?.mapelSatuTime?.split(' ')[0] === date && (data.Logs?.mapelSatu !== '' && data.Logs?.mapelSatu !== 'sakit')) ? true : false">Sakit</button>
+                      @click="setAbsensi(data.SK, 'sakit', 'mapelsatu', data.Logs?.mapelsatu, data.Logs?.mapelsatutime?.split(' ')[0])"
+                      :class="(!data.Logs?.mapelsatu || (data.Logs?.mapelsatu === '' && data.Logs?.mapelsatutime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapelsatu && data.Logs?.mapelsatutime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapelsatu === 'sakit' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="(data.Logs?.mapelsatu && data.Logs?.mapelsatutime?.split(' ')[0] === date && (data.Logs?.mapelsatu !== '' && data.Logs?.mapelsatu !== 'sakit')) ? true : false">Sakit</button>
                   </div>
                   <div class="box-radio">
                     <button
-                      @click="setAbsensi(data.SK, 'izin', 'mapelsatu', data.Logs?.mapelSatu, data.Logs?.mapelSatuTime?.split(' ')[0])"
-                      :class="(!data.Logs?.mapelSatu || (data.Logs?.mapelSatu === '' && data.Logs?.mapelSatuTime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapelSatu && data.Logs?.mapelSatuTime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapelSatu === 'izin' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.Logs?.mapelSatu && data.Logs?.mapelSatuTime?.split(' ')[0] === date && (data.Logs?.mapelSatu !== '' && data.Logs?.mapelSatu !== 'izin')) ? true : false">Izin</button>
+                      @click="setAbsensi(data.SK, 'izin', 'mapelsatu', data.Logs?.mapelsatu, data.Logs?.mapelsatutime?.split(' ')[0])"
+                      :class="(!data.Logs?.mapelsatu || (data.Logs?.mapelsatu === '' && data.Logs?.mapelsatutime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapelsatu && data.Logs?.mapelsatutime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapelsatu === 'izin' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="(data.Logs?.mapelsatu && data.Logs?.mapelsatutime?.split(' ')[0] === date && (data.Logs?.mapelsatu !== '' && data.Logs?.mapelsatu !== 'izin')) ? true : false">Izin</button>
                   </div>
                 </div>
               </td>
@@ -89,27 +89,27 @@
                 <div class="select-input mx-auto">
                   <div class="box-radio">
                     <button
-                      @click="setAbsensi(data.SK, 'absen', 'mapeldua', data.Logs?.mapelDua, data.Logs?.mapelDuaTime?.split(' ')[0])"
-                      :class="(!data.Logs?.mapelDua || (data.Logs?.mapelDua === '' && data.Logs?.mapelDuaTime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapelDua && data.Logs?.mapelDuaTime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapelDua === 'absen' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.Logs?.mapelDua && data.Logs?.mapelDuaTime?.split(' ')[0] === date && (data.Logs?.mapelDua !== '' && data.Logs?.mapelDua !== 'absen')) ? true : false">Absen</button>
+                      @click="setAbsensi(data.SK, 'absen', 'mapeldua', data.Logs?.mapeldua, data.Logs?.mapelduatime?.split(' ')[0])"
+                      :class="(!data.Logs?.mapeldua || (data.Logs?.mapeldua === '' && data.Logs?.mapelduatime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapeldua && data.Logs?.mapelduatime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapeldua === 'absen' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="(data.Logs?.mapeldua && data.Logs?.mapelduatime?.split(' ')[0] === date && (data.Logs?.mapeldua !== '' && data.Logs?.mapeldua !== 'absen')) ? true : false">Absen</button>
                   </div>
                   <div class="box-radio">
                     <button
-                      @click="setAbsensi(data.SK, 'terlambat', 'mapeldua', data.Logs?.mapelDua, data.Logs?.mapelDuaTime?.split(' ')[0])"
-                      :class="(!data.Logs?.mapelDua || (data.Logs?.mapelDua === '' && data.Logs?.mapelDuaTime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapelDua && data.Logs?.mapelDuaTime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapelDua === 'terlambat' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.Logs?.mapelDua && data.Logs?.mapelDuaTime?.split(' ')[0] === date && (data.Logs?.mapelDua !== '' && data.Logs?.mapelDua !== 'terlambat')) ? true : false">Terlambat</button>
+                      @click="setAbsensi(data.SK, 'terlambat', 'mapeldua', data.Logs?.mapeldua, data.Logs?.mapelduatime?.split(' ')[0])"
+                      :class="(!data.Logs?.mapeldua || (data.Logs?.mapeldua === '' && data.Logs?.mapelduatime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapeldua && data.Logs?.mapelduatime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapeldua === 'terlambat' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="(data.Logs?.mapeldua && data.Logs?.mapelduatime?.split(' ')[0] === date && (data.Logs?.mapeldua !== '' && data.Logs?.mapeldua !== 'terlambat')) ? true : false">Terlambat</button>
                   </div>
                   <div class="box-radio">
                     <button
-                      @click="setAbsensi(data.SK, 'sakit', 'mapeldua', data.Logs?.mapelDua, data.Logs?.mapelDuaTime?.split(' ')[0])"
-                      :class="(!data.Logs?.mapelDua || (data.Logs?.mapelDua === '' && data.Logs?.mapelDuaTime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapelDua && data.Logs?.mapelDuaTime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapelDua === 'sakit' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.Logs?.mapelDua && data.Logs?.mapelDuaTime?.split(' ')[0] === date && (data.Logs?.mapelDua !== '' && data.Logs?.mapelDua !== 'sakit')) ? true : false">Sakit</button>
+                      @click="setAbsensi(data.SK, 'sakit', 'mapeldua', data.Logs?.mapeldua, data.Logs?.mapelduatime?.split(' ')[0])"
+                      :class="(!data.Logs?.mapeldua || (data.Logs?.mapeldua === '' && data.Logs?.mapelduatime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapeldua && data.Logs?.mapelduatime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapeldua === 'sakit' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="(data.Logs?.mapeldua && data.Logs?.mapelduatime?.split(' ')[0] === date && (data.Logs?.mapeldua !== '' && data.Logs?.mapeldua !== 'sakit')) ? true : false">Sakit</button>
                   </div>
                   <div class="box-radio">
                     <button
-                      @click="setAbsensi(data.SK, 'izin', 'mapeldua', data.Logs?.mapelDua, data.Logs?.mapelDuaTime?.split(' ')[0])"
-                      :class="(!data.Logs?.mapelDua || (data.Logs?.mapelDua === '' && data.Logs?.mapelDuaTime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapelDua && data.Logs?.mapelDuaTime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapelDua === 'izin' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.Logs?.mapelDua && data.Logs?.mapelDuaTime?.split(' ')[0] === date && (data.Logs?.mapelDua !== '' && data.Logs?.mapelDua !== 'izin')) ? true : false">Izin</button>
+                      @click="setAbsensi(data.SK, 'izin', 'mapeldua', data.Logs?.mapeldua, data.Logs?.mapelduatime?.split(' ')[0])"
+                      :class="(!data.Logs?.mapeldua || (data.Logs?.mapeldua === '' && data.Logs?.mapelduatime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapeldua && data.Logs?.mapelduatime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapeldua === 'izin' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="(data.Logs?.mapeldua && data.Logs?.mapelduatime?.split(' ')[0] === date && (data.Logs?.mapeldua !== '' && data.Logs?.mapeldua !== 'izin')) ? true : false">Izin</button>
                   </div>
                 </div>
               </td>
@@ -119,27 +119,27 @@
                 <div class="select-input mx-auto">
                   <div class="box-radio">
                     <button
-                      @click="setAbsensi(data.SK, 'absen', 'mapeltiga', data.Logs?.mapelTiga, data.Logs?.mapelTigaTime?.split(' ')[0])"
-                      :class="(!data.Logs?.mapelTiga || (data.Logs?.mapelTiga === '' && data.Logs?.mapelDuaTime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapelTiga && data.Logs?.mapelTigaTime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapelTiga === 'absen' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.Logs?.mapelTiga && data.Logs?.mapelTigaTime?.split(' ')[0] === date && (data.Logs?.mapelTiga !== '' && data.Logs?.mapelTiga !== 'absen')) ? true : false">Absen</button>
+                      @click="setAbsensi(data.SK, 'absen', 'mapeltiga', data.Logs?.mapeltiga, data.Logs?.mapeltigatime?.split(' ')[0])"
+                      :class="(!data.Logs?.mapeltiga || (data.Logs?.mapeltiga === '' && data.Logs?.mapeltigatime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapeltiga && data.Logs?.mapeltigatime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapeltiga === 'absen' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="(data.Logs?.mapeltiga && data.Logs?.mapeltigatime?.split(' ')[0] === date && (data.Logs?.mapeltiga !== '' && data.Logs?.mapeltiga !== 'absen')) ? true : false">Absen</button>
                     </div>
                     <div class="box-radio">
                       <button
-                      @click="setAbsensi(data.SK, 'terlambat', 'mapeltiga', data.Logs?.mapelTiga, data.Logs?.mapelTigaTime?.split(' ')[0])"
-                      :class="(!data.Logs?.mapelTiga || (data.Logs?.mapelTiga === '' && data.Logs?.mapelDuaTime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapelTiga && data.Logs?.mapelTigaTime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapelDua === 'terlambat' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.Logs?.mapelTiga && data.Logs?.mapelTigaTime?.split(' ')[0] === date && (data.Logs?.mapelTiga !== '' && data.Logs?.mapelTiga !== 'terlambat')) ? true : false">Terlambat</button>
+                      @click="setAbsensi(data.SK, 'terlambat', 'mapeltiga', data.Logs?.mapeltiga, data.Logs?.mapeltigatime?.split(' ')[0])"
+                      :class="(!data.Logs?.mapeltiga || (data.Logs?.mapeltiga === '' && data.Logs?.mapeltigatime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapeltiga && data.Logs?.mapeltigatime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapeltiga === 'terlambat' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="(data.Logs?.mapeltiga && data.Logs?.mapeltigatime?.split(' ')[0] === date && (data.Logs?.mapeltiga !== '' && data.Logs?.mapeltiga !== 'terlambat')) ? true : false">Terlambat</button>
                     </div>
                     <div class="box-radio">
                       <button
-                      @click="setAbsensi(data.SK, 'sakit', 'mapeltiga', data.Logs?.mapelTiga, data.Logs?.mapelTigaTime?.split(' ')[0])"
-                      :class="(!data.Logs?.mapelTiga || (data.Logs?.mapelTiga === '' && data.Logs?.mapelDuaTime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapelTiga && data.Logs?.mapelTigaTime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapelDua === 'sakit' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.Logs?.mapelTiga && data.Logs?.mapelTigaTime?.split(' ')[0] === date && (data.Logs?.mapelTiga !== '' && data.Logs?.mapelTiga !== 'sakit')) ? true : false">Sakit</button>
+                      @click="setAbsensi(data.SK, 'sakit', 'mapeltiga', data.Logs?.mapeltiga, data.Logs?.mapeltigatime?.split(' ')[0])"
+                      :class="(!data.Logs?.mapeltiga || (data.Logs?.mapeltiga === '' && data.Logs?.mapeltigatime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapeltiga && data.Logs?.mapeltigatime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapeltiga === 'sakit' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="(data.Logs?.mapeltiga && data.Logs?.mapeltigatime?.split(' ')[0] === date && (data.Logs?.mapeltiga !== '' && data.Logs?.mapeltiga !== 'sakit')) ? true : false">Sakit</button>
                     </div>
                     <div class="box-radio">
                       <button
-                      @click="setAbsensi(data.SK, 'izin', 'mapeltiga', data.Logs?.mapelTiga, data.Logs?.mapelTigaTime?.split(' ')[0])"
-                      :class="(!data.Logs?.mapelTiga || (data.Logs?.mapelTiga === '' && data.Logs?.mapelDuaTime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapelTiga && data.Logs?.mapelTigaTime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapelDua === 'izin' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.Logs?.mapelTiga && data.Logs?.mapelTigaTime?.split(' ')[0] === date && (data.Logs?.mapelTiga !== '' && data.Logs?.mapelTiga !== 'izin')) ? true : false">Izin</button>
+                      @click="setAbsensi(data.SK, 'izin', 'mapeltiga', data.Logs?.mapeltiga, data.Logs?.mapeltigatime?.split(' ')[0])"
+                      :class="(!data.Logs?.mapeltiga || (data.Logs?.mapeltiga === '' && data.Logs?.mapeltigatime?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapeltiga && data.Logs?.mapeltigatime?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapeltiga === 'izin' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="(data.Logs?.mapeltiga && data.Logs?.mapeltigatime?.split(' ')[0] === date && (data.Logs?.mapeltiga !== '' && data.Logs?.mapeltiga !== 'izin')) ? true : false">Izin</button>
                   </div>
                 </div>
               </td>
@@ -239,7 +239,7 @@ export default {
     ...mapMutations('kelasAbsensi', { changeStep: 'setAbsensi' }),
     setAbsensi(sk, type, time, condition, dateTime) {
       const obj = {
-        sk, type, time
+        sk, type, time, condition
       }
       if (condition && dateTime === this.date) {
         this.deleteStatus(obj)
