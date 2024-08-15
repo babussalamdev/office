@@ -9,8 +9,7 @@
         <div class="col-12 col-md-6">
           <!-- Button trigger modal -->
           <div class="button-santri float-end">
-            <button type="button" class="btn btn-sm btn-primary button-santri" data-bs-toggle="modal"
-              data-bs-target="#inputDataStruktur">
+            <button type="button" class="btn btn-sm btn-primary button-santri" @click="inputModal()">
               Tambah Data
             </button>
           </div>
@@ -23,10 +22,14 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
   async asyncData({ store }) {
     const program = localStorage.getItem("program");
     store.dispatch(`struktur/changeUnit`, program);
+  },
+  methods: {
+    ...mapMutations('struktur', ['inputModal'])
   },
 };
 </script>

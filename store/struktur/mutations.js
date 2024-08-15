@@ -2,6 +2,10 @@ export default {
   setStruktur(state, value) {
     state.struktur = value
   },
+  inputModal(state, value) {
+    $("#inputDataStruktur").modal("show");
+    state.value = []
+  },
   inputStruktur(state, value) {
     state.struktur.push(value);
     state.struktur.sort((a, b) => {
@@ -10,7 +14,6 @@ export default {
     state.value = [];
     $("#inputDataStruktur").modal("hide");
     $("#inputStruktur")[0].reset();
-
   },
   editItem(state, value) {
     const i = state.struktur.findIndex((x) => x.SK === value)

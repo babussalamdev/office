@@ -136,4 +136,8 @@ export default {
 
 <style>
 @import url(~/assets/css/pegawai/pegawai.css);
+
+h2 {
+  font-size: 14px;
+}
 </style>

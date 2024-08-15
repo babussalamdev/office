@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- modal input -->
-    <div class="modal fade" id="inputDataStruktur" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="inputDataStruktur" tabindex="-1" aria-labelledby="staticBackdropLabel" data-bs-backdrop="static" data-bs-keyboard="false" >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <form @submit.prevent="inputStruktur" id="inputStruktur">

@@ -21,21 +21,21 @@
                   <option value="sedang">Sedang</option>
                   <option value="besar">Besar</option>
                 </select>
-                <input type="number" class="form-control" placeholder="Poin" name="Poin" />
+                <input type="number" class="form-control" placeholder="Poin" name="Poin" required />
               </div>
               <div class="form-floating mb-3">
                 <textarea name="Nama" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
-                  style="height: 100px"></textarea>
+                  style="height: 100px" required></textarea>
                 <label for="floatingTextarea2">Jenis Pelanggaran</label>
               </div>
               <div class="form-floating mb-3">
                 <textarea name="Solusi" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
-                  style="height: 100px"></textarea>
+                  style="height: 100px" required></textarea>
                 <label for="floatingTextarea2">Tindak Lanjut</label>
               </div>
               <div class="input-group">
-                <input type="date" class="form-control" name="Date" />
-                <input type="time" class="form-control" name="Time" />
+                <input type="date" class="form-control" name="Date" required/>
+                <input type="time" class="form-control" name="Time" required/>
               </div>
             </div>
             <div class="modal-footer">

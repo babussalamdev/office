@@ -14,41 +14,21 @@ export default {
     const program = localStorage.getItem('program')
     data["Program"] = program
     data["Permissions"] = state.value.map((x) => x.name).join(",");
-    try {
-      const result = await this.$axios.$post(
-        `input-settings?sk=${program}&type=struktur`,
-        data
-      );
+    if (state.value.length === 0) {
+      commit('btn')
       Swal.fire({
         position: "center",
-        icon: "success",
-        text: "Data berhasil di input",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      commit('btn')
-      commit('inputStruktur', result);
-    } catch (error) {
-      commit('btn')
-      Swal.fire({
         icon: "warning",
-        text: error,
+        text: "Permission tidak boleh kosong",
         showConfirmButton: false,
         timer: 1500,
       });
-    }
-  },
-  async updateStruktur({ commit, state }, event) {
-    commit('btn')
-    const data = Object.fromEntries(new FormData(event.target));
-    data["Permissions"] = state.value.map((x) => x.name).join(",");
-    const key = state.updateData.SK.replace('#', '%23');
-    try {
-      const result = await this.$axios.$put(
-        `update-settings?sk=${key}&type=struktur`,
-        data
-      );
-      if (result) {
+    } else {
+      try {
+        const result = await this.$axios.$post(
+          `input-settings?sk=${program}&type=struktur`,
+          data
+        );
         Swal.fire({
           position: "center",
           icon: "success",
@@ -57,20 +37,77 @@ export default {
           timer: 1500,
         });
         commit('btn')
-        data["SK"] = key;
-        commit('updateDataStruktur', data);
+        commit('inputStruktur', result);
+      } catch (error) {
+        commit('btn')
+        Swal.fire({
+          icon: "warning",
+          text: error,
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
-    } catch (error) {
+    }
+  },
+  async updateStruktur({ commit, state }, event) {
+    commit('btn')
+    const data = Object.fromEntries(new FormData(event.target));
+    data["Permissions"] = state.value.map((x) => x.name).join(",");
+    const key = state.updateData.SK.replace('#', '%23');
+
+    if (state.value.length === 0) {
       commit('btn')
       Swal.fire({
+        position: "center",
         icon: "warning",
-        text: error,
+        text: "Permission tidak boleh kosong",
         showConfirmButton: false,
         timer: 1500,
       });
+    } else {
+      const hasNullCode = state.value.some(element => element.code === null);
+
+      if (hasNullCode) {
+        commit('btn')
+        Swal.fire({
+          position: "center",
+          icon: "warning",
+          text: "Data anda salah",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        return
+      }
+
+      try {
+        const result = await this.$apiBase.$put(
+          `update-settings?sk=${key}&type=struktur`,
+          data
+        );
+        if (result) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            text: "Data berhasil di input",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          commit('btn')
+          data["SK"] = key;
+          commit('updateDataStruktur', data);
+        }
+      } catch (error) {
+        commit('btn')
+        Swal.fire({
+          icon: "warning",
+          text: error,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
     }
   },
-  async deleteItem({commit, state}, sk) {
+  async deleteItem({ commit, state }, sk) {
     const i = state.struktur.findIndex((x) => x.SK === sk)
     const name = state.struktur[i].Nama
     const key = state.struktur[i].SK.replace('#', '%23')
@@ -95,7 +132,7 @@ export default {
           text: "Data berhasil dihapus!",
           showConfirmButton: false,
           timer: 1500,
-          });
+        });
         commit("deleteStruktur", key);
       }
     }

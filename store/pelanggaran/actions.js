@@ -54,6 +54,8 @@ export default {
   async inputForm({ commit, state }, event) {
     commit('setLoad')
     const data = Object.fromEntries(new FormData(event.target));
+    data['Kelas'] = state.updateData.Kelas
+    data['Asrama'] = state.updateData.Asrama
     const skSantri = state.updateData.SK.replace('#', '%23')
     const program = localStorage.getItem("program");
     const tahun = this.$auth.user.Label

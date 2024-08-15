@@ -55,10 +55,6 @@
                 class="btn btn-sm btn-warning text-xss me-1 text-white rounded-2">
                 Record
               </nuxt-link>
-              <!-- <i
-                class="btn btn-sm btn-warning text-xs me-1 text-white rounded-2"
-                >Record</i
-              > -->
               <i @click="input(index)" class="btn btn-sm btn-primary text-xs text-white rounded-2">Input</i>
             </td>
           </tr>

@@ -1,6 +1,18 @@
 <template>
   <div>
     <div>
+      <div class="row mb-3">
+        <div class="col-12 col-md-8 d-flex align-items-center mb-3 mb-md-0">
+          <h2 class="mb-0">Database Pegawai</h2>
+        </div>
+        <div class="col-12 col-md-4 d-flex justify-content-end">
+          <div class="input-group">
+            <i style="font-size: 12px;" class="material-icons input-group-text"> search </i>
+            <input style="font-size: 12px;" type="text" class="form-control" placeholder="Search" aria-label="Username"
+              aria-describedby="basic-addon1" v-model="search">
+          </div>
+        </div>
+      </div>
       <div class="table-responsive">
         <!-- Modal -->
         <ModalPegawai @deleteUpdateData="deleteUpdateData" />
@@ -10,7 +22,7 @@
               <th scope="col">
                 <input type="checkbox" />
               </th>
-              <th scope="col">Nama / NIS</th>
+              <th scope="col">Nama / NIP</th>
               <th scope="col">Username</th>
               <th scope="col">Lulusan</th>
               <th scope="col">Jabatan</th>
@@ -66,8 +78,8 @@
                   </a>
                   <a href="javascript:;" @click="updateItem(data.Username, data.SK, data.Status)"><button
                       class="btn btn-sm" :class="data.Status === 'active'
-                          ? 'btn-primary'
-                          : 'btn-secondary'
+                        ? 'btn-primary'
+                        : 'btn-secondary'
                         ">
                       <i class="material-icons"> power_settings_new </i>
                     </button></a>

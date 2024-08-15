@@ -12,7 +12,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(data, index) in kaldik" :key="index">
+          <tr v-for="(data, index) in filteredDatas" :key="index">
             <td class="text-capitalize">{{ data.Nama }}</td>
             <td>{{ data.TanggalMulai.split(',')[0] }}</td>
             <td>{{ data.TanggalAkhir.split(',')[0] }}</td>
@@ -34,6 +34,24 @@
       </table>
     </div>
     <ModalKaldik />
+
+    <!-- pagination -->
+    <div class="btn-group text-center float-end mt-3 mb-5" role="group">
+      <button @click="page = 1" :disabled="page === 1" type="button" class="btn btn-primary btn-sm">
+        &laquo;
+      </button>
+      <button @click="page--" :disabled="page === 1" type="button" class="btn btn-primary  btn-sm">
+        Prev
+      </button>
+      <button class="btn btn-dark  btn-sm disabled">{{ `${page}` }}</button>
+      <button @click="page++" :disabled="page >= Math.ceil(table.length / perPage)" class="btn btn-primary  btn-sm">
+        Next
+      </button>
+      <button @click="page = Math.ceil(table.length / perPage)" :disabled="page >= Math.ceil(table.length / perPage)"
+        type="button" class="btn btn-primary  btn-sm">
+        &raquo;
+      </button>
+    </div>
   </div>
 </template>
 
@@ -46,14 +64,22 @@ export default {
   data() {
     return {
       updateData: "",
+      page: 1,
+      perPage: 10,
+      table: "",
+      search: ''
     };
-  },
-  async asyncData({ store }) {
-    const program = localStorage.getItem("program");
-    store.dispatch(`kaldik/changeUnit`, program);
   },
   computed: {
     ...mapState("kaldik", ["kaldik"]),
+    filteredDatas() {
+      this.table = this.kaldik.filter((data) => {
+        return data.Nama.toLowerCase().includes(this.search.toLowerCase());
+      });
+      let start = (this.page - 1) * this.perPage;
+      let end = start + this.perPage;
+      return this.table.slice(start, end);
+    },
   },
   mixins: [formatSet],
 
