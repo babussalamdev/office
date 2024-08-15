@@ -117,14 +117,14 @@ export default {
       }
     },
     ayatto(value) {
-      if ( value !== null ) {
+      if (value !== null) {
         if (this.ayatfrom.page !== '' && value.page !== '') {
           this.page = Math.abs(this.ayatfrom.page - this.ayatto.page) + 1
         }
       }
     },
     ayatfrom(value) {
-      if ( value !== null ) {
+      if (value !== null) {
         if (this.ayatto.page !== '' && value.page !== '') {
           this.page = Math.abs(this.ayatfrom.page - this.ayatto.page) + 1
         }
@@ -154,9 +154,13 @@ export default {
       data['From'] = from
       data['To'] = to
       try {
+        const program = localStorage.getItem('program')
         const sk = this.detail.SK.replace('#', '%23')
         const subject = localStorage.getItem('subject')
-        const result = await this.$apiSantri.$post(`input-logs?subject=${subject}&sksantri=${sk}`, data)
+        const tahun = this.$auth.user.Label
+        const semester = this.$auth.user.Semester
+        const halaqah = this.$auth.user.Halaqah[program]
+        const result = await this.$apiSantri.$post(`input-logs?subject=${subject}&sksantri=${sk}&halaqah=${halaqah}&thn=${tahun}&smstr=${semester}`, data)
         if (result) {
           Swal.fire({
             position: "center",
@@ -169,6 +173,11 @@ export default {
           this.$store.commit('mutabaah/pushDetail', result)
           $('#mutabaah').modal('hide')
           this.$refs.mutabaah.reset()
+          this.surahfrom = { name: '', ayat: [] }
+          this.surahto = { name: '', ayat: [] }
+          this.ayatfrom = { number: '', page: '', juz: '' }
+          this.ayatto = { name: '', page: '', juz: '' }
+          this.page = 0
         }
       } catch (error) {
         Swal.fire({

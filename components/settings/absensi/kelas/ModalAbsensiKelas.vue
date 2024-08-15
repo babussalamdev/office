@@ -61,11 +61,11 @@ export default {
       const tahun = this.$auth.user.Label
       const semester = this.$auth.user.Semester
       const time = this.updateData.time
-      const namakelas = this.updateData.Kelas
+      const namakelas = this.updateData.santri.Kelas
       const program = localStorage.getItem("program");
       try {
         const result = await this.$apiSantri.$put(
-          `update-absensi-sisalam?sksantri=${skSantri}&type=${time}&thn=${tahun}&smstr=${semester}&program=${program}&namakelas=${namakelas}`,
+          `update-absensi-sisalam?sksantri=${skSantri}&type=${time}&thn=${tahun}&smstr=${semester}&program=${program}&subject=${namakelas}`,
           data
         );
         if (result) {

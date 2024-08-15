@@ -13,7 +13,6 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              {{ updateData }}
               <div class="form-floating">
                 <textarea name="Note" class="form-control" style="height: 100px"
                   placeholder="Leave a comment here" id="floatingTextarea"></textarea>
@@ -62,11 +61,11 @@ export default {
       const tahun = this.$auth.user.Label
       const semester = this.$auth.user.Semester
       const time = this.updateData.time
-      const namahalaqah = this.updateData.Halaqah
+      const namahalaqah = this.updateData.santri.Halaqah
       const program = localStorage.getItem("program");
       try {
         const result = await this.$apiSantri.$put(
-          `update-absensi-sisalam?sksantri=${skSantri}&type=halaqah${time}&thn=${tahun}&smstr=${semester}&program=${program}&namahalaqah=${namahalaqah}`,
+          `update-absensi-sisalam?sksantri=${skSantri}&type=halaqah${time}&thn=${tahun}&smstr=${semester}&program=${program}&subject=${namahalaqah}`,
           data
         );
         if (result) {

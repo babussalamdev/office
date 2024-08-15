@@ -39,15 +39,15 @@
         <tbody>
           <tr v-for="(data, index) in santri" :key="index">
             <td class="text-capitalize align-middle">{{ data.Nama }}</td>
-            <td class="text-capitalize align-middle">{{ data.Awal ? data.Awal : '-' }}</td>
-            <td class="text-capitalize align-middle">{{ data.Akhir ? data.Akhir : '-' }}</td>
-            <td class="text-capitalize align-middle">{{ data.Baru ? data.Baru : '-' }}</td>
-            <td class="text-capitalize align-middle">{{ juz(data.Baru ? data.Baru : 0) }} Juz</td>
-            <td class="text-capitalize align-middle text-center">{{ data.T ? data.T : '-' }}</td>
-            <td class="text-capitalize align-middle text-center">{{ data.S ? data.S : '-' }}</td>
-            <td class="text-capitalize align-middle text-center">{{ data.I ? data.I : '-' }}</td>
-            <td class="text-capitalize align-middle text-center">{{ data.A ? data.A : '-' }}</td>
-            <td class="text-capitalize align-middle text-center">{{ data.T + data.S + data.A + data.I  }}</td>
+            <td class="text-capitalize align-middle" style="font-family: 'Noto Kufi Arabic', sans-serif; font-size: 12px; font-weight: 600">{{ data.From }}</td>
+            <td class="text-capitalize align-middle" style="font-family: 'Noto Kufi Arabic', sans-serif; font-size: 12px; font-weight: 600">{{ data.To }}</td>
+            <td class="text-capitalize align-middle">{{ data.Page }} Hal</td>
+            <td class="text-capitalize align-middle">{{ data.Juz }} Juz</td>
+            <td class="text-capitalize align-middle text-center">{{ data.terlambat }}</td>
+            <td class="text-capitalize align-middle text-center">{{ data.sakit }}</td>
+            <td class="text-capitalize align-middle text-center">{{ data.izin }}</td>
+            <td class="text-capitalize align-middle text-center">{{ data.absen }}</td>
+            <td class="text-capitalize align-middle text-center">{{ data.terlambat + data.izin + data.sakit + data.absen  }}</td>
           </tr>
         </tbody>
       </table>
