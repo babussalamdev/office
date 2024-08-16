@@ -84,4 +84,45 @@
   #nilai-mapel .nilai-mapel .table-responsive .table tbody tr td {
     font-size: 12px;
   }
+}
+
+#jurnal .jurnal h2 {
+  font-size: 14px;
+}
+#jurnal .jurnal .table-responsive {
+  overflow-x: auto;
+  border-radius: 7px !important;
+  box-shadow: 0 0 15px rgba(177, 177, 177, 0.4);
+}
+#jurnal .jurnal .table-responsive .table {
+  width: 100%;
+  margin-bottom: 0 !important;
+}
+#jurnal .jurnal .table-responsive .table thead tr th {
+  padding: 15px 20px;
+  background: #176b87;
+  font-size: 12px;
+  color: #fff;
+}
+#jurnal .jurnal .table-responsive .table tbody tr td {
+  padding: 17px 20px;
+  margin: auto;
+  font-size: 12px;
+}
+#jurnal .jurnal .table-responsive .table tbody tr td button {
+  padding: 2px 5px 2px !important;
+}
+#jurnal .jurnal .table-responsive .table tbody tr td button i {
+  font-size: 14px !important;
+}
+#jurnal .jurnal .table-responsive .table tbody tr td i {
+  font-size: 12px;
+}
+@media screen and (max-width: 576px) {
+  #jurnal .jurnal .table-responsive .table thead tr th {
+    font-size: 12px;
+  }
+  #jurnal .jurnal .table-responsive .table tbody tr td {
+    font-size: 12px;
+  }
 }/*# sourceMappingURL=kelas.css.map */

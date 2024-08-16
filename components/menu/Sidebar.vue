@@ -51,11 +51,11 @@
                 </nuxt-link>
               </li>
               <!-- jurnal -->
-              <!-- <li>
+              <li>
                 <nuxt-link to="/kelas/jurnal" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Jurnal</span>
                 </nuxt-link>
-              </li> -->
+              </li>
               <!-- nilai -->
               <li>
                 <nuxt-link to="/kelas/nilai" class="custom-link text-decoration-none d-flex align-items-center gap-2">

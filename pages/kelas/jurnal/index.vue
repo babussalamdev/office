@@ -1,7 +1,7 @@
 <template>
   <section id="jurnal">
     <div class="jurnal">
-      <h1>Jurnal Page</h1>
+      <JurnalTable />
     </div>
   </section>
 </template>
@@ -10,4 +10,6 @@
 export default {};
 </script>
 
-<style lang="scss" scoped></style>
+<style>
+@import url(~/assets/css/kelas/kelas.css);
+</style>
