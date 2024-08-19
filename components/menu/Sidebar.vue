@@ -192,7 +192,8 @@
             </nuxt-link>
           </li>
           <!-- Report -->
-          <li v-if="$auth.user.role !== 'root' &&  ['report mapel', 'report ekskull', 'report absensi', 'report pelanggaran'].some(name => permissions?.includes(name))">
+          <li
+            v-if="$auth.user.role !== 'root' && ['report mapel', 'report ekskull', 'report absensi', 'report pelanggaran'].some(name => permissions?.includes(name))">
             <div @click="notClick('listReport')"
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
@@ -320,7 +321,8 @@
                 </ul>
               </li>
               <!-- Pegawai Menu -->
-              <li v-if="['pengampu', 'wali kelas', 'musyrif', 'pengajar'].some(name => permissions.includes(name))">
+              <li
+                v-if="['pengampu', 'wali kelas', 'musyrif', 'pengajar'].some(name => permissions.includes(name)) || $auth.user.role === 'root' || personalia === 'on'">
                 <div @click="notClickSub('pegawai')"
                   class="dropdown d-flex align-items-center justify-content-between gap-2">
                   <span class="d-flex align-items-center gap-2">
@@ -370,7 +372,8 @@
                 </ul>
               </li>
               <!-- Database Menu -->
-              <li v-if="$auth.user.role !== 'root' && ['setup halaqah', 'setup asrama', 'setup kelas', 'setup mapel'].some(name => permissions.includes(name))" >
+              <li
+                v-if="$auth.user.role !== 'root' && ['setup halaqah', 'setup asrama', 'setup kelas', 'setup mapel'].some(name => permissions.includes(name))">
                 <div @click="notClickSub('database')"
                   class="dropdown d-flex align-items-center justify-content-between gap-2">
                   <span class="d-flex align-items-center gap-2">
