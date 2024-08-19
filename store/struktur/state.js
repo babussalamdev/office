@@ -25,6 +25,7 @@ export default () => ({
     { name: "page asrama", code: 19 },
     { name: "page pelanggaran", code: 20 },
     { name: "laundry", code: 21 },
+    { name: "none", code: 22 },
   ],
 
   // partikel
