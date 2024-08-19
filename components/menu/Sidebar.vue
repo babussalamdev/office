@@ -373,7 +373,7 @@
               </li>
               <!-- Database Menu -->
               <li
-                v-if="$auth.user.role !== 'root' && ['setup halaqah', 'setup asrama', 'setup kelas', 'setup mapel'].some(name => permissions.includes(name))">
+                v-if="$auth.user.role !== 'root' && ['setup halaqah', 'setup asrama', 'setup kelas', 'setup mapel'].some(name => permissions.includes(name)) || personalia === 'on'">
                 <div @click="notClickSub('database')"
                   class="dropdown d-flex align-items-center justify-content-between gap-2">
                   <span class="d-flex align-items-center gap-2">
