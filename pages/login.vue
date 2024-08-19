@@ -6,7 +6,7 @@
           <div class="col-12 col-md-6 left-side d-none d-md-flex">
             <div class="d-flex align-items-center gap-3 animate__animated animate__fadeInLeft">
               <img src="~/assets/img/logo-1.png" alt="Logo Babussalam" />
-              <span class="fw-semibold">Sistem Ma'had Babussalam</span>
+              <span class="fw-semibold">Sistem Babussalam {{ version }}</span>
             </div>
             <div>
               <img src="~/assets/img/main.png" alt="main image"
@@ -82,8 +82,16 @@
 import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
   layout: "login",
+  data() {
+    return {
+      version: 0
+    }
+  },
   computed: {
     ...mapState('login', ['year', 'btnLoad', 'type']),
+  },
+  created() {
+    this.version = process.env.version;
   },
   methods: {
     ...mapActions('login', ['submit']),

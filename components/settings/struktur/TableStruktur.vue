@@ -7,7 +7,7 @@
             <th scope="col">Sort</th>
             <th scope="col">Nama</th>
             <th scope="col">Permission</th>
-            <th scope="col">Settings</th>
+            <!-- <th scope="col">Settings</th> -->
             <th scope="col" class="text-end">Action</th>
           </tr>
         </thead>
@@ -32,12 +32,12 @@
                 <p style="font-size: 10px;" class="">No permissions available</p>
               </div>
             </td>
-            <td class="text-capitalize align-middle">
+            <!-- <td class="text-capitalize align-middle">
               <div class="form-switch">
                 <input @change="openSettings(data.SK, data.Status)" class="form-check-input" type="checkbox"
                   role="switch" id="flexSwitchCheckChecked" />
               </div>
-            </td>
+            </td> -->
             <td class="text-end align-middle">
               <a href="javascript:;" @click="editItem(data.SK)">
                 <button class="btn btn-sm btn-warning">
