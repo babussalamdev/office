@@ -8,6 +8,10 @@
 
 <script>
 export default {
+  middleware: 'permission',
+  meta: {
+    permissions: ['ekskull']
+  },
   async asyncData({ store }) {
     store.dispatch(`santri/ekskull/changeUnit`);
   },

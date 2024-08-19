@@ -26,6 +26,10 @@
 
 <script>
 export default {
+  middleware: 'permission',
+  meta: {
+    permissions: ['setup kelas']
+  },
   async asyncData({ store }) {
     const program = localStorage.getItem("program");
     store.dispatch(`kelas/changeUnit`, program);

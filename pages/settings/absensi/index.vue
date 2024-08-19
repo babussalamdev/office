@@ -9,6 +9,10 @@
 
 <script>
 export default {
+  middleware: 'permission',
+  meta: {
+    permissions: ['setup absensi']
+  },
   async asyncData({ store }) {
     const program = localStorage.getItem("program");
     store.dispatch(`setupabsensi/getAbsensi`, program);

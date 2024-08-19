@@ -8,6 +8,10 @@
 
 <script>
 export default {
+  middleware: 'permission',
+  meta: {
+    permissions: ['musyrif']
+  },
   async asyncData({ store }) {
     const program = localStorage.getItem("program");
     store.dispatch(`pegawai/musyrif/showMusyrif`, program);

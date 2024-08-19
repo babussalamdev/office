@@ -8,6 +8,10 @@
 
 <script>
 export default {
+  middleware: 'permission',
+  meta: {
+    permissions: ['report lagger']
+  },
   async asyncData({ store }) {
     store.dispatch('report/lagger/changeUnit');
   },

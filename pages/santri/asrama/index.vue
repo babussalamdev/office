@@ -8,6 +8,10 @@
 
 <script>
 export default {
+  middleware: 'permission',
+  meta: {
+    permissions: ['asrama']
+  },
   async asyncData({ store }) {
     store.dispatch(`santri/asrama/changeUnit`);
   },

@@ -21,9 +21,8 @@
               <span class="text animate__animated animate__fadeInRight">Dashboard</span>
             </nuxt-link>
           </li>
-
           <!-- Kaldik -->
-          <li v-if="$auth.user.role !== 'root'">
+          <li v-if="hasRoot">
             <nuxt-link to="/kaldik" class="text-decoration-none d-flex align-items-center gap-2">
               <i class="material-icons animate__animated animate__fadeInRight">
                 calendar_month
@@ -32,7 +31,7 @@
             </nuxt-link>
           </li>
           <!-- Kelas-->
-          <li v-if="$auth.user.role !== 'root' && $auth.user.Pengajar[unit] !== 'off'">
+          <li v-if="hasRoot && $auth.user.Pengajar[unit] !== 'off'">
             <div @click="notClick('listKelas')"
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
@@ -65,7 +64,7 @@
             </ul>
           </li>
           <!-- Asrama -->
-          <li v-if="$auth.user.role !== 'root' && permissions?.includes('page asrama')">
+          <li v-if="hasRoot && hasPermission('page asrama')">
             <div @click="notClick('listAsrama')"
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
@@ -94,7 +93,7 @@
             </ul>
           </li>
           <!-- Tahfidz -->
-          <li v-if="$auth.user.role !== 'root' && $auth.user.Pengampu[unit] !== 'off'">
+          <li v-if="hasRoot && $auth.user.Pengampu[unit] !== 'off'">
             <div @click="notClick('listTahfidz')"
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
@@ -135,7 +134,7 @@
             </ul>
           </li>
           <!-- Laundry -->
-          <li v-if="$auth.user.role !== 'root' && permissions?.includes('laundry')">
+          <li v-if="hasRoot && hasPermission('laundry')">
             <div @click="notClick('listLaundry')"
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
@@ -183,7 +182,7 @@
             </ul>
           </li>
           <!-- Pelanggaran -->
-          <li v-if="$auth.user.role !== 'root' && permissions?.includes('page pelanggaran')">
+          <li v-if="hasRoot && hasPermission('page pelanggaran')">
             <nuxt-link to="/pelanggaran" class="text-decoration-none d-flex align-items-center gap-2">
               <i class="material-icons animate__animated animate__fadeInRight">
                 privacy_tip
@@ -193,7 +192,7 @@
           </li>
           <!-- Report -->
           <li
-            v-if="$auth.user.role !== 'root' && ['report mapel', 'report ekskull', 'report absensi', 'report pelanggaran'].some(name => permissions?.includes(name))">
+            v-if="hasRoot && ['report mapel', 'report ekskull', 'report absensi', 'report pelanggaran'].some(name => hasPermission(name))">
             <div @click="notClick('listReport')"
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
@@ -206,13 +205,13 @@
             </div>
             <ul v-if="listReport" class="dropdown-list">
               <!-- mapel -->
-              <li v-if="permissions?.includes('report mapel')">
+              <li v-if="hasPermission('report mapel')">
                 <nuxt-link to="/report/mapel" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Nilai Mapel</span>
                 </nuxt-link>
               </li>
               <!-- mapel -->
-              <li v-if="permissions?.includes('report mapel')">
+              <li v-if="hasPermission('report mapel')">
                 <nuxt-link to="/report/lagger" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Lagger Mapel</span>
                 </nuxt-link>
@@ -225,21 +224,21 @@
                 </nuxt-link>
               </li> -->
               <!-- tahfidz -->
-              <li v-if="permissions?.includes('report ekskull')">
+              <!-- <li v-if="permissions?.includes('report ekskull')">
                 <nuxt-link to="/report/ekskull"
                   class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Ekskull</span>
                 </nuxt-link>
-              </li>
+              </li> -->
               <!-- absensi -->
-              <li v-if="permissions?.includes('report absensi')">
+              <li v-if="hasPermission('report absensi')">
                 <nuxt-link to="/report/absensi"
                   class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Absensi Kelas</span>
                 </nuxt-link>
               </li>
               <!-- pelanggaran -->
-              <li v-if="permissions?.includes('report pelanggaran')">
+              <li v-if="hasPermission('report pelanggaran')">
                 <nuxt-link to="/report/pelanggaran"
                   class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Pelanggaran</span>
@@ -262,19 +261,19 @@
             </div>
             <ul v-if="listSettings" class="dropdown-list">
               <!-- Absensi Menu -->
-              <li v-if="$auth.user.role !== 'root' && permissions?.includes('setup absensi')">
+              <li v-if="hasRoot && hasPermission('setup absensi')">
                 <nuxt-link to="/settings/absensi" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Absensi</span>
                 </nuxt-link>
               </li>
-              <li v-if="$auth.user.role !== 'root' && permissions?.includes('setup pelanggaran')">
+              <li v-if="hasRoot && hasPermission('setup pelanggaran')">
                 <nuxt-link to="/settings/pelanggaran"
                   class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Pelanggaran</span>
                 </nuxt-link>
               </li>
               <!-- Santri Menu -->
-              <li v-if="$auth.user.role !== 'root'">
+              <li v-if="hasRoot">
                 <div @click="notClickSub('santri')"
                   class="dropdown d-flex align-items-center justify-content-between gap-2">
                   <span class="d-flex align-items-center gap-2">
@@ -285,34 +284,34 @@
                 <!-- sub menu santri -->
                 <ul v-if="santriSubList" class="dropdown-list">
                   <!-- data -->
-                  <li v-if="permissions?.includes('data santri')">
+                  <li v-if="hasPermission('data santri')">
                     <nuxt-link to="/santri/database"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Data</span>
                     </nuxt-link>
                   </li>
                   <!-- kelas -->
-                  <li v-if="permissions?.includes('kelas')">
+                  <li v-if="hasPermission('kelas')">
                     <nuxt-link to="/santri/kelas" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Kelas</span>
                     </nuxt-link>
                   </li>
                   <!-- asrama -->
-                  <li v-if="permissions?.includes('asrama')">
+                  <li v-if="hasPermission('asrama')">
                     <nuxt-link to="/santri/asrama"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Asrama</span>
                     </nuxt-link>
                   </li>
                   <!-- halaqah -->
-                  <li v-if="permissions?.includes('halaqah')">
+                  <li v-if="hasPermission('halaqah')">
                     <nuxt-link to="/santri/halaqoh"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Halaqah</span>
                     </nuxt-link>
                   </li>
                   <!-- ekskull -->
-                  <li v-if="permissions?.includes('ekskull')">
+                  <li v-if="hasPermission('ekskull')">
                     <nuxt-link to="/santri/ekskull"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Ekskull</span>
@@ -322,7 +321,7 @@
               </li>
               <!-- Pegawai Menu -->
               <li
-                v-if="['pengampu', 'wali kelas', 'musyrif', 'pengajar'].some(name => permissions.includes(name)) || $auth.user.role === 'root' || personalia === 'on'">
+                v-if="['pengampu', 'wali kelas', 'musyrif', 'pengajar'].some(name => hasPermission(name)) || $auth.user.role === 'root' || hasPersonalia">
                 <div @click="notClickSub('pegawai')"
                   class="dropdown d-flex align-items-center justify-content-between gap-2">
                   <span class="d-flex align-items-center gap-2">
@@ -334,7 +333,7 @@
                 <ul v-if="pegawaiSubList" class="dropdown-list">
                   <!-- data -->
                   <li v-if="
-                    personalia === 'on' || $auth.user.role === 'root'
+                    hasPersonalia || $auth.user.role === 'root'
                   ">
                     <nuxt-link to="/pegawai/database"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
@@ -342,28 +341,28 @@
                     </nuxt-link>
                   </li>
                   <!-- halaqah -->
-                  <li v-if="$auth.user.role !== 'root' && permissions?.includes('pengampu')">
+                  <li v-if="hasRoot && hasPermission('pengampu')">
                     <nuxt-link to="/pegawai/halaqoh"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Halaqah</span>
                     </nuxt-link>
                   </li>
                   <!-- wali kelas -->
-                  <li v-if="$auth.user.role !== 'root' && permissions?.includes('wali kelas')">
+                  <li v-if="hasRoot && hasPermission('wali kelas')">
                     <nuxt-link to="/pegawai/walas"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Wali Kelas</span>
                     </nuxt-link>
                   </li>
                   <!-- musyrif -->
-                  <li v-if="$auth.user.role !== 'root' && permissions?.includes('musyrif')">
+                  <li v-if="hasRoot && hasPermission('musyrif')">
                     <nuxt-link to="/pegawai/musyrif"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Musyrif</span>
                     </nuxt-link>
                   </li>
                   <!-- mapel -->
-                  <li v-if="$auth.user.role !== 'root' && permissions?.includes('pengajar')">
+                  <li v-if="hasRoot && hasPermission('pengajar')">
                     <nuxt-link to="/pegawai/mapel"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Mapel</span>
@@ -373,7 +372,7 @@
               </li>
               <!-- Database Menu -->
               <li
-                v-if="$auth.user.role !== 'root' && ['setup halaqah', 'setup asrama', 'setup kelas', 'setup mapel'].some(name => permissions.includes(name)) || personalia === 'on'">
+                v-if="hasRoot && ['setup halaqah', 'setup asrama', 'setup kelas', 'setup mapel'].some(name => hasPermission(name)) || hasPersonalia">
                 <div @click="notClickSub('database')"
                   class="dropdown d-flex align-items-center justify-content-between gap-2">
                   <span class="d-flex align-items-center gap-2">
@@ -384,49 +383,49 @@
                 <!-- sub menu pegawai -->
                 <ul v-if="databaseSubList" class="dropdown-list">
                   <!-- Utama -->
-                  <li v-if="personalia === 'on'">
+                  <li v-if="hasPersonalia">
                     <nuxt-link to="/settings/periode"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Periode</span>
                     </nuxt-link>
                   </li>
                   <!-- Kaldik -->
-                  <li v-if="personalia === 'on'">
+                  <li v-if="hasPersonalia">
                     <nuxt-link to="/settings/kaldik"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Kaldik</span>
                     </nuxt-link>
                   </li>
                   <!-- Halaqah -->
-                  <li v-if="permissions?.includes('setup halaqah')">
+                  <li v-if="hasPermission('setup halaqah')">
                     <nuxt-link to="/settings/halaqah"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Halaqah</span>
                     </nuxt-link>
                   </li>
                   <!-- Asrama -->
-                  <li v-if="permissions?.includes('setup asrama')">
+                  <li v-if="hasPermission('setup asrama')">
                     <nuxt-link to="/settings/asrama"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Asrama</span>
                     </nuxt-link>
                   </li>
                   <!-- Kelas -->
-                  <li v-if="permissions?.includes('setup kelas')">
+                  <li v-if="hasPermission('setup kelas')">
                     <nuxt-link to="/settings/kelas"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Kelas</span>
                     </nuxt-link>
                   </li>
                   <!-- Mapel -->
-                  <li v-if="permissions?.includes('setup mapel')">
+                  <li v-if="hasPermission('setup mapel')">
                     <nuxt-link to="/settings/mapel"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Mapel</span>
                     </nuxt-link>
                   </li>
                   <!-- Struktur -->
-                  <li v-if="personalia === 'on'">
+                  <li v-if="hasPersonalia">
                     <nuxt-link to="/settings/struktur"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Struktur</span>
@@ -461,6 +460,12 @@ export default {
     ...mapState("index", ["unit", "permissions", "pengajar", "pengampu", "personalia",]),
     ...mapState("sidebar", ["activeMenu", "listAsrama", "listTahfidz", "listSettings", "listKelas", "listReport", 'listLaundry',
       "absensiSubList", "santriSubList", "pegawaiSubList", "databaseSubList", 'isSidebar']),
+    hasPersonalia() {
+      return this.personalia === 'on' ? true : false
+    },
+    hasRoot() {
+      return this.$auth.user.role !== 'root' ? true : false
+    }
   },
 
   methods: {
@@ -469,6 +474,9 @@ export default {
     isRouteActive(route) {
       const currentPath = this.$route.path;
       return currentPath === route;
+    },
+    hasPermission(permission) {
+      return this.permissions.includes(permission);
     },
   },
 };

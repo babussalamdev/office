@@ -23,6 +23,10 @@
 import { mapState } from "vuex";
 
 export default {
+  middleware: 'permission',
+  meta: {
+    permissions: ['pengajar']
+  },
   data() {
     return {
       listKelas: "",

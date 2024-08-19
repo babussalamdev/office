@@ -53,6 +53,10 @@
 import Swal from "sweetalert2";
 import { mapGetters, mapActions, mapMutations, mapState } from 'vuex'
 export default {
+  middleware: 'permission',
+  meta: {
+    permissions: ['data santri']
+  },
   data() {
     return {
       btn2: true

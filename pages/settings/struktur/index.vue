@@ -24,6 +24,10 @@
 <script>
 import { mapMutations } from 'vuex'
 export default {
+  middleware: 'personalia',
+  meta: {
+    personalias: 'on'
+  },
   async asyncData({ store }) {
     const program = localStorage.getItem("program");
     store.dispatch(`struktur/changeUnit`, program);

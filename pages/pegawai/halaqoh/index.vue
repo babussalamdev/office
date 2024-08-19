@@ -8,6 +8,10 @@
 
 <script>
 export default {
+  middleware: 'permission',
+  meta: {
+    permissions: ['pengampu']
+  },
   async asyncData({ store }) {
     const program = localStorage.getItem("program");
     store.dispatch(`pegawai/halaqah/changeUnit`, program);

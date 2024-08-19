@@ -9,6 +9,10 @@
 
 <script>
 export default {
+  middleware: 'permission',
+  meta: {
+    permissions: ['page pelanggaran']
+  },
   async asyncData({ store }) {
     store.dispatch(`pelanggaran/changeUnit`);
   },

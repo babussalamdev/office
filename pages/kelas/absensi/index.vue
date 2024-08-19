@@ -9,6 +9,10 @@
 
 <script>
 export default {
+  middleware: 'root',
+  meta: {
+    roots: 'root'
+  },
   async asyncData({ store }) {
     store.dispatch(`kelasAbsensi/changeUnit`);
   },

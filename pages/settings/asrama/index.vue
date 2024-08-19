@@ -36,6 +36,10 @@
 
 <script>
 export default {
+  middleware: 'permission',
+  meta: {
+    permissions: ['setup asrama']
+  },
   async asyncData({ store }) {
     const program = localStorage.getItem("program");
     store.dispatch(`kelompok/changeUnitAsrama`, program);

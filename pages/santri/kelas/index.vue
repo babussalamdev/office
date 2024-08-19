@@ -8,6 +8,10 @@
 
 <script>
 export default {
+  middleware: 'permission',
+  meta: {
+    permissions: ['kelas']
+  },
   async asyncData({ store }) {
     store.dispatch(`santri/kelas/changeUnit`);
   },

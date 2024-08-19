@@ -8,6 +8,10 @@
 
 <script>
 export default {
+  middleware: 'permission',
+  meta: {
+    permissions: ['halaqah']
+  },
   async asyncData({ store }) {
     store.dispatch(`santri/halaqah/changeUnit`);
   },

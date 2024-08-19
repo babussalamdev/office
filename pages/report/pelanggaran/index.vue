@@ -5,7 +5,12 @@
 </template>
 
 <script>
-export default {};
+export default {
+  middleware: 'permission',
+  meta: {
+    permissions: ['report pelanggaran']
+  },
+};
 </script>
 
 <style lang="scss" scoped></style>

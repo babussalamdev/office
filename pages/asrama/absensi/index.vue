@@ -9,6 +9,10 @@
 
 <script>
 export default {
+  middleware: 'permission',
+  meta: {
+      Permissions: ['page asrama']
+  },
   async asyncData({ store }) {
     store.dispatch(`asramaAbsensi/changeUnit`);
   },

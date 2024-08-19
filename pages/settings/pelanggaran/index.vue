@@ -9,6 +9,10 @@
 
 <script>
 export default {
+  middleware: 'permission',
+  meta: {
+    permissions: ['setup pelanggaran']
+  },
   async asyncData({ store }) {
     const program = localStorage.getItem("program");
     store.dispatch(`setuppelanggaran/getPelanggaran`, program);
