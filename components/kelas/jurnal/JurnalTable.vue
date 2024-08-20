@@ -3,43 +3,53 @@
 
     <div class="animate__animated animate__fadeInUp">
       <div class="row mb-3">
-        <div class="col-12 col-md-8 mb-3 mb-md-0 d-flex align-items-center">
+        <div class="col-12 col-md-7 mb-3 mb-md-0 d-flex align-items-center">
           <h2>Jurnal Page</h2>
         </div>
-        <div class="col-12 col-md-4 d-flex flex-wrap flex-md-nowrap gap-2 justify-content-end">
-          <!-- Button trigger modal -->
-          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#inputModalJurnal">
-            Input Data
+        <div class="col-12 col-md-5 d-flex flex-wrap flex-md-nowrap gap-2 justify-content-end">
+          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#inputModalJurnal" :disabled="!selectedMapel">
+            tambah data
           </button>
           <div class="input-group">
-            <span class="input-group-text">Tanggal</span>
-            <input type="date" class="form-control">
+            <select class="form-select" v-model="selectedKelas" @change="applyFilter">
+              <option value="" selected disabled>Kelas</option>
+              <option v-for="(data, index) in uniqueClasses" :key="index" :value="data">{{ data }}</option>
+            </select>
+            <select class="form-select" v-model="selectedMapel">
+              <option value="" selected disabled>Mapel</option>
+              <option v-for="(data, index) in uniqueLesson" :key="index" :value="data.Nama">{{ data.Nama }}</option>
+            </select>
+          </div>
+          <div>
           </div>
         </div>
       </div>
+      <!-- {{ uniqueLesson }}
+      <br>
+      <br>
+      {{ scheduleMapel }}
+      <br>
+      <br>
+      {{ schedule }} -->
       <div class="table-responsive">
         <table class="table table-hover table-striped">
           <thead>
             <tr>
-              <th scope="col" class="text-capitalize">jam ke-</th>
-              <th scope="col" class="text-capitalize">nama pengajar</th>
-              <th scope="col" class="text-capitalize">mata pelajaran</th>
+              <th scope="col" class="text-capitalize">Waktu</th>
               <th scope="col" class="text-capitalize">judul / pembahasan</th>
               <th scope="col" class="text-capitalize">catatan kejadian / solusi</th>
               <th scope="col" class="text-capitalize text-end">Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="text-capitalize" scope="col">1</td>
-              <td class="text-capitalize" scope="col">zuhudi ainun qolbi</td>
-              <td class="text-capitalize" scope="col">fiqh</td>
-              <td class="text-capitalize" scope="col">indahnya hari jumat</td>
-              <td class="text-capitalize" scope="col">bagus bnget lah ceramahnya</td>
+            <tr v-for="(data, index) in values" :key="index">
+              <td class="text-capitalize" scope="col">{{ data.SK.split('#')[2] }}</td>
+              <td class="text-capitalize" scope="col">{{ data.Description }}</td>
+              <td class="text-capitalize" scope="col">{{ data.Occurrence }}</td>
               <td class="text-capitalize text-end" scope="col">
-                <a href="javascript:;" @click="editItem()">
+                <a href="javascript:;" @click="editItem(data.SK)">
                   <button class="btn btn-sm btn-warning">
-                    <i class="bx bx-pencil text-dark"></i>
+                    <i class="bx bx-pencil text-dark mb-0"></i>
                   </button>
                 </a>
               </td>
@@ -65,14 +75,87 @@
       </div> -->
     </div>
     <JurnalModal />
+    <JurnalModalUpdate />
   </div>
 </template>
 
 <script>
+import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
 export default {
+  computed: {
+    ...mapState('jurnal', ['datas', 'values', 'schedule']),
+    ...mapGetters('jurnal', ['getSelectedMapel', 'getSelectedKelas']),
+    selectedMapel: {
+      get() {
+        return this.getSelectedMapel
+      },
+      set(value) {
+        this.$store.commit('jurnal/setState', { key: 'selectedMapel', value })
+      }
+    },
+    selectedKelas: {
+      get() {
+        return this.getSelectedKelas
+      },
+      set(value) {
+        this.$store.commit('jurnal/setState', { key: 'selectedKelas', value })
+      }
+    },
+    hariIni() {
+      const today = new Date();
+      const hariIni = today.toLocaleDateString('id-ID', { weekday: 'long' }).toLowerCase();
+      return hariIni;
+    },
+    uniqueClasses() {
+      // Get unique classes from data
+      const classes = this.datas.map(item => item.Kelas);
+      return [...new Set(classes)];
+    },
+    filteredData() {
+      return this.datas.filter(item => {
+        const matchesClass = item.Kelas === this.selectedKelas;
+        this.selectedMapel = ''
+        return matchesClass
+      });
+    },
+    uniqueLesson() {
+      return this.filteredData
+        .map(item => {
+          const hariList = item.Hari.split(", ");
+          const hariRelevan = hariList.find(hari => hari.includes(this.hariIni));
+          if (hariRelevan) {
+            return {
+              Nama: item.Nama,
+              SK: item.SK,
+              Kelas: item.Kelas,
+              Hari: hariRelevan
+            };
+          }
+          return null;
+        })
+        .filter(item => item !== null); // Remove any null values
+    },
+    scheduleMapel() {
+      return this.uniqueLesson.find((x) => x.Nama === this.selectedMapel)
+    },
+  },
+  watch: {
+    selectedMapel(value) {
+      if (value) {
+        this.getData()
+      }
+    },
+    scheduleMapel(value) {
+      if ( value ) {
+        this.setState({ key: 'schedule', value })
+      }
+    }
+  },
   methods: {
-    editItem() {
-      $('#inputModalJurnal').modal('show')
+    ...mapActions('jurnal', ['getData']),
+    ...mapMutations('jurnal', ['setState', 'editItem']),
+    applyFilter() {
+      this.filteredData;
     }
   },
 };
@@ -85,7 +168,7 @@ a {
 
 select {
   font-size: 12px;
-  width: 100px;
+  width: max-content !important;
 }
 
 .input-group label,

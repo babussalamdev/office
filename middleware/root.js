@@ -1,10 +1,13 @@
-export default function ({ route, redirect }) {
-  const userRoot = this.$auth.user.role
+export default function ({ $auth, route, redirect }) {
+  const userRoot = $auth.user.role
   const requiredRoot = route.meta[0]?.roots || ''
 
   const hasRoot = userRoot !== requiredRoot
 
   if(!hasRoot) {
-    return redirect('/')
+    if (!$auth) {
+      // Tangani kasus di mana $auth belum terdefinisi
+      return redirect('/');
+    }
   }
 }

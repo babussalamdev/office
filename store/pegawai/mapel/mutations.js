@@ -14,7 +14,7 @@ export default {
   setPengajar(state, value) {
     const i = state.mapel.findIndex((x) => x.SK === value.SK)
     const data = state.mapel[i];
-    data.GSIPK1 = value.Pengajar
+    data['GSIPK1'] = value.Pengajar
     $("#updateMapel")[0].reset();
     $("#mapelSetupModal").modal("hide");
 

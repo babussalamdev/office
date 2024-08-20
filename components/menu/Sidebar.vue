@@ -476,7 +476,7 @@ export default {
       return currentPath === route;
     },
     hasPermission(permission) {
-      return this.permissions.includes(permission);
+      return this.permissions?.includes(permission);
     },
   },
 };

@@ -15,7 +15,7 @@
           <div>
             <select class="form-select" v-model="selectedMapel">
               <option value="" selected disabled>Mapel</option>
-              <option v-for="(data, index) in uniqueLesson" :key="index" :value="data.Nama">{{ data.Nama }}</option>
+              <option v-for="(data, index) in uniqueLesson" :key="index" :value="data">{{ data.Nama }}</option>
             </select>
           </div>
         </div>
@@ -179,6 +179,7 @@ export default {
         return this.getSelectedMapel
       },
       set(value) {
+        console.log(value)
         this.$store.commit('kelasAbsensi/setSelectedMapel', value)
       }
     },
