@@ -192,7 +192,7 @@
           </li>
           <!-- Report -->
           <li
-            v-if="hasRoot && ['report mapel', 'report ekskull', 'report absensi', 'report pelanggaran'].some(name => hasPermission(name))">
+            v-if="hasRoot && ['report mapel', 'report ekskull', 'report absensi', 'report pelanggaran', 'report jurnal'].some(name => hasPermission(name))">
             <div @click="notClick('listReport')"
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
@@ -242,6 +242,12 @@
                 <nuxt-link to="/report/pelanggaran"
                   class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Pelanggaran</span>
+                </nuxt-link>
+              </li>
+              <!-- Jurnal -->
+              <li v-if="hasPermission('report jurnal')">
+                <nuxt-link to="/report/jurnal" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Jurnal</span>
                 </nuxt-link>
               </li>
             </ul>

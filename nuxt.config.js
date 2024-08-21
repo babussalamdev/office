@@ -82,6 +82,7 @@ export default {
       '~/components/report/absensi',
       '~/components/report/mapel',
       '~/components/report/lagger',
+      '~/components/report/jurnal',
       '~/components/settings/kaldik',
       '~/components/settings/kelas',
       '~/components/settings/kelompok',
