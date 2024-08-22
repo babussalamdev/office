@@ -57,11 +57,26 @@ export default {
       });
     }
   },
+  async editItem({ commit, state}, value) {
+    const i = state.mapel.findIndex((x) => x.SK === value)
+    commit('setState', { key: 'updateData', value: state.mapel[i]})
+
+    const hari = state.updateData.Hari.split(', ');
+    if (hari && hari.length > 0) {
+      const mappedArray = hari.map((x) => {
+        const option = state.options.find((option) => option.name === x);
+        return { name: x, code: option ? option.code : null };
+      });
+      commit('setState', { key: 'value', value: mappedArray})
+    }
+
+    $("#updateDataMapel").modal("show");
+  },
+
   async updateMapel({ commit, state }, event) {
     commit('btn')
     const data = Object.fromEntries(new FormData(event.target));
     const hari = state.value.map((x) => x.name);
-    data['Status'] = state.statusNilai
     data["Hari"] = hari.join(', ')
     const key = state.updateData.SK.replace(/#/g, "%23");
     try {

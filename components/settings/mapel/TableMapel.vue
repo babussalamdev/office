@@ -65,7 +65,6 @@
         </tbody>
       </table>
     </div>
-    {{ mapel }}
     <ModalMapel />
     <ModalMapelUpdate />
     <ModalMapelPenilaian />
@@ -91,8 +90,8 @@ export default {
     };
   },
   methods: {
-    ...mapActions('mapel', { deleteItem: 'deleteItem', changeStep: 'delScore' }),
-    ...mapMutations('mapel', ['editItem', 'inputScore']),
+    ...mapActions('mapel', { deleteItem: 'deleteItem', changeStep: 'delScore', editItem: 'editItem' }),
+    ...mapMutations('mapel', ['inputScore']),
     delScore(index, sk) {
       const obj = { index, sk }
       this.changeStep(obj)

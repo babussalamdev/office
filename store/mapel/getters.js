@@ -5,7 +5,4 @@ export default {
   getPenilaian(state) {
     return state.Penilaian
   },
-  getStatus(state) {
-    return state.statusNilai
-  }
 }

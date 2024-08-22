@@ -14,7 +14,7 @@
               </div>
               <div class="modal-body">
                 <div class="mb-3">
-                  <label for="kelas" class="form-label">Halaqah</label>
+                  <label for="kelas" class="form-label">Guru Pengajar</label>
                   <select name="Asrama" id="Asrama" class="form-select" v-model="pengajarShow" required>
                     <option value="" selected disabled>
                       -- Pilih Pengajar --
@@ -25,6 +25,8 @@
                   </select>
                 </div>
               </div>
+              {{ updateData }}
+              {{ pengajarShow }}
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                   Close

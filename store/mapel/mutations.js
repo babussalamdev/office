@@ -24,9 +24,9 @@ export default {
     state.selectKelas = value
   },
   inputModal(state, value) {
+    state.value = []
     $('#InputDataMapel').modal('show')
     $("#inputMapel")[0].reset()
-    state.value = []
   },
   inputMapel(state, value) {
     const i = state.mapel.findIndex((x) => x.SK === value.SK)
@@ -38,20 +38,12 @@ export default {
       return a.Sort - b.Sort;
     });
 
-    state.value = [];
     $("#InputDataMapel").modal("hide");
     $("#inputMapel")[0].reset()
   },
-  editItem(state, value) {
-    const i = state.mapel.findIndex((x) => x.SK === value)
 
-    state.updateData = state.mapel[i];
-    state.statusNilai = state.updateData.Status
-    $("#updateDataMapel").modal("show");
-  },
   updateMapel(state, value) {
     value['SK'] = value.SK.replace(/%23/g, "#")
-    // state.mapel = state.mapel.map((item, index) => index === i ? { ...value, ...item } : item)
 
     // Update data
     const updatedData = state.mapel.map(item =>
@@ -60,15 +52,6 @@ export default {
 
 
     state.mapel = updatedData
-    // const data = state.mapel[i]
-    // data.Sort = value.Sort;
-    // data.Nama = value.Nama;
-    // data.Kelas = value.Kelas;
-    // data.Jurusan = value.Jurusan;
-    // data.Hari = value.Hari
-    // data.Status = value.Status
-
-    state.value = [];
     $("#updateMapel")[0].reset();
     $("#updateDataMapel").modal("hide");
   },
@@ -115,9 +98,6 @@ export default {
   //   }
   // }
   setState(state, value) {
-    // if (value.key === 'statusNilai') {
-    //   state.updateData.Status = value.value
-    // }
     state[value.key] = value.value
-  }
+  },
 }

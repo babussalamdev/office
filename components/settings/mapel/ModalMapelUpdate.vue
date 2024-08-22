@@ -12,7 +12,6 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              {{ updateData }}
               <div class="mb-3">
                 <label for="sort" class="form-label">Sort</label>
                 <input name="Sort" type="number" class="form-control" id="sort" :value="updateData?.Sort" required />
@@ -37,23 +36,13 @@
                   :taggable="true" @tag="addTag" required></multiselect>
               </div>
               <div class="mb-3">
-                <label for="nilai" class="form-label">Status Input Nilai</label>{{ status }}{{ updateData.Status }}
+                <label for="nilai" class="form-label">Status Input Nilai</label>
                 <div class="mb-3">
-                  <div class="form-check form-switch d-flex align-items-center gap-2">
-                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked"
-                      v-model="status" :checked="true">
-                    <label class="form-check-label" for="flexSwitchCheckChecked">{{ status ? 'open' : 'close' }}</label>
-                  </div>
-                </div>
-                <div class="mb-3 d-flex">
-                  <div class="form-check form-check-inline d-flex align-items-center gap-1 p-0">
-                    <input class="form-check-input m-0" type="radio" id="open" v-model="status" :value="true">
-                    <label class="form-check-label" for="open">Open</label>
-                  </div>
-                  <div class="form-check form-check-inline  d-flex align-items-center gap-1  p-0">
-                    <input class="form-check-input m-0" type="radio" id="close" v-model="status" :value="false">
-                    <label class="form-check-label" for="close">Close</label>
-                  </div>
+                  <select name="Status" id="" class="form-select" :value="updateData?.Status">
+                    <option selected disabled value="">-- select --</option>
+                    <option value="open">Open</option>
+                    <option value="close">Close</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -87,8 +76,8 @@ export default {
     Multiselect,
   },
   computed: {
-    ...mapState("mapel", ["kelas", "jurusan", "selectKelas", 'btn', 'value', 'options', 'updateData', 'statusNilai']),
-    ...mapGetters('mapel', ['getValue', 'getStatus']),
+    ...mapState("mapel", ["kelas", "jurusan", "selectKelas", 'btn', 'options', 'updateData']),
+    ...mapGetters('mapel', ['getValue']),
     value: {
       get() {
         return this.getValue
@@ -97,15 +86,6 @@ export default {
         this.$store.commit('mapel/setValue', value)
       }
     },
-    status: {
-      get() {
-        return this.getStatus
-      },
-      set(value) {
-        const obj = { key: 'statusNilai', value }
-        this.$store.commit('mapel/setState', obj)
-      }
-    }
   },
   mounted() {
     document
@@ -113,9 +93,6 @@ export default {
       .addEventListener("hidden.bs.modal", function () {
         this.value = [];
       });
-  },
-  watch: {
-    updateData: "valueUpdate",
   },
 
   methods: {
@@ -129,16 +106,6 @@ export default {
       this.value.push(tag);
     },
 
-    async valueUpdate() {
-      const hari = this.updateData.Hari.split(', ');
-      if (hari && hari.length > 0) {
-        const mappedArray = hari.map((x) => {
-          const option = this.options.find((option) => option.name === x);
-          return { name: x, code: option ? option.code : null };
-        });
-        this.value = mappedArray;
-      }
-    },
   },
 };
 </script>

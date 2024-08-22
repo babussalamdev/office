@@ -30,18 +30,6 @@
               <td class="text-capitalize align-middle">
                 <h1>{{ data.GSIPK1 }}</h1>
               </td>
-              <!-- <td class="text-capitalize align-middle">
-                {{
-                  data.Halaqah[unit] === "off"
-                    ? "belum dipilih"
-                    : data.Halaqah[unit]
-                }}
-              </td> -->
-              <!-- <a href="javascript:;" @click="editItem(index)">
-                <button class="btn btn-sm btn-warning">
-                  <i class="bx bx-pencil text-dark"></i>
-                </button>
-              </a> -->
               <td class="text-end align-middle">
                 <button class="btn btn-sm btn-warning" @click="editItem(data.SK)">
                   <i class="bx bx-pencil text-dark"></i>
