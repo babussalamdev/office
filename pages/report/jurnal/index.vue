@@ -1,7 +1,7 @@
 <template>
     <section id="jurnal">
         <div class="jurnal">
-            <ReportJurnalTable />
+            <ReportJurnalTableVer1 />
         </div>
     </section>
 </template>

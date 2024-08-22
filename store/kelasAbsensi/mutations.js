@@ -28,13 +28,10 @@ export default {
   updateAbsen(state, value) {
     const i = state.santri.findIndex((x) => x.SK === value.SK)
     const data = state.santri[i]
-    // Membuat salinan data dan memperbarui salinan tersebut
     const updatedSantri = state.santri.map((item, index) => {
       if (index === i) {
-        // Salinan data yang diperbarui
         const updatedItem = { ...item };
 
-        // Memperbarui Logs dengan data baru
         updatedItem.Logs = {
           ...item.Logs,
           ...value.Logs
@@ -45,7 +42,6 @@ export default {
       return item;
     });
 
-    // Mengganti data santri lama dengan data yang telah diperbarui
     state.santri = updatedSantri;
   },
   deleteAbsen(state, value) {

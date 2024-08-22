@@ -23,6 +23,10 @@ export default {
   setSelectKelas(state, value) {
     state.selectKelas = value
   },
+  inputModal(state, value) {
+    $('#InputDataMapel').modal('show')
+    state.value = []
+  },
   inputMapel(state, value) {
     const i = state.mapel.findIndex((x) => x.SK === value.SK)
     if (!state.Penilaian[i]) {
@@ -40,21 +44,28 @@ export default {
   editItem(state, value) {
     const i = state.mapel.findIndex((x) => x.SK === value)
 
-    $("#updateDataMapel").modal("show");
     state.updateData = state.mapel[i];
     state.statusNilai = state.updateData.Status
+    $("#updateDataMapel").modal("show");
   },
   updateMapel(state, value) {
-    const sk = value.SK.replace(/%23/g, "#")
-    const i = state.mapel.findIndex((x) => x.SK === sk)
+    value['SK'] = value.SK.replace(/%23/g, "#")
+    // state.mapel = state.mapel.map((item, index) => index === i ? { ...value, ...item } : item)
 
-    const data = state.mapel[i]
-    data.Sort = value.Sort;
-    data.Nama = value.Nama;
-    data.Kelas = value.Kelas;
-    data.Jurusan = value.Jurusan;
-    data.Hari = value.Hari
-    data.Status = value.Status
+    // Update data
+    const updatedData = state.mapel.map(item =>
+      item.SK === value.SK ? { ...item, ...value } : item
+    );
+
+
+    state.mapel = updatedData
+    // const data = state.mapel[i]
+    // data.Sort = value.Sort;
+    // data.Nama = value.Nama;
+    // data.Kelas = value.Kelas;
+    // data.Jurusan = value.Jurusan;
+    // data.Hari = value.Hari
+    // data.Status = value.Status
 
     state.value = [];
     $("#updateMapel")[0].reset();

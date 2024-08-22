@@ -1,36 +1,23 @@
 <template>
   <div>
-
     <div class="animate__animated animate__fadeInUp">
-      <div class="row mb-3">
-        <div class="col-12 col-md-7 mb-3 mb-md-0 d-flex align-items-center">
-          <h2>Jurnal Page</h2>
+      <h2 class="mb-2">Jurnal Page</h2>
+      <div class="d-flex justify-content-between mb-3">
+        <div class="d-flex">
+          <select class="form-select" v-model="selectedKelas" @change="applyFilter">
+            <option value="" selected disabled>Kelas</option>
+            <option v-for="(data, index) in uniqueClasses" :key="index" :value="data">{{ data }}</option>
+          </select>
+          <select class="form-select" v-model="selectedMapel">
+            <option value="" selected disabled>Mapel</option>
+            <option v-for="(data, index) in uniqueLesson" :key="index" :value="data.Nama">{{ data.Nama }}</option>
+          </select>
         </div>
-        <div class="col-12 col-md-5 d-flex flex-wrap flex-md-nowrap gap-2 justify-content-end">
-          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#inputModalJurnal" :disabled="!selectedMapel">
-            tambah data
-          </button>
-          <div class="input-group">
-            <select class="form-select" v-model="selectedKelas" @change="applyFilter">
-              <option value="" selected disabled>Kelas</option>
-              <option v-for="(data, index) in uniqueClasses" :key="index" :value="data">{{ data }}</option>
-            </select>
-            <select class="form-select" v-model="selectedMapel">
-              <option value="" selected disabled>Mapel</option>
-              <option v-for="(data, index) in uniqueLesson" :key="index" :value="data.Nama">{{ data.Nama }}</option>
-            </select>
-          </div>
-          <div>
-          </div>
-        </div>
+        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#inputModalJurnal"
+          :disabled="!selectedMapel">
+          tambah data
+        </button>
       </div>
-      <!-- {{ uniqueLesson }}
-      <br>
-      <br>
-      {{ scheduleMapel }}
-      <br>
-      <br>
-      {{ schedule }} -->
       <div class="table-responsive">
         <table class="table table-hover table-striped">
           <thead>
@@ -140,13 +127,16 @@ export default {
     },
   },
   watch: {
+    selectedKelas(value) {
+      this.setState({ key: 'reset', value })
+    },
     selectedMapel(value) {
       if (value) {
         this.getData()
       }
     },
     scheduleMapel(value) {
-      if ( value ) {
+      if (value) {
         this.setState({ key: 'schedule', value })
       }
     }

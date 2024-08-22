@@ -1,6 +1,16 @@
 export default {
   setState(state, data) {
-    state[data.key] = data.value
+    if ( data.key === 'datas') {
+      state.values = []
+      state.selectedMapel = ''
+      state.selectedKelas = ''
+      state[data.key] = data.value
+    } else if ( data.key === 'reset') {
+      state.values = []
+      state.selectedMapel = ''
+    } else {
+      state[data.key] = data.value
+    }
   },
   btn(state) {
     state.btn = !state.btn

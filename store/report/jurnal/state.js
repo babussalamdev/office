@@ -10,6 +10,11 @@ const date = `${tahun}-${bulan}-${tanggal}`;
 
 export default () => ({
     date: date,
-    listKelas: '',
+    listKelas: [],
     selectedKelas: '',
+    listMapel: [],
+    selectedMapel: '',
+    values: [],
+    page: 1,
+    perPage: 10
 })

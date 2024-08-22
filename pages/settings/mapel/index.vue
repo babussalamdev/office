@@ -14,8 +14,8 @@
         <div class="col-12 col-md-6">
           <!-- Button trigger modal -->
           <div class="button-santri float-end">
-            <button type="button" class="btn btn-sm btn-primary button-santri" data-bs-toggle="modal"
-              data-bs-target="#InputDataMapel" :disabled="isMapelEmpty">
+            <button type="button" class="btn btn-sm btn-primary button-santri"
+              @click="inputModal" :disabled="isMapelEmpty">
               Tambah Mapel
             </button>
           </div>
@@ -48,6 +48,7 @@ export default {
     store.dispatch(`mapel/changeUnit`, program);
   },
   methods: {
+    ...mapMutations('mapel', ['inputModal']),
     kelasLoad() {
       const program = localStorage.getItem("program");
       const data = {

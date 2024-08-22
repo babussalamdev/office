@@ -65,7 +65,9 @@
         </tbody>
       </table>
     </div>
+    {{ mapel }}
     <ModalMapel />
+    <ModalMapelUpdate />
     <ModalMapelPenilaian />
   </div>
 </template>
