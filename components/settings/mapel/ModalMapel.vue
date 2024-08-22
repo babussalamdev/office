@@ -6,7 +6,7 @@
         <div class="modal-content">
           <form @submit.prevent="inputMapel" id="inputMapel">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">
+              <h1 class="modal-title fs-5">
                 Input Mapel
               </h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -88,7 +88,7 @@ export default {
       this.options.push(tag);
       this.value.push(tag);
     },
-                      },
+  },
 };
 </script>
 

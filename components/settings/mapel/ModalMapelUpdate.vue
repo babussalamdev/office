@@ -38,15 +38,20 @@
               </div>
               <div class="mb-3">
                 <label for="nilai" class="form-label">Status Input Nilai</label>{{ status }}{{ updateData.Status }}
+                <div class="mb-3">
+                  <div class="form-check form-switch d-flex align-items-center gap-2">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked"
+                      v-model="status" :checked="true">
+                    <label class="form-check-label" for="flexSwitchCheckChecked">{{ status ? 'open' : 'close' }}</label>
+                  </div>
+                </div>
                 <div class="mb-3 d-flex">
                   <div class="form-check form-check-inline d-flex align-items-center gap-1 p-0">
-                    <input class="form-check-input m-0" type="radio" name="Status" id="open" v-model="updateData.Status"
-                      value="open">
+                    <input class="form-check-input m-0" type="radio" id="open" v-model="status" :value="true">
                     <label class="form-check-label" for="open">Open</label>
                   </div>
                   <div class="form-check form-check-inline  d-flex align-items-center gap-1  p-0">
-                    <input class="form-check-input m-0" type="radio" name="Status" id="close"
-                      v-model="updateData.Status" value="close">
+                    <input class="form-check-input m-0" type="radio" id="close" v-model="status" :value="false">
                     <label class="form-check-label" for="close">Close</label>
                   </div>
                 </div>

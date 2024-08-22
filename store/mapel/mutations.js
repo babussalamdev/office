@@ -25,6 +25,7 @@ export default {
   },
   inputModal(state, value) {
     $('#InputDataMapel').modal('show')
+    $("#inputMapel")[0].reset()
     state.value = []
   },
   inputMapel(state, value) {
@@ -114,6 +115,9 @@ export default {
   //   }
   // }
   setState(state, value) {
+    // if (value.key === 'statusNilai') {
+    //   state.updateData.Status = value.value
+    // }
     state[value.key] = value.value
   }
 }

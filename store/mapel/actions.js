@@ -61,6 +61,7 @@ export default {
     commit('btn')
     const data = Object.fromEntries(new FormData(event.target));
     const hari = state.value.map((x) => x.name);
+    data['Status'] = state.statusNilai
     data["Hari"] = hari.join(', ')
     const key = state.updateData.SK.replace(/#/g, "%23");
     try {
