@@ -4,7 +4,7 @@ bug
 		dan radio button nya.
 		ketika membuka update dan menutupnya, kemudian membuka add, data form tidak bersih
 		solusi : nnti pas pake komputer server aja
-2. Page pegawai/mapel
+* 2. Page pegawai/mapel
 	detail : ketika pertama kali mencocokkan guru di mapel tertentu, isi dari v-model search nya tak berfungsi dan
 		table tidak berubah
 

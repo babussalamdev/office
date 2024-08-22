@@ -18,6 +18,16 @@ export default {
   editItem(state, value) {
     const i = state.struktur.findIndex((x) => x.SK === value)
     state.updateData = state.struktur[i];
+
+    const permissions = state.updateData.Permissions.split(",");
+    if (permissions && permissions.length > 0) {
+      const mappedArray = permissions.map((x) => {
+        const option = state.options.find((option) => option.name === x);
+        return { name: x, code: option ? option.code : null };
+      });
+      state.value = mappedArray;
+    }
+
     $("#updateDataStruktur").modal("show");
   },
   deleteValue(state, value) {

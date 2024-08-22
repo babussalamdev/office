@@ -77,9 +77,6 @@ export default {
         this.value = [];
       });
   },
-  watch: {
-    updateData: "valueUpdate",
-  },
 
   methods: {
     ...mapActions('struktur', ['inputStruktur', 'updateStruktur']),
@@ -91,17 +88,6 @@ export default {
       };
       this.options.push(tag);
       this.value.push(tag);
-    },
-
-    async valueUpdate() {
-      const permissions = this.updateData.Permissions.split(",");
-      if (permissions && permissions.length > 0) {
-        const mappedArray = permissions.map((x) => {
-          const option = this.options.find((option) => option.name === x);
-          return { name: x, code: option ? option.code : null };
-        });
-        this.value = mappedArray;
-      }
     },
   },
 };
