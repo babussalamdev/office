@@ -3,7 +3,6 @@
     <h2 class="mb-3 mb-md-3">Penilaian Ekskull</h2>
     <div class="head row mb-3">
       <div class="col-12 col-md-7 d-flex flex-column flex-md-row gap-4 gap-md-0 mb-3 mb-md-0">
-        {{ selectedEkskull }}
         <select class="form-select" v-model="selectedEkskull" @change="getSantri">
           <option value="" disabled selected>Ekskull</option>
           <option v-for="(data, index) in select" :key="index" :value="data">
@@ -16,27 +15,24 @@
       <table class="table table-hover table-striped">
         <thead>
           <tr>
-            <th class="text-uppercase">nama</th>
-            <th class="text-uppercase">nilai</th>
+            <th class="text-capitalize">nama</th>
+            <th class="text-capitalize text-center">nilai</th>
           </tr>
         </thead>
         <tbody>
-          <!-- <tr v-for="(data, index) in santri" :key="index">
+          <tr v-for="(data, index) in santri" :key="index">
             <td class="text-capitalize align-middle">
               <h1>{{ data.Nama }}</h1>
             </td>
-            <td v-for="(value, key) in data.Penilaian" :key="key">
-              <div v-if="isNumber(value)" @click.prevent="setEdit(index, value, key)" class="cursor-pointer">
-                {{ value }}
+            <td class="text-center">
+              <div v-if="isNumber(data.Nilai)" @click.prevent="setEdit( index, data.Nilai, data.SKsantri )" class="cursor-pointer">
+                {{ data.Nilai }}
               </div>
-              <div v-else class="flex items-center gap-1">
-                <input type="number" class="form-control" v-model="nilai" :placeholder="value" max="100">
+              <div v-else class="d-flex justify-content-center gap-1">
+                <input type="number" class="form-control" v-model="nilai" :placeholder="data.Nilai" max="100">
               </div>
             </td>
-            <td class="text-capitalize align-middle">
-              {{ data.TotalScore }}
-            </td>
-          </tr> -->
+          </tr>
         </tbody>
       </table>
     </div>
@@ -56,8 +52,6 @@ export default {
       radio: "none",
       hadir: "",
       overlay: false,
-      th: { Nama: '', Total: '' },
-      newData: { uas: 30, uts: 30, ukk: 25 },
       editPenilaian: true,
     };
   },
@@ -76,7 +70,7 @@ export default {
       },
       set(value) {
         const obj = { key: 'nilai', value }
-        this.$store.commit('kelas/nilai/setState', obj)
+        this.$store.commit('ekskull/nilai/setState', obj)
       }
     },
     santri: {
@@ -85,7 +79,7 @@ export default {
       },
       set(value) {
         const obj = { key: 'santri', value }
-        this.$store.commit('kelas/nilai/setState', obj)
+        this.$store.commit('ekskull/nilai/setState', obj)
       }
     },
     selectedEkskull: {
@@ -96,21 +90,6 @@ export default {
         const obj = { key: 'selectedEkskull', value }
         this.$store.commit('ekskull/nilai/setState', obj)
       }
-    },
-    uniqueClasses() {
-      // Get unique classes from data
-      const classes = this.select.map(item => item.Kelas);
-      return [...new Set(classes)];
-    },
-    uniqueLesson() {
-      return this.select.filter(item => {
-        const matchesClass = item.Kelas === this.selectedKelas;
-        this.selectedMapel = ''
-        // this.santri = []
-        // const matchesAsrama = item.Logs.asrama === this.selectedAsrama;
-        // return matchesClass && matchesAsrama;
-        return matchesClass
-      });
     },
     general() {
       return this.select.find((x) => x.Nama === this.selectedMapel.Nama)
@@ -125,9 +104,6 @@ export default {
     calculateTotalFromPenilaian(penilaian) {
       // Hitung jumlah semua nilai dalam objek Penilaian
       return Object.values(penilaian).reduce((sum, value) => sum + value, 0);
-    },
-    applyFilter() {
-      this.filteredData
     },
     setData(event, data) {
       const dataOutside = this.$refs[data];
@@ -156,8 +132,8 @@ export default {
       this.th = newHeaders;
       this.getSantri()
     },
-    setEdit(index, i, key) {
-      const obj = { index, i, key }
+    setEdit( index, nilai, skSantri) {
+      const obj = { index, nilai, skSantri }
       this.setPenilaian(obj)
     },
     async input(index) {

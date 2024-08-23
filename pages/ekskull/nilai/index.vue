@@ -8,6 +8,10 @@
 
 <script>
 export default {
+  middleware: 'permission',
+  meta: {
+    permissions: ['page ekskull']
+  },
   async asyncData({ store }) {
     store.dispatch("ekskull/nilai/changeUnit");
   },

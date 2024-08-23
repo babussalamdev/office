@@ -63,6 +63,8 @@ export default {
       '~/components/menu',
       '~/components/ekskull',
       '~/components/ekskull/nilai',
+      '~/components/pengampu',
+      '~/components/pengampu/absensi',
       '~/components/kelas',
       '~/components/kelas/nilai',
       '~/components/pelanggaran',

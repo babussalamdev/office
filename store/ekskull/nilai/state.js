@@ -1,9 +1,9 @@
 export default () => ({
   select: [],
   selectedEkskull: "",
-  // santri: [],
-  // openEdit: '',
-  // nilai: 0,
+  santri: [],
+  openEdit: '',
+  nilai: 0,
   globalLoad: false,
   // kelas: [],
   // jurusan: [],

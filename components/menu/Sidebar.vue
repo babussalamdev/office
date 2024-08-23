@@ -30,6 +30,15 @@
               <span class="text animate__animated animate__fadeInRight">Kaldik</span>
             </nuxt-link>
           </li>
+          <!-- Pengampu -->
+          <li v-if="hasPermission('absensi pengampu')">
+            <nuxt-link to="/pengampu" class="text-decoration-none d-flex align-items-center gap-2">
+              <i class="material-icons animate__animated animate__fadeInRight">
+                group
+              </i>
+              <span class="text animate__animated animate__fadeInRight">Pengampu</span>
+            </nuxt-link>
+          </li>
           <!-- Kelas-->
           <li v-if="hasRoot && $auth.user.Pengajar[unit] !== 'off'">
             <div @click="notClick('listKelas')"

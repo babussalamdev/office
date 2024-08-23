@@ -5,7 +5,7 @@ export default {
     state.globalLoad = state.globalLoad ? false : true
   },
   setState(state, data) {
-      state[data.key] = data.value
+    state[data.key] = data.value
     // if (data.key === 'santri') {
     //   const remappedData = data.value.map(item => {
     //     // Ambil objek Penilaian dari item
@@ -31,13 +31,16 @@ export default {
   },
   setPenilaian(state, data) {
     if (data['type'] === 'set') {
-      state.santri[data.index].Penilaian[data.key] = state.santri[data.index].Penilaian[data.key].toString()
-      state.nilai = state.santri[data.index].Penilaian[data.key]
-      if (state.santri[data.index].Penilaian[data.key]) {
-        state.openEdit = data
+      if( data['skSantri'] ) {
+        state.santri[data.index].Nilai = state.santri[data.index].Nilai.toString()
+        state.nilai = state.santri[data.index].Nilai
+
+        if (state.santri[data.index].Nilai) {
+          state.openEdit = data
+        }
       }
     } else if (data['type'] === 'close') {
-      if (state.santri[state.openEdit.index].Penilaian[state.openEdit.key] > 100) {
+      if (state.santri[state.openEdit.index].Nilai > 100) {
         Swal.fire({
           title: 'Warning!',
           text: 'Nilai tidak boleh lebih dari 100.',
@@ -45,16 +48,39 @@ export default {
           confirmButtonText: 'OK'
         });
       }
-      state.santri[state.openEdit.index].Penilaian[state.openEdit.key] = +state.nilai
-      state.santri[state.openEdit.index].TotalScore = +data.result.Total
-      console.log(data)
+      state.santri[state.openEdit.index].Nilai = +state.nilai
       state.nilai = 0
     } else if (data['type'] === 'button') {
-      state.santri[state.openEdit.index].Penilaian[state.openEdit.key] = +state.nilai
-      state.santri[state.openEdit.index].TotalScore = +data.result.Total
+      state.santri[state.openEdit.index].Nilai = +state.nilai
       state.openEdit = ''
     }
   },
+  // setPenilaian(state, data) {
+  //   if (data['type'] === 'set') {
+  //     state.santri[data.index].Penilaian[data.key] = state.santri[data.index].Penilaian[data.key].toString()
+  //     state.nilai = state.santri[data.index].Penilaian[data.key]
+  //     if (state.santri[data.index].Penilaian[data.key]) {
+  //       state.openEdit = data
+  //     }
+  //   } else if (data['type'] === 'close') {
+  //     if (state.santri[state.openEdit.index].Penilaian[state.openEdit.key] > 100) {
+  //       Swal.fire({
+  //         title: 'Warning!',
+  //         text: 'Nilai tidak boleh lebih dari 100.',
+  //         icon: 'warning',
+  //         confirmButtonText: 'OK'
+  //       });
+  //     }
+  //     state.santri[state.openEdit.index].Penilaian[state.openEdit.key] = +state.nilai
+  //     state.santri[state.openEdit.index].TotalScore = +data.result.Total
+  //     console.log(data)
+  //     state.nilai = 0
+  //   } else if (data['type'] === 'button') {
+  //     state.santri[state.openEdit.index].Penilaian[state.openEdit.key] = +state.nilai
+  //     state.santri[state.openEdit.index].TotalScore = +data.result.Total
+  //     state.openEdit = ''
+  //   }
+  // },
   // setData(state, value) {
   //   state.kelas = value.kelas
   //   state.jurusan = value.jurusan
