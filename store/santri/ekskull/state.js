@@ -1,5 +1,9 @@
 export default () => ({
     santri: [],
     selectEkskull: [],
-    select: []
+    select: [],
+    data: [],
+    kelas: '',
+    btn: true,
+    ekskullShow: ''
 })

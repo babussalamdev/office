@@ -13,7 +13,7 @@
               :disabled="data.length > 0 ? false : true">
               Edit
             </button>
-            <select name="Kelas" id="kelas" v-model="kelas" @change="kelasLoad" class="form-select select" required>
+            <select name="Kelas" id="kelas" v-model="kelas" @change="loadEkskull" class="form-select select" required>
               <option value="" selected disabled>Kelas</option>
               <option v-for="(data, index) in select" :key="index" :value="data">
                 {{ data }}
@@ -24,7 +24,7 @@
       </div>
       <div class="table-responsive">
         <!-- Modal -->
-        <EkskullSantriModal :updateData="updateData" @resetSelect="resetSelect" />
+        <EkskullSantriModal />
         <table class="table table-hover table-striped">
           <thead>
             <tr>
@@ -59,15 +59,8 @@
                 {{ data.Halaqah ? data.Halaqah : "-" }}
               </td>
               <td class="text-capitalize align-middle text-white" style="background: #176b87">
-                {{ data.Ekskull ? data.Ekskull : "-" }}
+                {{ formatEkskull(data.Ekskull) }}
               </td>
-              <!-- <td class="text-capitalize align-middle">
-                  {{
-                    data.Halaqah[unit] === "off"
-                      ? "belum dipilih"
-                      : data.Halaqah[unit]
-                  }}
-                </td> -->
             </tr>
           </tbody>
         </table>
@@ -77,17 +70,12 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-
+import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   data() {
     return {
-      btn: true,
-      updateData: "",
-      kelas: "",
       unit: "",
       selection: false,
-      data: [],
       selectAll: false,
       selectedItems: {},
       isDataEmpty: true,
@@ -95,20 +83,32 @@ export default {
   },
   computed: {
     ...mapState("santri/ekskull", ["santri", "select", "selectEkskull"]),
+    ...mapGetters('santri/ekskull', ['getData', 'getKelas']),
+    data: {
+      get() {
+        return this.getData
+      },
+      set(value) {
+        this.setState({ key: 'data', value })
+      }
+    },
+    kelas: {
+      get() {
+        return this.getKelas
+      },
+      set(value) {
+        this.setState({ key: 'kelas', value })
+      }
+    }
+  },
+  watch: {
+    santri() {
+      this.resetSelect()
+    }
   },
   methods: {
-    kelasLoad() {
-      const program = localStorage.getItem("program");
-      const data = {
-        program: program,
-        kelas: this.kelas,
-      };
-      this.$store.dispatch(`santri/ekskull/loadEkskull`, data);
-    },
-    // async editItem(index) {
-    //   $("#updateDataSantriEkskull").modal("show");
-    //   this.updateData = this.santri[index];
-    // },
+    ...mapActions('santri/ekskull', ['loadEkskull']),
+    ...mapMutations('santri/ekskull', ['setState', 'editBulk']),
     selectAllCheckbox() {
       for (const item of this.santri) {
         this.$set(this.selectedItems, item.SK, this.selectAll);
@@ -121,15 +121,20 @@ export default {
       );
       this.data = checkedNames;
     },
-    async editBulk(index) {
-      $("#updateDataSantriEkskull").modal("show");
-      this.updateData = this.data;
-    },
     resetSelect() {
       this.data = [];
       this.selectAll = false;
       this.selectedItems = {};
     },
+    formatEkskull(value) {
+      if (!value) {
+        return "-";
+      }
+      // Memeriksa apakah ada koma
+      return value.includes(',')
+        ? value.replace(/,/g, ', ')
+        : value;
+    }
   },
 };
 </script>

@@ -61,6 +61,8 @@ export default {
       '~/components',
       '~/components/home',
       '~/components/menu',
+      '~/components/ekskull',
+      '~/components/ekskull/nilai',
       '~/components/kelas',
       '~/components/kelas/nilai',
       '~/components/pelanggaran',

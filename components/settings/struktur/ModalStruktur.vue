@@ -25,7 +25,6 @@
                 <multiselect name="Permissions" v-model="value" class="text-capitalize"
                   tag-placeholder="Add this as new tag" placeholder="Search or add a tag" label="name" track-by="code"
                   :options="options" :multiple="true" :taggable="true" @tag="addTag" required></multiselect>
-                <!-- <pre class="language-json"><code>{{ value  }}</code></pre> -->
               </div>
             </div>
             <div class="modal-footer">

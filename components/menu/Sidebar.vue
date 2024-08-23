@@ -63,6 +63,35 @@
               </li>
             </ul>
           </li>
+          <!-- Ekskull -->
+          <li v-if="hasRoot && hasPermission('page ekskull')">
+            <div @click="notClick('listAsrama')"
+              class="dropdown d-flex align-items-center justify-content-between gap-2">
+              <span class="d-flex align-items-center gap-2">
+                <i class="material-icons animate__animated animate__fadeInRight">
+                  fitness_center
+                </i>
+                <span class="text animate__animated animate__fadeInRight">Ekskull</span>
+              </span>
+              <i class="bx bx-chevron-down"></i>
+            </div>
+            <ul v-if="listAsrama" class="dropdown-list">
+              <!-- absensi -->
+              <li>
+                <nuxt-link to="/ekskull/nilai"
+                  class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Nilai</span>
+                </nuxt-link>
+              </li>
+              <!-- waktu tidur -->
+              <!-- <li>
+                <nuxt-link to="/asrama/waktutidur"
+                  class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Waktu Tidur</span>
+                </nuxt-link>
+              </li> -->
+            </ul>
+          </li>
           <!-- Asrama -->
           <li v-if="hasRoot && hasPermission('page asrama')">
             <div @click="notClick('listAsrama')"

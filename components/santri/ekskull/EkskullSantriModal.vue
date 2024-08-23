@@ -14,15 +14,10 @@
             </div>
             <div class="modal-body">
               <div class="mb-3">
-                <label for="Kelas" class="form-label">Ekskull</label>
-                <select name="value" id="Kelas" class="form-select" v-model="ekskullShow" required>
-                  <option value="" selected disabled>
-                    -- Pilih Ekskull --
-                  </option>
-                  <option v-for="(value, index) in selectEkskull" :value="value" :key="index">
-                    {{ value }}
-                  </option>
-                </select>
+                <label class="typo__label mb-2">Permissions</label>
+                <multiselect v-model="ekskullShow" class="text-capitalize"
+                  tag-placeholder="Add this as new tag" placeholder="Search or add a tag" label="name" track-by="code"
+                  :options="selectEkskull" :multiple="true" :taggable="true" @tag="addTag" required></multiselect>
               </div>
             </div>
             <div class="modal-footer">
@@ -47,58 +42,34 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import Swal from "sweetalert2";
-
+import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
+import Multiselect from "vue-multiselect";
 export default {
-  props: ["updateData"],
-  data() {
-    return {
-      btn: true,
-      ekskullShow: "",
-      // unit: localStorage.getItem("program"),
-    };
+  components: {
+    Multiselect,
   },
   computed: {
-    ...mapState("santri/ekskull", ["selectEkskull"]),
+    ...mapState("santri/ekskull", ["selectEkskull", 'btn']),
+    ...mapGetters('santri/ekskull', ['getEkskullShow']),
+    ekskullShow: {
+      get() {
+        return this.getEkskullShow
+      },
+      set(value) {
+        this.setState({ key: 'ekskullShow', value })
+      }
+    }
   },
   methods: {
-    async updateDataSantriEkskull(event) {
-      this.btn = false;
-      const data = {};
-      const program = localStorage.getItem("program");
-      data["value"] = this.ekskullShow;
-      data["sort"] = this.updateData;
-      try {
-        const result = await this.$apiSantri.$put(
-          `update-santri-sisalam?sk&program=${program}&bulk=Ekskull`,
-          data
-        );
-        if (result) {
-          this.btn = true;
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            text: "Your work has been saved",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          this.$emit("resetSelect");
-          this.$store.commit("santri/ekskull/updateEkskullSantri", data);
-          this.ekskullShow = "";
-          $("#updateDataSantriEkskull").modal("hide");
-        }
-      } catch (error) {
-        this.btn = true;
-        console.log(error);
-        Swal.fire({
-          text: error,
-          icon: "error",
-          timer: 3000,
-          timerProgressBar: false,
-          showConfirmButton: false,
-        });
-      }
+    ...mapActions('santri/ekskull', ['updateDataSantriEkskull']),
+    ...mapMutations('santri/ekskull', ['setState']),
+    addTag(newTag) {
+      const tag = {
+        name: newTag,
+        code: newTag.substring(0, 2) + Math.floor(Math.random() * 10000000),
+      };
+      this.options.push(tag);
+      this.value.push(tag);
     },
   },
 };
