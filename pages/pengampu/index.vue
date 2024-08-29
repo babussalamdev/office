@@ -10,7 +10,7 @@
 <script>
 export default {
   async asyncData({ store }) {
-    store.dispatch(`tahfidzAbsensi/changeUnit`);
+    store.dispatch(`pengampu/changeUnit`);
   },
 };
 </script>

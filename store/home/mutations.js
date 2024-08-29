@@ -91,19 +91,19 @@ export default {
     state.cate = kelasNames
 
     // sort data
-    // Mengubah format asramaTime menjadi objek Date dan mengurutkan data
+    // Mengubah format asramatime menjadi objek Date dan mengurutkan data
     const sortedSantriData = value.SantriData.map(santri => {
-      const dateTimeParts = santri.Logs.asramaTime.split(', '); // Memisahkan tanggal dan waktu
-      const dateParts = dateTimeParts[0].split('/'); // Memisahkan hari, bulan, tahun
-      const timeParts = dateTimeParts[1].split('.'); // Memisahkan jam, menit, detik
+      const dateTimeParts = santri.Logs.asramatime.split(' '); // Memisahkan tanggal dan waktu
+      const dateParts = dateTimeParts[0].split('-'); // Memisahkan hari, bulan, tahun
+      const timeParts = dateTimeParts[1].split(':'); // Memisahkan jam, menit, detik
 
       const formattedDate = new Date(`${dateParts[1]}/${dateParts[0]}/${dateParts[2]} ${timeParts[0]}:${timeParts[1]}:${timeParts[2]}`);
-      santri.Logs.asramaTime = formattedDate; // Mengubah string menjadi objek Date
+      santri.Logs.asramatime = formattedDate; // Mengubah string menjadi objek Date
 
       return santri;
     });
 
-    sortedSantriData.sort((a, b) => new Date(b.Logs.asramaTime) - new Date(a.Logs.asramaTime)); // Mengurutkan berdasarkan asramaTime terbaru
+    sortedSantriData.sort((a, b) => new Date(b.Logs.asramatime) - new Date(a.Logs.asramatime)); // Mengurutkan berdasarkan asramatime terbaru
     state.highlight = sortedSantriData; // Menetapkan data yang sudah diurutkan ke dalam state
     state.kelasCounts = value.kelasCounts
     const pegawaiData = [

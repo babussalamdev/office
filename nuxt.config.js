@@ -73,6 +73,8 @@ export default {
       '~/components/tahfidz/mutabaah',
       '~/components/tahfidz/modalmutabaah',
       '~/components/tahfidz/rekap',
+      '~/components/tahfidz/rekap/absensitahfidz',
+      '~/components/tahfidz/rekap/nilaitahfidz',
       '~/components/santri',
       '~/components/santri/database',
       '~/components/santri/halaqah',

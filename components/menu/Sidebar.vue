@@ -164,10 +164,31 @@
                 </nuxt-link>
               </li> -->
               <!-- rekap -->
-              <li>
-                <nuxt-link to="/tahfidz/rekap" class="custom-link text-decoration-none d-flex align-items-center gap-2">
-                  <span class="text animate__animated animate__fadeInRight">Rekap</span>
-                </nuxt-link>
+              <li v-if="hasRoot">
+                <div @click="notClickSub('tahfidz')"
+                  class="dropdown d-flex align-items-center justify-content-between gap-2">
+                  <span class="d-flex align-items-center gap-2">
+                    <span class="text animate__animated animate__fadeInRight">Rekap</span>
+                  </span>
+                  <i class="bx bx-chevron-down"></i>
+                </div>
+                <!-- sub menu santri -->
+                <ul v-if="tahfidzSubList" class="dropdown-list">
+                  <!-- Absensi -->
+                  <li>
+                    <nuxt-link to="/tahfidz/rekap/absensi"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Absensi</span>
+                    </nuxt-link>
+                  </li>
+                  <!-- Absensi -->
+                  <li>
+                    <nuxt-link to="/tahfidz/rekap/nilai"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Nilai</span>
+                    </nuxt-link>
+                  </li>
+                </ul>
               </li>
             </ul>
           </li>
@@ -230,7 +251,7 @@
           </li>
           <!-- Report -->
           <li
-            v-if="hasRoot && ['report mapel', 'report ekskull', 'report absensi', 'report pelanggaran', 'report jurnal'].some(name => hasPermission(name))">
+            v-if="hasRoot && ['report mapel', 'report ekskull', 'report absensi', 'report pelanggaran', 'report jurnal', 'report tahfidz'].some(name => hasPermission(name))">
             <div @click="notClick('listReport')"
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
@@ -255,12 +276,12 @@
                 </nuxt-link>
               </li>
               <!-- tahfidz -->
-              <!-- <li v-if="permissions?.includes('report tahfidz')">
+              <li v-if="permissions?.includes('report tahfidz')">
                 <nuxt-link to="/report/tahfidz"
                   class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Tahfidz</span>
                 </nuxt-link>
-              </li> -->
+              </li>
               <!-- tahfidz -->
               <!-- <li v-if="permissions?.includes('report ekskull')">
                 <nuxt-link to="/report/ekskull"
@@ -503,7 +524,7 @@ export default {
   computed: {
     ...mapState("index", ["unit", "permissions", "pengajar", "pengampu", "personalia",]),
     ...mapState("sidebar", ["activeMenu", "listAsrama", "listTahfidz", "listSettings", "listKelas", "listReport", 'listLaundry',
-      "absensiSubList", "santriSubList", "pegawaiSubList", "databaseSubList", 'isSidebar']),
+      "absensiSubList", "santriSubList", "pegawaiSubList", "databaseSubList", 'tahfidzSubList', 'isSidebar']),
     hasPersonalia() {
       return this.personalia === 'on' ? true : false
     },

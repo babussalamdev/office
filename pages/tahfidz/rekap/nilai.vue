@@ -1,8 +1,8 @@
 <template>
   <section id="rekap">
     <div class="rekap">
-      <h1 class="mb-3">Rekap Tahfidz</h1>
-      <rekapTable />
+      <h1 class="mb-3">Rekap Nilai Tahfidz</h1>
+      <RekapNilaiTahfidzTable />
     </div>
   </section>
 </template>

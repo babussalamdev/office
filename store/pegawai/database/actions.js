@@ -149,7 +149,8 @@ export default {
       }
     }
   },
-  async setStatusPengajar({ commit }, value) {
+  async setStatusPengajar({ commit, dispatch }, value) {
+    dispatch('index/submitLoad', null, { root: true })
     const user = value.user
     const key = value.key
     const data = {
@@ -160,9 +161,15 @@ export default {
       `update-pegawai?subject=Pengajar&username=${user}&sk=${key}`,
       data
     );
-    commit('setStatusPengajar', result)
+    if (result) {
+      result['unit'] = value.unit
+      result['index'] = value.key
+      commit('setStatusPengajar', result)
+      dispatch('index/submitLoad', null, { root: true })
+    }
   },
-  async setStatusPengampu({ commit }, value) {
+  async setStatusPengampu({ commit, dispatch }, value) {
+    dispatch('index/submitLoad', null , { root: true })
     const user = value.user
     const key = value.key
     const data = {
@@ -173,9 +180,12 @@ export default {
       `update-pegawai?subject=Pengampu&username=${user}&sk=${key}`,
       data
     );
-    result['unit'] = value.unit
-    result['index'] = value.key
-    commit('setStatusPengampu', result)
+    if (result) {
+      result['unit'] = value.unit
+      result['index'] = value.key
+      commit('setStatusPengampu', result)
+      dispatch('index/submitLoad', null , { root: true })
+    }
   },
   async setStatusPersonalia({ commit }, value) {
     const user = value.user
