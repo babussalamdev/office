@@ -20,7 +20,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              <button type="button" class="btn btn-secondary">
                 Close
               </button>
               <span>
@@ -50,26 +50,22 @@ export default {
     };
   },
   computed: {
-    ...mapState('tahfidzAbsensi', ['updateData'])
+    ...mapState('pengampu', ['updateData'])
   },
   methods: {
     async santriAbsen() {
       this.btn = false;
       const data = Object.fromEntries(new FormData(event.target));
       data["Status"] = this.updateData.type;
-      const skSantri = this.updateData.santri.SK.replace('#', '%23')
-      const tahun = this.$auth.user.Label
-      const semester = this.$auth.user.Semester
+      const skSantri = this.updateData.pegawai.SK
       const time = this.updateData.time
-      const namahalaqah = this.updateData.santri.Halaqah
       const program = localStorage.getItem("program");
       try {
-        const result = await this.$apiSantri.$put(
-          `update-absensi-sisalam?sksantri=${skSantri}&type=halaqah${time}&thn=${tahun}&smstr=${semester}&program=${program}&subject=${namahalaqah}`,
+        const result = await this.$apiBase.$put(
+          `update-absensi?type=pengampu${time}&skpegawai=${skSantri}`,
           data
         );
         if (result) {
-          this.btn = true;
           Swal.fire({
             position: "center",
             icon: "success",
@@ -77,11 +73,12 @@ export default {
             showConfirmButton: false,
             timer: 1500,
           });
+          this.btn = true;
           this.$refs.santriAbsen.reset();
           $("#modalAbsen").modal("hide");
           result['time'] = time
-          result["SK"] = this.updateData.santri.SK;
-          this.$store.commit('tahfidzAbsensi/updateAbsen', result);
+          result["SK"] = this.updateData.pegawai.SK;
+          this.$store.commit('pengampu/updateAbsen', result);
         }
       } catch (error) {
         console.log(error);

@@ -119,11 +119,8 @@ export default {
         sk, type, time, condition
       }
       if (condition && dateTime === this.date) {
-        console.log('hapus')
-        console.log(sk)
         this.deleteStatus(obj)
       } else {
-        console.log('update')
         this.changeStep(obj)
       }
     },

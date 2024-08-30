@@ -530,6 +530,13 @@
                       <span class="text animate__animated animate__fadeInRight">Mapel</span>
                     </nuxt-link>
                   </li>
+                  <!-- Nilai Quran -->
+                  <li>
+                    <nuxt-link to="/settings/nilaiquran"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Nilai Quran</span>
+                    </nuxt-link>
+                  </li>
                   <!-- Struktur -->
                   <li v-if="hasPersonalia">
                     <nuxt-link to="/settings/struktur"

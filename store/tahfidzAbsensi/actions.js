@@ -42,7 +42,6 @@ export default {
       type: type
     }
     // console.log(data)
-    console.log(obj)
   },
   async deleteStatus({ commit, state }, datas) {
     console.log(datas)
