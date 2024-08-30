@@ -12,7 +12,7 @@
       </div>
       <div class="table-responsive">
         <!-- Modal -->
-        <ModalAbsensiTahfidz />
+        <!-- <ModalAbsensiTahfidz /> -->
         <table class="table table-hover table-striped">
           <thead>
             <tr>
@@ -24,7 +24,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(data, index) in santri" :key="index">
+            <tr v-for="(data, index) in pegawai" :key="index">
               <td class="text-capitalize align-middle">
                 <h1>{{ data.Nama }}</h1>
                 <p class="mt-1 text-secondary">{{ data.Nis }}</p>
@@ -109,7 +109,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("tahfidzAbsensi", ["santri", "permissions", "select", 'date', 'updateData']),
+    ...mapState("pengampu", ["pegawai", "permissions", "select", 'date', 'updateData']),
   },
   methods: {
     ...mapActions('tahfidzAbsensi', ['setStatus', 'deleteStatus']),

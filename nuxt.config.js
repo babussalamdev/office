@@ -75,6 +75,7 @@ export default {
       '~/components/tahfidz/rekap',
       '~/components/tahfidz/rekap/absensitahfidz',
       '~/components/tahfidz/rekap/nilaitahfidz',
+      '~/components/tahfidz/rekap/hafalantahfidz',
       '~/components/santri',
       '~/components/santri/database',
       '~/components/santri/halaqah',

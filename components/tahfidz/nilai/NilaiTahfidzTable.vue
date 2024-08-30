@@ -1,17 +1,17 @@
 <template>
   <div class="animate__animated animate__fadeInUp">
-    <h2 class="mb-3 mb-md-3">Penilaian Tahfidz</h2>
+    <h2 class="mb-3 mb-md-3">Penilaian Kelas</h2>
     <div class="head row mb-3">
       <div class="col-12 col-md-7 d-flex flex-column flex-md-row gap-4 gap-md-0 mb-3 mb-md-0">
         <div class="input-group w-75">
-          <select class="form-select" aria-label="Default select example" v-model="selectedKelas" @change="applyFilter">
-            <option value="" selected>Kelas</option>
+          <select class="form-select" v-model="selectedKelas" @change="applyFilter">
+            <option value="" disabled selected>Kelas</option>
             <option v-for="(data, index) in uniqueClasses" :key="index" :value="data">
               {{ data }}
             </option>
           </select>
-          <select class="form-select" aria-label="Default select example" v-model="selectedMapel" @change="addNewData">
-            <option value="" selected>Mapel</option>
+          <select class="form-select" v-model="selectedMapel" @change="addNewData">
+            <option value="" disabled selected>Mapel</option>
             <option v-for="(value, i) in uniqueLesson" :key="i" :value="value">
               {{ value.Nama }}
             </option>
@@ -19,16 +19,9 @@
           <span class="input-group-text">
             {{ selectedMapel?.Jurusan }}
           </span>
-          <!-- <select class="form-select" aria-label="Default select example" v-model="periode">
-            <option value="" disabled selected>Periode</option>
-            <option v-for="(data, index) in selectedPeriode" :key="index" :value="data">
-              {{ data.periode }} ( {{ data.semester }} )
-            </option>
-          </select> -->
         </div>
       </div>
       <div class="col-12 col-md-5 d-flex align-items-center justify-content-end gap-3">
-        <!-- <d. -->
       </div>
     </div>
     <div class="table-responsive" ref="input">
@@ -36,15 +29,9 @@
         <thead>
           <tr>
             <th class="text-uppercase" v-for="(value, key) in th" :key="key">{{ key }}</th>
-            <!-- <th scope="col">Nama</th>
-            <th scope="col">Hadir & Akhlak</th>
-            <th scope="col">Nilai Harian</th>
-            <th scope="col">UTS</th>
-            <th scope="col">UAS</th>
-            <th scope="col">Total</th> -->
           </tr>
         </thead>
-        <tbody>
+        <tbody v-if="selectedMapel.Status !== 'close'">
           <tr v-for="(data, index) in santri" :key="index">
             <td class="text-capitalize align-middle">
               <h1>{{ data.Nama }}</h1>
@@ -58,7 +45,7 @@
               </div>
             </td>
             <td class="text-capitalize align-middle">
-              {{ calculateTotalFromPenilaian(data.Penilaian) }}
+              {{ data.TotalScore }}
             </td>
           </tr>
         </tbody>
@@ -68,11 +55,13 @@
 </template>
 
 <script>
+import Swal from "sweetalert2";
 import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
 export default {
   data() {
     return {
       btn: true,
+      btn2: true,
       selectedKelas: "",
       periode: "",
       radio: "none",
@@ -83,14 +72,6 @@ export default {
       editPenilaian: true,
     };
   },
-  watch: {
-    // selectedMapel: {
-    //   handler(newValue) {
-    //     // this.addNewData();
-    //   },
-    //   deep: true
-    // }
-  },
   mounted() {
     document.addEventListener("click", event => this.setData(event, 'input'));
   },
@@ -98,15 +79,15 @@ export default {
     document.removeEventListener("click", event => this.setData(event, 'input'));
   },
   computed: {
-    ...mapState("kelas/nilai", ['select', 'openEdit']),
-    ...mapGetters('kelas/nilai', ['getSelectedMapel', 'getDataSantri', 'getNilai']),
+    ...mapState("tahfidznilai", ['select', 'openEdit']),
+    ...mapGetters('tahfidznilai', ['getSelectedMapel', 'getDataSantri', 'getNilai']),
     nilai: {
       get() {
         return this.getNilai
       },
       set(value) {
         const obj = { key: 'nilai', value }
-        this.$store.commit('kelas/nilai/setState', obj)
+        this.$store.commit('tahfidznilai/setState', obj)
       }
     },
     santri: {
@@ -115,7 +96,7 @@ export default {
       },
       set(value) {
         const obj = { key: 'santri', value }
-        this.$store.commit('kelas/nilai/setState', obj)
+        this.$store.commit('tahfidznilai/setState', obj)
       }
     },
     selectedMapel: {
@@ -124,7 +105,7 @@ export default {
       },
       set(value) {
         const obj = { key: 'selectedMapel', value }
-        this.$store.commit('kelas/nilai/setState', obj)
+        this.$store.commit('tahfidznilai/setState', obj)
       }
     },
     uniqueClasses() {
@@ -147,7 +128,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions('kelas/nilai', ['getSantri', 'setPenilaian']),
+    ...mapActions('tahfidznilai', ['getSantri', 'setPenilaian']),
     isNumber(val) {
       // Periksa apakah val adalah angka dan bukan false
       return typeof val === 'number' && !isNaN(val);
@@ -190,67 +171,78 @@ export default {
       const obj = { index, i, key }
       this.setPenilaian(obj)
     },
-    // async getNilai() {
-    //   const data = {
-    //     kelas: this.kelas,
-    //     mapel: this.mapel.Nama,
-    //     jurusan: this.mapel.Jurusan,
-    //     periode: `${this.periode.periode} ${this.periode.semester}`,
-    //   };
-    //   this.$store.dispatch("kelas/getNilai", data);
-    // },
-    // async selectPeriode() {
-    //   this.$store.dispatch("kelas/selectPeriode");
-    // },
-    // async selectMapel() {
-    //   this.$store.dispatch("kelas/selectMapel", this.kelas);
-    // },
     async input(index) {
       $("#inputModal").modal("show");
       const updateData = this.santri[index];
       this.$store.commit("pelanggaran/updateData", updateData);
     },
-    // async update(index, field) {
-    //   const data = {
-    //     index: index,
-    //     field: field,
-    //     value: this.dummy[index][field],
-    //   };
-    //   console.log(data);
-    // },
-    // kelasLoad() {
-    //   const program = localStorage.getItem("program");
-    //   const data = {
-    //     program: program,
-    //     kelas: this.kelas,
-    //   };
-    //   this.$store.dispatch(`santri/asrama/loadAsrama`, data);
-    // },
-    // async editItem(index) {
-    //   $("#updateDataSantriKelas").modal("show");
-    //   this.updateData = this.santri[index];
-    // },
-    // selectAllCheckbox() {
-    //   for (const item of this.santri) {
-    //     this.$set(this.selectedItems, item.SK, this.selectAll);
-    //   }
-    //   this.getCheckedNames();
-    // },
-    // getCheckedNames() {
-    //   const checkedNames = Object.keys(this.selectedItems).filter(
-    //     (key) => this.selectedItems[key]
-    //   );
-    //   this.data = checkedNames;
-    // },
-    // async editBulk(index) {
-    //   $("#updateDataSantriAsrama").modal("show");
-    //   this.updateData = this.data;
-    // },
-    // resetSelect() {
-    //   this.data = [];
-    //   this.selectAll = false;
-    //   this.selectedItems = {};
-    // },
+    async handleUpload(selected) {
+      const file = this.$refs.fileInput.files[0]; // Dapatkan file dari input file
+      const reader = new FileReader();
+
+      // Validasi jenis file
+      if (
+        file &&
+        file.type !==
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      ) {
+        // Tampilkan notifikasi menggunakan Sweet Alert jika jenis file tidak sesuai
+        Swal.fire({
+          icon: "error",
+          title: "Invalid File Type",
+          text: "Only .xlsx files are allowed",
+        });
+        return; // Hentikan eksekusi jika jenis file tidak sesuai
+      }
+
+      reader.onload = async () => {
+        this.btn2 = false;
+        try {
+          const base64String = reader.result.split(",")[1];
+          const program = localStorage.getItem("program");
+          const request = { formData: base64String }
+          const subject = selected.Nama
+          const sk = selected.SK.replace(/#/g, '%23')
+          const kelas = selected.Kelas
+          const data = await this.$apiBase.$put(
+            `upload-mapel?type=mapel&subject=${subject}&sk=${sk}&program=${program}&kelas=${kelas}`, request
+          )
+          if(data) {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              text: "Data berhasil diinput",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            $('#inputGroupFile04').val('');
+          }
+          this.btn2 = true;
+        } catch (error) {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            text: "Data gagal diinput, Mohon periksa kembali!",
+            showConfirmButton: false,
+            timer: 2000,
+          });
+          this.btn2 = true;
+          console.log(error);
+        }
+      };
+
+      // Periksa apakah file telah dipilih
+      if (file) {
+        reader.readAsDataURL(file); // Baca konten file sebagai data URL
+      } else {
+        // Tampilkan notifikasi jika file belum dipilih
+        Swal.fire({
+          icon: "error",
+          title: "File Not Selected",
+          text: "Please select a file",
+        });
+      }
+    },
   },
 };
 </script>
@@ -284,6 +276,10 @@ button {
 
 input {
   padding: 5px;
+}
+
+.input-excel input {
+  padding: 6px 12px;
 }
 
 @media screen and (max-width: 576px) {

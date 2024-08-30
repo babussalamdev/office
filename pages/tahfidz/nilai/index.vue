@@ -9,7 +9,7 @@
 <script>
 export default {
   async asyncData({ store }) {
-    store.dispatch("kelas/nilai/changeUnit");
+    store.dispatch("tahfidznilai/changeUnit");
   },
 };
 </script>

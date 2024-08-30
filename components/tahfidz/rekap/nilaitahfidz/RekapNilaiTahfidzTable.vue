@@ -1,42 +1,33 @@
 <template>
-  <div>
-    <div class="row mb-3">
-      <div class="col-12 col-md-6 mb-2 mb-md-0">
-        <div class="input-group d-flex align-items-center">
-          <span class="input-group-text bg-secondary text-white" id="basic-addon1">{{ santri.length }} Santri</span>
-          <button class="btn btn-success border-0">Export</button>
-        </div>
-      </div>
-      <div class="col-12 col-md-6 d-flex justify-content-end">
-        <div class="input-group">
-          <span class="input-group-text" id="basic-addon1">From</span>
-          <input type="date" class="form-control" aria-label="Username" aria-describedby="basic-addon1" v-model="start">
-          <span class="input-group-text" id="basic-addon1">To</span>
-          <input type="date" class="form-control" aria-label="Username" aria-describedby="basic-addon1" v-model="end">
-        </div>
-      </div>
+  <div class="animate__animated animate__fadeInUp">
+    <h2 class="mb-3 mb-md-3">Nilai Mapel</h2>
+    <div class="d-flex justify-content-between mb-3 w-auto">
+      <select class="form-select" aria-label="Default select example" v-model="selectedMapel" @change="addNewData">
+        <option value="" selected disabled>Mapel</option>
+        <option v-for="(data, index) in mapel" :key="index" :value="data">{{ data.Nama }}</option>
+      </select>
+      <button class="btn btn-success border-0">Export</button>
     </div>
-    <div class="table-responsive animate__animated animate__fadeInUp">
+    <div class="table-responsive" ref="input">
       <table class="table table-hover table-striped">
         <thead>
           <tr>
-            <th scope="col" rowspan="2" class="text-start">Nama</th>
-            <th scope="col" colspan="4">Hafalan Baru</th>
-          </tr>
-          <tr>
-            <th scope="col" class="text-start">Awal</th>
-            <th scope="col" class="text-start">Akhir</th>
-            <th scope="col" class="text-start">Baru</th>
-            <th scope="col" class="text-start">Jumlah</th>
+            <th class="text-uppercase" v-for="(value, key) in th" :key="key">{{ key }}</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(data, index) in santri" :key="index">
-            <td class="text-capitalize align-middle">{{ data.Nama }}</td>
-            <td class="text-capitalize align-middle" style="font-family: 'Noto Kufi Arabic', sans-serif; font-size: 12px; font-weight: 600">{{ data.From }}</td>
-            <td class="text-capitalize align-middle" style="font-family: 'Noto Kufi Arabic', sans-serif; font-size: 12px; font-weight: 600">{{ data.To }}</td>
-            <td class="text-capitalize align-middle">{{ data.Page }} Hal</td>
-            <td class="text-capitalize align-middle">{{ data.Juz }} Juz</td>
+            <td class="text-capitalize align-middle">
+              <h1>{{ data.Nama }}</h1>
+            </td>
+            <td v-for="(value, key) in data.Penilaian" :key="key">
+              <div class="cursor-pointer">
+                {{ value }}
+              </div>
+            </td>
+            <td class="text-capitalize align-middle">
+              {{ data.TotalScore }}
+            </td>
           </tr>
         </tbody>
       </table>
@@ -45,51 +36,123 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
+import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
 export default {
-  computed: {
-    ...mapState('rekap', ['santri']),
-    ...mapGetters('rekap', ['getStart', 'getEnd']),
-    start: {
-      get() {
-        return this.getStart
-      },
-      set(value) {
-        const obj = { key: 'start', value}
-        this.$store.commit('rekap/setState', obj)
-      }
-    },
-    end: {
-      get() {
-        return this.getEnd
-      },
-      set(value) {
-        const obj = { key: 'end', value}
-        this.$store.commit('rekap/setState', obj)
-      }
-    }
+  data() {
+    return {
+      btn: true,
+      th: { Nama: '', Total: '' },
+    };
   },
-  watch: {
-    start() {
-      this.changeUnit()
+  mounted() {
+    document.addEventListener("click", event => this.setData(event, 'input'));
+  },
+  destroyed() {
+    document.removeEventListener("click", event => this.setData(event, 'input'));
+  },
+  computed: {
+    ...mapState("report/nilaimapel", ['mapel']),
+    ...mapGetters('report/nilaimapel', ['getSelectedMapel', 'getDataSantri', 'getNilai']),
+    santri: {
+      get() {
+        return this.getDataSantri
+      },
+      set(value) {
+        const obj = { key: 'santri', value }
+        this.$store.commit('report/nilaimapel/setState', obj)
+      }
     },
-    end() {
-      this.changeUnit()
-    }
+    selectedMapel: {
+      get() {
+        return this.getSelectedMapel
+      },
+      set(value) {
+        const obj = { key: 'selectedMapel', value }
+        this.$store.commit('report/nilaimapel/setState', obj)
+      }
+    },
   },
   methods: {
-    ...mapActions('rekap', ['changeUnit']),
-    // ...mapMutations('mutabaah', ['showDetail'])
-    juz(value) {
-      const juz = value / 20
-      return juz
-    }
+    ...mapActions('report/nilaimapel', ['getSantri']),
+    isNumber(val) {
+      // Periksa apakah val adalah angka dan bukan false
+      return typeof val === 'number' && !isNaN(val);
+    },
+    calculateTotalFromPenilaian(penilaian) {
+      // Hitung jumlah semua nilai dalam objek Penilaian
+      return Object.values(penilaian).reduce((sum, value) => sum + value, 0);
+    },
+    applyFilter() {
+      this.filteredData
+    },
+    setData(event, data) {
+      const dataOutside = this.$refs[data];
+
+      // Memeriksa apakah elemen yang diklik berada di luar profile
+      if (dataOutside && !dataOutside.contains(event.target)) {
+        // this.falseData(data);
+        if (this.nilai && this.openEdit) {
+          this.setPenilaian({ type: 'button' })
+        }
+      }
+    },
+    addNewData() {
+      const newData = this.selectedMapel?.Penilaian || {};
+      // Menyiapkan objek header baru
+      const newHeaders = { Nama: '' };
+      // Tambahkan data baru dari selectedMapel.Penilaian
+      for (const [key, value] of Object.entries(newData)) {
+        newHeaders[key] = value;
+      }
+      // Tambahkan 'Total' jika ada sebelumnya
+      if (this.th.hasOwnProperty('Total')) {
+        newHeaders['Total'] = this.th['Total'];
+      }
+      // Update th dengan header baru
+      this.th = newHeaders;
+      this.getSantri()
+    },
+    setEdit(index, i, key) {
+      const obj = { index, i, key }
+      this.setPenilaian(obj)
+    },
+    async input(index) {
+      $("#inputModal").modal("show");
+      const updateData = this.santri[index];
+      this.$store.commit("pelanggaran/updateData", updateData);
+    },
   },
 };
 </script>
 
 <style scoped>
-tr th, tr td {
-  white-space: nowrap;
+a {
+  font-size: 12px;
+}
+
+.form-select {
+  font-size: 12px;
+  width: max-content !important;
+}
+
+span {
+  font-size: 12px;
+}
+
+button {
+  font-size: 12px;
+}
+
+.form-check-label {
+  font-size: 12px;
+}
+
+.form-control {
+  font-size: 12px;
+  width: 60px;
+}
+
+input {
+  padding: 5px;
 }
 </style>

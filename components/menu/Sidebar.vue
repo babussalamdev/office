@@ -158,11 +158,11 @@
                 </nuxt-link>
               </li>
               <!-- nilai -->
-              <!-- <li>
+              <li>
                 <nuxt-link to="/tahfidz/nilai" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Nilai</span>
                 </nuxt-link>
-              </li> -->
+              </li>
               <!-- rekap -->
               <li v-if="hasRoot">
                 <div @click="notClickSub('tahfidz')"
@@ -182,6 +182,13 @@
                     </nuxt-link>
                   </li>
                   <!-- Absensi -->
+                  <li>
+                    <nuxt-link to="/tahfidz/rekap/hafalan"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Hafalan</span>
+                    </nuxt-link>
+                  </li>
+                  <!-- Nilai -->
                   <li>
                     <nuxt-link to="/tahfidz/rekap/nilai"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
@@ -275,11 +282,45 @@
                   <span class="text animate__animated animate__fadeInRight">Lagger Mapel</span>
                 </nuxt-link>
               </li>
-              <!-- tahfidz -->
-              <li v-if="permissions?.includes('report tahfidz')">
-                <nuxt-link to="/report/tahfidz"
+              <!-- rekap -->
+              <li v-if="hasRoot && hasPermission('report tahfidz')">
+                <div @click="notClickSub('tahfidz')"
+                  class="dropdown d-flex align-items-center justify-content-between gap-2">
+                  <span class="d-flex align-items-center gap-2">
+                    <span class="text animate__animated animate__fadeInRight">Report Tahfidz</span>
+                  </span>
+                  <i class="bx bx-chevron-down"></i>
+                </div>
+                <!-- sub menu santri -->
+                <ul v-if="tahfidzSubList" class="dropdown-list">
+                  <!-- Absensi -->
+                  <li>
+                    <nuxt-link to="/report/tahfidz/absensi"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Absensi</span>
+                    </nuxt-link>
+                  </li>
+                  <!-- Absensi -->
+                  <li>
+                    <nuxt-link to="/report/tahfidz/hafalan"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Hafalan</span>
+                    </nuxt-link>
+                  </li>
+                  <!-- Nilai -->
+                  <li>
+                    <nuxt-link to="/report/tahfidz/nilai"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Nilai</span>
+                    </nuxt-link>
+                  </li>
+                </ul>
+              </li>
+              <!-- report pengampu -->
+              <li v-if="hasPermission('report pengampu')">
+                <nuxt-link to="/report/pengampu"
                   class="custom-link text-decoration-none d-flex align-items-center gap-2">
-                  <span class="text animate__animated animate__fadeInRight">Tahfidz</span>
+                  <span class="text animate__animated animate__fadeInRight">Report Pengampu</span>
                 </nuxt-link>
               </li>
               <!-- tahfidz -->

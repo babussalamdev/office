@@ -1,10 +1,9 @@
 export default {
   async changeUnit({ commit, state, dispatch }) {
     dispatch('index/submitLoad', null, { root: true })
-    const tahun = this.$auth.user.Label
-    const semester = this.$auth.user.Semester
+    const program = localStorage.getItem('program')
     const reqPegawai = await this.$apiBase.$get(
-      `get-absensi?type=pengampu&program=smp&startdate=2024-08-01&endate=2024-08-29`
+      `get-absensi?program=${program}&type=absensipengampu`
     );
     if ( reqPegawai ) {
       commit('setPegawai', reqPegawai);
