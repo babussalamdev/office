@@ -8,7 +8,7 @@
           <form @submit.prevent="santriAbsen" ref="santriAbsen">
             <div class="modal-header">
               <h1 class="modal-title fs-5 text-capitalize" id="staticBackdropLabel">
-                {{ updateData?.type }} - {{ updateData?.santri?.Nama }}
+                {{ updateData?.type }} - {{ updateData?.pegawai?.Nama }}
               </h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>

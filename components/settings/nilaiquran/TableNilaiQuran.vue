@@ -1,28 +1,42 @@
 <template>
   <div>
-    <div class="d-flex justify-content-between">
-      <div>
-        <h2>Settings Nilai Quran</h2>
-      </div>
-      <div>
-        <button class="btn btn-primary btn-sm">+ Add</button>
-      </div>
-    </div>
     <div class="table-responsive animate__animated animate__fadeInUp">
       <table class="table table-hover table-striped">
         <thead>
           <tr>
             <th scope="col">Kelas</th>
-            <th scope="col">Penilaian</th>
             <th scope="col">Semester</th>
+            <th scope="col">Penilaian</th>
             <th scope="col" class="text-end">Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td scope="row">7a</td>
-            <td scope="row">uts-30</td>
-            <td scope="row">Ganjil</td>
+          <tr v-for="(data, i) in quran" :key="i">
+            <td scope="row">{{ data.SK.split('#')[1] }}</td>
+            <td scope="row">{{ data.SK.split('#')[2] }}</td>
+            <td scope="row">
+              <div v-for="(value, index) in penilaian[i]" :key="index" style="display: inline">
+                <div class="btn-group btn-group-sm px-0 py-0 me-1">
+                  <div class="btn btn-secondary btn-sm disabled fs-6 align-middle">{{ value }}
+                  </div>
+                  <div class="btn btn-secondary btn-sm" @click="delScore(index, data.SK)">
+                    <i class="material-icons fs-6">close</i>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td class="text-end">
+              <a href="javascript:;" @click="inputScore(data.SK)">
+                <button class="btn btn-sm btn-primary">
+                  <i class="bx bx-plus"></i>
+                </button>
+              </a>
+              <a href="javascript:;" @click="deleteItem(data.SK)">
+                <button class="btn btn-sm btn-danger">
+                  <i class="bx bx-trash text-white"></i>
+                </button>
+              </a>
+            </td>
           </tr>
           <!-- <tr v-for="(data, i) in mapel" :key="i">
             <td scope="row">{{ data.Sort }}</td>
@@ -60,9 +74,8 @@
         </tbody>
       </table>
     </div>
-    <ModalMapel />
-    <ModalMapelUpdate />
-    <ModalMapelPenilaian />
+    <ModalNilaiQuran />
+    <ModalPenilaianQuran />
   </div>
 </template>
 
@@ -75,7 +88,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("mapel", ["mapel", 'listKelas', 'Penilaian']),
+    ...mapState("setupnilaiquran", ["quran", 'penilaian']),
   },
   created () {
     if(process.env.NODE_ENV !== 'production') {
@@ -85,8 +98,8 @@ export default {
     };
   },
   methods: {
-    ...mapActions('mapel', { deleteItem: 'deleteItem', changeStep: 'delScore', editItem: 'editItem' }),
-    ...mapMutations('mapel', ['inputScore']),
+    ...mapActions('setupnilaiquran', { deleteItem: 'deleteItem', changeStep: 'delScore', editItem: 'editItem' }),
+    ...mapMutations('setupnilaiquran', ['inputScore']),
     delScore(index, sk) {
       const obj = { index, sk }
       this.changeStep(obj)

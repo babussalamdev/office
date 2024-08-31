@@ -463,6 +463,22 @@
 }
 #nilai-quran {
   .nilai-quran {
+    .row {
+      margin-bottom: 18px;
+      h3 {
+        font-size: 14px;
+      }
+      .upload-data-santri {
+        transform: scale(0.85);
+        border-radius: 10px;
+      }
+      .button-santri {
+        button {
+          font-size: 12px;
+          width: max-content;
+        }
+      }
+    }
     .table-responsive {
       overflow-x: auto;
       border-radius: 7px !important;
@@ -483,7 +499,7 @@
         tbody {
           tr {
             td {
-              padding: 15px 20px;
+              padding: 12px 20px;
               margin: auto;
               font-size: 12px;
               button {
@@ -491,19 +507,6 @@
                 i {
                   font-size: 14px !important;
                   padding: -5px !important;
-                }
-              }
-            }
-            .container-permissions {
-              .list-permissions {
-                .btn {
-                  background: #000;
-                  span {
-                    font-size: 10px;
-                    @media screen and (max-width: 576px) {
-                      font-size: 8px;
-                    }
-                  }
                 }
               }
             }

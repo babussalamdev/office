@@ -337,6 +337,21 @@
   }
 }
 
+#nilai-quran .nilai-quran .row {
+  margin-bottom: 18px;
+}
+#nilai-quran .nilai-quran .row h3 {
+  font-size: 14px;
+}
+#nilai-quran .nilai-quran .row .upload-data-santri {
+  transform: scale(0.85);
+  border-radius: 10px;
+}
+#nilai-quran .nilai-quran .row .button-santri button {
+  font-size: 12px;
+  width: -moz-max-content;
+  width: max-content;
+}
 #nilai-quran .nilai-quran .table-responsive {
   overflow-x: auto;
   border-radius: 7px !important;
@@ -353,7 +368,7 @@
   color: #fff;
 }
 #nilai-quran .nilai-quran .table-responsive .table tbody tr td {
-  padding: 15px 20px;
+  padding: 12px 20px;
   margin: auto;
   font-size: 12px;
 }
@@ -363,17 +378,6 @@
 #nilai-quran .nilai-quran .table-responsive .table tbody tr td button i {
   font-size: 14px !important;
   padding: -5px !important;
-}
-#nilai-quran .nilai-quran .table-responsive .table tbody tr .container-permissions .list-permissions .btn {
-  background: #000;
-}
-#nilai-quran .nilai-quran .table-responsive .table tbody tr .container-permissions .list-permissions .btn span {
-  font-size: 10px;
-}
-@media screen and (max-width: 576px) {
-  #nilai-quran .nilai-quran .table-responsive .table tbody tr .container-permissions .list-permissions .btn span {
-    font-size: 8px;
-  }
 }
 @media screen and (max-width: 576px) {
   #nilai-quran .nilai-quran .table-responsive .table thead tr th {
