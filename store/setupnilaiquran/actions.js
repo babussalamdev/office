@@ -1,9 +1,13 @@
 import Swal from "sweetalert2"
 export default {
-  async changeUnit({ commit, state }) {
+  async changeUnit({ commit, state, dispatch }) {
+    dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
     const data = await this.$apiBase.$get(`get-settings?type=quran&program=${program}`)
-    commit('setKelas', data)
+    if (data) {
+      dispatch('index/submitLoad', null, { root: true })
+      commit('setKelas', data)
+    }
   },
   async submit({ commit, state }, event) {
     commit('btn')
@@ -63,7 +67,7 @@ export default {
 
   // penilaian
   async inputDataPenilaian({ commit, state }, event) {
-    // commit('btn')
+    commit('btn')
     const data = Object.fromEntries(new FormData(event.target))
     const sk = state.updateDataPenilaian.SK.replace(/#/g, '%23')
     const i = state.quran.findIndex((x) => x.SK === state.updateDataPenilaian.SK)
@@ -84,9 +88,9 @@ export default {
     try {
       const result = await this.$apiBase.$put(`update-settings?sk=${sk}&type=quran`, data)
       commit('updateScore')
-      // commit('btn')
+      commit('btn')
     } catch (error) {
-      // commit('btn')
+      commit('btn')
       Swal.fire({
         icon: "warning",
         text: error,
@@ -96,7 +100,8 @@ export default {
     }
   },
 
-  async delScore({ commit, state }, datas) {
+  async delScore({ commit, state, dispatch }, datas) {
+    dispatch('index/submitLoad', null, { root: true })
     const i = state.quran.findIndex((x) => x.SK === datas.sk)
     commit('deletePenilaian', { indexMapel: i, indexPenilaian: datas.index })
     const array = state.penilaian[i]
@@ -113,6 +118,9 @@ export default {
     try {
       const sk = datas.sk.replace(/#/g, '%23')
       const result = await this.$apiBase.$put(`update-settings?sk=${sk}&type=quran`, data)
+      if (result) {
+        dispatch('index/submitLoad', null, { root: true })
+      }
     } catch (error) {
       Swal.fire({
         icon: "warning",

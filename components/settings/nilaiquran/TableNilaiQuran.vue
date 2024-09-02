@@ -38,39 +38,6 @@
               </a>
             </td>
           </tr>
-          <!-- <tr v-for="(data, i) in mapel" :key="i">
-            <td scope="row">{{ data.Sort }}</td>
-            <td scope="row" class="text-capitalize">{{ data.Nama }}</td>
-            <td scope="row" class="text-uppercase">{{ data.Jurusan }}</td>
-            <td scope="row" class="text-capitalize container-hari">
-              <div v-for="(value, i) in data.Hari.split(', ')" :key="i" style="display: inline">
-                <div class="btn-group btn-group-sm px-1 py-1 list-hari">
-                  <div class="btn btn-secondary disabled">
-                    <span>{{ value }}</span>
-                  </div>
-                </div>
-              </div>
-            </td>
-            <td scope="row" class="">
-              <div v-for="(value, index) in Penilaian[i]" :key="index" style="display: inline">
-                <div class="btn-group btn-group-sm px-0 py-0 me-1">
-                  <div class="btn btn-secondary btn-sm disabled fs-6 align-middle">{{ value }}
-                  </div>
-                  <div class="btn btn-secondary btn-sm" @click="delScore(index, data.SK)">
-                    <i class="material-icons fs-6">close</i>
-                  </div>
-                </div>
-              </div>
-            </td>
-            <td scope="row">{{ data.Status }}</td>
-            <td class="text-end">
-              <a href="javascript:;" @click="deleteItem(data.SK)">
-                <button class="btn btn-sm btn-danger">
-                  <i class="bx bx-trash text-white"></i>
-                </button>
-              </a>
-            </td>
-          </tr> -->
         </tbody>
       </table>
     </div>
@@ -90,8 +57,8 @@ export default {
   computed: {
     ...mapState("setupnilaiquran", ["quran", 'penilaian']),
   },
-  created () {
-    if(process.env.NODE_ENV !== 'production') {
+  created() {
+    if (process.env.NODE_ENV !== 'production') {
       this.urlXlsx = process.env.XlsxDev
     } else {
       this.urlXlsx = process.env.XlsxPro
@@ -120,5 +87,4 @@ tr th {
 tr td {
   white-space: nowrap;
 }
-
 </style>

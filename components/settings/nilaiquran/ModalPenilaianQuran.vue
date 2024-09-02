@@ -13,8 +13,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              {{ updateDataPenilaian }}
-              <div class="mb-3">
+s              <div class="mb-3">
                 <label for="sort" class="form-label">Nama</label>
                 <input name="nama" type="text" class="form-control" id="sort" required />
               </div>
