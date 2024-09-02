@@ -55,7 +55,7 @@ export default {
     { src: '~/plugins/moment.js', ssr: false },
   ],
 
-loading: '~/components/Loader.vue',
+  loading: '~/components/Loader.vue',
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: {

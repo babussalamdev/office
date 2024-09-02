@@ -93,15 +93,29 @@ export default {
     // sort data
     // Mengubah format asramatime menjadi objek Date dan mengurutkan data
     const sortedSantriData = value.SantriData.map(santri => {
-      const dateTimeParts = santri.Logs.asramatime.split(' '); // Memisahkan tanggal dan waktu
-      const dateParts = dateTimeParts[0].split('-'); // Memisahkan hari, bulan, tahun
-      const timeParts = dateTimeParts[1].split(':'); // Memisahkan jam, menit, detik
+      if (santri.Logs.asrama.time) {
+        const dateTimeParts = santri.Logs.asrama.time.split(' ');
 
-      const formattedDate = new Date(`${dateParts[1]}/${dateParts[0]}/${dateParts[2]} ${timeParts[0]}:${timeParts[1]}:${timeParts[2]}`);
-      santri.Logs.asramatime = formattedDate; // Mengubah string menjadi objek Date
+        if (dateTimeParts.length === 2) {
+          const dateParts = dateTimeParts[0].split('-'); // Pisahkan hari, bulan, tahun
+          const timeParts = dateTimeParts[1].split(':'); // Pisahkan jam, menit, detik
+
+          if (dateParts.length === 3 && timeParts.length === 3) {
+            const formattedDate = new Date(`${dateParts[1]}/${dateParts[0]}/${dateParts[2]} ${timeParts[0]}:${timeParts[1]}:${timeParts[2]}`);
+            santri.Logs.asrama.time = formattedDate; // Mengubah string menjadi objek Date
+          } else {
+            console.error('Format waktu tidak valid');
+          }
+        } else {
+          console.error('Format tanggal dan waktu tidak sesuai');
+        }
+      } else {
+        console.warn('santri.Logs.asrama.time tidak ada isinya untuk santri')
+      }
 
       return santri;
     });
+
 
     sortedSantriData.sort((a, b) => new Date(b.Logs.asramatime) - new Date(a.Logs.asramatime)); // Mengurutkan berdasarkan asramatime terbaru
     state.highlight = sortedSantriData; // Menetapkan data yang sudah diurutkan ke dalam state
