@@ -23,9 +23,9 @@ export default {
         const updatedItem = { ...item };
 
         // Memperbarui Logs dengan data baru
-        updatedItem.Logs = {
-          ...item.Logs,
-          ...value.Logs
+        updatedItem[value.time] = {
+          ...item[value.time],
+          ...value.Logs.halaqah[value.time]
         };
 
         return updatedItem;
@@ -46,9 +46,9 @@ export default {
         const updatedItem = { ...item };
 
         // Memperbarui Logs dengan data baru
-        updatedItem.Logs = {
-          ...item.Logs,
-          ...value.Logs
+        updatedItem[value.time] = {
+          ...item[value.time],
+          ...value.Logs.halaqah[value.time]
         };
 
         return updatedItem;

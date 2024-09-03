@@ -22,6 +22,7 @@
           <tr>
             <th scope="col" rowspan="2" class="text-start">Nama</th>
             <th scope="col" colspan="5">Ketidakhadiran</th>
+            <th scope="col" rowspan="2" class="text-end">Action</th>
           </tr>
           <tr>
             <th scope="col" class="text-center bg-primary">T</th>
@@ -38,7 +39,17 @@
             <td class="text-capitalize align-middle text-center">{{ data.sakit }}</td>
             <td class="text-capitalize align-middle text-center">{{ data.izin }}</td>
             <td class="text-capitalize align-middle text-center">{{ data.absen }}</td>
-            <td class="text-capitalize align-middle text-center">{{ data.terlambat + data.izin + data.sakit + data.absen  }}</td>
+            <td class="text-capitalize align-middle text-center">{{ data.terlambat + data.izin + data.sakit + data.absen
+              }}</td>
+            <td class="text-end align-middle">
+              <a href="javascript:;">
+                <button class="btn btn-primary">
+                  <i class="material-symbols-outlined">
+                    info
+                  </i>
+                </button>
+              </a>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -57,7 +68,7 @@ export default {
         return this.getStart
       },
       set(value) {
-        const obj = { key: 'start', value}
+        const obj = { key: 'start', value }
         this.$store.commit('rekap/setState', obj)
       }
     },
@@ -66,7 +77,7 @@ export default {
         return this.getEnd
       },
       set(value) {
-        const obj = { key: 'end', value}
+        const obj = { key: 'end', value }
         this.$store.commit('rekap/setState', obj)
       }
     }
@@ -91,7 +102,17 @@ export default {
 </script>
 
 <style scoped>
-tr th, tr td {
+tr th,
+tr td {
   white-space: nowrap;
 }
+
+/* button {
+  padding: 2px 5px 0.5px !important;
+}
+
+button i {
+  font-size: 14px !important;
+  padding: -5px !important;
+} */
 </style>

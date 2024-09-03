@@ -252,8 +252,12 @@
               padding: 17px 20px;
               margin: auto;
               font-size: 12px;
-              i {
-                cursor: pointer;
+              button {
+                padding: 2px 5px 0.5px !important;
+                i {
+                  font-size: 14px !important;
+                  padding: -5px !important;
+                }
               }
             }
           }

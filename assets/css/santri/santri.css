@@ -191,8 +191,12 @@
   margin: auto;
   font-size: 12px;
 }
-#rekap .rekap .table-responsive .table tbody tr td i {
-  cursor: pointer;
+#rekap .rekap .table-responsive .table tbody tr td button {
+  padding: 2px 5px 0.5px !important;
+}
+#rekap .rekap .table-responsive .table tbody tr td button i {
+  font-size: 14px !important;
+  padding: -5px !important;
 }
 @media screen and (max-width: 576px) {
   #rekap .rekap .table-responsive .table thead tr th {

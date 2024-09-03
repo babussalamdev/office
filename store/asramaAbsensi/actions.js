@@ -18,11 +18,11 @@ export default {
       let reqSantri = ''
       if (subject === 'asrama') {
         reqSantri = this.$apiSantri.$get(
-          `get-absensi-sisalam?subject=${subject}&program=${program}&value=${asrama}`
+          `get-absensi-sisalam?type=all&subject=${subject}&program=${program}&value=${asrama}`
         );
       } else {
         reqSantri = this.$apiSantri.$get(
-          `get-absensi-sisalam?subject=${subject}&program=${program}&value=${kelas}`
+          `get-absensi-sisalam?type=all&subject=${subject}&program=${program}&value=${kelas}`
         );
       }
       const reqPermissions = this.$apiBase.$get(
@@ -47,7 +47,7 @@ export default {
     const program = localStorage.getItem('program')
     const jabatan = this.$auth.user.Jabatan[program]
     const reqSantri = this.$apiSantri.$get(
-      `get-absensi-sisalam?subject=kelas&program=${program}&value=${state.selectKelas}`
+      `get-absensi-sisalam?type=all&subject=kelas&program=${program}&value=${state.selectKelas}`
     );
     const reqPermissions = this.$apiBase.$get(
       `get-settings?sk=${program}&type=buttonAbsensi&value=${jabatan}`

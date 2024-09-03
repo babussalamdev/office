@@ -13,14 +13,24 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <div class="mb-3">
-                <label for="sort" class="form-label">Sort</label>
-                <input name="Sort" type="number" class="form-control" id="sort" :value="updateData.Sort" required />
-              </div>
-              <div class="mb-3">
-                <label for="nama" class="form-label">Nama</label>
-                <input name="Nama" type="text" class="form-control" id="nama" :value="updateData.Nama" required />
-              </div>
+              <span>
+                <div class="mb-3" v-if="updateData?.Nama !== 'wali kelas' && updateData?.Nama !== 'musyrif'">
+                  <label for="sort" class="form-label">Sort</label>
+                  <input name="Sort" type="number" class="form-control" id="sort" :value="updateData.Sort" required />
+                </div>
+                <div class="mb-3" v-else>
+                  <input name="Sort" type="hidden" class="form-control" id="sort" :value="updateData.Sort" required />
+                </div>
+              </span>
+              <span>
+                <div class="mb-3" v-if="updateData?.Nama !== 'wali kelas' && updateData?.Nama !== 'musyrif'">
+                  <label for="nama" class="form-label">Nama</label>
+                  <input name="Nama" type="text" class="form-control" id="nama" :value="updateData.Nama" required />
+                </div>
+                <div class="mb-3" v-else>
+                  <input name="Nama" type="hidden" class="form-control" id="nama" :value="updateData.Nama" required />
+                </div>
+              </span>
               <div class="mb-3">
                 <label class="typo__label mb-2">Permissions</label>
                 <multiselect name="Permissions" v-model="value" tag-placeholder="Add this as new tag"

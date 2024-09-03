@@ -32,6 +32,7 @@ export default {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/Logo-Mahad.png' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/icon?family=Material+Icons' },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" },
       { href: "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css", rel: "stylesheet" },
       { rel: 'stylesheet', href: 'https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' },
       { rel: 'stylesheet', href: 'https://unpkg.com/vue-multiselect@2.1.6/dist/vue-multiselect.min.css' },

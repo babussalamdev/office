@@ -74,7 +74,7 @@
           </li>
           <!-- Ekskull -->
           <li v-if="hasRoot && hasPermission('page ekskull')">
-            <div @click="notClick('listAsrama')"
+            <div @click="notClick('listEkskull')"
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
                 <i class="material-icons animate__animated animate__fadeInRight">
@@ -84,7 +84,7 @@
               </span>
               <i class="bx bx-chevron-down"></i>
             </div>
-            <ul v-if="listAsrama" class="dropdown-list">
+            <ul v-if="listEkskull" class="dropdown-list">
               <!-- absensi -->
               <li>
                 <nuxt-link to="/ekskull/nilai"
@@ -571,7 +571,7 @@ export default {
   },
   computed: {
     ...mapState("index", ["unit", "permissions", "pengajar", "pengampu", "personalia",]),
-    ...mapState("sidebar", ["activeMenu", "listAsrama", "listTahfidz", "listSettings", "listKelas", "listReport", 'listLaundry',
+    ...mapState("sidebar", ["activeMenu", "listAsrama", "listTahfidz", "listSettings", 'listEkskull', "listKelas", "listReport", 'listLaundry',
       "absensiSubList", "santriSubList", "pegawaiSubList", "databaseSubList", 'tahfidzSubList', 'isSidebar']),
     hasPersonalia() {
       return this.personalia === 'on' ? true : false

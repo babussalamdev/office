@@ -44,7 +44,7 @@
                   <i class="bx bx-pencil"></i>
                 </button>
               </a>
-              <a href="javascript:;" @click="deleteItem(data.SK)">
+              <a v-if="data.Nama !== 'wali kelas' && data.Nama !== 'musyrif'" href="javascript:;" @click="deleteItem(data.SK)">
                 <button class="btn btn-sm btn-danger">
                   <i class="bx bx-trash text-white"></i>
                 </button>

@@ -16,7 +16,7 @@ export default {
       subject = 'kelas'
     }
     const reqSantri = await this.$apiSantri.$get(
-      `get-absensi-sisalam?subject=halaqah&program=${program}&value=${halaqah}`
+      `get-absensi-sisalam?type=all&subject=halaqah&program=${program}&value=${halaqah}`
     );
     if ( reqSantri ) {
       commit('setSantriTahfidz', reqSantri);
@@ -43,17 +43,12 @@ export default {
     }
     // console.log(data)
   },
-  async deleteStatus({ commit, state }, datas) {
-    console.log(datas)
+  async deleteStatus({ commit, state, dispatch }, datas) {
+    dispatch('index/submitLoad', null, { root: true })
     const i = state.santri.findIndex((x) => x.SK === datas.sk)
     const data = state.santri[i]
     const time = datas.time
-    let sk = ''
-    if (time === 'Pagi') {
-      sk = data.Logs.halaqahpagitime
-    } else {
-      sk = data.Logs.halaqahsoretime
-    }
+    const sk = data[time].time
     const skSantri = datas.sk.replace('#', '%23')
     const tahun = this.$auth.user.Label
     const semester = this.$auth.user.Semester
@@ -61,39 +56,11 @@ export default {
     const req = await this.$apiSantri.$delete(
       `delete-absensi-sisalam?sksantri=${skSantri}&type=halaqah${time}&thn=${tahun}&smstr=${semester}&program=${program}&sk=${sk}&status=${datas.condition}`
     );
-    req['time'] = time
-    req["SK"] = datas.sk;
-    commit('deleteAbsen', req);
-    // const result = await Swal.fire({
-    //   title: datas.type + '-' + data.Nama.replace(/\b\w/g, (char) => char.toUpperCase()),
-    //   text: `Subject akan dihapus`,
-    //   icon: "warning",
-    //   showCancelButton: true,
-    //   confirmButtonColor: "#3085d6",
-    //   cancelButtonColor: "#d33",
-    //   confirmButtonText: `Ya, Hapus!`,
-    // });
-    // if (result.isConfirmed) {
-    //   const req = await this.$apiSantri.$delete(
-    //     `delete-absensi-sisalam?sksantri=${skSantri}&type=halaqah${time}&thn=${tahun}&smstr=${semester}&program=${program}&sk=${sk}`
-    //   );
-    //   if (req) {
-    //     Swal.fire({
-    //       position: "center",
-    //       icon: "success",
-    //       text: `Data Berhasil dihapus`,
-    //       showConfirmButton: false,
-    //       timer: 1500,
-    //     });
-    //     req['time'] = time
-    //     req["SK"] = datas.sk;
-    //     commit('deleteAbsen', req);
-    //     // const response = {
-    //     //   key,
-    //     //   Status: status === "active" ? "inactive" : "active",
-    //     // };
-    //     // commit("updateSubject", response);
-    //   }
-    // }
+    if ( req ) {
+      req['time'] = time
+      req["SK"] = datas.sk;
+      commit('deleteAbsen', req);
+      dispatch('index/submitLoad', null, { root: true })
+    }
   },
 }
