@@ -5,6 +5,7 @@ export default () => ({
   openEdit: '',
   nilai: 0,
   globalLoad: false,
+  example: '',
   // kelas: [],
   // jurusan: [],
   // ekskull: [],

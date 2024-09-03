@@ -1,7 +1,9 @@
 <template>
   <div class="animate__animated animate__fadeInUp">
-    <h2 class="mb-3 mb-md-3">Penilaian Kelas</h2>
-    <div class="head row mb-3">
+    <h2 class="mb-3 mb-md-3">Penilaian Tahfidz</h2>
+    {{ $auth.user }} <br> <br>
+    {{ example }}
+    <!-- <div class="head row mb-3">
       <div class="col-12 col-md-7 d-flex flex-column flex-md-row gap-4 gap-md-0 mb-3 mb-md-0">
         <div class="input-group w-75">
           <select class="form-select" v-model="selectedKelas" @change="applyFilter">
@@ -23,7 +25,7 @@
       </div>
       <div class="col-12 col-md-5 d-flex align-items-center justify-content-end gap-3">
       </div>
-    </div>
+    </div> -->
     <div class="table-responsive" ref="input">
       <table class="table table-hover table-striped">
         <thead>
@@ -79,7 +81,7 @@ export default {
     document.removeEventListener("click", event => this.setData(event, 'input'));
   },
   computed: {
-    ...mapState("tahfidznilai", ['select', 'openEdit']),
+    ...mapState("tahfidznilai", ['select', 'openEdit', 'example']),
     ...mapGetters('tahfidznilai', ['getSelectedMapel', 'getDataSantri', 'getNilai']),
     nilai: {
       get() {
@@ -207,7 +209,7 @@ export default {
           const data = await this.$apiBase.$put(
             `upload-mapel?type=mapel&subject=${subject}&sk=${sk}&program=${program}&kelas=${kelas}`, request
           )
-          if(data) {
+          if (data) {
             Swal.fire({
               position: "center",
               icon: "success",
