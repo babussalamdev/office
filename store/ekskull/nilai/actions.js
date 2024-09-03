@@ -20,7 +20,7 @@ export default {
     const result = await this.$apiSantri.$get(
       `get-logs?thn=${tahun}&smstr=${semester}&methode=${methode}&program=${program}`
     )
-    if ( result ) {
+    if (result) {
       const obj = { key: 'santri', value: result }
       commit('setState', obj)
       dispatch('index/submitLoad', null, { root: true })
@@ -30,16 +30,48 @@ export default {
     // close
     if (data.type === 'button') {
       dispatch('index/submitLoad', null, { root: true })
-      commit('setPenilaian', data)
+      const skSantri = state.santri[state.openEdit.index].SKsantri.replace('#', '%23')
+      const kelas = state.santri[state.openEdit.index].Kelas
+      const skLogs = state.santri[state.openEdit.index].SKlogs.replace(/#/g, '%23')
+      const tahun = this.$auth.user.Label
+      const semester = this.$auth.user.Semester
+      const nilai = { Nilai: +state.nilai }
+      try {
+        const result = await this.$apiSantri.$put(`update-logs?methode=${state.selectedEkskull}&sksantri=${skSantri}&thn=${tahun}&kls=${kelas}&smstr=${semester}&sklogs=${skLogs}`, nilai)
+        data['result'] = result
+        commit('setPenilaian', data)
+      } catch (error) {
+        Swal.fire({
+          icon: "warning",
+          title: "Perubahan tidak tersimpan",
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
       dispatch('index/submitLoad', null, { root: true })
-      console.log('simpan')
     } else {
       if (state.openEdit) {
         data['type'] = 'close'
         dispatch('index/submitLoad', null, { root: true })
-        commit('setPenilaian', data)
+        const skSantri = state.santri[state.openEdit.index].SKsantri.replace('#', '%23')
+        const kelas = state.santri[state.openEdit.index].Kelas
+        const skLogs = state.santri[state.openEdit.index].SKlogs.replace(/#/g, '%23')
+        const tahun = this.$auth.user.Label
+        const semester = this.$auth.user.Semester
+        const nilai = { Nilai: +state.nilai }
+        try {
+          const result = await this.$apiSantri.$put(`update-logs?methode=${state.selectedEkskull}&sksantri=${skSantri}&thn=${tahun}&kls=${kelas}&smstr=${semester}&sklogs=${skLogs}`, nilai)
+          data['result'] = result
+          commit('setPenilaian', data)
+        } catch (error) {
+          Swal.fire({
+            icon: "warning",
+            title: "Perubahan tidak tersimpan",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
         dispatch('index/submitLoad', null, { root: true })
-        console.log('simpan')
       }
     }
     if (data) {

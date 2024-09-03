@@ -3,19 +3,21 @@ export default {
   async changeUnit({ commit, state, dispatch }) {
     const program = localStorage.getItem('program')
     const data = await this.$axios.$get(`get-settings?type=quran&program=${program}`)
+    console.log(data)
     if (data.quran) {
       const findSK = `${program}#7a#${this.$auth.user.Semester}`
       const selectedQuran = data.quran.find((x) => x.SK === findSK)
-      const datas = {}
-      datas['Filter'] = 'non-jurusan'
-      datas['Kelas'] = '7a'
-      datas['Subject'] = 'quran'
-      datas['Tahun'] = this.$auth.user.Label
-      datas['Semester'] = this.$auth.user.Semester
-      datas['Penilaian'] = state.selectedQuran.Penilaian
-      const result = await this.$apiSantri.$put(
-        `get-nilai-sisalam?program=${program}`, datas
-      )
+      console.log(selectedQuran)
+      // const datas = {}
+      // datas['Filter'] = 'non-jurusan'
+      // datas['Kelas'] = '7a'
+      // datas['Subject'] = 'quran'
+      // datas['Tahun'] = this.$auth.user.Label
+      // datas['Semester'] = this.$auth.user.Semester
+      // datas['Penilaian'] = state.selectedQuran.Penilaian
+      // const result = await this.$apiSantri.$put(
+      //   `get-nilai-sisalam?program=${program}`, datas
+      // )
     }
     // commit('setState', { key: 'example', value: data })
   },
