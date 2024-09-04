@@ -87,8 +87,7 @@
             <ul v-if="listEkskull" class="dropdown-list">
               <!-- absensi -->
               <li>
-                <nuxt-link to="/ekskull/nilai"
-                  class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                <nuxt-link to="/ekskull/nilai" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Nilai</span>
                 </nuxt-link>
               </li>
@@ -186,13 +185,6 @@
                     <nuxt-link to="/tahfidz/rekap/hafalan"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Hafalan</span>
-                    </nuxt-link>
-                  </li>
-                  <!-- Nilai -->
-                  <li>
-                    <nuxt-link to="/tahfidz/rekap/nilai"
-                      class="text-decoration-none sub-menu d-flex align-items-center gap-2">
-                      <span class="text animate__animated animate__fadeInRight">Nilai</span>
                     </nuxt-link>
                   </li>
                 </ul>

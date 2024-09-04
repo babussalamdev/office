@@ -16,6 +16,7 @@
         </div>
       </div>
     </div>
+    {{ santri }}
     <div class="table-responsive animate__animated animate__fadeInUp">
       <table class="table table-hover table-striped">
         <thead>
@@ -42,13 +43,13 @@
             <td class="text-capitalize align-middle text-center">{{ data.terlambat + data.izin + data.sakit + data.absen
               }}</td>
             <td class="text-end align-middle">
-              <a href="javascript:;">
+              <nuxt-link :to="`/tahfidz/rekap/absensi/${data.SK.replace('#', '%23')}`">
                 <button class="btn btn-primary">
                   <i class="material-symbols-outlined">
                     info
                   </i>
                 </button>
-              </a>
+              </nuxt-link>
             </td>
           </tr>
         </tbody>
