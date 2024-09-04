@@ -6,6 +6,8 @@ export default () => ({
   nilai: 0,
   globalLoad: false,
   example: '',
+  th: { Nama: '', Total: '' },
+  selectedQuran: '',
   // kelas: [],
   // jurusan: [],
   // ekskull: [],

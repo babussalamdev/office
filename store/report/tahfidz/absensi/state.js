@@ -13,4 +13,6 @@ export default () => ({
   end: date,
   santri: [],
   details: [],
+  kelas: [],
+  selectedKelas: ''
 })

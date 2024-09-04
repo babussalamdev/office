@@ -13,27 +13,6 @@
             </div>
             <div class="modal-body">
               <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input name="Username" type="text" class="form-control" id="username" required />
-              </div>
-              <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <div class="input-group">
-                  <input type="text" name="Password" id="password" v-model="password" class="form-control" required
-                    disabled />
-                  <span>
-                    <button v-if="btn" class="btn btn-success" type="button" id="inputGroupFileAddon04"
-                      @click="generatePassword">
-                      Generate
-                    </button>
-                    <button v-else class="btn btn-success btn-sm" type="button" disabled>
-                      <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
-                      <span class="visually-hidden" role="status">Loading...</span>
-                    </button>
-                  </span>
-                </div>
-              </div>
-              <div class="mb-3">
                 <label for="nama" class="form-label">Nama</label>
                 <input name="Nama" type="text" class="form-control" id="nama" />
               </div>

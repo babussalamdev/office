@@ -18,7 +18,6 @@ export default {
     const data = Object.fromEntries(new FormData(event.target));
     const program = state.value.map((x) => x.name);
     data["Program"] = program.join();
-    data["Password"] = state.password;
     try {
       const result = await this.$apiBase.$post(
         `input-pegawai?method=single`,

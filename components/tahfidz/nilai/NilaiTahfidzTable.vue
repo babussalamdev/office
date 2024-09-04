@@ -1,8 +1,6 @@
 <template>
   <div class="animate__animated animate__fadeInUp">
     <h2 class="mb-3 mb-md-3">Penilaian Tahfidz</h2>
-    {{ $auth.user }} <br> <br>
-    {{ example }}
     <!-- <div class="head row mb-3">
       <div class="col-12 col-md-7 d-flex flex-column flex-md-row gap-4 gap-md-0 mb-3 mb-md-0">
         <div class="input-group w-75">
@@ -33,7 +31,7 @@
             <th class="text-uppercase" v-for="(value, key) in th" :key="key">{{ key }}</th>
           </tr>
         </thead>
-        <tbody v-if="selectedMapel.Status !== 'close'">
+        <tbody>
           <tr v-for="(data, index) in santri" :key="index">
             <td class="text-capitalize align-middle">
               <h1>{{ data.Nama }}</h1>
@@ -69,7 +67,6 @@ export default {
       radio: "none",
       hadir: "",
       overlay: false,
-      th: { Nama: '', Total: '' },
       newData: { uas: 30, uts: 30, ukk: 25 },
       editPenilaian: true,
     };
@@ -81,7 +78,7 @@ export default {
     document.removeEventListener("click", event => this.setData(event, 'input'));
   },
   computed: {
-    ...mapState("tahfidznilai", ['select', 'openEdit', 'example']),
+    ...mapState("tahfidznilai", ['select', 'openEdit', 'example', 'th', 'nilai']),
     ...mapGetters('tahfidznilai', ['getSelectedMapel', 'getDataSantri', 'getNilai']),
     nilai: {
       get() {
@@ -152,22 +149,6 @@ export default {
           this.setPenilaian({ type: 'button' })
         }
       }
-    },
-    addNewData() {
-      const newData = this.selectedMapel?.Penilaian || {};
-      // Menyiapkan objek header baru
-      const newHeaders = { Nama: '' };
-      // Tambahkan data baru dari selectedMapel.Penilaian
-      for (const [key, value] of Object.entries(newData)) {
-        newHeaders[key] = value;
-      }
-      // Tambahkan 'Total' jika ada sebelumnya
-      if (this.th.hasOwnProperty('Total')) {
-        newHeaders['Total'] = this.th['Total'];
-      }
-      // Update th dengan header baru
-      this.th = newHeaders;
-      this.getSantri()
     },
     setEdit(index, i, key) {
       const obj = { index, i, key }

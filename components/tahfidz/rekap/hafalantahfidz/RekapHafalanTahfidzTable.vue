@@ -48,15 +48,15 @@
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 export default {
   computed: {
-    ...mapState('rekap', ['santri']),
-    ...mapGetters('rekap', ['getStart', 'getEnd']),
+    ...mapState('rekaphafalan', ['santri']),
+    ...mapGetters('rekaphafalan', ['getStart', 'getEnd']),
     start: {
       get() {
         return this.getStart
       },
       set(value) {
         const obj = { key: 'start', value}
-        this.$store.commit('rekap/setState', obj)
+        this.$store.commit('rekaphafalan/setState', obj)
       }
     },
     end: {
@@ -65,7 +65,7 @@ export default {
       },
       set(value) {
         const obj = { key: 'end', value}
-        this.$store.commit('rekap/setState', obj)
+        this.$store.commit('rekaphafalan/setState', obj)
       }
     }
   },
@@ -78,7 +78,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('rekap', ['changeUnit']),
+    ...mapActions('rekaphafalan', ['changeUnit']),
     // ...mapMutations('mutabaah', ['showDetail'])
     juz(value) {
       const juz = value / 20

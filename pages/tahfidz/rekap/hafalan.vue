@@ -10,7 +10,7 @@
 <script>
 export default {
   async asyncData({ store }) {
-    store.dispatch('rekap/changeUnit')
+    store.dispatch('rekaphafalan/changeUnit')
   }
 };
 </script>

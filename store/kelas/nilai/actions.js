@@ -39,7 +39,7 @@ export default {
         datas['Subject'] = state.selectedMapel.Nama
         datas['SubAttribute'] = state.openEdit.key
         datas[mapelKey] = `${state.nilai}/${state.selectedMapel.Penilaian[state.openEdit.key]}`
-        const result = await this.$apiSantri.$post(`input-nilai-sisalam?sksantri=${skSantri}&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`, datas)
+        const result = await this.$apiSantri.$post(`input-nilai-sisalam?type=nilaimapel&sksantri=${skSantri}&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`, datas)
         if (result) {
           dispatch('index/submitLoad', null, { root: true })
           data['result'] = result
@@ -71,7 +71,7 @@ export default {
           datas['Subject'] = state.selectedMapel.Nama
           datas['SubAttribute'] = state.openEdit.key
           datas[mapelKey] = `${state.nilai}/${state.selectedMapel.Penilaian[state.openEdit.key]}`
-          const result = await this.$apiSantri.$post(`input-nilai-sisalam?sksantri=${skSantri}&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`, datas)
+          const result = await this.$apiSantri.$post(`input-nilai-sisalam?type=nilaimapel&sksantri=${skSantri}&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`, datas)
           if (result) {
             data['result'] = result
             dispatch('index/submitLoad', null, { root: true })

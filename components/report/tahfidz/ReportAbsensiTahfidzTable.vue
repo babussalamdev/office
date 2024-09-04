@@ -8,12 +8,10 @@
         </div>
       </div>
       <div class="col-12 col-md-6 d-flex justify-content-end">
-        <!-- <div class="input-group">
-          <span class="input-group-text" id="basic-addon1">From</span>
-          <input type="date" class="form-control" aria-label="Username" aria-describedby="basic-addon1" v-model="start">
-          <span class="input-group-text" id="basic-addon1">To</span>
-          <input type="date" class="form-control" aria-label="Username" aria-describedby="basic-addon1" v-model="end">
-        </div> -->
+        <select class="form-select" @change="getSantri()" v-model="selectedKelas">
+          <option value="">-- kelas --</option>
+          <option v-for="(data, index) in kelas" :key="index" :value="data">{{ data.Nama }}</option>
+        </select>
       </div>
     </div>
     <div class="table-responsive animate__animated animate__fadeInUp">
@@ -42,7 +40,7 @@
             <td class="text-capitalize align-middle text-center">{{ data.terlambat + data.izin + data.sakit + data.absen
               }}</td>
             <td class="text-end align-middle">
-              <nuxt-link :to="`/tahfidz/rekap/absensi/${data.SK.replace('#', '%23')}`">
+              <nuxt-link :to="`/report/tahfidz/absensi/${data.SK.replace('#', '%23')}`">
                 <button class="btn btn-primary">
                   <i class="material-symbols-outlined">
                     info
@@ -61,37 +59,20 @@
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 export default {
   computed: {
-    ...mapState('rekap', ['santri']),
-    ...mapGetters('rekap', ['getStart', 'getEnd']),
-    start: {
+    ...mapState('report/tahfidz/absensi', ['santri', 'kelas']),
+    ...mapGetters('report/tahfidz/absensi', ['getKelas']),
+    selectedKelas: {
       get() {
-        return this.getStart
+        return this.getKelas
       },
       set(value) {
-        const obj = { key: 'start', value }
-        this.$store.commit('rekap/setState', obj)
+        const obj = { key: 'selectedKelas', value }
+        this.$store.commit('report/tahfidz/absensi/setState', obj)
       }
     },
-    end: {
-      get() {
-        return this.getEnd
-      },
-      set(value) {
-        const obj = { key: 'end', value }
-        this.$store.commit('rekap/setState', obj)
-      }
-    }
-  },
-  watch: {
-    start() {
-      this.changeUnit()
-    },
-    end() {
-      this.changeUnit()
-    }
   },
   methods: {
-    ...mapActions('rekap', ['changeUnit']),
+    ...mapActions('report/tahfidz/absensi', ['getSantri']),
     // ...mapMutations('mutabaah', ['showDetail'])
     juz(value) {
       const juz = value / 20
@@ -105,6 +86,11 @@ export default {
 tr th,
 tr td {
   white-space: nowrap;
+}
+
+select {
+  font-size: 12px;
+  width: max-content;
 }
 
 /* button {

@@ -63,7 +63,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('santri/database', ['angkatan', 'btn', 'years']),
+    ...mapState('santri/database', ['btn', 'years']),
     ...mapGetters('santri/database', ['getAngkatan']),
     angkatan: {
       get() {
@@ -106,7 +106,7 @@ export default {
           const program = localStorage.getItem("program");
           const base64 = base64String;
           const data = await this.$apiSantri.$post(
-            `input-santri-sisalam?method=bulk`,
+            `input-santri-sisalam?method=bulk&angkatan=${this.angkatan}&program=${program}`,
             base64
           );
           Swal.fire({

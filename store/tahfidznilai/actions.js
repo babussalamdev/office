@@ -1,25 +1,40 @@
+import { er } from "@fullcalendar/core/internal-common";
 import Swal from "sweetalert2";
 export default {
   async changeUnit({ commit, state, dispatch }) {
     const program = localStorage.getItem('program')
     const data = await this.$axios.$get(`get-settings?type=quran&program=${program}`)
-    console.log(data)
+    commit('setState', { key: 'selectedQuran', value: data })
     if (data.quran) {
       const findSK = `${program}#7a#${this.$auth.user.Semester}`
       const selectedQuran = data.quran.find((x) => x.SK === findSK)
-      console.log(selectedQuran)
-      // const datas = {}
-      // datas['Filter'] = 'non-jurusan'
-      // datas['Kelas'] = '7a'
-      // datas['Subject'] = 'quran'
-      // datas['Tahun'] = this.$auth.user.Label
-      // datas['Semester'] = this.$auth.user.Semester
-      // datas['Penilaian'] = state.selectedQuran.Penilaian
-      // const result = await this.$apiSantri.$put(
-      //   `get-nilai-sisalam?program=${program}`, datas
-      // )
+      const datas = {}
+      datas['Filter'] = 'pengampu'
+      datas['Halaqah'] = this.$auth.user.Halaqah[program]
+      datas['Subject'] = 'quran'
+      datas['Tahun'] = this.$auth.user.Label
+      datas['Semester'] = this.$auth.user.Semester
+      datas['Penilaian'] = selectedQuran.Penilaian
+      const result = await this.$apiSantri.$put(
+        `get-nilai-sisalam?program=${program}&type=pengampu`, datas
+      )
+      if (result) {
+        commit('setState', { key: 'santri', value: result.data })
+
+        const newData = selectedQuran.Penilaian || {};
+        const newHeaders = { Nama: '' };
+
+        for (const [key, value] of Object.entries(newData)) {
+          newHeaders[key] = value;
+        }
+
+        if (state.th.hasOwnProperty('Total')) {
+          newHeaders['Total'] = state.th['Total'];
+        }
+
+        commit('setState', { key: 'th', value: newHeaders });
+      }
     }
-    // commit('setState', { key: 'example', value: data })
   },
   // async changeUnit({ commit, dispatch }, data) {
   //   dispatch('index/submitLoad', null, { root: true })
@@ -48,6 +63,7 @@ export default {
   //   commit('setState', obj)
   // },
   async setPenilaian({ commit, state, dispatch }, data) {
+    const program = localStorage.getItem('program')
     if (data.type === 'button') {
       dispatch('index/submitLoad', null, { root: true })
       const skSantri = state.santri[state.openEdit.index].SK.replace('#', '%23')
@@ -55,18 +71,21 @@ export default {
       const tahun = this.$auth.user.Label
       const semester = this.$auth.user.Semester
       try {
-        const mapelKey = convertToCapitalizedFormat(state.selectedMapel.Nama)
+        const Key = 'Quran'
+        const findSK = `${program}#7a#${this.$auth.user.Semester}`
+        const selectedQuran = state.selectedQuran.quran.find((x) => x.SK === findSK)
         const datas = {}
-        datas['Subject'] = state.selectedMapel.Nama
+        datas['Subject'] = Key
         datas['SubAttribute'] = state.openEdit.key
-        datas[mapelKey] = `${state.nilai}/${state.selectedMapel.Penilaian[state.openEdit.key]}`
-        const result = await this.$apiSantri.$post(`input-nilai-sisalam?sksantri=${skSantri}&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`, datas)
+        datas[Key] = `${state.nilai}/${selectedQuran.Penilaian[state.openEdit.key]}`
+        const result = await this.$apiSantri.$post(`input-nilai-sisalam?type=nilaiquran&sksantri=${skSantri}&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`, datas)
         if (result) {
           dispatch('index/submitLoad', null, { root: true })
           data['result'] = result
           commit('setPenilaian', data)
         }
       } catch (error) {
+        console.log(error)
         Swal.fire({
           icon: "warning",
           title: "Perubahan tidak tersimpan",
@@ -84,21 +103,21 @@ export default {
         const tahun = this.$auth.user.Label
         const semester = this.$auth.user.Semester
         try {
-          // "Subject": "fiqh",
-          // "SubAttribute": "uas",
-          // "Fiqh": "10/30" //30 = bobot untuk uas
-          const mapelKey = convertToCapitalizedFormat(state.selectedMapel.Nama)
+          const Key = 'Quran'
+          const findSK = `${program}#7a#${this.$auth.user.Semester}`
+          const selectedQuran = state.selectedQuran.quran.find((x) => x.SK === findSK)
           const datas = {}
-          datas['Subject'] = state.selectedMapel.Nama
+          datas['Subject'] = Key
           datas['SubAttribute'] = state.openEdit.key
-          datas[mapelKey] = `${state.nilai}/${state.selectedMapel.Penilaian[state.openEdit.key]}`
-          const result = await this.$apiSantri.$post(`input-nilai-sisalam?sksantri=${skSantri}&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`, datas)
+          datas[Key] = `${state.nilai}/${selectedQuran.Penilaian[state.openEdit.key]}`
+          const result = await this.$apiSantri.$post(`input-nilai-sisalam?type=nilaiquran&sksantri=${skSantri}&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`, datas)
           if (result) {
-            data['result'] = result
             dispatch('index/submitLoad', null, { root: true })
+            data['result'] = result
             commit('setPenilaian', data)
           }
         } catch (error) {
+          console.log(error)
           dispatch('index/submitLoad', null, { root: true })
           Swal.fire({
             icon: "warning",

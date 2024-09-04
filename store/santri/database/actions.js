@@ -14,7 +14,6 @@ export default {
     commit('btn')
     const data = Object.fromEntries(new FormData(event.target));
     const program = localStorage.getItem("program");
-    data["Password"] = state.password;
     data['Program'] = program
     try {
       const result = await this.$apiSantri.$post(

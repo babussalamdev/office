@@ -8,7 +8,7 @@
       </div>
       <div class="row mb-3">
         <div class="col-12 col-md-6 mb-2 mb-md-0 d-flex align-items-center">
-          <h1 class="mb-3 mb-md-0">Rekap Absensi Tahfidz</h1>
+          <h1 class="mb-3 mb-md-0">Report Absensi Tahfidz</h1>
         </div>
         <div class="col-12 col-md-6 d-flex justify-content-end">
           <div class="input-group">
@@ -51,19 +51,19 @@ import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 export default {
   async asyncData({ store, params }) {
     const id = params.id
-    store.dispatch('rekap/getDetails', id)
+    store.dispatch('report/tahfidz/absensi/getDetails', id)
     return { id }
   },
   computed: {
-    ...mapState('rekap', ['santri', 'details']),
-    ...mapGetters('rekap', ['getStart', 'getEnd']),
+    ...mapState('report/tahfidz/absensi', ['santri', 'details']),
+    ...mapGetters('report/tahfidz/absensi', ['getStart', 'getEnd']),
     start: {
       get() {
         return this.getStart
       },
       set(value) {
         const obj = { key: 'start', value }
-        this.$store.commit('rekap/setState', obj)
+        this.$store.commit('report/tahfidz/absensi/setState', obj)
       }
     },
     end: {
@@ -72,7 +72,7 @@ export default {
       },
       set(value) {
         const obj = { key: 'end', value }
-        this.$store.commit('rekap/setState', obj)
+        this.$store.commit('report/tahfidz/absensi/setState', obj)
       }
     }
   },
@@ -85,9 +85,9 @@ export default {
     }
   },
   methods: {
-    ...mapActions('rekap', ['getDetails']),
+    ...mapActions('report/tahfidz/absensi', ['getDetails']),
     backPage() {
-      this.$router.push('/tahfidz/rekap/absensi')
+      this.$router.push('/report/tahfidz/absensi')
     }
   },
 }

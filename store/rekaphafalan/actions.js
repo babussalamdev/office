@@ -2,14 +2,14 @@ export default {
   async changeUnit({ commit, state, dispatch }) {
     dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
-    const kelas = this.$auth.user.Kelas[program]
+    const value = this.$auth.user.Halaqah[program]
     const tahun = this.$auth.user.Label
     const semester = this.$auth.user.Semester
-    const result = await this.$apiSantri.$get(`get-recapabsensi-sisalam?method=kelas&kelas=${kelas}&program=${program}&thn=${tahun}&smstr=${semester}`)
+    const result = await this.$apiSantri.$get(`get-tahfidz-sisalam?halaqah=${value}&program=${program}&thn=${tahun}&smstr=${semester}&startdate=${state.start}&enddate=${state.end}`)
     if (result) {
       const obj = { key: 'santri', value: result }
       commit('setState', obj)
       dispatch('index/submitLoad', null, { root: true })
     }
-  }
+  },
 }

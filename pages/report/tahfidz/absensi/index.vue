@@ -1,8 +1,8 @@
 <template>
   <section id="rekap">
     <div class="rekap">
-      <h1 class="mb-3">Rekap Absensi Tahfidz</h1>
-      <RekapAbsensiTahfidzTable />
+      <h1 class="mb-3">Report Absensi Tahfidz</h1>
+      <ReportAbsensiTahfidzTable />
     </div>
   </section>
 </template>
@@ -10,7 +10,7 @@
 <script>
 export default {
   async asyncData({ store }) {
-    store.dispatch('rekap/changeUnit')
+    store.dispatch('report/tahfidz/absensi/changeUnit')
   }
 };
 </script>
