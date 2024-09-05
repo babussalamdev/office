@@ -9,12 +9,14 @@ export default {
         state.pegawaiSubList = false;
         state.databaseSubList = false;
         state.tahfidzSubList = false;
+        state.tahfidz2SubList = false;
       } else {
         state.absensiSubList = false;
         state.santriSubList = false;
         state.pegawaiSubList = false;
         state.databaseSubList = false;
         state.tahfidzSubList = false;
+        state.tahfidz2SubList = false;
         state[list + 'SubList'] = !state[list + 'SubList'];
       }
     },

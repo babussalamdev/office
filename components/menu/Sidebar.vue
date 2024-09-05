@@ -276,7 +276,7 @@
               </li>
               <!-- rekap -->
               <li v-if="hasRoot && hasPermission('report tahfidz')">
-                <div @click="notClickSub('tahfidz')"
+                <div @click="notClickSub('tahfidz2')"
                   class="dropdown d-flex align-items-center justify-content-between gap-2">
                   <span class="d-flex align-items-center gap-2">
                     <span class="text animate__animated animate__fadeInRight">Report Tahfidz</span>
@@ -284,7 +284,7 @@
                   <i class="bx bx-chevron-down"></i>
                 </div>
                 <!-- sub menu santri -->
-                <ul v-if="tahfidzSubList" class="dropdown-list">
+                <ul v-if="tahfidz2SubList" class="dropdown-list">
                   <!-- Absensi -->
                   <li>
                     <nuxt-link to="/report/tahfidz/absensi"
@@ -564,7 +564,7 @@ export default {
   computed: {
     ...mapState("index", ["unit", "permissions", "pengajar", "pengampu", "personalia",]),
     ...mapState("sidebar", ["activeMenu", "listAsrama", "listTahfidz", "listSettings", 'listEkskull', "listKelas", "listReport", 'listLaundry',
-      "absensiSubList", "santriSubList", "pegawaiSubList", "databaseSubList", 'tahfidzSubList', 'isSidebar']),
+      "absensiSubList", "santriSubList", "pegawaiSubList", "databaseSubList", 'tahfidzSubList', 'tahfidz2SubList', 'isSidebar']),
     hasPersonalia() {
       return this.personalia === 'on' ? true : false
     },

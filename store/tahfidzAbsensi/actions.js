@@ -16,7 +16,7 @@ export default {
       subject = 'kelas'
     }
     const reqSantri = await this.$apiSantri.$get(
-      `get-absensi-sisalam?type=all&subject=halaqah&program=${program}&value=${halaqah}`
+      `get-absensi-sisalam?type=two&subject=halaqah&subject2=asrama&program=${program}&value=${halaqah}`
     );
     if ( reqSantri ) {
       commit('setSantriTahfidz', reqSantri);

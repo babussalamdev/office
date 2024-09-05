@@ -29,5 +29,9 @@ export default () => ({
     { name: "sabtu-1", code: 15 },
     { name: "sabtu-2", code: 16 },
     { name: "sabtu-3", code: 17 },
+    { name: "sabtu-4", code: 18 },
+    { name: "sabtu-5", code: 19 },
+    { name: "sabtu-6", code: 20 },
+    { name: "sabtu-7", code: 21 },
   ],
 })

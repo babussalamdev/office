@@ -24,7 +24,7 @@ export default {
     data["Hari"] = hari.join(', ');
     try {
       const result = await this.$axios.$post(
-        `input-settings?sk=${program}&type=mapel`,
+        `input-settings?program=${program}&kls=${state.selectKelas}&type=mapel`,
         data
       );
       if (result.message === "Kelas terisi dengan mapel lain") {

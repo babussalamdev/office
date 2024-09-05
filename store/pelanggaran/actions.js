@@ -39,18 +39,39 @@ export default {
       dispatch('index/submitLoad', null, { root: true })
     }
   },
+  // async getPelanggaran({ commit, state }, data) {
+  //   const program = localStorage.getItem('program')
+  //   const jabatan = this.$auth.user.Jabatan[program]
+  //   const reqSantri = this.$apiSantri.$get(
+  //     `get-pelanggaran-sisalam?subject=kelas&program=${program}&value=${state.selectKelas}`
+  //   );
+  //   const reqPermissions = this.$apiBase.$get(
+  //     `get-settings?sk=${program}&type=buttonpelanggaran&value=${jabatan}`
+  //   )
+  //   const [resSantri, resPermissions] = await Promise.all([reqSantri, reqPermissions])
+  //   commit('setSantriManual', { resSantri, resPermissions });
+  // },
   async getPelanggaran({ commit, state }, data) {
-    const program = localStorage.getItem('program')
-    const jabatan = this.$auth.user.Jabatan[program]
+    const program = localStorage.getItem('program');
+    const jabatan = this.$auth.user.Jabatan[program];
     const reqSantri = this.$apiSantri.$get(
       `get-pelanggaran-sisalam?subject=kelas&program=${program}&value=${state.selectKelas}`
     );
     const reqPermissions = this.$apiBase.$get(
       `get-settings?sk=${program}&type=buttonpelanggaran&value=${jabatan}`
-    )
-    const [resSantri, resPermissions] = await Promise.all([reqSantri, reqPermissions])
+    );
+    const [resSantri, resPermissions] = await Promise.all([reqSantri, reqPermissions]);
     commit('setSantriManual', { resSantri, resPermissions });
+    // try {
+    // } catch (error) {
+    //   Swal.fire({
+    //     position: "center",
+    //     icon: "error",
+    //     text: "Anda tidak punya izin untuk mengakses",
+    //   });
+    // }
   },
+
   async inputForm({ commit, state }, event) {
     commit('setLoad')
     const data = Object.fromEntries(new FormData(event.target));

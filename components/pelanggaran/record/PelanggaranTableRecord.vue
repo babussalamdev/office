@@ -39,8 +39,8 @@
                 {{ data.Solusi ? data.Solusi : "-" }}
               </td>
               <td class="text-capitalize align-middle text-end">
-                <i @click="editItem(data.SK)" class="btn btn-sm btn-warning text-xs me-1 text-white rounded-2">Edit</i>
-                <i @click="deleteItem(data.SK)" class="btn btn-sm btn-danger text-xs text-white rounded-2">Delete</i>
+                <i @click="editItem(data.SK)" v-if="hasRequiredPermission('edit')" class="btn btn-sm btn-warning text-xs me-1 text-white rounded-2">Edit</i>
+                <i @click="deleteItem(data.SK)" v-if="hasRequiredPermission('delete')" class="btn btn-sm btn-danger text-xs text-white rounded-2">Delete</i>
               </td>
             </tr>
           </tbody>
@@ -65,6 +65,13 @@ export default {
     deleteItem(sk) {
       const obj = { sk, id: this.$route.params.id }
       this.changeAction(obj)
+    },
+    hasRequiredPermission(permission) {
+      if ( this.permissions ) {
+        return this.permissions?.includes(permission)
+      } else {
+        return false
+      }
     }
     // kelasLoad() {
     //   const program = localStorage.getItem("program");

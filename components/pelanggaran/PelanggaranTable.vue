@@ -55,7 +55,7 @@
                 class="btn btn-sm btn-warning text-xss me-1 text-white rounded-2">
                 Record
               </nuxt-link>
-              <i @click="input(index)" class="btn btn-sm btn-primary text-xs text-white rounded-2">Input</i>
+              <i @click="input(index)" v-if="hasRequiredPermission('input')" class="btn btn-sm btn-primary text-xs text-white rounded-2">Input</i>
             </td>
           </tr>
         </tbody>
@@ -127,6 +127,13 @@ export default {
       const updateData = this.santri[index];
       this.$store.commit("pelanggaran/updateData", updateData);
     },
+    hasRequiredPermission(permission) {
+      if ( this.permissions ) {
+        return this.permissions?.includes(permission)
+      } else {
+        return false
+      }
+    }
     // kelasLoad() {
     //   const program = localStorage.getItem("program");
     //   const data = {

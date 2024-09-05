@@ -20,6 +20,7 @@
               <th scope="col">Asrama</th>
               <th scope="col" class="text-center">Pagi</th>
               <th scope="col" class="text-center">Sore</th>
+              <th scope="col">Note</th>
               <!-- <th scope="col" class="text-end">Action</th> -->
             </tr>
           </thead>
@@ -30,7 +31,7 @@
                 <p class="mt-1 text-secondary">{{ data.Nis }}</p>
               </td>
               <td class="text-capitalize align-middle">
-                {{ data.Logs?.asrama }}
+                {{ data.status }}
               </td>
               <!-- pagi -->
               <td class="text-capitalize py-2">
@@ -91,6 +92,9 @@
                   </div>
                 </div>
               </td>
+
+              <!-- note -->
+              <td></td>
             </tr>
           </tbody>
         </table>

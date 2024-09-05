@@ -15,7 +15,7 @@
               <div class="modal-body">
                 <div class="mb-3">
                   <label for="kelas" class="form-label">Guru Pengajar</label>
-                  <select name="Asrama" id="Asrama" class="form-select" v-model="pengajarShow" required>
+                  <select name="Asrama" id="Asrama" class="form-select text-capitalize" v-model="pengajarShow" required>
                     <option value="" selected disabled>
                       -- Pilih Pengajar --
                     </option>

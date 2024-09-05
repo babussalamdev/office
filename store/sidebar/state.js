@@ -12,6 +12,7 @@ export default () => ({
     pegawaiSubList: false,
     databaseSubList: false,
     tahfidzSubList: false,
+    tahfidz2SubList: false,
 
     isSidebar: true
 })

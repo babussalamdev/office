@@ -6,6 +6,7 @@ export default () => ({
     options: [
       { name: "input", code: 0 },
       { name: "edit", code: 1 },
+      { name: "delete", code: 2 },
     ],
     updateData: ''
 })

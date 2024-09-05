@@ -9,7 +9,11 @@ export default {
   },
   setKelas(state, value) {
     state.mapel = value.mapel
-    state.pengajar = value.pengajar
+    const sortedPengajar = value.pengajar.sort((a, b) => {
+      // Bandingkan nama dengan localeCompare
+      return a.Nama.localeCompare(b.Nama);
+    })
+    state.pengajar = sortedPengajar
   },
   setPengajar(state, value) {
     value['SK'] = value.SK.replace(/%23/g, "#")
