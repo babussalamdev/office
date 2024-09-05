@@ -27,6 +27,11 @@
               <td class="text-capitalize">{{ san.Orangtua }}</td>
               <td class="text-capitalize">{{ san.Alamat }}</td>
               <td class="text-end">
+                <a href="jacascript:;" @click="resetPassword(san.SK)">
+                  <button class="btn btn-sm btn-danger">
+                    <i class='bx bx-reset'></i>
+                  </button>
+                </a>
                 <a href="#" @click="editItem(san.SK)">
                   <button class="btn btn-sm btn-warning">
                     <i class="bx bx-pencil text-dark"></i>
@@ -55,13 +60,14 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 import Swal from "sweetalert2";
 export default {
   computed: {
     ...mapState("santri/database", ["santri", 'years', 'select']),
   },
   methods: {
+    ...mapActions('santri/database', ['resetPassword']),
     ...mapMutations('santri/database', ['editItem', 'deleteItem']),
   },
 };
