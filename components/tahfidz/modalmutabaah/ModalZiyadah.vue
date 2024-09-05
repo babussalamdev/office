@@ -176,7 +176,6 @@ export default {
       data['Score'] = +data.Score
       data['From'] = from
       data['To'] = to
-      console.log(data)
       try {
         const sk = this.updateData.SK.replace(' ', '%20')
         const sksantri = this.detail.SK.replace('#', '%23')

@@ -1,19 +1,15 @@
 <template>
-  <section id="nilai-mapel">
-    <div class="nilai-mapel">
-      <RekapNilaiTahfidzTable />
+  <section id="nilai-tahfidz">
+    <div class="nilai-tahfidz">
+      <ReportNilaiTahfidzTable />
     </div>
   </section>
 </template>
 
 <script>
 export default {
-  middleware: 'permission',
-  meta: {
-    permissions: ['report mapel']
-  },
   async asyncData({ store }) {
-    store.dispatch("report/nilaimapel/changeUnit");
+    store.dispatch("report/tahfidz/nilai/changeUnit");
   },
 };
 </script>

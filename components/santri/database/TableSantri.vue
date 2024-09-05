@@ -11,6 +11,7 @@
                 <input type="checkbox" />
               </th> -->
               <th scope="col">Nama</th>
+              <th scope="col">Username</th>
               <th scope="col">NISN</th>
               <th scope="col">Orang Tua</th>
               <th scope="col">Alamat</th>
@@ -23,11 +24,12 @@
                 <input type="checkbox" />
               </td> -->
               <td class="text-capitalize">{{ san.Nama }}</td>
+              <td>{{ san.Username }}</td>
               <td>{{ san.Nisn }}</td>
               <td class="text-capitalize">{{ san.Orangtua }}</td>
               <td class="text-capitalize">{{ san.Alamat }}</td>
               <td class="text-end">
-                <a href="jacascript:;" @click="resetPassword(san.SK)">
+                <a href="javascript:;" @click="resetPassword(san.SK)">
                   <button class="btn btn-sm btn-danger">
                     <i class='bx bx-reset'></i>
                   </button>

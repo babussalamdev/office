@@ -111,50 +111,45 @@ export default {
   },
 
   async resetPassword({ commit, state }, data ) {
+    const i = state.santri.findIndex((x) => x.SK === data)
+    const nama = state.santri[i].Nama
     try {
-      // Tampilkan konfirmasi dengan SweetAlert2
       const result = await Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
+        title: 'Apakah Anda yakin?',
+        text: `Anda akan mereset password akun ${nama}!`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, reset it!'
+        confirmButtonText: 'Ya, reset sekarang!'
       });
 
-      // Jika pengguna mengonfirmasi
       if (result.isConfirmed) {
-        // Lakukan permintaan reset password di sini
-        // Contoh: Mengirim permintaan ke API untuk mereset password
-        // await api.resetPassword(payload);
-
-        // Menampilkan notifikasi sukses setelah reset password
-        await Swal.fire({
-          title: 'Reset Successful!',
-          text: 'Your password has been reset.',
-          icon: 'success'
-        });
-
-        // Anda bisa melakukan commit atau dispatch lain di sini jika diperlukan
-        // commit('SET_RESET_SUCCESS', true);
+        const username = state.santri[i].Username
+        const result = await this.$apiSantri.$put(`change-password-sisalam?username=${username}`)
+        console.log(result)
+        if ( result ) {
+          await Swal.fire({
+            title: 'Reset Berhasil!',
+            text: `Kata sandi baru adalah: ${result.password}`,
+            icon: 'success'
+          });
+        }
       } else {
-        // Menampilkan notifikasi jika pengguna membatalkan
         await Swal.fire({
-          title: 'Cancelled',
-          text: 'Your password reset was cancelled.',
+          title: 'Dibatalkan',
+          text: 'Reset kata sandi Anda dibatalkan.',
           icon: 'error'
         });
       }
     } catch (error) {
-      // Menangani error jika terjadi
       await Swal.fire({
         title: 'Error',
-        text: 'An error occurred while resetting the password.',
+        text: 'Terjadi kesalahan saat mereset kata sandi.',
         icon: 'error'
       });
-      console.error('Error resetting password:', error);
+      console.error('Error mereset kata sandi:', error);
     }
-    
+
   }
 }

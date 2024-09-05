@@ -6,7 +6,7 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <form @submit.prevent="submit" ref="mutabaah">
-
+            {{ detail }}
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -156,11 +156,12 @@ export default {
       try {
         const program = localStorage.getItem('program')
         const sk = this.detail.SK.replace('#', '%23')
+        const kelas = this.detail.Kelas
         const subject = localStorage.getItem('subject')
         const tahun = this.$auth.user.Label
         const semester = this.$auth.user.Semester
         const halaqah = this.$auth.user.Halaqah[program]
-        const result = await this.$apiSantri.$post(`input-logs?subject=${subject}&sksantri=${sk}&halaqah=${halaqah}&thn=${tahun}&smstr=${semester}`, data)
+        const result = await this.$apiSantri.$post(`input-logs?kls=${kelas}&subject=${subject}&sksantri=${sk}&halaqah=${halaqah}&thn=${tahun}&smstr=${semester}`, data)
         if (result) {
           Swal.fire({
             position: "center",
