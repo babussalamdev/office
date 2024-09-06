@@ -75,13 +75,14 @@ export default {
 
   async updateMapel({ commit, state }, event) {
     commit('btn')
+    const program = localStorage.getItem('program')
     const data = Object.fromEntries(new FormData(event.target));
     const hari = state.value.map((x) => x.name);
     data["Hari"] = hari.join(', ')
     const key = state.updateData.SK.replace(/#/g, "%23");
     try {
       const result = await this.$axios.$put(
-        `update-settings?sk=${key}&type=mapel`,
+        `update-settings?program=${program}&kls=${state.selectKelas}&type=mapel`,
         data
       );
       commit('btn')

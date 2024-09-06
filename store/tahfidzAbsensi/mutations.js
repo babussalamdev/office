@@ -72,4 +72,10 @@ export default {
     state.updateData = obj
     $("#modalAbsen").modal("show");
   },
+
+  // catatan
+  openModal(state, data) {
+    $(`#${data.modal}`).modal('show')
+    state.updateDataCatatan = data.catatan
+  }
 }

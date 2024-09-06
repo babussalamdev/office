@@ -31,7 +31,23 @@
                 <p class="mt-1 text-secondary">{{ data.Nis }}</p>
               </td>
               <td class="text-capitalize align-middle">
-                {{ data.status }}
+                <span style="font-size: 10px" class="py-1 px-2 rounded-1"
+                  :class="data.status === 'rumah' ? 'text-bg-secondary' : data.status === 'sekolah' ? 'text-bg-success' : data.status === 'izin' ? 'text-bg-primary' : data.status === 'sakit' ? 'text-bg-warning' : 'text-bg-danger'">
+                  <i class="material-icons mb-0 me-1" style="font-size: 10px;">
+                    {{
+                      data?.status === "sekolah"
+                        ? " school "
+                        : data?.status === "rumah"
+                          ? " villa "
+                          : data?.status === "sakit"
+                            ? " medication "
+                            : data?.status === "izin"
+                              ? "hourglass_top"
+                              : " person_off "
+                    }}
+                  </i>
+                  {{ data.status }}
+                </span>
               </td>
               <!-- pagi -->
               <td class="text-capitalize py-2">
@@ -94,18 +110,33 @@
               </td>
 
               <!-- note -->
-              <td></td>
+              <td class="align-middle">
+                <a href="javascript:;" @click="openModal(data.SK, 'modalcatatanpagi')">
+                  <button class="btn btn-sm btn-primary">
+                    <i class="material-symbols-outlined">
+                      clear_day
+                    </i>
+                  </button>
+                </a>
+                <a href="javascript:;" @click="openModal(data.SK, 'modalcatatansore')">
+                  <button class="btn btn-sm btn-warning">
+                    <i class="material-symbols-outlined">
+                      bedtime
+                    </i>
+                  </button>
+                </a>
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
+      <ModalCatatanAbsensiTahfidz />
     </div>
   </div>
 </template>
 
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
-
 export default {
   data() {
     return {
@@ -117,7 +148,7 @@ export default {
   },
   methods: {
     ...mapActions('tahfidzAbsensi', ['setStatus', 'deleteStatus']),
-    ...mapMutations('tahfidzAbsensi', { changeStep: 'setAbsensi' }),
+    ...mapMutations('tahfidzAbsensi', { changeStep: 'setAbsensi', changeModal: 'openModal' }),
     setAbsensi(sk, type, time, condition, dateTime) {
       const obj = {
         sk, type, time, condition
@@ -132,6 +163,10 @@ export default {
       const kelas = this.selectKelas;
       this.$store.dispatch("asramaAbsensi/getAbsensi", kelas);
     },
+    openModal(sk, modal) {
+      const obj = { sk, modal }
+      this.changeModal(obj)
+    }
   },
 };
 </script>

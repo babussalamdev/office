@@ -63,4 +63,14 @@ export default {
       dispatch('index/submitLoad', null, { root: true })
     }
   },
+
+  // catatan
+  async updatecatatanpagi({ commit, state}, event) {
+    const data = Object.fromEntries(new FormData(event.target))
+    console.log(data)
+  },
+  async updatecatatansore({ commit, state}, event) {
+    const data = Object.fromEntries(new FormData(event.target))
+    console.log(data)
+  },
 }

@@ -21,5 +21,6 @@ export default () => ({
     pagi: '',
     sore: '',
     updateData: '',
-    date: tanggalDalamFormat
+    date: tanggalDalamFormat,
+    btn: true
 })
