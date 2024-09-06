@@ -1,3 +1,4 @@
+import Swal from "sweetalert2"
 export default {
   async changeUnit({ commit, state, dispatch }) {
     dispatch('index/submitLoad', null, { root: true })
