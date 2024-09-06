@@ -45,6 +45,11 @@
               </td>
               <td class="text-end">
                 <div class="action">
+                  <a href="javascript:;" @click="resetPassword(data.SK)">
+                    <button class="btn btn-sm btn-danger">
+                      <i class='bx bx-reset'></i>
+                    </button>
+                  </a>
                   <a href="javascript:;" @click="editItem(data.SK)">
                     <button class="btn btn-sm btn-warning">
                       <i class="bx bx-pencil"></i>
@@ -107,7 +112,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions('pegawai/database', ['updateItem']),
+    ...mapActions('pegawai/database', ['updateItem', 'resetPassword']),
     ...mapMutations('pegawai/database', ['editItem']),
     statusPersonalia(username, sk, status) {
       const condition = status === "off" ? "on" : "off";

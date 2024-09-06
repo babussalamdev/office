@@ -40,53 +40,53 @@
                 <p class="mt-1 text-secondary">{{ data.Nis }}</p>
               </td>
               <td class="text-capitalize align-middle">
-                <i class="material-icons" :class="data.Logs?.asrama === 'sekolah'
+                <i class="material-icons" :class="data.Logs?.asrama?.status === 'sekolah'
                   ? 'text-success'
-                  : data.Logs?.asrama === 'rumah'
+                  : data.Logs?.asrama?.status === 'rumah'
                     ? 'text-secondary'
-                    : data.Logs?.asrama === 'sakit'
+                    : data.Logs?.asrama?.status === 'sakit'
                       ? 'text-warning'
-                      : data.Logs?.asrama === 'izin'
+                      : data.Logs?.asrama?.status === 'izin'
                         ? 'text-primary'
                         : 'text-danger'
                   ">{{
-                  data.Logs?.asrama === "sekolah"
+                  data.Logs?.asrama?.status === "sekolah"
                     ? " school "
-                    : data.Logs?.asrama === "rumah"
+                    : data.Logs?.asrama?.status === "rumah"
                       ? " villa "
-                      : data.Logs?.asrama === "sakit"
+                      : data.Logs?.asrama?.status === "sakit"
                         ? " medication "
-                        : data.Logs?.asrama === "izin"
+                        : data.Logs?.asrama?.status === "izin"
                           ? "hourglass_top"
                           : " person_off "
                 }}</i>
               </td>
               <td class="text-capitalize align-middle">
-                {{ data.Logs?.asramaNote }}
+                {{ data.Logs?.asrama?.note }}
               </td>
               <td class="text-capitalize align-middle">
-                <h1>{{ data.Logs?.asramaTime?.split(" ")[0] }}</h1>
+                <h1>{{ data.Logs?.asrama?.time?.split(" ")[0] }}</h1>
                 <p class="mt-1 text-secondary">
-                  {{ data.Logs?.asramaTime?.split(" ")[1] }}
+                  {{ data.Logs?.asrama?.time?.split(" ")[1] }}
                 </p>
               </td>
               <td class="text-end align-middle">
                 <a href="javascript:;" class="bg-success"
-                  v-if="permissions.includes('sekolah') && data.Logs?.asrama !== 'sekolah'"
+                  v-if="permissions.includes('sekolah') && data.Logs?.asrama?.status !== 'sekolah'"
                   @click="absen(index, 'sekolah')">
                   <i class="material-icons"> school </i> Sekolah</a>
                 <a href="javascript:;" class="bg-danger"
-                  v-if="permissions.includes('absen') && data.Logs?.asrama !== 'absen'" @click="absen(index, 'absen')">
+                  v-if="permissions.includes('absen') && data.Logs?.asrama?.status !== 'absen'" @click="absen(index, 'absen')">
                   <i class="material-icons"> person_off </i>
                   Absen</a>
                 <a href="javascript:;" class="bg-warning"
-                  v-if="permissions.includes('sakit') && data.Logs?.asrama !== 'sakit'" @click="absen(index, 'sakit')">
+                  v-if="permissions.includes('sakit') && data.Logs?.asrama?.status !== 'sakit'" @click="absen(index, 'sakit')">
                   <i class="material-icons"> medication </i> Sakit</a>
                 <a href="javascript:;" class="bg-secondary"
-                  v-if="permissions.includes('rumah') && data.Logs?.asrama !== 'rumah'" @click="absen(index, 'rumah')">
+                  v-if="permissions.includes('rumah') && data.Logs?.asrama?.status !== 'rumah'" @click="absen(index, 'rumah')">
                   <i class="material-icons"> villa </i> Pulang</a>
                 <a href="javascript:;" class="bg-primary"
-                  v-if="permissions.includes('izin') && data.Logs?.asrama !== 'izin'" @click="absen(index, 'izin')">
+                  v-if="permissions.includes('izin') && data.Logs?.asrama?.status !== 'izin'" @click="absen(index, 'izin')">
                   <i class="material-icons"> villa </i> Izin</a>
               </td>
             </tr>

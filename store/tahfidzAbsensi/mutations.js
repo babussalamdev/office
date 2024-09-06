@@ -23,8 +23,8 @@ export default {
         const updatedItem = { ...item };
 
         // Memperbarui Logs dengan data baru
-        updatedItem[value.time] = {
-          ...item[value.time],
+        updatedItem.Logs.halaqah[value.time] = {
+          ...item.Logs.halaqah[value.time],
           ...value.Logs.halaqah[value.time]
         };
 
@@ -46,8 +46,8 @@ export default {
         const updatedItem = { ...item };
 
         // Memperbarui Logs dengan data baru
-        updatedItem[value.time] = {
-          ...item[value.time],
+        updatedItem.Logs.halaqah[value.time] = {
+          ...item.Logs.halaqah[value.time],
           ...value.Logs.halaqah[value.time]
         };
 
@@ -74,8 +74,113 @@ export default {
   },
 
   // catatan
+  btncatatan(state) {
+    state.btn = !state.btn
+  },
+
   openModal(state, data) {
     $(`#${data.modal}`).modal('show')
-    state.updateDataCatatan = data.catatan
-  }
+    const i = state.santri.findIndex((x) => x.SK === data.sk)
+    state.updateDataCatatan = state.santri[i]
+  },
+  setcatatanpagi(state, data) {
+    const sk = data.sk.replace('%23', '#')
+    const i = state.santri.findIndex((x) => x.SK === sk)
+
+    // Membuat salinan data dan memperbarui salinan tersebut
+    const updatedCatatanSantri = state.santri.map((item, index) => {
+      if (index === i) {
+        // Salinan data yang diperbarui
+        const updatedItem = { ...item };
+
+        // Memperbarui Logs dengan data baru
+        updatedItem.Logs.catatan.pagi = {
+          ...item.Logs.catatan.pagi,
+          ...data.Pagi
+        };
+
+        return updatedItem;
+      }
+      return item;
+    });
+
+    state.santri = updatedCatatanSantri
+    $('#modalcatatanpagi').modal('hide')
+    $('#formpagi')[0].reset()
+  },
+  deletecatatanpagi(state, data) {
+    const sk = data.sk.replace('%23', '#')
+    const i = state.santri.findIndex((x) => x.SK === sk)
+
+    // Membuat salinan data dan memperbarui salinan tersebut
+    const updatedCatatanSantri = state.santri.map((item, index) => {
+      if (index === i) {
+        // Salinan data yang diperbarui
+        const updatedItem = { ...item };
+
+        // Memperbarui Logs dengan data baru
+        updatedItem.Logs.catatan.pagi = {
+          ...item.Logs.catatan.pagi,
+          ...data.pagi
+        };
+
+        return updatedItem;
+      }
+      return item;
+    });
+
+    state.santri = updatedCatatanSantri
+    $('#modalcatatanpagi').modal('hide')
+    $('#formpagi')[0].reset()
+  },
+  setcatatansore(state, data) {
+    const sk = data.sk.replace('%23', '#')
+    const i = state.santri.findIndex((x) => x.SK === sk)
+
+    // Membuat salinan data dan memperbarui salinan tersebut
+    const updatedCatatanSantri = state.santri.map((item, index) => {
+      if (index === i) {
+        // Salinan data yang diperbarui
+        const updatedItem = { ...item };
+
+        // Memperbarui Logs dengan data baru
+        updatedItem.Logs.catatan.sore = {
+          ...item.Logs.catatan.sore,
+          ...data.Sore
+        };
+
+        return updatedItem;
+      }
+      return item;
+    });
+
+    state.santri = updatedCatatanSantri
+    $('#modalcatatansore').modal('hide')
+    $('#formsore')[0].reset()
+  },
+  deletecatatansore(state, data) {
+    const sk = data.sk.replace('%23', '#')
+    const i = state.santri.findIndex((x) => x.SK === sk)
+
+    // Membuat salinan data dan memperbarui salinan tersebut
+    const updatedCatatanSantri = state.santri.map((item, index) => {
+      if (index === i) {
+        // Salinan data yang diperbarui
+        const updatedItem = { ...item };
+
+        // Memperbarui Logs dengan data baru
+        updatedItem.Logs.catatan.sore = {
+          ...item.Logs.catatan.sore,
+          ...data.sore
+        };
+
+        return updatedItem;
+      }
+      return item;
+    });
+
+    state.santri = updatedCatatanSantri
+    $('#modalcatatansore').modal('hide')
+    $('#formsore')[0].reset()
+  },
 }

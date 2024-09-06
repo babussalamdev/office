@@ -26,7 +26,7 @@ export default {
   async getDataSantri({ commit }, data) {
     const program = localStorage.getItem('program')
     const result = await this.$apiSantri.$get(
-      `get-absensi-sisalam?subject=kelas&program=${program}&value=${data}`
+      `get-absensi-sisalam?type=every&subject=kelas&program=${program}&value=${data}`
     );
 
     commit('setDataSantri', result);

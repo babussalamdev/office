@@ -13,7 +13,7 @@
             </div>
             <div class="modal-body">
               <div class="mb-3">
-                <label for="sort" class="form-label">Sort</label>
+                <label for="sort" class="form-label">Urutan</label>
                 <input name="Sort" type="number" class="form-control" id="sort" required />
               </div>
               <div class="mb-3">

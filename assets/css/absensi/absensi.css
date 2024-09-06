@@ -30,6 +30,16 @@
   margin: auto;
   font-size: 12px;
 }
+#absensi .absensi .table-responsive .table tbody tr td a {
+  font-size: 12px;
+  color: #fff;
+  text-decoration: none;
+  padding: 5px 10px;
+}
+#absensi .absensi .table-responsive .table tbody tr td a i {
+  font-size: 12px;
+  text-decoration: none;
+}
 #absensi .absensi .table-responsive .table tbody tr td button {
   padding: 2px 5px 0.5px !important;
 }

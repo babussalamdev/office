@@ -2,6 +2,7 @@ import { er } from "@fullcalendar/core/internal-common";
 import Swal from "sweetalert2";
 export default {
   async changeUnit({ commit, state, dispatch }) {
+    dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
     const data = await this.$axios.$get(`get-settings?type=quran&program=${program}`)
     commit('setState', { key: 'selectedQuran', value: data })
@@ -20,6 +21,7 @@ export default {
       )
       if (result) {
         commit('setState', { key: 'santri', value: result.data })
+        dispatch('index/submitLoad', null, { root: true })
 
         const newData = selectedQuran.Penilaian || {};
         const newHeaders = { Nama: '' };

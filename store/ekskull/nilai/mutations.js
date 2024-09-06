@@ -5,7 +5,13 @@ export default {
     state.globalLoad = state.globalLoad ? false : true
   },
   setState(state, data) {
-    state[data.key] = data.value
+    if ( data.key === 'santri') {
+      state.santri = []
+      state.selectedEkskull = ''
+      state[data.key] = data.value
+    } else {
+      state[data.key] = data.value
+    }
   },
   setPenilaian(state, data) {
     if (data['type'] === 'set') {

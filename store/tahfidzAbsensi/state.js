@@ -22,5 +22,6 @@ export default () => ({
     sore: '',
     updateData: '',
     date: tanggalDalamFormat,
-    btn: true
+    btn: true,
+    updateDataCatatan: ''
 })

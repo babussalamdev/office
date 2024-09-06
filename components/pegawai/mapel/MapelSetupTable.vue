@@ -1,6 +1,23 @@
 <template>
   <div>
     <div>
+      <div class="row mb-3">
+        <div class="col-12 col-md-6 d-flex align-items-center">
+          <h2 class="text-capitalize mb-3">setup mapel</h2>
+        </div>
+        <div class="col-12 col-md-6 d-flex justify-content-end">
+          <div class="input-group" style="font-size: 12px;" v-if="mapel.length > 0">
+            <span class="input-group-text material-icons" style="font-size: 12px;"> search </span>
+            <input type="text" class="form-control" v-model="search" style="font-size: 12px;">
+          </div>
+          <select name="Mapel" id="mapel" v-model="listKelas" @change="kelasLoad" class="form-select select" required>
+            <option value="" selected disabled>Kelas</option>
+            <option v-for="(data, index) in kelas" :key="index" :value="data">
+              {{ data.Nama }}
+            </option>
+          </select>
+        </div>
+      </div>
       <MapelSetupModal />
       <div class="table-responsive">
         <!-- Modal -->
@@ -14,7 +31,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(data, index) in mapel" :key="index">
+            <tr v-for="(data, index) in filteredDatas" :key="index">
               <td class="text-capitalize align-middle">
                 {{ data.Nama }}
               </td>
@@ -49,16 +66,49 @@ export default {
   data() {
     return {
       unit: "",
+      page: 1,
+      perPage: 10,
+      table: "",
+      search: '',
+      listKelas: "",
     };
   },
   // mounted() {
   //   this.unit = localStorage.getItem("program");
   // },
   computed: {
-    ...mapState("pegawai/mapel", ["mapel"]),
+    ...mapState("pegawai/mapel", ["mapel", 'kelas']),
+    filteredDatas() {
+      // Jika ada filter pencarian
+      if (this.search) {
+        this.table = this.mapel?.filter((data) => {
+          // Periksa apakah GSIPK1 ada dan cocok dengan pencarian
+          return data.GSIPK1 ? data.GSIPK1.toLowerCase().includes(this.search.toLowerCase()) : false;
+        });
+      } else {
+        // Jika tidak ada pencarian, tampilkan semua data
+        this.table = this.mapel;
+      }
+
+      // Pagination
+      let start = (this.page - 1) * this.perPage;
+      let end = start + this.perPage;
+
+      // Mengembalikan data yang dipotong sesuai pagination
+      return this.table.slice(start, end);
+    }
+
   },
   methods: {
     ...mapMutations('pegawai/mapel', ['editItem']),
+    kelasLoad() {
+      const program = localStorage.getItem("program");
+      const data = {
+        program: program,
+        kelas: this.listKelas.Nama,
+      };
+      this.$store.dispatch(`pegawai/mapel/getKelas`, data);
+    },
   },
 };
 </script>

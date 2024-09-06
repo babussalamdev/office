@@ -1,16 +1,19 @@
 import Swal from "sweetalert2";
 export default {
-  async changeUnit({ commit }, data) {
+  async changeUnit({ commit, dispatch }, data) {
+    dispatch('index/submitLoad', null, { root: true })
     if (data === 'root') {
       const result = await this.$axios.$get(
         `get-pegawai`
       );
       commit('setDatabaseAll', result);
+      dispatch('index/submitLoad', null, { root: true })
     } else {
       const result = await this.$apiBase.$get(
         `get-pegawai?program=${data}&opsi=struktur`
       );
       commit('setDatabase', result);
+      dispatch('index/submitLoad', null, { root: true })
     }
   },
   async inputPegawai({ commit, state }, event) {
@@ -202,6 +205,47 @@ export default {
     result['index'] = value.key
     commit('setStatusPengampu', result)
   },
+  async resetPassword({ commit, state }, data ) {
+    const i = state.pegawai.findIndex((x) => x.SK === data)
+    const nama = state.pegawai[i].Nama
+    try {
+      const result = await Swal.fire({
+        title: 'Apakah Anda yakin?',
+        text: `Anda akan mereset password akun ${nama}!`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, reset sekarang!'
+      });
+
+      if (result.isConfirmed) {
+        const username = state.pegawai[i].Username
+        const result = await this.$apiBase.$put(`change-password?username=${username}`)
+        if ( result ) {
+          await Swal.fire({
+            title: 'Reset Berhasil!',
+            text: `Kata sandi baru adalah: ${result.password}`,
+            icon: 'success'
+          });
+        }
+      } else {
+        await Swal.fire({
+          title: 'Dibatalkan',
+          text: 'Reset kata sandi Anda dibatalkan.',
+          icon: 'error'
+        });
+      }
+    } catch (error) {
+      await Swal.fire({
+        title: 'Error',
+        text: 'Terjadi kesalahan saat mereset kata sandi.',
+        icon: 'error'
+      });
+      console.error('Error mereset kata sandi:', error);
+    }
+
+  }
 }
 
 const encryptData = (data) => {

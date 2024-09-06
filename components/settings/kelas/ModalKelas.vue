@@ -14,7 +14,7 @@
             </div>
             <div class="modal-body">
               <div class="mb-3">
-                <label for="sort" class="form-label">Urut</label>
+                <label for="sort" class="form-label">Urutan</label>
                 <input name="Sort" type="text" class="form-control" id="sort" />
               </div>
               <div class="mb-3">
@@ -54,7 +54,7 @@
             </div>
             <div class="modal-body">
               <div class="mb-3">
-                <label for="sort" class="form-label">Sort</label>
+                <label for="sort" class="form-label">Urutan</label>
                 <input name="Sort" type="number" class="form-control" id="sort" required />
               </div>
               <div class="mb-3">
@@ -94,7 +94,7 @@
             </div>
             <div class="modal-body">
               <div class="mb-3">
-                <label for="sort" class="form-label">Urut</label>
+                <label for="sort" class="form-label">Urutan</label>
                 <input name="Sort" type="number" class="form-control" id="sort" />
               </div>
               <div class="mb-3">

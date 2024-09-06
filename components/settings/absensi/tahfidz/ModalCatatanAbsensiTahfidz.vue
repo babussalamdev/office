@@ -13,7 +13,7 @@
             <div class="modal-body">
               <div class="form-floating">
                 <textarea style="height: 100px;" class="form-control" placeholder="Leave a comment here"
-                  id="floatingTextarea" name="Catatan"></textarea>
+                  id="floatingTextarea" name="Note" :value="updateDataCatatan?.Logs?.catatan?.pagi?.note"></textarea>
                 <label for="floatingTextarea">Catatan</label>
               </div>
             </div>
@@ -45,7 +45,7 @@
             <div class="modal-body">
               <div class="form-floating">
                 <textarea style="height: 100px;" class="form-control" placeholder="Leave a comment here"
-                  id="floatingTextarea" name="Catatan"></textarea>
+                  id="floatingTextarea" name="Note" :value="updateDataCatatan?.Logs?.catatan?.sore?.note"></textarea>
                 <label for="floatingTextarea">Catatan</label>
               </div>
             </div>
@@ -70,7 +70,7 @@
 import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
   computed: {
-    ...mapState('tahfidzAbsensi', ['btn'])
+    ...mapState('tahfidzAbsensi', ['btn', 'updateDataCatatan'])
   },
   methods: {
     ...mapActions('tahfidzAbsensi', ['updatecatatanpagi', 'updatecatatansore'])

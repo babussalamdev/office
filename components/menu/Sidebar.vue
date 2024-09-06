@@ -523,7 +523,7 @@
                     </nuxt-link>
                   </li>
                   <!-- Nilai Quran -->
-                  <li>
+                  <li v-if="hasPermission('setup nilai quran')">
                     <nuxt-link to="/settings/nilaiquran"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Nilai Quran</span>

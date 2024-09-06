@@ -57,9 +57,9 @@ export default {
       });
     }
   },
-  async editItem({ commit, state}, value) {
+  async editItem({ commit, state }, value) {
     const i = state.mapel.findIndex((x) => x.SK === value)
-    commit('setState', { key: 'updateData', value: state.mapel[i]})
+    commit('setState', { key: 'updateData', value: state.mapel[i] })
 
     const hari = state.updateData.Hari.split(', ');
     if (hari && hari.length > 0) {
@@ -67,7 +67,7 @@ export default {
         const option = state.options.find((option) => option.name === x);
         return { name: x, code: option ? option.code : null };
       });
-      commit('setState', { key: 'value', value: mappedArray})
+      commit('setState', { key: 'value', value: mappedArray })
     }
 
     $("#updateDataMapel").modal("show");
@@ -75,18 +75,15 @@ export default {
 
   async updateMapel({ commit, state }, event) {
     commit('btn')
-    const program = localStorage.getItem('program')
     const data = Object.fromEntries(new FormData(event.target));
     const hari = state.value.map((x) => x.name);
     data["Hari"] = hari.join(', ')
     const key = state.updateData.SK.replace(/#/g, "%23");
+    const program = localStorage.getItem('program')
     try {
       const result = await this.$axios.$put(
-        `update-settings?program=${program}&kls=${state.selectKelas}&type=mapel`,
-        data
-      );
-      commit('btn')
-      if (result.message === "Kelas terisi dengan mapel lain") {
+        `update-settings?sk=${key}&program=${program}&kls=${state.selectKelas}&type=mapel`, data)
+        if (result.message === "Kelas terisi dengan mapel lain") {
         Swal.fire({
           position: "center",
           icon: "warning",
@@ -94,6 +91,7 @@ export default {
           showConfirmButton: false,
           timer: 1500,
         });
+        commit('btn')
       } else {
         Swal.fire({
           position: "center",
@@ -103,6 +101,7 @@ export default {
           timer: 1500,
         });
         data["SK"] = key;
+        commit('btn')
         commit('updateMapel', data);
       }
     } catch (error) {
@@ -165,10 +164,12 @@ export default {
     }, {});
     data['Penilaian'] = transformedObject;
     data['Nama'] = state.updateDataPenilaian.Nama
+    data['Hari'] = state.mapel[i].Hari
     delete data.bobot
     delete data.nama
     try {
-      const result = await this.$apiBase.$put(`update-settings?sk=${sk}&type=mapel`, data)
+      const program = localStorage.getItem('program')
+      const result = await this.$apiBase.$put(`update-settings?sk=${sk}&program=${program}&kls=${state.selectKelas}&type=mapel`, data)
       commit('updateScore')
       commit('btn')
     } catch (error) {
@@ -196,6 +197,7 @@ export default {
     const data = {}
     data['Penilaian'] = transformedObject
     data['Nama'] = state.mapel[i].Nama
+    data['Hari'] = state.mapel[i].Hari
     try {
       const sk = datas.sk.replace(/#/g, '%23')
       const result = await this.$apiBase.$put(`update-settings?sk=${sk}&type=mapel`, data)
