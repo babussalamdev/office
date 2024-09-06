@@ -3,23 +3,18 @@ import Swal from "sweetalert2"
 export default {
   async changeUnit({ commit, dispatch }, data) {
     dispatch('index/submitLoad', null, { root: true })
-    const program = localStorage.getItem('program')
-    const jabatan = this.$auth.user.Jabatan[program]
-    const asrama = this.$auth.user.Asrama[program]
-    const halaqah = this.$auth.user.Halaqah[program]
-    const kelas = this.$auth.user.Kelas[program]
-
-    let subject = ''
-    if (jabatan === 'musyrif') {
-      subject = 'asrama'
-    } else {
-      subject = 'kelas'
-    }
     const resSelect = await this.$apiBase.$get(
       `get-settings?type=absensikelas`
     )
-    if( resSelect ) {
+    if ( resSelect.length > 0 ) {
       commit('setSelect', resSelect);
+      dispatch('index/submitLoad', null, { root: true })
+    } else {
+      Swal.fire({
+        position: "center",
+        icon: "warning",
+        text: "Anda tidak mengajar apapun hari ini",
+      });
       dispatch('index/submitLoad', null, { root: true })
     }
   },

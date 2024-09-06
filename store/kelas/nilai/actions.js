@@ -6,8 +6,15 @@ export default {
     const result = await this.$apiBase.$get(
       `get-mapel?subject=pengajar&program=${program}`
     );
-    if ( result ) {
+    if ( result.length > 0 ) {
       commit('setUnit', result);
+      dispatch('index/submitLoad', null, { root: true })
+    } else {
+      Swal.fire({
+        position: "center",
+        icon: "warning",
+        text: "Anda tidak mengajar apapun hari ini",
+      });
       dispatch('index/submitLoad', null, { root: true })
     }
   },

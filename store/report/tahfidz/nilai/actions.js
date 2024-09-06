@@ -2,10 +2,18 @@ export default {
   async changeUnit({ commit, state, dispatch }) {
     dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
+    const semester = this.$auth.user.Semester
     const result = await this.$apiBase.$get(`get-settings?program=${program}&type=quran`)
-    if (result) {
-      const data = result.quran.filter(item => item.SK.includes('smp') && item.SK.includes('ganjil'))
+    if (result.quran.length > 0) {
+      const data = result.quran.filter(item => item.SK.includes(`${program}`) && item.SK.includes(`${semester}`))
       commit('setState', { key: 'listKelas', value: data })
+      dispatch('index/submitLoad', null, { root: true })
+    } else {
+      Swal.fire({
+        position: "center",
+        icon: "warning",
+        text: "Penilaian untuk Tahfidz belum di setup",
+      });
       dispatch('index/submitLoad', null, { root: true })
     }
   },

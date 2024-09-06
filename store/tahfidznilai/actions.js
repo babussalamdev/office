@@ -1,4 +1,3 @@
-import { er } from "@fullcalendar/core/internal-common";
 import Swal from "sweetalert2";
 export default {
   async changeUnit({ commit, state, dispatch }) {
@@ -6,7 +5,7 @@ export default {
     const program = localStorage.getItem('program')
     const data = await this.$axios.$get(`get-settings?type=quran&program=${program}`)
     commit('setState', { key: 'selectedQuran', value: data })
-    if (data.quran) {
+    if (data.quran.length > 0) {
       const findSK = `${program}#7a#${this.$auth.user.Semester}`
       const selectedQuran = data.quran.find((x) => x.SK === findSK)
       const datas = {}
@@ -36,6 +35,13 @@ export default {
 
         commit('setState', { key: 'th', value: newHeaders });
       }
+    } else {
+      Swal.fire({
+        position: "center",
+        icon: "warning",
+        text: "Penilaian untuk Quran belum di setup",
+      });
+      dispatch('index/submitLoad', null, { root: true })
     }
   },
   // async changeUnit({ commit, dispatch }, data) {

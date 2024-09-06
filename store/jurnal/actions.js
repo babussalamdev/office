@@ -1,10 +1,18 @@
+import Swal from "sweetalert2"
 export default {
   async changeUnit({ commit, state, dispatch }) {
     dispatch('index/submitLoad', null, { root: true })
     const result = await this.$apiBase.$get(`get-settings?type=absensikelas`)
-    if (result) {
+    if (result.length > 0) {
       dispatch('index/submitLoad', null, { root: true })
       commit('setState', { key: 'datas', value: result })
+    } else {
+      Swal.fire({
+        position: "center",
+        icon: "warning",
+        text: "Anda tidak mengajar apapun hari ini",
+      });
+      dispatch('index/submitLoad', null, { root: true })
     }
   },
   async getData({ commit, state, dispatch }) {

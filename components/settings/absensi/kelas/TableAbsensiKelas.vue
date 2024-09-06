@@ -179,7 +179,6 @@ export default {
         return this.getSelectedMapel
       },
       set(value) {
-        console.log(value)
         this.$store.commit('kelasAbsensi/setSelectedMapel', value)
       }
     },
@@ -223,14 +222,11 @@ export default {
         .filter(item => item !== null); // Remove any null values
     },
     scheduleMapel() {
-      console.log(this.uniqueLesson)
-      console.log(this.selectedMapel)
       return this.uniqueLesson.find((x) => x.Nama === this.selectedMapel.Nama)
     },
   },
   watch: {
     selectedMapel(value) {
-      // console.log(value)
       if (value) {
         this.getDataSantri(this.selectedKelas)
         // this.santri = []

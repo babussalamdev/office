@@ -102,6 +102,16 @@
                   :taggable="true" @tag="addTag" required></multiselect>
               </div>
               <div class="mb-3">
+                <label for="nilai" class="form-label">Personalia</label>
+                <div class="mb-3">
+                  <select name="Personalia" id="" class="form-select" :value="updateData?.Personalia">
+                    <option selected disabled value="">-- select --</option>
+                    <option value="on">On</option>
+                    <option value="off">Off</option>
+                  </select>
+                </div>
+              </div>
+              <!-- <div class="mb-3">
                 <label for="personalia" class="form-label mb-2">Personalia</label>
                 <div class="d-flex gap-4">
                   <div class="form-check d-flex align-items-center justify-content-center gap-2">
@@ -119,7 +129,7 @@
                     </label>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
