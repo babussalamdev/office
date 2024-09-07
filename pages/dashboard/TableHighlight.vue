@@ -11,7 +11,7 @@
         </select>
         <select class="form-select" v-model="selectedAsrama" @change="applyFilter">
           <option value="all">All</option>
-          <option v-for="(data, index) in uniqueStatus" :key="index" :value="data">{{ data }}</option>
+          <option v-for="(data, index) in uniqueStatus" :key="index" :value="data.status">{{ data.status }}</option>
         </select>
       </div>
     </div>
@@ -34,16 +34,16 @@
             <td>{{ data.Kelas }}</td>
             <td>
               <span class="badge" :class="{
-                'bg-danger': data?.Logs?.asrama === 'absen',
-                'bg-primary': data?.Logs?.asrama === 'izin',
-                'bg-warning': data?.Logs?.asrama === 'sakit',
+                'bg-danger': data?.Logs?.asrama.status === 'absen',
+                'bg-primary': data?.Logs?.asrama.status === 'izin',
+                'bg-warning': data?.Logs?.asrama.status === 'sakit',
               }">
                 <!-- <span class="bg-danger"> -->
-                {{ data?.Logs?.asrama }}
+                {{ data?.Logs?.asrama.status }}
               </span>
             </td>
-            <td>{{ data?.Logs?.asramaNote }}</td>
-            <td>{{ data?.Logs?.asramaTime }}</td>
+            <td>{{ data?.Logs?.asrama.note === '' ? '-' : data?.Logs?.asrama.note }}</td>
+            <td>{{ data?.Logs?.asrama.time }}</td>
           </tr>
         </tbody>
       </table>

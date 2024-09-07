@@ -20,7 +20,21 @@ export default {
         state[list + 'SubList'] = !state[list + 'SubList'];
       }
     },
-    toggleSidebar(state) {
-      state.isSidebar = state.isSidebar ? false : true;
+    // toggleSidebar(state) {
+    //   console.log(state.isSidebar)
+    //   state.isSidebar = state.isSidebar ? false : true;
+    //   console.log(state.isSidebar)
+    // },
+    // tutupSidebar(state) {
+    //   state.isSidebar = true
+    // }
+    TOGGLE_SIDEBAR(state) {
+      state.isSidebarOpen = !state.isSidebarOpen;
     },
+    CLOSE_SIDEBAR(state) {
+      state.isSidebarOpen = true;
+    },
+    OPEN_SIDEBAR(state) {
+      state.isSidebarOpen = false;
+    }
 }

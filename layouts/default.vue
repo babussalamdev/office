@@ -3,15 +3,15 @@
     <!-- <Loader /> -->
     <Sidebar />
     <!-- menu mobile  -->
-    <div class="menu-mobile" :class="!isSidebar ? 'menu-mobile-open' : ''">
+    <div class="menu-mobile" :class="!isSidebarOpen ? 'menu-mobile-open' : ''">
       <div class="logo justify-content-between animate__animated animate__zoomIn">
         <div class="d-flex gap-3 align-items-center">
           <img src="~/assets/img/logo-1.png" />
           <h5 class="text-white">Sisalam {{ version }}</h5>
         </div>
-        <div>
+        <div class="hamburger-menu-mobile">
           <span @click="toggleSidebar">
-            <i v-if="isSidebar" class="bx bx-menu-alt-right"></i>
+            <i v-if="isSidebarOpen" class="bx bx-menu-alt-right"></i>
             <i v-else class="material-icons text-dark"> close </i>
           </span>
         </div>
@@ -19,7 +19,7 @@
     </div>
 
     <!-- content -->
-    <div class="content" :class="!isSidebar ? 'fix' : ''">
+    <div class="content" :class="!isSidebarOpen ? 'fix' : ''">
       <!-- <div class="animate__animated animate__fadeInUp"> -->
       <Navbar />
       <hr class="mb-4 d-block d-md-none" />
@@ -51,16 +51,28 @@ export default {
       version: 0
     }
   },
+  mounted() {
+    document.addEventListener('click', this.handleClickOutside);
+  },
+  beforeDestroy() {
+    document.removeEventListener('click', this.handleClickOutside);
+  },
   created() {
     this.version = process.env.version;
   },
   methods: {
-    ...mapMutations('sidebar', ['toggleSidebar'])
+    // ...mapMutations('sidebar', ['toggleSidebar']),
+    handleClickOutside(event) {
+      this.$store.dispatch('sidebar/handleClickOutside', event);
+    },
+    toggleSidebar() {
+      this.$store.dispatch('sidebar/toggleSidebar');
+    }
   },
 
   computed: {
     ...mapState("mainkelas", ["overlay"]),
-    ...mapState('sidebar', ['isSidebar']),
+    ...mapState('sidebar', ['isSidebar', 'isSidebarOpen']),
 
   },
 };

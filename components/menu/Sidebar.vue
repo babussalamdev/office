@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar" :class="!isSidebar ? 'sidebar-open' : ''" ref="sidebar">
+  <div class="sidebar" :class="!isSidebarOpen ? 'sidebar-open' : ''" ref="sidebar">
     <div class="sidebar-container scrollarea">
       <!-- Logo -->
       <div class="logo animate__animated animate__zoomIn">
@@ -561,10 +561,16 @@ export default {
   created() {
     this.version = process.env.version;
   },
+  // mounted () {
+  //   document.addEventListener("click", event => this.hideOutside(event, 'sidebar'));
+  // },
+  // destroyed () {
+  //   document.removeEventListener("click", event => this.hideOutside(event, 'sidebar'));
+  // },
   computed: {
     ...mapState("index", ["unit", "permissions", "pengajar", "pengampu", "personalia",]),
     ...mapState("sidebar", ["activeMenu", "listAsrama", "listTahfidz", "listSettings", 'listEkskull', "listKelas", "listReport", 'listLaundry',
-      "absensiSubList", "santriSubList", "pegawaiSubList", "databaseSubList", 'tahfidzSubList', 'tahfidz2SubList', 'isSidebar']),
+      "absensiSubList", "santriSubList", "pegawaiSubList", "databaseSubList", 'tahfidzSubList', 'tahfidz2SubList', 'isSidebar', 'isSidebarOpen']),
     hasPersonalia() {
       return this.personalia === 'on' ? true : false
     },
@@ -574,7 +580,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations("sidebar", ["notClick", "notClickSub"]),
+    ...mapMutations("sidebar", ["notClick", "notClickSub", 'toggleSidebar']),
     // Method untuk menampilkan/menyembunyikan sub-menu saat menu utama diklik
     isRouteActive(route) {
       const currentPath = this.$route.path;
@@ -583,6 +589,18 @@ export default {
     hasPermission(permission) {
       return this.permissions?.includes(permission);
     },
+    // hideOutside(event, data) {
+    //   // Mengambil referensi elemen profile
+    //   const dataOutside = this.$refs[data];
+
+    //   // Memeriksa apakah elemen yang diklik berada di luar profile
+    //   if (dataOutside && !dataOutside.contains(event.target)) {
+    //     this.toggleSidebar()
+    //   }
+    // },
+    // hideOutside(event) {
+    //   this.$store.dispatch('handleClickOutside', { event, data: this.$refs.profile });
+    // }
   },
 };
 </script>

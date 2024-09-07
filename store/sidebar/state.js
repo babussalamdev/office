@@ -14,5 +14,6 @@ export default () => ({
     tahfidzSubList: false,
     tahfidz2SubList: false,
 
-    isSidebar: true
+    isSidebar: true,
+    isSidebarOpen: true
 })

@@ -62,9 +62,10 @@
                 }}</i>
               </td>
               <td class="text-capitalize align-middle">
-                {{ data.Logs?.asrama?.note }}
+                {{ data.Logs?.asrama?.note === '' ? '-' : data.Logs?.asrama?.note }}
               </td>
               <td class="text-capitalize align-middle">
+                <span v-if="data.Logs?.asrama?.time === ''" >-</span>
                 <h1>{{ data.Logs?.asrama?.time?.split(" ")[0] }}</h1>
                 <p class="mt-1 text-secondary">
                   {{ data.Logs?.asrama?.time?.split(" ")[1] }}

@@ -24,12 +24,12 @@
             <td class="align-middle">{{ data.Kelas }}</td>
             <td class="align-middle">
               <span class="badge" :class="{
-                'bg-danger': data?.Logs?.asrama === 'absen',
-                'bg-primary': data?.Logs?.asrama === 'izin',
-                'bg-warning': data?.Logs?.asrama === 'sakit',
+                'bg-danger': data?.Logs?.asrama.status === 'absen',
+                'bg-primary': data?.Logs?.asrama.status === 'izin',
+                'bg-warning': data?.Logs?.asrama.status === 'sakit',
               }">
                 <!-- <span class="bg-danger"> -->
-                {{ data?.Logs?.asrama }}
+                {{ data?.Logs?.asrama.status }}
               </span>
             </td>
             <td class="align-middle">{{ data?.Logs?.asramaNote }}</td>
