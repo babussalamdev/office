@@ -6,9 +6,8 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <form @submit.prevent="submit" ref="mutabaah">
-            {{ detail }}
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
+              <h3 class="modal-title fs-5" id="staticBackdropLabel">Input {{ subject }}</h3>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -92,7 +91,8 @@ export default {
         }
       ],
       page: 0,
-      btn: true
+      btn: true,
+      subject: localStorage.getItem('subject')
     }
   },
   computed: {

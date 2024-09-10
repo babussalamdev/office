@@ -162,6 +162,12 @@
                   <span class="text animate__animated animate__fadeInRight">Nilai</span>
                 </nuxt-link>
               </li>
+            <!-- form ujian -->
+              <!-- <li>
+                <nuxt-link to="/tahfidz/form" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Form Ujian</span>
+                </nuxt-link>
+              </li> -->
               <!-- rekap -->
               <li v-if="hasRoot">
                 <div @click="notClickSub('tahfidz')"

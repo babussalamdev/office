@@ -20,7 +20,7 @@
               <th scope="col">Asrama</th>
               <th scope="col" class="text-center">Pagi</th>
               <th scope="col" class="text-center">Sore</th>
-              <th scope="col">Note</th>
+              <th scope="col" class="text-end">Note</th>
               <!-- <th scope="col" class="text-end">Action</th> -->
             </tr>
           </thead>
@@ -110,15 +110,15 @@
               </td>
 
               <!-- note -->
-              <td class="align-middle">
-                <a href="javascript:;" @click="openModal(data.SK, 'modalcatatanpagi')">
+              <td class="align-middle text-end">
+                <a style="padding: 0;" href="javascript:;" @click="openModal(data.SK, 'modalcatatanpagi')">
                   <button class="btn btn-sm btn-primary">
                     <i class="material-symbols-outlined">
                       clear_day
                     </i>
                   </button>
                 </a>
-                <a href="javascript:;" @click="openModal(data.SK, 'modalcatatansore')">
+                <a style="padding: 0" href="javascript:;" @click="openModal(data.SK, 'modalcatatansore')">
                   <button class="btn btn-sm btn-warning">
                     <i class="material-symbols-outlined">
                       bedtime

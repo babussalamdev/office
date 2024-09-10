@@ -7,7 +7,7 @@
         <div class="modal-content">
           <form @submit.prevent="submit" ref="mutabaahupdate">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Input {{ subject }}</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -86,7 +86,8 @@ export default {
         }
       ],
       page: 0,
-      btn: true
+      btn: true,
+      subject: localStorage.getItem('subject')
     }
   },
   computed: {

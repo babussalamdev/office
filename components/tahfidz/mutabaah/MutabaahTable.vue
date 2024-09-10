@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mb-3">
-      <h2>Rekap Tahfidz</h2>
+      <h2>Mutabaah Tahfidz</h2>
     </div>
     <div class="table-responsive animate__animated animate__fadeInUp">
       <table class="table table-hover table-striped">
