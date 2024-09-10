@@ -2,10 +2,16 @@
   <div class="animate__animated animate__fadeInUp">
     <h2 class="mb-3 mb-md-3">Report Nilai Tahfidz</h2>
     <div class="d-flex justify-content-between mb-3 w-auto">
-      <select class="form-select" aria-label="Default select example" v-model="selectedKelas" @change="addNewData">
-        <option value="" selected disabled>Kelas</option>
-        <option v-for="(data, index) in listKelas" :key="index" :value="data">{{ data.SK.split('#')[1] }}</option>
-      </select>
+      <span class="d-flex gap-2">
+        <select class="form-select" aria-label="Default select example" v-model="selectedKelas" @change="addNewData">
+          <option value="" selected disabled>Kelas</option>
+          <option v-for="(data, index) in listKelas" :key="index" :value="data">{{ data.SK.split('#')[1] }}</option>
+        </select>
+        <select class="form-select" aria-label="Default select example" v-model="selectedKelas" @change="addNewData">
+          <option value="" selected disabled>Halaqah</option>
+          <option v-for="(data, index) in listKelas" :key="index" :value="data">{{ data.SK.split('#')[1] }}</option>
+        </select>
+      </span>
       <button class="btn btn-success border-0">Export</button>
     </div>
     <div class="table-responsive" ref="input">
