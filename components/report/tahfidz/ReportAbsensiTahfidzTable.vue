@@ -19,6 +19,7 @@
         <thead>
           <tr>
             <th scope="col" rowspan="2" class="text-start">Nama</th>
+            <th scope="col" rowspan="2" class="text-start">Halaqah</th>
             <th scope="col" colspan="5">Ketidakhadiran</th>
             <th scope="col" rowspan="2" class="text-end">Action</th>
           </tr>
@@ -33,6 +34,7 @@
         <tbody>
           <tr v-for="(data, index) in santri" :key="index">
             <td class="text-capitalize align-middle">{{ data.Nama }}</td>
+            <td class="text-capitalize align-middle">{{ data.Halaqah }}</td>
             <td class="text-capitalize align-middle text-center">{{ data.terlambat }}</td>
             <td class="text-capitalize align-middle text-center">{{ data.sakit }}</td>
             <td class="text-capitalize align-middle text-center">{{ data.izin }}</td>

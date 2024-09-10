@@ -7,10 +7,6 @@
           <option value="" selected disabled>Kelas</option>
           <option v-for="(data, index) in listKelas" :key="index" :value="data">{{ data.SK.split('#')[1] }}</option>
         </select>
-        <select class="form-select" aria-label="Default select example" v-model="selectedKelas" @change="addNewData">
-          <option value="" selected disabled>Halaqah</option>
-          <option v-for="(data, index) in listKelas" :key="index" :value="data">{{ data.SK.split('#')[1] }}</option>
-        </select>
       </span>
       <button class="btn btn-success border-0">Export</button>
     </div>
@@ -25,6 +21,9 @@
           <tr v-for="(data, index) in santri" :key="index">
             <td class="text-capitalize align-middle">
               <h1>{{ data.Nama }}</h1>
+            </td>
+            <td class="text-capitalize align-middle">
+              <h1>{{ data.Halaqah }}</h1>
             </td>
             <td v-for="(value, key) in data.Penilaian" :key="key">
               <div class="cursor-pointer">
@@ -47,7 +46,7 @@ export default {
   data() {
     return {
       btn: true,
-      th: { Nama: '', Total: '' },
+      th: { Nama: '', Halaqah: '', Total: '' },
     };
   },
   computed: {
@@ -88,7 +87,7 @@ export default {
     addNewData() {
       const newData = this.selectedKelas?.Penilaian || {};
       // Menyiapkan objek header baru
-      const newHeaders = { Nama: '' };
+      const newHeaders = { Nama: '', Halaqah: '' };
       // Tambahkan data baru dari selectedMapel.Penilaian
       for (const [key, value] of Object.entries(newData)) {
         newHeaders[key] = value;

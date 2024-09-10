@@ -82,7 +82,7 @@ export default {
     filteredData() {
       return this.detail.filter(item => {
         const matchesClass = this.selectedKelas === 'all' || item.Kelas === this.selectedKelas;
-        const matchesAsrama = this.selectedAsrama === 'all' || item.Logs.asrama === this.selectedAsrama;
+        const matchesAsrama = this.selectedAsrama === 'all' || item.Logs.asrama.status === this.selectedAsrama;
         return matchesClass && matchesAsrama;
       });
     }
