@@ -162,7 +162,7 @@
                   <span class="text animate__animated animate__fadeInRight">Nilai</span>
                 </nuxt-link>
               </li>
-            <!-- form ujian -->
+              <!-- form ujian -->
               <!-- <li>
                 <nuxt-link to="/tahfidz/form" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Form Ujian</span>
@@ -377,7 +377,8 @@
                 </nuxt-link>
               </li>
               <!-- Santri Menu -->
-              <li v-if="hasRoot && ['data santri', 'kelas', 'asrama', 'halaqah', 'ekskull'].some(name => hasPermission(name))">
+              <li
+                v-if="hasRoot && ['data santri', 'kelas', 'asrama', 'halaqah', 'ekskull'].some(name => hasPermission(name))">
                 <div @click="notClickSub('santri')"
                   class="dropdown d-flex align-items-center justify-content-between gap-2">
                   <span class="d-flex align-items-center gap-2">

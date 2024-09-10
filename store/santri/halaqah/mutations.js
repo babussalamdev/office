@@ -39,7 +39,6 @@ export default {
     state.btn = state.btn ? false : true
   },
   setAsramaShow(state, value) {
-    console.log('done')
     state.asramaShow = value
-  }
+  },
 }

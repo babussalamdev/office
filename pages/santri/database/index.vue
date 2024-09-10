@@ -1,10 +1,14 @@
 <template>
   <section id="santri">
     <div class="santri">
-      <div class="mt-3">
-        <div class="database-santri mb-3">
-          <div class="left">
-            <select name="Kelas" id="kelas" v-model="angkatan" @change="changeUnit" class="form-select select"
+      <div class="mb-3 row">
+          <div class="col-12 col-md-6 d-flex mb-2 mb-md-0">
+            <select style="font-size: 12px; max-width: max-content" class="form-select" v-model="selectBy">
+              <option value="" selected disabled>Select By</option>
+              <option value="angkatan">Angkatan</option>
+              <option value="kelas">Kelas</option>
+            </select>
+            <select style="font-size: 12px; max-width: max-content;" name="Kelas" id="kelas" v-model="angkatan" @change="changeUnit" class="form-select select"
               required>
               <option value="" selected disabled>Angkatan</option>
               <option v-for="(data, index) in years" :key="index" :value="data">
@@ -12,9 +16,8 @@
               </option>
             </select>
           </div>
-          <div class="right">
+          <div class="col-12 col-md-6 d-flex">
             <!-- Button trigger modal -->
-
             <div class="button-santri">
               <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                 data-bs-target="#InputDataSantri">
@@ -37,7 +40,6 @@
               </span>
             </div>
           </div>
-        </div>
       </div>
 
       <!-- table -->
@@ -71,6 +73,14 @@ export default {
       },
       set(value) {
         this.$store.commit('santri/database/setAngkatan', value)
+      }
+    },
+    selectBy: {
+      get() {
+        return this.getSelectBy
+      },
+      set(value) {
+        this.$store.commit('santri/database/set')
       }
     }
   },

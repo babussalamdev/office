@@ -1,41 +1,6 @@
 #santri .santri {
   min-height: 100vh;
 }
-#santri .santri .database-santri {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-@media screen and (max-width: 768px) {
-  #santri .santri .database-santri {
-    display: inherit !important;
-  }
-  #santri .santri .database-santri .left {
-    margin-bottom: 10px;
-  }
-}
-#santri .santri .database-santri .left .select {
-  font-size: 12px;
-}
-#santri .santri .database-santri .right {
-  width: 50%;
-  margin: 0 0 0 auto;
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  justify-content: flex-end;
-}
-@media screen and (max-width: 768px) {
-  #santri .santri .database-santri .right {
-    width: inherit !important;
-  }
-}
-#santri .santri .database-santri .right .button-santri button {
-  font-size: 12px;
-}
-#santri .santri .database-santri .right .button-santri button i {
-  font-size: 10px;
-}
 #santri .santri .table-responsive {
   overflow-x: auto;
   border-radius: 7px !important;

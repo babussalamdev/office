@@ -2,10 +2,12 @@ import Swal from "sweetalert2";
 export default {
   async changeUnitHalaqah({ commit, dispatch }, data) {
     dispatch('index/submitLoad', null, { root: true })
-    const result = await this.$axios.$get(
+    const result = this.$apiBase.$get(
       `get-settings?sk=${data}&type=halaqah`
     );
-    commit('setDataHalaqah', result);
+    const kelas = this.$apiBase.$get(`get-settings?type=options&sk=smp&category=kelas`)
+    const [ resResult, resKelas ] = await Promise.all([ result, kelas ])
+    commit('setDataHalaqah', { resResult, resKelas });
     dispatch('index/submitLoad', null, { root: true })
   },
   async changeUnitAsrama({ commit }, data) {
@@ -22,7 +24,7 @@ export default {
     const program = localStorage.getItem('program')
     data["Program"] = program
     try {
-      const result = await this.$axios.$post(
+      const result = await this.$apiBase.$post(
         `input-settings?sk=${program}&type=halaqah`,
         data
       );
@@ -36,6 +38,35 @@ export default {
         });
         commit('btn')
         commit('updateHalaqah', result);
+      }
+    } catch (error) {
+      commit('btn')
+      Swal.fire({
+        icon: "warning",
+        text: error,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  },
+  async updateHalaqah({ commit, state}, event) {
+    commit('btn')
+    const data = Object.fromEntries(new FormData(event.target))
+    const sk = state.updateData.SK.replace('#', '%23')
+    data['Status'] = state.updateData.Status
+    data['Program'] = state.updateData.Program
+    try {
+      const result = await this.$apiBase.$put(`update-settings?sk=${sk}&type=halaqah`, data)
+      if ( result ) {
+        result['sk'] = state.updateData.SK
+        commit('setKelasHalaqah', result)
+        commit('btn')
+        Swal.fire({
+          icon: "success",
+          text: "Berhasil diubah!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     } catch (error) {
       commit('btn')
@@ -62,7 +93,7 @@ export default {
     });
 
     if (result.isConfirmed) {
-      const result = await this.$axios.$delete(
+      const result = await this.$apiBase.$delete(
         `delete-settings?sk=${key}&type=halaqah`
       );
       if (result) {
@@ -85,7 +116,7 @@ export default {
     const program = localStorage.getItem('program')
     data["Program"] = program
     try {
-      const result = await this.$axios.$post(
+      const result = await this.$apiBase.$post(
         `input-settings?sk=${program}&type=asrama`,
         data
       );
@@ -125,7 +156,7 @@ export default {
     });
 
     if (result.isConfirmed) {
-      const result = await this.$axios.$delete(
+      const result = await this.$apiBase.$delete(
         `delete-settings?sk=${key}&type=asrama`
       );
       if (result) {

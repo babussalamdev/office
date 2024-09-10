@@ -1,41 +1,41 @@
 #santri {
   .santri {
     min-height: 100vh;
-    .database-santri {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      @media screen and (max-width: 768px) {
-        display: inherit !important;
-        .left {
-          margin-bottom: 10px;
-        }
-      }
-      .left {
-        .select {
-          font-size: 12px;
-        }
-      }
-      .right {
-        width: 50%;
-        margin: 0 0 0 auto;
-        display: flex;
-        gap: 20px;
-        align-items: center;
-        justify-content: flex-end;
-        @media screen and (max-width: 768px) {
-          width: inherit !important;
-        }
-        .button-santri {
-          button {
-            font-size: 12px;
-            i {
-              font-size: 10px;
-            }
-          }
-        }
-      }
-    }
+    // .database-santri {
+    //   display: flex;
+    //   justify-content: space-between;
+    //   align-items: center;
+    //   @media screen and (max-width: 768px) {
+    //     display: inherit !important;
+    //     .left {
+    //       margin-bottom: 10px;
+    //     }
+    //   }
+    //   .left {
+    //     .select {
+    //       font-size: 12px;
+    //     }
+    //   }
+    //   .right {
+    //     width: 50%;
+    //     margin: 0 0 0 auto;
+    //     display: flex;
+    //     gap: 20px;
+    //     align-items: center;
+    //     justify-content: flex-end;
+    //     @media screen and (max-width: 768px) {
+    //       width: inherit !important;
+    //     }
+    //     .button-santri {
+    //       button {
+    //         font-size: 12px;
+    //         i {
+    //           font-size: 10px;
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
     .table-responsive {
       overflow-x: auto;
       border-radius: 7px !important;

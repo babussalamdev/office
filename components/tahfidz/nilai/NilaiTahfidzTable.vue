@@ -1,29 +1,7 @@
 <template>
   <div class="animate__animated animate__fadeInUp">
     <h2 class="mb-3 mb-md-3">Penilaian Tahfidz</h2>
-    <!-- <div class="head row mb-3">
-      <div class="col-12 col-md-7 d-flex flex-column flex-md-row gap-4 gap-md-0 mb-3 mb-md-0">
-        <div class="input-group w-75">
-          <select class="form-select" v-model="selectedKelas" @change="applyFilter">
-            <option value="" disabled selected>Kelas</option>
-            <option v-for="(data, index) in uniqueClasses" :key="index" :value="data">
-              {{ data }}
-            </option>
-          </select>
-          <select class="form-select" v-model="selectedMapel" @change="addNewData">
-            <option value="" disabled selected>Mapel</option>
-            <option v-for="(value, i) in uniqueLesson" :key="i" :value="value">
-              {{ value.Nama }}
-            </option>
-          </select>
-          <span class="input-group-text">
-            {{ selectedMapel?.Jurusan }}
-          </span>
-        </div>
-      </div>
-      <div class="col-12 col-md-5 d-flex align-items-center justify-content-end gap-3">
-      </div>
-    </div> -->
+    {{  }}
     <div class="table-responsive" ref="input">
       <table class="table table-hover table-striped">
         <thead>

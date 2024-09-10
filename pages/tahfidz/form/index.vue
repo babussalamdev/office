@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="form-ujian">
     <h2 class="mb-3">Form Ujian</h2>
     <div class="card">
       <div class="card-header">
@@ -20,7 +20,7 @@
             <input type="number" class="form-control" v-model="jumlahJuz">
           </div>
         </div>
-        <div class="soal" v-for="n in jumlahJuz" :key="n">
+        <div class="soal" v-for="(data, index) in generateArray" :key="index">
           <hr>
           <div class="row mb-3">
             <div class="col-12 col-md-6 col-lg-4">
@@ -144,24 +144,30 @@ export default {
         { name: 'Laravel', language: 'PHP' },
         { name: 'Phoenix', language: 'Elixir' }
       ],
-      jumlahJuz: '',
+      jumlahJuz: 4,
+    }
+  },
+  computed: {
+    generateArray() {
+      // Membuat array dengan panjang jumlahJuz
+      return Array.from({ length: this.jumlahJuz }, (_, index) => index);
     }
   },
   methods: {
     nameWithLang({ name, language }) {
       return `${name} — [${language}]`
     }
-  }
+  },
 }
 </script>
 
 <style>
-section,
-label,
-input,
-.input-group,
-.input-group-text,
-.form-control {
+.form-ujian section,
+.form-ujian label,
+.form-ujian input,
+.form-ujian .input-group,
+.form-ujian .input-group-text,
+.form-ujian .form-control {
   font-size: 12px;
 }
 

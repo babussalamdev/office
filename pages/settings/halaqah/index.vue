@@ -28,6 +28,7 @@
 
     <!-- modal -->
     <ModalKelompok />
+    <ModalUpdateHalaqah />
   </section>
 </template>
 

@@ -35,25 +35,16 @@ export default {
     state.santri = []
   },
   setPenilaian(state, data) {
-    if (data['type'] === 'set') {
+    if (data['type'] === 'set' && !state.nilai) {
       state.santri[data.index].Penilaian[data.key] = state.santri[data.index].Penilaian[data.key].toString()
       state.nilai = state.santri[data.index].Penilaian[data.key]
       if (state.santri[data.index].Penilaian[data.key]) {
         state.openEdit = data
       }
     } else if (data['type'] === 'close') {
-      if (state.santri[state.openEdit.index].Penilaian[state.openEdit.key] > 100) {
-        Swal.fire({
-          title: 'Warning!',
-          text: 'Nilai tidak boleh lebih dari 100.',
-          icon: 'warning',
-          confirmButtonText: 'OK'
-        });
-      }
       state.santri[state.openEdit.index].Penilaian[state.openEdit.key] = +state.nilai
       state.santri[state.openEdit.index].TotalScore = +data.result.Total
-      console.log(data)
-      state.nilai = 0
+      state.nilai = ''
     } else if (data['type'] === 'button') {
       state.santri[state.openEdit.index].Penilaian[state.openEdit.key] = +state.nilai
       state.santri[state.openEdit.index].TotalScore = +data.result.Total

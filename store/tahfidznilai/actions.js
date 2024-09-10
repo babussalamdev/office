@@ -3,18 +3,18 @@ export default {
   async changeUnit({ commit, state, dispatch }) {
     dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
-    const data = await this.$axios.$get(`get-settings?type=quran&program=${program}`)
-    commit('setState', { key: 'selectedQuran', value: data })
-    if (data.quran.length > 0) {
-      const findSK = `${program}#7a#${this.$auth.user.Semester}`
-      const selectedQuran = data.quran.find((x) => x.SK === findSK)
+    const halaqah = this.$auth.user.Halaqah[program]
+    const semester = this.$auth.user.Semester
+    const data = await this.$axios.$get(`get-settings?program=${program}&type=nilaiquran&hlq=${halaqah}&smstr=${semester}`)
+    commit('setState', { key: 'selectedQuran', value: data.quran })
+    if (data.quran) {
       const datas = {}
       datas['Filter'] = 'pengampu'
       datas['Halaqah'] = this.$auth.user.Halaqah[program]
       datas['Subject'] = 'quran'
       datas['Tahun'] = this.$auth.user.Label
       datas['Semester'] = this.$auth.user.Semester
-      datas['Penilaian'] = selectedQuran.Penilaian
+      datas['Penilaian'] = state.selectedQuran.Penilaian
       const result = await this.$apiSantri.$put(
         `get-nilai-sisalam?program=${program}&type=pengampu`, datas
       )
@@ -22,7 +22,7 @@ export default {
         commit('setState', { key: 'santri', value: result.data })
         dispatch('index/submitLoad', null, { root: true })
 
-        const newData = selectedQuran.Penilaian || {};
+        const newData = state.selectedQuran.Penilaian || {};
         const newHeaders = { Nama: '' };
 
         for (const [key, value] of Object.entries(newData)) {
@@ -80,17 +80,26 @@ export default {
       const semester = this.$auth.user.Semester
       try {
         const Key = 'Quran'
-        const findSK = `${program}#7a#${this.$auth.user.Semester}`
-        const selectedQuran = state.selectedQuran.quran.find((x) => x.SK === findSK)
         const datas = {}
         datas['Subject'] = Key
         datas['SubAttribute'] = state.openEdit.key
-        datas[Key] = `${state.nilai}/${selectedQuran.Penilaian[state.openEdit.key]}`
-        const result = await this.$apiSantri.$post(`input-nilai-sisalam?type=nilaiquran&sksantri=${skSantri}&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`, datas)
-        if (result) {
+        datas[Key] = `${state.nilai}/${state.selectedQuran.Penilaian[state.openEdit.key]}`
+        if (state.nilai > 100) {
+          Swal.fire({
+            title: 'Warning!',
+            text: 'Nilai tidak boleh lebih dari 100.',
+            icon: 'warning',
+            showConfirmButton: false,
+            timer: 3000
+          });
           dispatch('index/submitLoad', null, { root: true })
-          data['result'] = result
-          commit('setPenilaian', data)
+        } else {
+          const result = await this.$apiSantri.$post(`input-nilai-sisalam?type=nilaiquran&sksantri=${skSantri}&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`, datas)
+          if (result) {
+            dispatch('index/submitLoad', null, { root: true })
+            data['result'] = result
+            commit('setPenilaian', data)
+          }
         }
       } catch (error) {
         console.log(error)
@@ -112,17 +121,26 @@ export default {
         const semester = this.$auth.user.Semester
         try {
           const Key = 'Quran'
-          const findSK = `${program}#7a#${this.$auth.user.Semester}`
-          const selectedQuran = state.selectedQuran.quran.find((x) => x.SK === findSK)
           const datas = {}
           datas['Subject'] = Key
           datas['SubAttribute'] = state.openEdit.key
-          datas[Key] = `${state.nilai}/${selectedQuran.Penilaian[state.openEdit.key]}`
-          const result = await this.$apiSantri.$post(`input-nilai-sisalam?type=nilaiquran&sksantri=${skSantri}&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`, datas)
-          if (result) {
+          datas[Key] = `${state.nilai}/${state.selectedQuran.Penilaian[state.openEdit.key]}`
+          if (state.nilai > 100) {
+            Swal.fire({
+              title: 'Warning!',
+              text: 'Nilai tidak boleh lebih dari 100.',
+              icon: 'warning',
+              timer: 3000,
+              showConfirmButton: false
+            });
             dispatch('index/submitLoad', null, { root: true })
-            data['result'] = result
-            commit('setPenilaian', data)
+          } else {
+            const result = await this.$apiSantri.$post(`input-nilai-sisalam?type=nilaiquran&sksantri=${skSantri}&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`, datas)
+            if (result) {
+              dispatch('index/submitLoad', null, { root: true })
+              data['result'] = result
+              commit('setPenilaian', data)
+            }
           }
         } catch (error) {
           console.log(error)
