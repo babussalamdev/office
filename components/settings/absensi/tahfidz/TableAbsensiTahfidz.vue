@@ -3,12 +3,6 @@
     <div>
       <div class="head d-flex align-items-center mb-3 justify-content-start">
         <h2 class="mb-3 mb-md-0">Absensi Tahfidz</h2>
-        <!-- <select v-if="select.length > 0" class="form-select" name="Kelas" @change="getAbsensi" v-model="selectKelas">
-          <option value="" selected>-- Kelas --</option>
-          <option v-for="(data, index) in select" :key="index" :value="data">
-            {{ data }}
-          </option>
-        </select> -->
       </div>
       <div class="table-responsive">
         <!-- Modal -->

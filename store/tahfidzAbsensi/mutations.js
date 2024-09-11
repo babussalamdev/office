@@ -14,6 +14,7 @@ export default {
 
   },
   updateAbsen(state, value) {
+    console.log(value)
     const i = state.santri.findIndex((x) => x.SK === value.SK)
     const data = state.santri[i]
     // Membuat salinan data dan memperbarui salinan tersebut
@@ -22,9 +23,13 @@ export default {
         // Salinan data yang diperbarui
         const updatedItem = { ...item };
 
+        // Pastikan Logs dan halaqah ada
+        updatedItem.Logs = updatedItem.Logs || {};
+        updatedItem.Logs['halaqah'] = updatedItem.Logs['halaqah'] || {};
+
         // Memperbarui Logs dengan data baru
-        updatedItem.Logs.halaqah[value.time] = {
-          ...item.Logs.halaqah[value.time],
+        updatedItem.Logs['halaqah'][value.time] = {
+          ...item.Logs['halaqah'][value.time],
           ...value.Logs.halaqah[value.time]
         };
 

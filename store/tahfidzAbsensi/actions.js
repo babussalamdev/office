@@ -18,7 +18,8 @@ export default {
     const reqSantri = await this.$apiSantri.$get(
       `get-absensi-sisalam?type=every&subject=halaqah&program=${program}&value=${halaqah}`
     );
-    if ( reqSantri ) {
+    console.log(reqSantri)
+    if (reqSantri) {
       commit('setSantriTahfidz', reqSantri);
       dispatch('index/submitLoad', null, { root: true })
     }
@@ -56,7 +57,7 @@ export default {
     const req = await this.$apiSantri.$delete(
       `delete-absensi-sisalam?sksantri=${skSantri}&type=halaqah${time}&thn=${tahun}&smstr=${semester}&program=${program}&sk=${sk}&status=${datas.condition}`
     );
-    if ( req ) {
+    if (req) {
       req['time'] = time
       req["SK"] = datas.sk;
       commit('deleteAbsen', req);
@@ -65,48 +66,48 @@ export default {
   },
 
   // catatan
-  async updatecatatanpagi({ commit, state}, event) {
+  async updatecatatanpagi({ commit, state }, event) {
     const data = Object.fromEntries(new FormData(event.target))
     const skSantri = state.updateDataCatatan.SK.replace('#', '%23')
     const program = localStorage.getItem('program')
     commit('btncatatan')
-    if ( data.Note !== '' ) {
+    if (data.Note !== '') {
       const tahun = this.$auth.user.Label
       const semester = this.$auth.user.Semester
       const halaqah = state.updateDataCatatan.Halaqah
       const result = await this.$apiSantri.$put(`update-catatan-sisalam?thn=${tahun}&smstr=${semester}&program=${program}&type=catatanpagi&sksantri=${skSantri}&halaqah=${halaqah}`, data)
-      if ( result ) {
+      if (result) {
         result['sk'] = skSantri
         commit('setcatatanpagi', result)
         commit('btncatatan')
       }
     } else {
       const result = await this.$apiSantri.$delete(`delete-catatan-sisalam?program=${program}&type=catatanpagi&sksantri=${skSantri}`)
-      if ( result ) {
+      if (result) {
         result['sk'] = skSantri
         commit('deletecatatanpagi', result)
         commit('btncatatan')
       }
     }
   },
-  async updatecatatansore({ commit, state}, event) {
+  async updatecatatansore({ commit, state }, event) {
     const data = Object.fromEntries(new FormData(event.target))
     const skSantri = state.updateDataCatatan.SK.replace('#', '%23')
     const program = localStorage.getItem('program')
     commit('btncatatan')
-    if ( data.Note !== '' ) {
+    if (data.Note !== '') {
       const tahun = this.$auth.user.Label
       const semester = this.$auth.user.Semester
       const halaqah = state.updateDataCatatan.Halaqah
       const result = await this.$apiSantri.$put(`update-catatan-sisalam?thn=${tahun}&smstr=${semester}&program=${program}&type=catatansore&sksantri=${skSantri}&halaqah=${halaqah}`, data)
-      if ( result ) {
+      if (result) {
         result['sk'] = skSantri
         commit('setcatatansore', result)
         commit('btncatatan')
       }
     } else {
       const result = await this.$apiSantri.$delete(`delete-catatan-sisalam?program=${program}&type=catatansore&sksantri=${skSantri}`)
-      if ( result ) {
+      if (result) {
         result['sk'] = skSantri
         commit('deletecatatansore', result)
         commit('btncatatan')
