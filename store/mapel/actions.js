@@ -22,39 +22,50 @@ export default {
     data["Program"] = program
     data["Kelas"] = state.selectKelas;
     data["Hari"] = hari.join(', ');
-    try {
-      const result = await this.$axios.$post(
-        `input-settings?program=${program}&kls=${state.selectKelas}&type=mapel`,
-        data
-      );
-      if (result.message === "Kelas terisi dengan mapel lain") {
-        Swal.fire({
-          position: "center",
-          icon: "warning",
-          text: result.message,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        commit('btn')
-      } else {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          text: "Data berhasil di input",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        commit('btn')
-        commit('inputMapel', result);
-      }
-    } catch (error) {
+    if (state.value.length === 0) {
       commit('btn')
       Swal.fire({
+        position: "center",
         icon: "warning",
-        text: error,
+        text: "Hari tidak boleh kosong",
         showConfirmButton: false,
         timer: 1500,
       });
+    } else {
+      try {
+        const result = await this.$axios.$post(
+          `input-settings?program=${program}&kls=${state.selectKelas}&type=mapel`,
+          data
+        );
+        if (result.message === "Kelas terisi dengan mapel lain") {
+          Swal.fire({
+            position: "center",
+            icon: "warning",
+            text: result.message,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          commit('btn')
+        } else {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            text: "Data berhasil di input",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          commit('btn')
+          commit('inputMapel', result);
+        }
+      } catch (error) {
+        commit('btn')
+        Swal.fire({
+          icon: "warning",
+          text: error,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
     }
   },
   async editItem({ commit, state }, value) {
@@ -80,38 +91,62 @@ export default {
     data["Hari"] = hari.join(', ')
     const key = state.updateData.SK.replace(/#/g, "%23");
     const program = localStorage.getItem('program')
-    try {
-      const result = await this.$axios.$put(
-        `update-settings?sk=${key}&program=${program}&kls=${state.selectKelas}&type=mapel`, data)
-        if (result.message === "Kelas terisi dengan mapel lain") {
-        Swal.fire({
-          position: "center",
-          icon: "warning",
-          text: result.message,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        commit('btn')
-      } else {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          text: "Data berhasil di input",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        data["SK"] = key;
-        commit('btn')
-        commit('updateMapel', data);
-      }
-    } catch (error) {
+    if (state.value.length === 0) {
       commit('btn')
       Swal.fire({
+        position: "center",
         icon: "warning",
-        text: error,
+        text: "Hari tidak boleh kosong",
         showConfirmButton: false,
         timer: 1500,
       });
+    } else {
+      const hasNullCode = state.value.some(element => element.code === null);
+
+      if (hasNullCode) {
+        commit('btn')
+        Swal.fire({
+          position: "center",
+          icon: "warning",
+          text: "Hari anda salah",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        return
+      }
+      try {
+        const result = await this.$axios.$put(
+          `update-settings?sk=${key}&program=${program}&kls=${state.selectKelas}&type=mapel`, data)
+        if (result.message === "Kelas terisi dengan mapel lain") {
+          Swal.fire({
+            position: "center",
+            icon: "warning",
+            text: result.message,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          commit('btn')
+        } else {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            text: "Data berhasil di input",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          data["SK"] = key;
+          commit('btn')
+          commit('updateMapel', data);
+        }
+      } catch (error) {
+        commit('btn')
+        Swal.fire({
+          icon: "warning",
+          text: error,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
     }
   },
   async deleteItem({ commit, state }, key) {

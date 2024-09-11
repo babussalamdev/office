@@ -7,6 +7,7 @@
             <th scope="col">Kelas</th>
             <th scope="col">Semester</th>
             <th scope="col">Penilaian</th>
+            <th scope="col" class="text-center">Total</th>
             <th scope="col" class="text-end">Action</th>
           </tr>
         </thead>
@@ -24,6 +25,9 @@
                   </div>
                 </div>
               </div>
+            </td>
+            <td scope="row" class="text-center">
+              {{ totalNilai(penilaian[i]) }}
             </td>
             <td class="text-end">
               <a href="javascript:;" @click="inputScore(data.SK)">
@@ -71,6 +75,18 @@ export default {
       const obj = { index, sk }
       this.changeStep(obj)
     },
+    totalNilai(arr) {
+      if (arr.length > 0) {
+        return arr
+          .map(item => {
+            // Pisahkan string pada '-'
+            const parts = item.split('-');
+            // Ambil bagian setelah '-' dan konversi ke angka
+            return parseFloat(parts[1]) || 0;
+          })
+          .reduce((acc, curr) => acc + curr, 0);
+      }
+    }
   },
 };
 </script>

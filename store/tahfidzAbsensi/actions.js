@@ -18,7 +18,6 @@ export default {
     const reqSantri = await this.$apiSantri.$get(
       `get-absensi-sisalam?type=every&subject=halaqah&program=${program}&value=${halaqah}`
     );
-    console.log(reqSantri)
     if (reqSantri) {
       commit('setSantriTahfidz', reqSantri);
       dispatch('index/submitLoad', null, { root: true })

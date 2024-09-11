@@ -71,6 +71,26 @@ export default {
     const data = Object.fromEntries(new FormData(event.target))
     const sk = state.updateDataPenilaian.SK.replace(/#/g, '%23')
     const i = state.quran.findIndex((x) => x.SK === state.updateDataPenilaian.SK)
+
+    const arrAmount = state.penilaian[i].map(item => {
+      // Pisahkan string pada '-'
+      const parts = item.split('-');
+      // Ambil bagian setelah '-' dan konversi ke angka
+      return parseFloat(parts[1]) || 0;
+    }).reduce((acc, curr) => acc + curr, 0);
+
+    const bobotNumber = parseFloat(data.bobot)
+    if (!isNaN(bobotNumber) && arrAmount + bobotNumber > 100) {
+      Swal.fire({
+        icon: "warning",
+        text: 'Bobot Penilaian lebih dari 100',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      commit('btn')
+      return
+    }
+
     const dataPenilaian = `${data.nama.trim()}-${data.bobot.trim()}`
     commit('updatePenilaian', { dataPenilaian, i })
     const array = state.penilaian[i]
@@ -85,6 +105,7 @@ export default {
     data['Nama'] = `${state.updateDataPenilaian.SK.split('#')[1]}${state.updateDataPenilaian.SK.split('#')[2]}`
     delete data.bobot
     delete data.nama
+
     try {
       const result = await this.$apiBase.$put(`update-settings?sk=${sk}&type=quran`, data)
       commit('updateScore')
