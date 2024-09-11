@@ -1,9 +1,15 @@
 export default () => ({
     santri: [],
     btn: true,
-    angkatan: new Date().getFullYear(),
+    angkatan: '',
+    kelas: '',
     years: [],
+    listKelas: [],
     password: '',
     updateData: '',
-    deleteData: ''
+    deleteData: '',
+    selectBy: 'angkatan',
+    page: 1,
+    perPage: 15,
+    search: ''
 })

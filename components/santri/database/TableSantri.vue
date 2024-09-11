@@ -19,7 +19,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(san, index) in santri" :key="index">
+            <tr v-for="(san, index) in filteredDatas" :key="index">
               <!-- <td>
                 <input type="checkbox" />
               </td> -->
@@ -57,16 +57,45 @@
           </tbody>
         </table>
       </div>
+      <div class="btn-group text-center float-end mt-3 mb-5" role="group">
+      <button @click="page = 1" :disabled="page === 1" type="button" class="btn btn-primary btn-sm">
+        &laquo;
+      </button>
+      <button @click="page--" :disabled="page === 1" type="button" class="btn btn-primary  btn-sm">
+        Prev
+      </button>
+      <button class="btn btn-dark  btn-sm disabled">{{ `${page}` }}</button>
+      <button @click="page++" :disabled="page >= Math.ceil(santri.length / perPage)" class="btn btn-primary  btn-sm">
+        Next
+      </button>
+      <button @click="page = Math.ceil(santri.length / perPage)" :disabled="page >= Math.ceil(santri.length / perPage)"
+        type="button" class="btn btn-primary  btn-sm">
+        &raquo;
+      </button>
+    </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from "vuex";
+import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 import Swal from "sweetalert2";
 export default {
+  data() {
+    return {
+    }
+  },
   computed: {
-    ...mapState("santri/database", ["santri", 'years', 'select']),
+    ...mapState("santri/database", ["santri", 'years', 'select', 'perPage']),
+    ...mapGetters('santri/database', ['filteredDatas', 'getPage']),
+    page: {
+      get() {
+        return this.getPage
+      },
+      set(value) {
+        this.$store.commit('santri/database/setState', { key: 'page', value })
+      }
+    }
   },
   methods: {
     ...mapActions('santri/database', ['resetPassword']),

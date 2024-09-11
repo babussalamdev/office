@@ -2,14 +2,14 @@ import { v4 as uuidv4 } from "uuid";
 import Swal from "sweetalert2";
 export default {
   setDatabase(state, value) {
+    state.santri = []
+    state.selectBy = 'angkatan'
+    state.angkatan = ''
+    state.years = value.years
+    state.listKelas = value.kelas
+  },
+  setSantri(state, value) {
     state.santri = value
-
-    const tahunMulai = 2018;
-    const tahunSekarang = new Date().getFullYear();
-    state.years = Array.from(
-      { length: tahunSekarang - tahunMulai + 2 },
-      (_, index) => tahunMulai + index
-    );
   },
   inputSantriBulk(state, value) {
     state.santri = [...state.santri, ...value];
@@ -74,6 +74,20 @@ export default {
   },
   setAngkatan(state, value) {
     state.angkatan = value
+  },
+  setSelectBy(state, value) {
+    state.selectBy = value
+  },
+  setKelas(state, value) {
+    state.kelas = value
+  },
+  resetTable(state, value) {
+    state.santri = []
+    state.angkatan = ''
+    state.kelas = ''
+  },
+  setState(state, value) {
+    state[value.key] = value.value
   },
   btn(state, value) {
     state.btn = state.btn ? false : true

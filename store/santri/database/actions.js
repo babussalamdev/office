@@ -2,12 +2,30 @@ import state from "./state";
 import Swal from "sweetalert2";
 export default {
   async changeUnit({ commit, state, dispatch }, data) {
+    const program = localStorage.getItem('program')
+    const tahunMulai = 2018;
+    const tahunSekarang = new Date().getFullYear();
+    const years = Array.from(
+      { length: tahunSekarang - tahunMulai + 2 },
+      (_, index) => tahunMulai + index
+    );
+    const kelas = await this.$apiBase.$get(`get-settings?sk=${program}&type=kelas`)
+    commit('setDatabase', { years, kelas: kelas.kelas });
+  },
+  async getSantri({ commit, state, dispatch }) {
     dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
-    const result = await this.$apiSantri.$get(
-      `get-santri-sisalam?subject=${state.angkatan}&program=${program}&opsi=none`
-    );
-    commit('setDatabase', result);
+    let result
+    if ( state.angkatan ) {
+      result = await this.$apiSantri.$get(
+        `get-santri-sisalam?subject=${state.angkatan}&program=${program}&opsi=none`
+      );
+    } else {
+      result = await this.$apiSantri.$get(
+        `get-santri-sisalam?subject=kelas&program=${program}&opsi=${state.kelas}`
+      );
+    }
+    commit('setSantri', result )
     dispatch('index/submitLoad', null, { root: true })
   },
   async inputSantri({ commit, state }, event) {
