@@ -1,76 +1,86 @@
 <template>
-  <div class="animate__animated animate__fadeInUp">
-    <h2 class="mb-3 mb-md-3">Penilaian Kelas</h2>
-    <div class="head row mb-3">
-      <div class="col-12 col-md-7 d-flex flex-column flex-md-row gap-4 gap-md-0 mb-3 mb-md-0">
-        <div class="input-group w-75">
-          <select class="form-select" v-model="selectedKelas" @change="applyFilter">
-            <option value="" disabled selected>Kelas</option>
-            <option v-for="(data, index) in uniqueClasses" :key="index" :value="data">
-              {{ data }}
-            </option>
-          </select>
-          <select class="form-select" v-model="selectedMapel" @change="addNewData">
-            <option value="" disabled selected>Mapel</option>
-            <option v-for="(value, i) in uniqueLesson" :key="i" :value="value">
-              {{ value.Nama }}
-            </option>
-          </select>
-          <span class="input-group-text">
-            {{ selectedMapel?.Jurusan }}
-          </span>
-        </div>
-      </div>
-      <div class="col-12 col-md-5 d-flex align-items-center justify-content-end gap-3">
-        <div  v-if="selectedMapel.Status === 'close'" class="input-group input-excel">
-          <input type="file" class="form-control form-control-sm" id="inputGroupFile04"
-            aria-describedby="inputGroupFileAddon04" aria-label="Upload" ref="fileInput" />
-          <span>
-            <button v-if="btn2" class="btn btn-sm btn-success" type="button" id="inputGroupFileAddon04"
-              @click="handleUpload(selectedMapel)">
-              Tambah
-            </button>
-            <button v-else class="btn btn-success btn-sm" type="button" disabled>
-              <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
-              <span class="visually-hidden" role="status">Loading...</span>
-            </button>
-          </span>
-        </div>
+  <div>
 
+    <div class="animate__animated animate__fadeInUp">
+      <h2 class="mb-3 mb-md-3">Penilaian Kelas</h2>
+      <div class="head row mb-3">
+        <div class="col-12 col-md-6 d-flex flex-column flex-md-row gap-4 gap-md-0 mb-3 mb-md-0">
+          <div class="input-group">
+            <select class="form-select" v-model="selectedKelas" @change="applyFilter">
+              <option value="" disabled selected>Kelas</option>
+              <option v-for="(data, index) in uniqueClasses" :key="index" :value="data">
+                {{ data }}
+              </option>
+            </select>
+            <select class="form-select" v-model="selectedMapel" @change="addNewData">
+              <option value="" disabled selected>Mapel</option>
+              <option v-for="(value, i) in uniqueLesson" :key="i" :value="value">
+                {{ value.Nama }}
+              </option>
+            </select>
+            <span class="input-group-text">
+              {{ selectedMapel?.Jurusan }}
+            </span>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 d-flex align-items-center justify-content-end gap-3">
+          <div v-if="selectedMapel.Status === 'close'" class="input-group input-excel">
+            <input type="file" class="form-control form-control-sm" id="inputGroupFile04"
+              aria-describedby="inputGroupFileAddon04" aria-label="Upload" ref="fileInput" />
+            <span>
+              <button v-if="btn2" class="btn btn-sm btn-success" type="button" id="inputGroupFileAddon04"
+                @click="handleUpload(selectedMapel)">
+                Tambah
+              </button>
+              <button v-else class="btn btn-success btn-sm" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                <span class="visually-hidden" role="status">Loading...</span>
+              </button>
+            </span>
+          </div>
+          <div v-else-if="santri.length > 0">
+            <button class="btn btn-sm btn-warning" @click="handleExport(santri)"><i
+                class="bi bi-upload me-2"></i>Export</button>
+            <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
+              data-bs-target="#modalImport"><i class="bi bi-download me-2"></i>Import</button>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive" ref="input">
+        <table class="table table-hover table-striped">
+          <thead>
+            <tr>
+              <th class="text-uppercase" v-for="(value, key) in th" :key="key">{{ key }}</th>
+            </tr>
+          </thead>
+          <tbody v-if="selectedMapel.Status !== 'close'">
+            <tr v-for="(data, index) in santri" :key="index">
+              <td class="text-capitalize align-middle">
+                <h1>{{ data.Nama }}</h1>
+              </td>
+              <td v-for="(value, key) in data.Penilaian" :key="key">
+                <div v-if="isNumber(value)" @click.prevent="setEdit(index, value, key)" class="cursor-pointer">
+                  {{ value }}
+                </div>
+                <div v-else class="flex items-center gap-1">
+                  <input type="number" class="form-control" v-model="nilai" :placeholder="value" max="100">
+                </div>
+              </td>
+              <td class="text-capitalize align-middle">
+                {{ data.TotalScore }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-    <div class="table-responsive" ref="input">
-      <table class="table table-hover table-striped">
-        <thead>
-          <tr>
-            <th class="text-uppercase" v-for="(value, key) in th" :key="key">{{ key }}</th>
-          </tr>
-        </thead>
-        <tbody v-if="selectedMapel.Status !== 'close'">
-          <tr v-for="(data, index) in santri" :key="index">
-            <td class="text-capitalize align-middle">
-              <h1>{{ data.Nama }}</h1>
-            </td>
-            <td v-for="(value, key) in data.Penilaian" :key="key">
-              <div v-if="isNumber(value)" @click.prevent="setEdit(index, value, key)" class="cursor-pointer">
-                {{ value }}
-              </div>
-              <div v-else class="flex items-center gap-1">
-                <input type="number" class="form-control" v-model="nilai" :placeholder="value" max="100">
-              </div>
-            </td>
-            <td class="text-capitalize align-middle">
-              {{ data.TotalScore }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <PenilaianKelasModalImport />
   </div>
 </template>
 
 <script>
 import Swal from "sweetalert2";
+import * as XLSX from 'xlsx';
 import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
 export default {
   data() {
@@ -222,7 +232,7 @@ export default {
           const data = await this.$apiBase.$put(
             `upload-mapel?type=mapel&subject=${subject}&sk=${sk}&program=${program}&kelas=${kelas}`, request
           )
-          if(data) {
+          if (data) {
             Swal.fire({
               position: "center",
               icon: "success",
@@ -257,6 +267,39 @@ export default {
           text: "Please select a file",
         });
       }
+    },
+
+    //
+    handleExport(data) {
+      if (data.length === 0) return;
+
+      // Mendapatkan semua kunci dari Penilaian untuk menentukan kolom dinamis
+      const penilaianKeys = new Set();
+      data.forEach(item => {
+        Object.keys(item.Penilaian).forEach(key => penilaianKeys.add(key));
+      });
+
+      // Membuat array kolom yang mencakup 'Nama', 'SK', semua kunci Penilaian, dan 'TotalScore'
+      const columns = ['Nama', 'SK', ...penilaianKeys];
+
+      // Mengolah data
+      const processedData = data.map(item => {
+        return {
+          Nama: item.Nama,
+          SK: item.SK,
+          ...item.Penilaian,
+        };
+      });
+
+      // Membuat worksheet dari data yang diproses
+      const ws = XLSX.utils.json_to_sheet(processedData, { header: columns });
+
+      // Membuat workbook dan menambahkan worksheet ke dalamnya
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+      // Menyimpan workbook sebagai file Excel
+      XLSX.writeFile(wb, `${this.selectedMapel.Nama} - ${this.selectedMapel.Kelas}.xlsx`);
     },
   },
 };
