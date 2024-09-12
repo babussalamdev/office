@@ -7,6 +7,7 @@ export default {
       dispatch("index/changeUnit", state.unit, { root: true });
     }
     const name = datas.route
+    alert(name)
     if (name === "index") {
       dispatch(`home/setMainChart`, state.unit, { root: true });
     } else if (name === "setting-mapel") {
@@ -27,6 +28,10 @@ export default {
       dispatch(`pegawai/database/changeUnit`, state.unit, { root: true });
     } else if (name === "santri-kelas") {
       dispatch(`santri/kelas/changeUnit`, state.unit, { root: true });
+    } else if (name === 'settings-kelas') {
+      dispatch('kelas/changeUnit', state.unit, { root: true })
+    } else if (name === 'settings-absensi') {
+      dispatch('setupabsensi/getAbsensi', state.unit, { root: true })
     }
   },
 }

@@ -76,11 +76,11 @@
         Prev
       </button>
       <button class="btn btn-dark  btn-sm disabled">{{ `${page}` }}</button>
-      <button @click="page++" :disabled="page >= Math.ceil(table.length / perPage)" class="btn btn-primary  btn-sm">
+      <button @click="page++" :disabled="page >= Math.ceil(pegawai.length / perPage)" class="btn btn-primary  btn-sm">
         Next
       </button>
-      <button @click="page = Math.ceil(table.length / perPage)" :disabled="page >= Math.ceil(table.length / perPage)"
-        type="button" class="btn btn-primary  btn-sm">
+      <button @click="page = Math.ceil(pegawai.length / perPage)"
+        :disabled="page >= Math.ceil(pegawai.length / perPage)" type="button" class="btn btn-primary  btn-sm">
         &raquo;
       </button>
     </div>
@@ -89,27 +89,20 @@
 
 <script>
 import Swal from "sweetalert2";
-import { mapState, mapMutations, mapActions } from "vuex";
+import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 
 export default {
-  data() {
-    return {
-      page: 1,
-      perPage: 10,
-      table: "",
-      search: ''
-    }
-  },
   computed: {
-    ...mapState('pegawai/database', ["pegawai"]),
-    filteredDatas() {
-      this.table = this.pegawai.filter((data) => {
-        return data.Nama.toLowerCase().includes(this.search.toLowerCase());
-      });
-      let start = (this.page - 1) * this.perPage;
-      let end = start + this.perPage;
-      return this.table.slice(start, end);
-    },
+    ...mapState('pegawai/database', ["pegawai", 'perPage']),
+    ...mapGetters('pegawai/database', ['filteredDatas', 'getPage']),
+    page: {
+      get() {
+        return this.getPage
+      },
+      set(value) {
+        this.$store.commit('pegawai/database/setState', { key: 'page', value })
+      }
+    }
   },
   methods: {
     ...mapActions('pegawai/database', ['updateItem', 'resetPassword']),

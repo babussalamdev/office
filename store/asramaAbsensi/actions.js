@@ -49,13 +49,14 @@ export default {
     const reqSantri = this.$apiSantri.$get(
       `get-absensi-sisalam?type=every&subject=kelas&program=${program}&value=${state.selectKelas}`
     );
+    console.log(reqSantri)
     const reqPermissions = this.$apiBase.$get(
       `get-settings?sk=${program}&type=buttonAbsensi&value=${jabatan}`
     )
     const [resSantri, resPermissions] = await Promise.all([reqSantri, reqPermissions])
     commit('setSantriAsramaManual', { resSantri, resPermissions });
   },
-  async santriAbsen({ commit, state}, event) {
+  async santriAbsen({ commit, state }, event) {
     commit('setLoad')
     const data = Object.fromEntries(new FormData(event.target));
     data["Status"] = state.updateData.type;

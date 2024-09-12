@@ -6,14 +6,14 @@ export default {
     const result = await this.$apiBase.$get(
       `get-mapel?subject=pengajar&program=${program}`
     );
-    if ( result.length > 0 ) {
+    if (result.length > 0) {
       commit('setUnit', result);
       dispatch('index/submitLoad', null, { root: true })
     } else {
       Swal.fire({
         position: "center",
         icon: "warning",
-        text: "Anda tidak mengajar apapun hari ini",
+        text: "Anda tidak mengajar mapel apapun",
       });
       dispatch('index/submitLoad', null, { root: true })
     }
@@ -30,6 +30,7 @@ export default {
     const result = await this.$apiSantri.$put(
       `get-nilai-sisalam?program=${program}`, datas
     )
+    console.log(result)
     const obj = { key: 'santri', value: result.data }
     commit('setState', obj)
   },
