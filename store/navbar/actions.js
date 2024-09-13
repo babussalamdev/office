@@ -7,7 +7,6 @@ export default {
       dispatch("index/changeUnit", state.unit, { root: true });
     }
     const name = datas.route
-    alert(name)
     if (name === "index") {
       dispatch(`home/setMainChart`, state.unit, { root: true });
     } else if (name === "setting-mapel") {

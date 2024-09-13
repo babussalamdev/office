@@ -1,4 +1,7 @@
 export default {
+  setState(state, data) {
+    state[data.key] = data.value
+  },
   setSantriTahfidz(state, value) {
     if (value) {
       state.santri = value
@@ -188,4 +191,11 @@ export default {
     $('#modalcatatansore').modal('hide')
     $('#formsore')[0].reset()
   },
+
+  //
+  setMonitoring(state, data) {
+    state.santri = [],
+    state.listHalaqah = data
+    state.monitoring = ''
+  }
 }

@@ -54,6 +54,8 @@ export default {
     { src: '~/plugins/cookies.client.js', mode: 'client' },
     { src: '~/plugins/axios-instances.js' },
     { src: '~/plugins/moment.js', ssr: false },
+    { src: '~/plugins/notifications.js' },
+    '~/plugins/websocket.client.js',
   ],
 
   loading: '~/components/Loader.vue',
@@ -107,6 +109,7 @@ export default {
       '~/components/settings/absensi',
       '~/components/settings/absensi/asrama',
       '~/components/settings/absensi/tahfidz',
+      '~/components/settings/absensi/tahfidz/monitoring',
       '~/components/settings/absensi/kelas',
       '~/components/settings/setupabsensi',
       '~/components/settings/setuppelanggaran',
@@ -126,15 +129,16 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: development ? process.env.API_BASE_DEV : process.env.API_BASE_PRO,
+    baseURL: process.env.API_BASE,
   },
   publicRuntimeConfig: {
     axios: {
-      baseURL: development ? process.env.API_BASE_DEV : process.env.API_BASE_PRO,
+      baseURL: process.env.API_BASE,
     },
-    base: development ? process.env.API_BASE_DEV : process.env.API_BASE_PRO,
-    santri: development ? process.env.API_SANTRI_DEV : process.env.API_SANTRI_PRO,
-    card: development ? process.env.API_CARD_DEV : process.env.API_CARD_PRO,
+    base: process.env.API_BASE,
+    santri: process.env.API_SANTRI,
+    card: process.env.API_CARD,
+    websocket: process.env.API_WEBSOCKET
   },
 
 

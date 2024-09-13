@@ -113,4 +113,25 @@ export default {
       }
     }
   },
+
+  // monitoring
+  async getDataMonitoring({ commit, state, dispatch }) {
+    dispatch('index/submitLoad', null, { root: true })
+    const program = localStorage.getItem('program')
+    const result = await this.$apiBase.$get(`get-settings?sk=${program}&type=halaqah`)
+    commit('setMonitoring', result)
+    dispatch('index/submitLoad', null, { root: true })
+  },
+  async getUnitMonitoring({ commit, dispatch, state }, data) {
+    dispatch('index/submitLoad', null, { root: true })
+    const program = localStorage.getItem('program')
+
+    const reqSantri = await this.$apiSantri.$get(
+      `get-absensi-sisalam?type=every&subject=halaqah&program=${program}&value=${state.monitoring}`
+    );
+    if (reqSantri) {
+      commit('setSantriTahfidz', reqSantri);
+      dispatch('index/submitLoad', null, { root: true })
+    }
+  },
 }

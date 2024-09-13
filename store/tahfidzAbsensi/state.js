@@ -23,5 +23,7 @@ export default () => ({
     updateData: '',
     date: tanggalDalamFormat,
     btn: true,
-    updateDataCatatan: ''
+    updateDataCatatan: '',
+    listHalaqah: [],
+    monitoring: ''
 })

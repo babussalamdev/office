@@ -1,4 +1,7 @@
 export default {
+  getMonitoring(state) {
+    return state.monitoring
+  },
   // getPagi(state) {
   //   return state.pagi
   // },

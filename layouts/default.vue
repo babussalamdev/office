@@ -53,6 +53,10 @@ export default {
   },
   mounted() {
     document.addEventListener('click', this.handleClickOutside);
+
+    const program = localStorage.getItem('program')
+    this.$connectSocket(`${this.$config.websocket}?sk=${this.$auth.user.preferred_username
+      }&program=${program}`);
   },
   beforeDestroy() {
     document.removeEventListener('click', this.handleClickOutside);

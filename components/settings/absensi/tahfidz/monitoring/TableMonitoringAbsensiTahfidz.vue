@@ -1,15 +1,16 @@
 <template>
   <div>
     <div>
-      <div class="head d-flex align-items-center mb-3 justify-content-between">
-        <h2 class="mb-0">Absensi Tahfidz</h2>
-        <nuxt-link v-if="permissionsIndex.includes('report tahfidz')" to="/tahfidz/absensi/monitoring" style="font-size: 12px;" class="btn btn-sm btn-secondary text-decoration-none">
-          <i class="bi bi-eye-fill me-2"></i>Monitoring
-        </nuxt-link>
+      <div class="head d-flex flex-column flex-md-row align-items-start align-items-md-center mb-3 justify-content-md-between justify-content-start gap-2">
+        <h2 class="mb-0 text-start">Absensi Tahfidz - Monitoring</h2>
+        <select class="form-select" style="font-size: 12px; width: max-content;" @change="getUnitMonitoring" v-model="monitoring">
+          <option value="">halaqah</option>
+          <option v-for="(data, index) in listHalaqah" :key="index" :value="data.Nama">{{ data.Nama }}</option>
+        </select>
       </div>
       <div class="table-responsive">
         <!-- Modal -->
-        <ModalAbsensiTahfidz />
+        <ModalMonitoringAbsensiTahfidz />
         <table class="table table-hover table-striped">
           <thead>
             <tr>
@@ -127,14 +128,13 @@
           </tbody>
         </table>
       </div>
-      <ModalCatatanAbsensiTahfidz />
+      <ModalMonitoringCatatanAbsensiTahfidz />
     </div>
   </div>
 </template>
 
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
-import permission from "~/middleware/permission";
 export default {
   data() {
     return {
@@ -148,14 +148,21 @@ export default {
       select: state => state.select,
       date: state => state.date,
       updateData: state => state.updateData,
+      listHalaqah: state => state.listHalaqah
     }),
-    ...mapState("index", {
-      permissionsIndex: state => state.permissions, // Alias untuk permissions di modul index
-    }),
+    ...mapGetters('tahfidzAbsensi', ['getMonitoring']),
+    monitoring: {
+      get() {
+        return this.getMonitoring
+      },
+      set(value) {
+        this.$store.commit('tahfidzAbsensi/setState', { key: 'monitoring', value})
+      }
+    }
   },
 
   methods: {
-    ...mapActions('tahfidzAbsensi', ['setStatus', 'deleteStatus']),
+    ...mapActions('tahfidzAbsensi', ['setStatus', 'deleteStatus', 'getUnitMonitoring']),
     ...mapMutations('tahfidzAbsensi', { changeStep: 'setAbsensi', changeModal: 'openModal' }),
     setAbsensi(sk, type, time, condition, dateTime) {
       const obj = {
