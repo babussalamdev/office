@@ -49,6 +49,7 @@ export default {
       state.santri[state.openEdit.index].Penilaian[state.openEdit.key] = +state.nilai
       state.santri[state.openEdit.index].TotalScore = +data.result.Total
       state.openEdit = ''
+      state.nilai = ''
     }
   },
   // setData(state, value) {

@@ -1,6 +1,6 @@
 <template>
   <section id="home">
-    <button @click="showNotification">Show Notifications</button>
+    <!-- <button @click="showNotification">Show Notifications</button> -->
     <div v-if="unit" class="home animate__animated animate__fadeIn">
       <div v-if="$auth.user.role !== 'root'">
         <Chart />

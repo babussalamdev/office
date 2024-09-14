@@ -157,6 +157,7 @@ export default {
       // close
       if (data) {
         data['type'] = 'set'
+        console.log(data)
         commit('setPenilaian', data)
       }
     }
