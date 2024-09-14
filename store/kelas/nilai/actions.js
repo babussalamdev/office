@@ -47,11 +47,22 @@ export default {
         datas['Subject'] = state.selectedMapel.Nama
         datas['SubAttribute'] = state.openEdit.key
         datas[mapelKey] = `${state.nilai}/${state.selectedMapel.Penilaian[state.openEdit.key]}`
-        const result = await this.$apiSantri.$post(`input-nilai-sisalam?type=nilaimapel&sksantri=${skSantri}&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`, datas)
-        if (result) {
+        if (state.nilai > 100) {
+          Swal.fire({
+            title: 'Warning!',
+            text: 'Nilai tidak boleh lebih dari 100.',
+            icon: 'warning',
+            showConfirmButton: false,
+            timer: 3000
+          });
           dispatch('index/submitLoad', null, { root: true })
-          data['result'] = result
-          commit('setPenilaian', data)
+        } else {
+          const result = await this.$apiSantri.$post(`input-nilai-sisalam?type=nilaimapel&sksantri=${skSantri}&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`, datas)
+          if (result) {
+            dispatch('index/submitLoad', null, { root: true })
+            data['result'] = result
+            commit('setPenilaian', data)
+          }
         }
       } catch (error) {
         Swal.fire({
@@ -79,11 +90,22 @@ export default {
           datas['Subject'] = state.selectedMapel.Nama
           datas['SubAttribute'] = state.openEdit.key
           datas[mapelKey] = `${state.nilai}/${state.selectedMapel.Penilaian[state.openEdit.key]}`
-          const result = await this.$apiSantri.$post(`input-nilai-sisalam?type=nilaimapel&sksantri=${skSantri}&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`, datas)
-          if (result) {
-            data['result'] = result
+          if (state.nilai > 100) {
+            Swal.fire({
+              title: 'Warning!',
+              text: 'Nilai tidak boleh lebih dari 100.',
+              icon: 'warning',
+              timer: 3000,
+              showConfirmButton: false
+            });
             dispatch('index/submitLoad', null, { root: true })
-            commit('setPenilaian', data)
+          } else {
+            const result = await this.$apiSantri.$post(`input-nilai-sisalam?type=nilaimapel&sksantri=${skSantri}&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`, datas)
+            if (result) {
+              data['result'] = result
+              dispatch('index/submitLoad', null, { root: true })
+              commit('setPenilaian', data)
+            }
           }
         } catch (error) {
           dispatch('index/submitLoad', null, { root: true })

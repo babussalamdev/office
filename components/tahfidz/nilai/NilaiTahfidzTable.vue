@@ -1,9 +1,6 @@
 <template>
   <div class="animate__animated animate__fadeInUp">
     <h2 class="mb-3 mb-md-3">Penilaian Tahfidz</h2>
-    {{ santri }} <br> <br>
-    {{ nilai }} <br> <br>
-    {{ openEdit }}
     <div class="table-responsive" ref="input">
       <table class="table table-hover table-striped">
         <thead>
