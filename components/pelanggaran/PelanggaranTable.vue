@@ -55,7 +55,7 @@
                 class="btn btn-sm btn-warning text-xss me-1 text-white rounded-2">
                 Record
               </nuxt-link>
-              <i @click="input(index)" v-if="hasRequiredPermission('input')" class="btn btn-sm btn-primary text-xs text-white rounded-2">Input</i>
+              <i @click="input(data.SK)" v-if="hasRequiredPermission('input')" class="btn btn-sm btn-primary text-xs text-white rounded-2">Input</i>
             </td>
           </tr>
         </tbody>
@@ -124,7 +124,8 @@ export default {
     ...mapActions('pelanggaran', ['getPelanggaran']),
     async input(index) {
       $("#inputModal").modal("show");
-      const updateData = this.santri[index];
+      const i = this.santri.findIndex((x) => x.SK === index)
+      const updateData = this.santri[i];
       this.$store.commit("pelanggaran/updateData", updateData);
     },
     hasRequiredPermission(permission) {
