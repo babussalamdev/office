@@ -26,6 +26,42 @@ export default {
       state[data.key] = remappedData
     } else if (data.key === 'selectedMapel') {
       state[data.key] = data.value
+    } else if (data.key === 'updateSantri') {
+      const newData = data.value.map(item => {
+        // Ambil objek Penilaian dari item
+        const penilaian = item.feedback;
+        delete item.feedback
+
+        // Map setiap key dalam objek Penilaian untuk melakukan split dan konversi
+        const remappedPenilaian = Object.keys(penilaian).reduce((acc, key) => {
+          const [value] = penilaian[key].split('/');
+          acc[key] = Number(value);
+          return acc;
+        }, {});
+
+        // Kembalikan objek dengan Penilaian yang sudah dimodifikasi
+        return {
+          ...item,
+          Penilaian: remappedPenilaian
+        };
+      });
+      // Update data lama dengan data baru berdasarkan SK
+      const updatedData = state.santri.map(oldItem => {
+        const newItem = newData.find(newItem => newItem.SK === oldItem.SK);
+        if (newItem) {
+          // Membuat salinan objek lama dengan data baru dan memperbarui TotalScore
+          const updatedItem = {
+            ...oldItem,
+            ...newItem,
+            TotalScore: newItem.Total  // Update TotalScore with Total from newData
+          };
+          // Menghapus key Total
+          delete updatedItem.Total;
+          return updatedItem;
+        }
+      });
+      state.santri = updatedData
+      $('#modalImport').modal('hide')
     } else {
       state[data.key] = data.value
     }

@@ -6,7 +6,7 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">Import Data Penilaian</h1>
+            <h1 class="modal-title fs-5" id="importForm">Import Data Penilaian</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
@@ -95,7 +95,6 @@ export default {
           const Penilaian = this.selectedMapel.Penilaian
           const base64Data = base64String;
           const datas = { base64Data, Subject, Penilaian }
-          console.log('tarik api');
           const data = await this.$apiSantri.$post(
             `input-nilai-sisalam?type=bulknilaimapel&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`,
             datas
@@ -107,7 +106,8 @@ export default {
             showConfirmButton: false,
             timer: 1500,
           });
-          // this.$store.commit("santri/database/inputSantriBulk", data);
+          this.$store.commit("kelas/nilai/setState", { key: 'updateSantri', value: data});
+          this.$refs.fileInput.value = ''
           this.btn2 = true;
         } catch (error) {
           Swal.fire({

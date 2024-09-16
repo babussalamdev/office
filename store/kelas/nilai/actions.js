@@ -18,7 +18,8 @@ export default {
       dispatch('index/submitLoad', null, { root: true })
     }
   },
-  async getSantri({ commit, state }, data) {
+  async getSantri({ commit, state, dispatch }, data) {
+    dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
     const datas = {}
     datas['Filter'] = state.selectedMapel.Jurusan
@@ -32,6 +33,7 @@ export default {
     )
     const obj = { key: 'santri', value: result.data }
     commit('setState', obj)
+    dispatch('index/submitLoad', null, { root: true })
   },
   async setPenilaian({ commit, state, dispatch }, data) {
     if (data.type === 'button') {

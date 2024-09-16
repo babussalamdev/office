@@ -5,7 +5,7 @@ export default {
     const result = this.$apiBase.$get(
       `get-settings?sk=${data}&type=halaqah`
     );
-    const kelas = this.$apiBase.$get(`get-settings?type=options&sk=smp&category=kelas`)
+    const kelas = this.$apiBase.$get(`get-settings?type=options&sk=${data}&category=kelas`)
     const [ resResult, resKelas ] = await Promise.all([ result, kelas ])
     commit('setDataHalaqah', { resResult, resKelas });
     dispatch('index/submitLoad', null, { root: true })
