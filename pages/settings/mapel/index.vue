@@ -30,10 +30,10 @@
 <script>
 import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
 export default {
-  middleware: 'permission',
-  meta: {
-    permissions: ['setup mapel']
-  },
+  // middleware: 'permission',
+  // meta: {
+  //   permissions: ['setup mapel']
+  // },
   data() {
     return {
       listKelas: "",

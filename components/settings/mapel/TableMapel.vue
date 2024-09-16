@@ -9,6 +9,7 @@
             <th scope="col">Jurusan</th>
             <th scope="col">Hari</th>
             <th scope="col">Penilaian</th>
+            <th scope="col">Total</th>
             <th scope="col">Status</th>
             <th scope="col" class="text-end">Action</th>
           </tr>
@@ -37,6 +38,9 @@
                   </div>
                 </div>
               </div>
+            </td>
+            <td scope="row" class="text-center">
+              {{ totalNilai(Penilaian[i]) }}
             </td>
             <td scope="row">{{ data.Status }}</td>
             <td class="text-end">
@@ -96,6 +100,18 @@ export default {
       const obj = { index, sk }
       this.changeStep(obj)
     },
+    totalNilai(arr) {
+      if (arr.length > 0) {
+        return arr
+          .map(item => {
+            // Pisahkan string pada '-'
+            const parts = item.split('-');
+            // Ambil bagian setelah '-' dan konversi ke angka
+            return parseFloat(parts[1]) || 0;
+          })
+          .reduce((acc, curr) => acc + curr, 0);
+      }
+    }
   },
 };
 </script>

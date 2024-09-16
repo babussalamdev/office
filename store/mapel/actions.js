@@ -187,6 +187,26 @@ export default {
     const data = Object.fromEntries(new FormData(event.target))
     const sk = state.updateDataPenilaian.SK.replace(/#/g, '%23')
     const i = state.mapel.findIndex((x) => x.SK === state.updateDataPenilaian.SK)
+
+    const arrAmount = state.Penilaian[i].map(item => {
+      // Pisahkan string pada '-'
+      const parts = item.split('-');
+      // Ambil bagian setelah '-' dan konversi ke angka
+      return parseFloat(parts[1]) || 0;
+    }).reduce((acc, curr) => acc + curr, 0);
+
+    const bobotNumber = parseFloat(data.bobot)
+    if (!isNaN(bobotNumber) && arrAmount + bobotNumber > 100) {
+      Swal.fire({
+        icon: "warning",
+        text: 'Bobot Penilaian lebih dari 100',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      commit('btn')
+      return
+    }
+
     const dataPenilaian = `${data.nama.trim()}-${data.bobot.trim()}`
     commit('updatePenilaian', { dataPenilaian, i })
     const array = state.Penilaian[i]

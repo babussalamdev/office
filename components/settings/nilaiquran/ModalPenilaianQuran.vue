@@ -15,7 +15,7 @@
             <div class="modal-body">
               <div class="mb-3">
                 <label for="sort" class="form-label">Nama</label>
-                <input name="nama" type="text" class="form-control" id="sort" required />
+                <input name="nama" type="text" class="form-control" id="sort" required maxlength="10" />
               </div>
               <div class="mb-3">
                 <label for="nama" class="form-label">Bobot</label>
