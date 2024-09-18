@@ -8,11 +8,15 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   middleware: 'root',
   meta: {
     roots: 'root'
   },
+  // computed: {
+  //   ...mapState('kelasAbsensi', ['hari'])
+  // },
   async asyncData({ store }) {
     store.dispatch(`kelasAbsensi/changeUnit`);
   },

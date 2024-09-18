@@ -13,7 +13,7 @@ export default {
       Swal.fire({
         position: "center",
         icon: "warning",
-        text: "Anda tidak mengajar apapun hari ini",
+        text: "Anda tidak mengajar mapel apapun",
       });
       dispatch('index/submitLoad', null, { root: true })
     }

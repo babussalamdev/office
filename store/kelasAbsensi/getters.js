@@ -2,6 +2,9 @@ export default {
   getSelectedMapel(state) {
     return state.selectedMapel
   },
+  getSelectedJam(state) {
+    return state.selectedJam
+  },
   getSantri(state) {
     return state.santri
   }

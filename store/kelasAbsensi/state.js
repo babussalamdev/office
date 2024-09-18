@@ -16,5 +16,6 @@ export default () => ({
     sore: '',
     updateData: '',
     date: date,
-    selectedMapel: ''
+    selectedMapel: '',
+    selectedJam: ''
 })

@@ -1,35 +1,25 @@
 <template>
   <div>
     <div>
-      <!-- {{ firstData }} -->
-      <!-- {{ scheduleMapel?.Hari?.split('-')[1]}} -->
       <div class="row mb-3">
-        <div class="col-6 col-md-6 d-flex align-items-center">
-          <h2 class="mb-3 mb-md-0">Absensi Kelas</h2>
+        <div class="col-12 col-md-6 d-flex align-items-center">
+          <h2 class="mb-3 mb-md-0">Absensi Kelas  </h2>
         </div>
-        <div class="col-6 col-md-6 d-flex align-items-center justify-content-end gap-2">
+        <div class="col-12 col-md-6 d-flex align-items-center justify-content-end">
           <select class="form-select" v-model="selectedKelas" @change="applyFilter">
             <option value="" selected disabled>Kelas</option>
             <option v-for="(data, index) in uniqueClasses" :key="index" :value="data">{{ data }}</option>
           </select>
-          <div>
-            <select class="form-select" v-model="selectedMapel">
-              <option value="" selected disabled>Mapel</option>
-              <option v-for="(data, index) in uniqueLesson" :key="index" :value="data">{{ data.Nama }}</option>
-            </select>
-          </div>
+          <select class="form-select" v-model="selectedMapel">
+            <option value="" selected disabled>Mapel</option>
+            <option v-for="(data, index) in uniqueLesson" :key="index" :value="data">{{ data.Nama }}</option>
+          </select>
+          <select class="form-select" v-model="selectedJam" style="width: max-content;">
+            <option value="" selected disabled>Jam</option>
+            <option v-for="(data, index) in selectedMapel?.Hari" :key="index" :value="data">{{ data }}</option>
+          </select>
         </div>
       </div>
-      <!-- <div class="head d-flex align-items-center mb-3 justify-content-start">
-        <h2 class="mb-3 mb-md-0">Absensi Kelas</h2> -->
-      <!-- <select v-if="select.length > 0" class="form-select" name="Kelas" @change="getAbsensi" v-model="selectKelas">
-          <option value="" selected>-- Kelas --</option>
-          <option v-for="(data, index) in select" :key="index" :value="data">
-            {{ data }}
-          </option>
-        </select> -->
-      <!-- </div> -->
-      <!-- {{ uniqueClasses }} <br> <br> {{ filteredData }} <br> <br> {{ uniqueLesson }} <br><br> {{ selectedMapel }} -->
       <div class="table-responsive">
         <!-- Modal -->
         <ModalAbsensiKelas />
@@ -38,14 +28,13 @@
             <tr>
               <th scope="col">Nama / NIS</th>
               <th scope="col">Asrama</th>
-              <th scope="col" class="text-center" v-if="scheduleMapel?.Hari?.split('-')[1] === '1'">Mapel ke-1</th>
-              <th scope="col" class="text-center" v-if="scheduleMapel?.Hari?.split('-')[1] === '2'">Mapel ke-2</th>
-              <th scope="col" class="text-center" v-if="scheduleMapel?.Hari?.split('-')[1] === '3'">Mapel ke-3</th>
-              <!-- <th scope="col" class="text-center">Sore</th> -->
-              <!-- <th scope="col" class="text-end">Action</th> -->
+              <th scope="col" class="text-center" v-if="selectedJam">mapel {{ selectedJam }}</th>
             </tr>
           </thead>
           <tbody>
+            <tr v-if="uniqueClasses.length === 0">
+              <td colspan="2" class="text-center">Anda tidak mengajar apapun hari ini</td>
+            </tr>
             <tr v-for="(data, index) in santri" :key="index">
               <td class="text-capitalize align-middle">
                 <h1>{{ data.Nama }}</h1>
@@ -55,91 +44,32 @@
                 {{ data.Logs?.asrama.status }}
               </td>
               <!-- mapel 1 -->
-              <td class="text-capitalize py-2" v-if="scheduleMapel?.Hari?.split('-')[1] === '1'">
+              <!-- <td class="text-capitalize py-2" v-if="scheduleMapel?.Hari?.split('-')[1] === '1a '"> -->
+              <td class="text-capitalize py-2">
                 <div class="select-input mx-auto">
                   <div class="box-radio">
                     <button
-                      @click="setAbsensi(data.SK, 'absen', 'mapelsatu', data.Logs?.mapel?.satu?.status, data.Logs?.mapel?.satu?.time?.split(' ')[0])"
-                      :class="(!data.Logs?.mapel?.satu?.status || (data.Logs?.mapel?.satu?.status === '' && data.Logs?.mapel?.satu?.time?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapel?.satu?.status && data.Logs?.mapel?.satu?.time?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapel?.satu?.status === 'absen' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.Logs?.mapel?.satu?.status && data.Logs?.mapel?.satu?.time?.split(' ')[0] === date && (data.Logs?.mapel?.satu?.status !== '' && data.Logs?.mapel?.satu?.status !== 'absen')) ? true : false">Absen</button>
+                      @click="setAbsensi(data.SK, 'absen', `mapel${selectedJam}`, data.Logs?.mapel?.[selectedJam]?.status, data.Logs?.mapel?.[selectedJam]?.time?.split(' ')[0])"
+                      :class="(!data.Logs?.mapel?.[selectedJam]?.status || (data.Logs?.mapel?.[selectedJam]?.status === '' && data.Logs?.mapel?.[selectedJam]?.time?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapel?.[selectedJam]?.status && data.Logs?.mapel?.[selectedJam]?.time?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapel?.[selectedJam]?.status === 'absen' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="(data.Logs?.mapel?.[selectedJam]?.status && data.Logs?.mapel?.[selectedJam]?.time?.split(' ')[0] === date && (data.Logs?.mapel?.[selectedJam]?.status !== '' && data.Logs?.mapel?.[selectedJam]?.status !== 'absen')) ? true : false">Absen</button>
                   </div>
                   <div class="box-radio">
                     <button
-                      @click="setAbsensi(data.SK, 'terlambat', 'mapelsatu', data.Logs?.mapel?.satu?.status, data.Logs?.mapel?.satu?.time?.split(' ')[0])"
-                      :class="(!data.Logs?.mapel?.satu?.status || (data.Logs?.mapel?.satu?.status === '' && data.Logs?.mapel?.satu?.time?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapel?.satu?.status && data.Logs?.mapel?.satu?.time?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapel?.satu?.status === 'terlambat' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.Logs?.mapel?.satu?.status && data.Logs?.mapel?.satu?.time?.split(' ')[0] === date && (data.Logs?.mapel?.satu?.status !== '' && data.Logs?.mapel?.satu?.status !== 'terlambat')) ? true : false">Terlambat</button>
+                      @click="setAbsensi(data.SK, 'terlambat', `mapel${selectedJam}`, data.Logs?.mapel?.[selectedJam]?.status, data.Logs?.mapel?.[selectedJam]?.time?.split(' ')[0])"
+                      :class="(!data.Logs?.mapel?.[selectedJam]?.status || (data.Logs?.mapel?.[selectedJam]?.status === '' && data.Logs?.mapel?.[selectedJam]?.time?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapel?.[selectedJam]?.status && data.Logs?.mapel?.[selectedJam]?.time?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapel?.[selectedJam]?.status === 'terlambat' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="(data.Logs?.mapel?.[selectedJam]?.status && data.Logs?.mapel?.[selectedJam]?.time?.split(' ')[0] === date && (data.Logs?.mapel?.[selectedJam]?.status !== '' && data.Logs?.mapel?.[selectedJam]?.status !== 'terlambat')) ? true : false">Terlambat</button>
                   </div>
                   <div class="box-radio">
                     <button
-                      @click="setAbsensi(data.SK, 'sakit', 'mapelsatu', data.Logs?.mapel?.satu?.status, data.Logs?.mapel?.satu?.time?.split(' ')[0])"
-                      :class="(!data.Logs?.mapel?.satu?.status || (data.Logs?.mapel?.satu?.status === '' && data.Logs?.mapel?.satu?.time?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapel?.satu?.status && data.Logs?.mapel?.satu?.time?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapel?.satu?.status === 'sakit' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.Logs?.mapel?.satu?.status && data.Logs?.mapel?.satu?.time?.split(' ')[0] === date && (data.Logs?.mapel?.satu?.status !== '' && data.Logs?.mapel?.satu?.status !== 'sakit')) ? true : false">Sakit</button>
+                      @click="setAbsensi(data.SK, 'sakit', `mapel${selectedJam}`, data.Logs?.mapel?.[selectedJam]?.status, data.Logs?.mapel?.[selectedJam]?.time?.split(' ')[0])"
+                      :class="(!data.Logs?.mapel?.[selectedJam]?.status || (data.Logs?.mapel?.[selectedJam]?.status === '' && data.Logs?.mapel?.[selectedJam]?.time?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapel?.[selectedJam]?.status && data.Logs?.mapel?.[selectedJam]?.time?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapel?.[selectedJam]?.status === 'sakit' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="(data.Logs?.mapel?.[selectedJam]?.status && data.Logs?.mapel?.[selectedJam]?.time?.split(' ')[0] === date && (data.Logs?.mapel?.[selectedJam]?.status !== '' && data.Logs?.mapel?.[selectedJam]?.status !== 'sakit')) ? true : false">Sakit</button>
                   </div>
                   <div class="box-radio">
                     <button
-                      @click="setAbsensi(data.SK, 'izin', 'mapelsatu', data.Logs?.mapel?.satu?.status, data.Logs?.mapel?.satu?.time?.split(' ')[0])"
-                      :class="(!data.Logs?.mapel?.satu?.status || (data.Logs?.mapel?.satu?.status === '' && data.Logs?.mapel?.satu?.time?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapel?.satu?.status && data.Logs?.mapel?.satu?.time?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapel?.satu?.status === 'izin' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.Logs?.mapel?.satu?.status && data.Logs?.mapel?.satu?.time?.split(' ')[0] === date && (data.Logs?.mapel?.satu?.status !== '' && data.Logs?.mapel?.satu?.status !== 'izin')) ? true : false">Izin</button>
-                  </div>
-                </div>
-              </td>
-
-              <!-- mapel 2 -->
-              <td class="text-capitalize py-2" v-if="scheduleMapel?.Hari?.split('-')[1] === '2'">
-                <div class="select-input mx-auto">
-                  <div class="box-radio">
-                    <button
-                      @click="setAbsensi(data.SK, 'absen', 'mapeldua', data.Logs?.mapel?.dua?.status, data.Logs?.mapel?.dua?.time?.split(' ')[0])"
-                      :class="(!data.Logs?.mapel?.dua?.status || (data.Logs?.mapel?.dua?.status === '' && data.Logs?.mapel?.dua?.time?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapel?.dua?.status && data.Logs?.mapel?.dua?.time?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapel?.dua?.status === 'absen' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.Logs?.mapel?.dua?.status && data.Logs?.mapel?.dua?.time?.split(' ')[0] === date && (data.Logs?.mapel?.dua?.status !== '' && data.Logs?.mapel?.dua?.status !== 'absen')) ? true : false">Absen</button>
-                  </div>
-                  <div class="box-radio">
-                    <button
-                      @click="setAbsensi(data.SK, 'terlambat', 'mapeldua', data.Logs?.mapel?.dua?.status, data.Logs?.mapel?.dua?.time?.split(' ')[0])"
-                      :class="(!data.Logs?.mapel?.dua?.status || (data.Logs?.mapel?.dua?.status === '' && data.Logs?.mapel?.dua?.time?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapel?.dua?.status && data.Logs?.mapel?.dua?.time?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapel?.dua?.status === 'terlambat' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.Logs?.mapel?.dua?.status && data.Logs?.mapel?.dua?.time?.split(' ')[0] === date && (data.Logs?.mapel?.dua?.status !== '' && data.Logs?.mapel?.dua?.status !== 'terlambat')) ? true : false">Terlambat</button>
-                  </div>
-                  <div class="box-radio">
-                    <button
-                      @click="setAbsensi(data.SK, 'sakit', 'mapeldua', data.Logs?.mapel?.dua?.status, data.Logs?.mapel?.dua?.time?.split(' ')[0])"
-                      :class="(!data.Logs?.mapel?.dua?.status || (data.Logs?.mapel?.dua?.status === '' && data.Logs?.mapel?.dua?.time?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapel?.dua?.status && data.Logs?.mapel?.dua?.time?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapel?.dua?.status === 'sakit' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.Logs?.mapel?.dua?.status && data.Logs?.mapel?.dua?.time?.split(' ')[0] === date && (data.Logs?.mapel?.dua?.status !== '' && data.Logs?.mapel?.dua?.status !== 'sakit')) ? true : false">Sakit</button>
-                  </div>
-                  <div class="box-radio">
-                    <button
-                      @click="setAbsensi(data.SK, 'izin', 'mapeldua', data.Logs?.mapel?.dua?.status, data.Logs?.mapel?.dua?.time?.split(' ')[0])"
-                      :class="(!data.Logs?.mapel?.dua?.status || (data.Logs?.mapel?.dua?.status === '' && data.Logs?.mapel?.dua?.time?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapel?.dua?.status && data.Logs?.mapel?.dua?.time?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapel?.dua?.status === 'izin' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.Logs?.mapel?.dua?.status && data.Logs?.mapel?.dua?.time?.split(' ')[0] === date && (data.Logs?.mapel?.dua?.status !== '' && data.Logs?.mapel?.dua?.status !== 'izin')) ? true : false">Izin</button>
-                  </div>
-                </div>
-              </td>
-
-              <!-- mapel 3 -->
-              <td class="text-capitalize py-2" v-if="scheduleMapel?.Hari?.split('-')[1] === '3'">
-                <div class="select-input mx-auto">
-                  <div class="box-radio">
-                    <button
-                      @click="setAbsensi(data.SK, 'absen', 'mapeltiga', data.Logs?.mapel?.tiga?.status, data.Logs?.mapel?.tiga?.time?.split(' ')[0])"
-                      :class="(!data.Logs?.mapel?.tiga?.status || (data.Logs?.mapel?.tiga?.status === '' && data.Logs?.mapel?.tiga?.time?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapel?.tiga?.status && data.Logs?.mapel?.tiga?.time?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapel?.tiga?.status === 'absen' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.Logs?.mapel?.tiga?.status && data.Logs?.mapel?.tiga?.time?.split(' ')[0] === date && (data.Logs?.mapel?.tiga?.status !== '' && data.Logs?.mapel?.tiga?.status !== 'absen')) ? true : false">Absen</button>
-                    </div>
-                    <div class="box-radio">
-                      <button
-                      @click="setAbsensi(data.SK, 'terlambat', 'mapeltiga', data.Logs?.mapel?.tiga?.status, data.Logs?.mapel?.tiga?.time?.split(' ')[0])"
-                      :class="(!data.Logs?.mapel?.tiga?.status || (data.Logs?.mapel?.tiga?.status === '' && data.Logs?.mapel?.tiga?.time?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapel?.tiga?.status && data.Logs?.mapel?.tiga?.time?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapel?.tiga?.status === 'terlambat' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.Logs?.mapel?.tiga?.status && data.Logs?.mapel?.tiga?.time?.split(' ')[0] === date && (data.Logs?.mapel?.tiga?.status !== '' && data.Logs?.mapel?.tiga?.status !== 'terlambat')) ? true : false">Terlambat</button>
-                    </div>
-                    <div class="box-radio">
-                      <button
-                      @click="setAbsensi(data.SK, 'sakit', 'mapeltiga', data.Logs?.mapel?.tiga?.status, data.Logs?.mapel?.tiga?.time?.split(' ')[0])"
-                      :class="(!data.Logs?.mapel?.tiga?.status || (data.Logs?.mapel?.tiga?.status === '' && data.Logs?.mapel?.tiga?.time?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapel?.tiga?.status && data.Logs?.mapel?.tiga?.time?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapel?.tiga?.status === 'sakit' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.Logs?.mapel?.tiga?.status && data.Logs?.mapel?.tiga?.time?.split(' ')[0] === date && (data.Logs?.mapel?.tiga?.status !== '' && data.Logs?.mapel?.tiga?.status !== 'sakit')) ? true : false">Sakit</button>
-                    </div>
-                    <div class="box-radio">
-                      <button
-                      @click="setAbsensi(data.SK, 'izin', 'mapeltiga', data.Logs?.mapel?.tiga?.status, data.Logs?.mapel?.tiga?.time?.split(' ')[0])"
-                      :class="(!data.Logs?.mapel?.tiga?.status || (data.Logs?.mapel?.tiga?.status === '' && data.Logs?.mapel?.tiga?.time?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapel?.tiga?.status && data.Logs?.mapel?.tiga?.time?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapel?.tiga?.status === 'izin' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.Logs?.mapel?.tiga?.status && data.Logs?.mapel?.tiga?.time?.split(' ')[0] === date && (data.Logs?.mapel?.tiga?.status !== '' && data.Logs?.mapel?.tiga?.status !== 'izin')) ? true : false">Izin</button>
+                      @click="setAbsensi(data.SK, 'izin', `mapel${selectedJam}`, data.Logs?.mapel?.[selectedJam]?.status, data.Logs?.mapel?.[selectedJam]?.time?.split(' ')[0])"
+                      :class="(!data.Logs?.mapel?.[selectedJam]?.status || (data.Logs?.mapel?.[selectedJam]?.status === '' && data.Logs?.mapel?.[selectedJam]?.time?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.mapel?.[selectedJam]?.status && data.Logs?.mapel?.[selectedJam]?.time?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.mapel?.[selectedJam]?.status === 'izin' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="(data.Logs?.mapel?.[selectedJam]?.status && data.Logs?.mapel?.[selectedJam]?.time?.split(' ')[0] === date && (data.Logs?.mapel?.[selectedJam]?.status !== '' && data.Logs?.mapel?.[selectedJam]?.status !== 'izin')) ? true : false">Izin</button>
                   </div>
                 </div>
               </td>
@@ -163,7 +93,7 @@ export default {
   },
   computed: {
     ...mapState("kelasAbsensi", ["permissions", "select", 'date', 'updateData']),
-    ...mapGetters('kelasAbsensi', ['getSelectedMapel', 'getSantri']),
+    ...mapGetters('kelasAbsensi', ['getSelectedMapel', 'getSantri', 'getSelectedJam']),
     hariIni() {
       const today = new Date();
       const hariIni = today.toLocaleDateString('id-ID', { weekday: 'long' }).toLowerCase();
@@ -182,6 +112,14 @@ export default {
         this.$store.commit('kelasAbsensi/setSelectedMapel', value)
       }
     },
+    selectedJam: {
+      get() {
+        return this.getSelectedJam
+      },
+      set(value) {
+        this.$store.commit('kelasAbsensi/setSelectedJam', value)
+      }
+    },
     santri: {
       get() {
         return this.getSantri
@@ -198,10 +136,9 @@ export default {
     filteredData() {
       return this.firstData.filter(item => {
         const matchesClass = item.Kelas === this.selectedKelas;
-        this.selectedMapel = ''
+        this.selectedMapel = '',
+        this.selectedJam = ''
         this.santri = []
-        // const matchesAsrama = item.Logs.asrama === this.selectedAsrama;
-        // return matchesClass && matchesAsrama;
         return matchesClass
       });
     },
@@ -211,10 +148,12 @@ export default {
           const hariList = item.Hari.split(", ");
           const hariRelevan = hariList.find(hari => hari.includes(this.hariIni));
           if (hariRelevan) {
+            const days = item?.Hari?.split(", ");
+            // return
             return {
               Nama: item.Nama,
               SK: item.SK,
-              Hari: hariRelevan.charAt(0).toUpperCase() + hariRelevan.slice(1)  // Capitalize the first letter
+              Hari: days.filter(day => day.includes(this.hariIni))
             };
           }
           return null;
@@ -226,12 +165,17 @@ export default {
     },
   },
   watch: {
-    selectedMapel(value) {
+    selectedJam(value) {
       if (value) {
         this.getDataSantri(this.selectedKelas)
-        // this.santri = []
       }
     },
+    selectedMapel(value) {
+      if ( value ) {
+        this.santri = []
+        this.selectedJam = ''
+      }
+    }
   },
   methods: {
     ...mapActions('kelasAbsensi', ['setStatus', 'deleteStatus', 'getDataSantri']),
@@ -251,7 +195,7 @@ export default {
       this.$store.dispatch("asramaAbsensi/getAbsensi", kelas);
     },
     applyFilter() {
-      this.filteredData;
+      this.uniqueLesson;
     }
   },
 };
@@ -279,12 +223,8 @@ export default {
   align-items: center;
 }
 
-tr th, tr td {
+tr th,
+tr td {
   white-space: nowrap;
 }
-
-/* .box-radio input:checked+label {
-  background: grey;
-  color: #fff;
-} */
 </style>

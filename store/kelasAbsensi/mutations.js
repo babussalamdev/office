@@ -2,11 +2,15 @@ export default {
   setSelectedMapel(state, value) {
     state.selectedMapel = value
   },
+  setSelectedJam(state, value) {
+    state.selectedJam = value
+  },
   setSantri(state, value) {
     state.santri = value
   },
   setSelect(state, value) {
     state.select = value
+    state.selectedJam = ''
   },
   setDataSantri(state, value) {
     state.santri = value
