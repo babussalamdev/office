@@ -1,8 +1,15 @@
 <template>
   <div class="animate__animated animate__fadeInUp">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h2 class="mb-0">Lagger Mapel</h2>
-      <button class="btn btn-success border-0">Export</button>
+    <div class="row mb-3">
+      <div class="col-12 col-md-6 mb-3 mb-md-0 d-flex align-items-center">
+        <h2 class="mb-0">Lagger Mapel</h2>
+      </div>
+      <div class="col-12 col-md-6 mb-3 mb-md-0 d-flex justify-content-end gap-2">
+        <select name="" id="" class="form-select">
+          <option value="all">All</option>
+        </select>
+        <button class="btn btn-success border-0">Export</button>
+      </div>
     </div>
     <div class="table-responsive" ref="input">
       <table class="table table-hover table-striped">
@@ -56,7 +63,7 @@ export default {
       if (this.santri.length === 0) {
         return [];
       }
-      
+
       const firstObject = this.santri[0];
       const allKeys = Object.keys(firstObject);
       // Filter key untuk menghilangkan "Nama" dan "SK"

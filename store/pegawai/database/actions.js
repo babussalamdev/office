@@ -159,15 +159,24 @@ export default {
       Program: value.unit,
       Value: value.condition
     }
-    const result = await this.$apiBase.$put(
-      `update-pegawai?subject=Pengajar&username=${user}&sk=${key}`,
-      data
-    );
-    if (result) {
-      result['unit'] = value.unit
-      result['index'] = value.key
-      commit('setStatusPengajar', result)
+    try {
+      const result = await this.$apiBase.$put(
+        `update-pegawai?subject=Pengajar&username=${user}&sk=${key}`,
+        data
+      );
+      if (result) {
+        result['unit'] = value.unit
+        result['index'] = value.key
+        commit('setStatusPengajar', result)
+        dispatch('index/submitLoad', null, { root: true })
+      }
+    } catch (error) {
       dispatch('index/submitLoad', null, { root: true })
+      Swal.fire({
+        title: 'Error',
+        text: error,
+        icon: 'error'
+      });
     }
   },
   async setStatusPengampu({ commit, dispatch }, value) {
@@ -196,7 +205,7 @@ export default {
       Program: value.unit,
       Value: value.condition
     }
-    console.log(data)
+    // console.log(data)
     // const result = await this.$axios.$put(
     //     `update-pegawai?subject=Personalia&username=${user}&id=${key}`,
     //     data

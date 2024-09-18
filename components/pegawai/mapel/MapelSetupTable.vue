@@ -8,7 +8,7 @@
         <div class="col-12 col-md-6 d-flex justify-content-end">
           <div class="input-group" style="font-size: 12px;" v-if="mapel.length > 0">
             <span class="input-group-text material-icons" style="font-size: 12px;"> search </span>
-            <input type="text" class="form-control" v-model="search" style="font-size: 12px;">
+            <input type="text" class="form-control" v-model="search" style="font-size: 12px;" placeholder="search by pengajar">
           </div>
           <select name="Mapel" id="mapel" v-model="listKelas" @change="kelasLoad" class="form-select select" required>
             <option value="" selected disabled>Kelas</option>
@@ -56,6 +56,22 @@
           </tbody>
         </table>
       </div>
+      <div class="btn-group text-center float-end mt-3 mb-5" role="group">
+      <button @click="page = 1" :disabled="page === 1" type="button" class="btn btn-primary btn-sm">
+        &laquo;
+      </button>
+      <button @click="page--" :disabled="page === 1" type="button" class="btn btn-primary  btn-sm">
+        Prev
+      </button>
+      <button class="btn btn-dark  btn-sm disabled">{{ `${page}` }}</button>
+      <button @click="page++" :disabled="page >= Math.ceil(mapel.length / perPage)" class="btn btn-primary  btn-sm">
+        Next
+      </button>
+      <button @click="page = Math.ceil(mapel.length / perPage)"
+        :disabled="page >= Math.ceil(mapel.length / perPage)" type="button" class="btn btn-primary  btn-sm">
+        &raquo;
+      </button>
+    </div>
     </div>
   </div>
 </template>
