@@ -3,9 +3,9 @@
     <div>
       <div class="row mb-3">
         <div class="col-12 col-md-6 mb-3 mb-md-0 d-flex align-items-center">
-          <h2>Absensi Asrama</h2>
+          <h2>List Izin Asrama</h2>
         </div>
-        <div class="col-12 col-md-6 d-flex flex-column flex-md-row gap-2 gap-md-0 justify-content-end">
+        <!-- <div class="col-12 col-md-6 d-flex flex-column flex-md-row gap-2 gap-md-0 justify-content-end">
           <a href="javascript:;" class="btn btn-sm btn-primary me-2" v-if="permissions.includes('izin')">Izin</a>
           <div class="input-group" v-if="santri.length > 0">
             <label for="search" class="input-group-text">
@@ -20,7 +20,7 @@
               {{ data }}
             </option>
           </select>
-        </div>
+        </div> -->
       </div>
       <div class="table-responsive">
         <!-- Modal -->
@@ -32,6 +32,7 @@
               <th scope="col">Status</th>
               <th scope="col">Catatan</th>
               <th scope="col">Waktu</th>
+              <th scope="col">PIC</th>
               <th scope="col" class="text-end">Action</th>
             </tr>
           </thead>
@@ -39,63 +40,70 @@
             <tr v-for="(data, index) in filteredDatas" :key="index">
               <td class="text-capitalize align-middle">
                 <h1>{{ data.Nama }}</h1>
-                <p class="mt-1 text-secondary">{{ data.Nis }}</p>
               </td>
               <td class="text-capitalize align-middle">
-                <i class="material-icons" :class="data.Logs?.asrama?.status === 'sekolah'
+                <i class="material-icons" :class="data.Status === 'sekolah'
                   ? 'text-success'
-                  : data.Logs?.asrama?.status === 'rumah'
+                  : data.Status === 'rumah'
                     ? 'text-secondary'
-                    : data.Logs?.asrama?.status === 'sakit'
+                    : data.Status === 'sakit'
                       ? 'text-warning'
-                      : data.Logs?.asrama?.status === 'izin'
+                      : data.Status === 'izin'
                         ? 'text-primary'
                         : 'text-danger'
                   ">{{
-                    data.Logs?.asrama?.status === "sekolah"
+                    data.Status === "sekolah"
                       ? " school "
-                      : data.Logs?.asrama?.status === "rumah"
+                      : data.Status === "rumah"
                         ? " villa "
-                        : data.Logs?.asrama?.status === "sakit"
+                        : data.Status === "sakit"
                           ? " medication "
-                          : data.Logs?.asrama?.status === "izin"
+                          : data.Status === "izin"
                             ? "hourglass_top"
                             : " person_off "
                   }}</i>
               </td>
               <td class="text-capitalize align-middle">
-                {{ data.Logs?.asrama?.note === '' ? '-' : data.Logs?.asrama?.note }}
+                {{ data.Note === '' ? '-' : data.Note }}
               </td>
               <td class="text-capitalize align-middle">
-                <span v-if="data.Logs?.asrama?.time === ''">-</span>
-                <h1>{{ data.Logs?.asrama?.time?.split(" ")[0] }}</h1>
+                <span v-if="data.UpdatedAt === ''">-</span>
+                <h1>{{ data.UpdatedAt.split(" ")[0] }}</h1>
                 <p class="mt-1 text-secondary">
-                  {{ data.Logs?.asrama?.time?.split(" ")[1] }}
+                  {{ data.UpdatedAt.split(" ")[1] }}
                 </p>
               </td>
-              <td class="text-end align-middle">
+              <td class="text-capitalize align-middle">
+                {{ data.PIC === '' ? '-' : data.PIC }}
+              </td>
+              <td class="text-end">
+                <a href="javascript:;" @click="deleteItem(data.SK)">
+                  <button style="font-size: 12px;" class="btn btn-sm btn-danger">delete</button>
+                </a>
+              </td>
+              <!-- <td class="text-end align-middle">
                 <a href="javascript:;" class="bg-success"
-                  v-if="permissions.includes('sekolah') && data.Logs?.asrama?.status !== 'sekolah'"
+                  v-if="permissions.includes('sekolah') && data.Status !== 'sekolah'"
                   @click="absen(index, 'sekolah')">
                   <i class="material-icons"> school </i> Sekolah</a>
                 <a href="javascript:;" class="bg-danger"
-                  v-if="permissions.includes('absen') && data.Logs?.asrama?.status !== 'absen'"
+                  v-if="permissions.includes('absen') && data.Status !== 'absen'"
                   @click="absen(index, 'absen')">
                   <i class="material-icons"> person_off </i>
                   Absen</a>
                 <a href="javascript:;" class="bg-warning"
-                  v-if="permissions.includes('sakit') && data.Logs?.asrama?.status !== 'sakit'"
+                  v-if="permissions.includes('sakit') && data.Status !== 'sakit'"
                   @click="absen(index, 'sakit')">
                   <i class="material-icons"> medication </i> Sakit</a>
                 <a href="javascript:;" class="bg-secondary"
-                  v-if="permissions.includes('rumah') && data.Logs?.asrama?.status !== 'rumah'"
+                  v-if="permissions.includes('rumah') && data.Status !== 'rumah'"
                   @click="absen(index, 'rumah')">
                   <i class="material-icons"> villa </i> Pulang</a>
                 <a href="javascript:;" class="bg-primary"
-                  v-if="permissions.includes('izin') && data.Logs?.asrama?.status !== 'izin'"
+                  v-if="permissions.includes('izin') && data.Status !== 'izin'"
                   @click="absen(index, 'izin')">
                   <i class="material-icons"> villa </i> Izin</a>
-              </td>
+              </td> -->
             </tr>
           </tbody>
         </table>
@@ -109,10 +117,10 @@
         Prev
       </button>
       <button class="btn btn-dark  btn-sm disabled">{{ `${page ? page : 1}` }}</button>
-      <button @click="page++" :disabled="page >= Math.ceil(santri?.length / perPage)" class="btn btn-primary  btn-sm">
+      <button @click="page++" :disabled="page >= Math.ceil(santriIzin?.length / perPage)" class="btn btn-primary  btn-sm">
         Next
       </button>
-      <button @click="page = Math.ceil(santri.length / perPage)" :disabled="page >= Math.ceil(santri.length / perPage)"
+      <button @click="page = Math.ceil(santriIzin.length / perPage)" :disabled="page >= Math.ceil(santriIzin.length / perPage)"
         type="button" class="btn btn-primary  btn-sm">
         &raquo;
       </button>
@@ -121,55 +129,45 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapGetters } from "vuex";
+import { mapState, mapMutations, mapGetters, mapActions } from "vuex";
 
 export default {
-  computed: {
-    ...mapState("asramaAbsensi", ["santri", "permissions", "select", 'table', 'perPage']),
-    ...mapGetters('asramaAbsensi', ['getSelectKelas', 'filteredDatas', 'getPage', 'getSearch']),
-    search: {
-      get() {
-        return this.getSearch
-      },
-      set(value) {
-        const obj = { key: 'search', value }
-        this.$store.commit('asramaAbsensi/setState', obj)
-      }
-    },
-    page: {
-      get() {
-        return this.getPage
-      },
-      set(value) {
-        const obj = { key: 'page', value }
-        this.$store.commit('asramaAbsensi/setState', obj)
-      }
-    },
-    selectKelas: {
-      get() {
-        return this.getSelectKelas
-      },
-      set(value) {
-        const obj = { key: 'selectKelas', value }
-        this.$store.commit('asramaAbsensi/setState', obj)
-      }
+  data() {
+    return {
+      search: '',
+      page: 1,
+      perPage: 10,
+      table: []
     }
+  },
+  computed: {
+    ...mapState("asramaAbsensi", ['santriIzin']),
+    ...mapGetters('asramaAbsensi', []),
+    filteredDatas() {
+      const table = this.santriIzin.filter((data) => {
+        return data.Nama.toLowerCase().includes(this.search.toLowerCase());
+      });
+      let start = (this.page - 1) * this.perPage;
+      let end = start + this.perPage;
+      return table.slice(start, end);
+    },
   },
 
   methods: {
-    ...mapMutations('asramaAbsensi', ['setState']),
-    absen(index, type) {
-      $("#modalAbsen").modal("show");
-      const data = {
-        santri: this.santri[index],
-        type: type,
-      };
-      const obj = { key: 'updateData', value: data }
-      this.setState(obj)
-    },
-    getAbsensi() {
-      this.$store.dispatch("asramaAbsensi/getAbsensi");
-    },
+    ...mapActions('asramaAbsensi', ['deleteItem'])
+    // ...mapMutations('asramaAbsensi', ['setState']),
+    // absen(index, type) {
+    //   $("#modalAbsen").modal("show");
+    //   const data = {
+    //     santri: this.santri[index],
+    //     type: type,
+    //   };
+    //   const obj = { key: 'updateData', value: data }
+    //   this.setState(obj)
+    // },
+    // getAbsensi() {
+    //   this.$store.dispatch("asramaAbsensi/getAbsensi");
+    // },
   },
 };
 </script>

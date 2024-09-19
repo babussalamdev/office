@@ -42,24 +42,19 @@ export default {
       return item;
     });
 
-
-
-    // Mengganti data santri lama dengan data yang telah diperbarui
     state.santri = updatedSantri;
+    state.updateData = ''
 
     $("#santriAbsenInput")[0].reset()
     $("#modalAbsen").modal("hide");
-    // data['asrama'] = value.Logs.asrama
-    // data['asramaNote'] = value.Logs.asramaNote
-    // data['asramaTime'] = value.Logs.asramaTime
-
-    // const updateData = state.santri.map((item, index) => {
-    //     if (index === i) {
-    //         return data
-    //     }
-    //     return item
-    // })
-    // console.log(updateData)
-    // state.santri = updateData
   },
+  updateAbsenSantri(state, value) {
+    $("#santriAbsenInput")[0].reset()
+    $("#modalAbsen").modal("hide");
+    state.updateData = ''
+  },
+  deleteIzin(state, sk) {
+    const i = state.santriIzin.findIndex((x) => x.SK === sk)
+    state.santriIzin.splice(i, 1)
+  }
 }

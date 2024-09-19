@@ -139,4 +139,3 @@ const convertToCapitalizedFormat = text => {
     ).join('');
   }
 };
-

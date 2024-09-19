@@ -120,6 +120,12 @@
                   <span class="text animate__animated animate__fadeInRight">Absensi</span>
                 </nuxt-link>
               </li>
+              <li v-if="permissionsIzin.includes('izin')">
+                <nuxt-link to="/asrama/antrian"
+                  class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Antrian Izin</span>
+                </nuxt-link>
+              </li>
               <!-- waktu tidur -->
               <!-- <li>
                 <nuxt-link to="/asrama/waktutidur"
@@ -578,6 +584,9 @@ export default {
     ...mapState("index", ["unit", "permissions", "pengajar", "pengampu", "personalia",]),
     ...mapState("sidebar", ["activeMenu", "listAsrama", "listTahfidz", "listSettings", 'listEkskull', "listKelas", "listReport", 'listLaundry',
       "absensiSubList", "santriSubList", "pegawaiSubList", "databaseSubList", 'tahfidzSubList', 'tahfidz2SubList', 'isSidebar', 'isSidebarOpen']),
+    permissionsIzin() {
+      return this.$store.state.asramaAbsensi.permissions
+    },
     hasPersonalia() {
       return this.personalia === 'on' ? true : false
     },

@@ -1,3 +1,6 @@
+const today = new Date()
+const formattedDate = today.toISOString().split('T')[0]
+
 export default () => ({
   santri: [],
   permissions: [],
@@ -7,5 +10,9 @@ export default () => ({
   btn: true,
   page: 1,
   perPage: 10,
-  search: ''
+  search: '',
+  dateIzin: formattedDate,
+
+  // izin
+  santriIzin: []
 })

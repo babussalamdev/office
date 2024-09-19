@@ -15,5 +15,8 @@ export default {
   },
   getSearch(state) {
     return state.search
+  },
+  getDateIzin(state) {
+    return state.dateIzin
   }
 }

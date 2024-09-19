@@ -12,9 +12,9 @@ export default {
   // meta: {
   //   permissions: ['report mapel']
   // },
-  // async asyncData({ store }) {
-  //   store.dispatch('report/lagger/changeUnit');
-  // },
+  async asyncData({ store }) {
+    store.dispatch('report/lagger/changeUnit');
+  },
 };
 </script>
 

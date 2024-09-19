@@ -27,7 +27,9 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { name: 'view-transition', content: 'same-origin' },
       { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
+      { name: 'format-detection', content: 'telephone=no' },
+      { name: 'google', content: 'notranslate' },
+      { name: 'robots', content: 'noindex, nofollow' },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/Logo-Mahad.png' },

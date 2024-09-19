@@ -4,11 +4,23 @@
       <div class="col-12 col-md-6 mb-3 mb-md-0 d-flex align-items-center">
         <h2 class="mb-0">Lagger Mapel</h2>
       </div>
-      <div class="col-12 col-md-6 mb-3 mb-md-0 d-flex justify-content-end gap-2">
-        <select name="" id="" class="form-select">
-          <option value="all">All</option>
-        </select>
-        <button class="btn btn-success border-0">Export</button>
+      <div class="col-12 col-md-6 mb-3 mb-md-0 d-flex flex-column flex-md-row justify-content-end gap-2">
+        <div class="input-group d-flex justify-content-end">
+          <!-- <select v-if="kelas" style="max-width: max-content !important;" name="" id="" class="form-select" v-model="selectedKelas" @change="changeUnit">
+            <option value="" selected disabled>Kelas</option>
+            <option v-for="(data, index) in kelas" :value="data.Nama" :key="index">{{ data.Nama }}</option>
+          </select> -->
+          <select style="max-width: max-content !important;" name="" id="" class="form-select" v-model="selectedMapel">
+            <option value="" selected disabled>Mapel</option>
+            <option v-for="(data, index) in mapelSelect[0]" :value="data" :key="index">{{ data }}</option>
+          </select>
+          <select style="max-width: max-content !important;" name="" id="" class="form-select" v-model="selectedQuran">
+            <option value="" selected disabled>Quran</option>
+            <option v-for="(data, index) in quranSelect[0]" :value="data" :key="index">{{ data }}</option>
+          </select>
+          <button class="btn btn-primary border-0" @click="getSantri" :disabled="selectedMapel && selectedQuran ? false : true">Submit</button>
+        </div>
+        <button class="btn btn-danger border-0" @click="changeUnit">Reset</button>
       </div>
     </div>
     <div class="table-responsive" ref="input">
@@ -36,8 +48,32 @@
 import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
 export default {
   computed: {
-    ...mapState('report/lagger', ['select', 'openEdit']),
-    ...mapGetters('report/lagger', ['getSelectedMapel', 'getDataSantri', 'getNilai']),
+    ...mapState('report/lagger', ['select', 'mapelSelect', 'quranSelect', 'kelas']),
+    ...mapGetters('report/lagger', ['getSelectedMapel', 'getSelectedQuran', 'getSelectedKelas', 'getDataSantri', 'getNilai', ]),
+    selectedMapel: {
+      get() {
+        return this.getSelectedMapel
+      },
+      set(value) {
+        this.$store.commit('report/lagger/setState', { key: 'selectedMapel', value })
+      }
+    },
+    selectedQuran: {
+      get() {
+        return this.getSelectedQuran
+      },
+      set(value) {
+        this.$store.commit('report/lagger/setState', { key: 'selectedQuran', value })
+      }
+    },
+    selectedKelas: {
+      get() {
+        return this.getSelectedKelas
+      },
+      set(value) {
+        this.$store.commit('report/lagger/setState', { key: 'selectedKelas', value })
+      }
+    },
     nilai: {
       get() {
         return this.getNilai
@@ -72,7 +108,7 @@ export default {
 
   },
   methods: {
-    ...mapActions('kelas/nilai', ['getSantri', 'setPenilaian']),
+    ...mapActions('report/lagger', ['getSantri', 'setPenilaian', 'changeUnit']),
   },
 };
 </script>

@@ -13,10 +13,14 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <div class="form-floating">
+              <div class="form-floating mb-3">
                 <textarea name="Note" class="form-control" style="height: 100px" placeholder="Leave a comment here"
                   id="floatingTextarea"></textarea>
                 <label for="floatingTextarea">Catatan</label>
+              </div>
+              <div v-if="updateData.type === 'izin'" class="mb-3">
+                <label for="tanggal" class="mb-2">Tanggal</label>
+                <input id="tanggal" class="form-control" v-model="dateIzin" type="date" required>
               </div>
             </div>
             <div class="modal-footer">
@@ -51,10 +55,19 @@
 
 <script>
 import Swal from "sweetalert2";
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
 export default {
   computed: {
-    ...mapState('asramaAbsensi', ['updateData', 'btn'])
+    ...mapState('asramaAbsensi', ['updateData', 'btn']),
+    ...mapGetters('asramaAbsensi', ['getDateIzin']),
+    dateIzin: {
+      get() {
+        return this.getDateIzin
+      },
+      set(value) {
+        this.$store.commit('asramaAbsensi/setState', { key: 'dateIzin', value })
+      }
+    }
   },
   methods: {
     ...mapActions('asramaAbsensi', ['santriAbsen'])
