@@ -14,7 +14,6 @@
                   name="oldPassword"
                   :type="type"
                   class="form-control"
-                  placeholder="6 Digit Angka"
                   required
                 />
                 <span
@@ -36,7 +35,6 @@
                   name="newPassword"
                   :type="type"
                   class="form-control"
-                  placeholder="6 Digit Angka"
                   required
                 />
                 <span
@@ -59,7 +57,6 @@
                   name="passConfirm"
                   :type="type"
                   class="form-control"
-                  placeholder="6 Digit Angka"
                   required
                 />
                 <span

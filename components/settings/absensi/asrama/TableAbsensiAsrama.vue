@@ -75,25 +75,25 @@
               <td class="text-end align-middle">
                 <a href="javascript:;" class="bg-success"
                   v-if="permissions.includes('sekolah') && data.Logs?.asrama?.status !== 'sekolah'"
-                  @click="absen(index, 'sekolah')">
+                  @click="absen(data.SK, 'sekolah')">
                   <i class="material-icons"> school </i> Sekolah</a>
                 <a href="javascript:;" class="bg-danger"
                   v-if="permissions.includes('absen') && data.Logs?.asrama?.status !== 'absen'"
-                  @click="absen(index, 'absen')">
+                  @click="absen(data.SK, 'absen')">
                   <i class="material-icons"> person_off </i>
                   Absen</a>
                 <a href="javascript:;" class="bg-warning"
                   v-if="permissions.includes('sakit') && data.Logs?.asrama?.status !== 'sakit'"
-                  @click="absen(index, 'sakit')">
+                  @click="absen(data.SK, 'sakit')">
                   <i class="material-icons"> medication </i> Sakit</a>
                 <a href="javascript:;" class="bg-secondary"
                   v-if="permissions.includes('rumah') && data.Logs?.asrama?.status !== 'rumah'"
-                  @click="absen(index, 'rumah')">
+                  @click="absen(data.SK, 'rumah')">
                   <i class="material-icons"> villa </i> Pulang</a>
                   {{  }}
                 <a href="javascript:;" class="bg-primary"
                   v-if="permissions.includes('izin') && data.Logs?.asrama?.status !== 'izin' && !data.Logs?.asrama?.antrian"
-                  @click="absen(index, 'izin')">
+                  @click="absen(data.SK, 'izin')">
                   <i class="material-icons"> villa </i> Izin</a>
               </td>
             </tr>
@@ -162,14 +162,15 @@ export default {
 
   methods: {
     ...mapMutations('asramaAbsensi', ['setState']),
-    absen(index, type) {
-      $("#modalAbsen").modal("show");
+    absen(sk, type) {
+      const index = this.santri.findIndex((x) => x.SK === sk)
       const data = {
         santri: this.santri[index],
         type: type,
       };
       const obj = { key: 'updateData', value: data }
       this.setState(obj)
+      $("#modalAbsen").modal("show");
     },
     getAbsensi() {
       this.$store.dispatch("asramaAbsensi/getAbsensi");

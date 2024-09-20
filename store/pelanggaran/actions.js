@@ -18,11 +18,11 @@ export default {
       let reqSantri = ''
       if (subject === 'asrama') {
         reqSantri = this.$apiSantri.$get(
-          `get-absensi-sisalam?subject=${subject}&program=${program}&value=${asrama}`
+          `get-pelanggaran-sisalam?subject=${subject}&program=${program}&value=${asrama}`
         );
       } else {
         reqSantri = this.$apiSantri.$get(
-          `get-pelanggaran-sisalam?subject=${subject}&program=smp&value=${kelas}`
+          `get-pelanggaran-sisalam?subject=${subject}&program=${program}&value=${kelas}`
         );
       }
       const reqPermissions = this.$apiBase.$get(
