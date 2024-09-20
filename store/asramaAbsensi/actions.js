@@ -95,7 +95,9 @@ export default {
           })
           const today = new Date()
           const formattedDate = today.toISOString().split('T')[0]
-          commit("updateAbsenSantri", result);
+          result["SK"] = state.updateData.santri.SK;
+          commit("updateAbsen", result);
+          // commit("updateAbsenSantri", result);
           commit('setState', { key: 'dateIzin', value: formattedDate })
         }
       } else {
@@ -135,32 +137,82 @@ export default {
 
   // list izin
   async changeUnitSecond({ commit, state, dispatch }) {
+    dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
     try {
       const result = await this.$apiSantri.$get(`get-logs?type=antrian&program=${program}`)
       commit('setState', { key: 'santriIzin', value: result })
+      dispatch('index/submitLoad', null, { root: true })
     } catch (error) {
-
+      dispatch('index/submitLoad', null, { root: true })
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        text: error,
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   },
   async deleteItem({ commit, state, dispatch }, sk) {
-    dispatch('index/submitLoad', null, { root: true })
-    try {
-      const skList = sk.replace(/#/g, '%23')
-      const result = await this.$apiSantri.$delete(`delete-logs?type=antrian&sk=${skList}`)
-      if (result) {
-        commit('deleteIzin', sk)
+    const i = state.santriIzin.findIndex((x) => x.SK === sk)
+    const name = state.santriIzin[i].Nama
+    const skList = sk.replace(/#/g, '%23')
+    const result = await Swal.fire({
+      title: name,
+      text: "Data izin akan dihapus!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+    if (result.isConfirmed) {
+      dispatch('index/submitLoad', null, { root: true })
+      try {
+        const datas = await this.$apiSantri.$delete(`delete-logs?type=antrian&sk=${skList}`)
+        if (datas) {
+          commit('deleteIzin', sk)
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            text: 'berhasil dihapus',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          dispatch('index/submitLoad', null, { root: true })
+        }
+      } catch (error) {
+        dispatch('index/submitLoad', null, { root: true })
         Swal.fire({
           position: "center",
-          icon: "success",
-          text: 'berhasil dihapus',
+          icon: "error",
+          text: error,
           showConfirmButton: false,
           timer: 1500,
         });
-        dispatch('index/submitLoad', null, { root: true })
+      }
+    }
+  },
+  async izinUpdate({ commit, state, dispatch }, event) {
+    commit('setLoad')
+    const data = Object.fromEntries(new FormData(event.target))
+    const skSantri = state.updateDataIzin.SK.replace(/#/g, '%23')
+    try {
+      const result = await this.$apiSantri.$put(`update-logs?type=antrian&sk=${skSantri}`, data)
+      if (result) {
+        commit('setLoad')
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          text: "Data berhasil diupdate",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        result["SK"] = state.updateDataIzin.SK;
+        commit("updateIzin", result);
       }
     } catch (error) {
-      dispatch('index/submitLoad', null, { root: true })
       Swal.fire({
         position: "center",
         icon: "error",

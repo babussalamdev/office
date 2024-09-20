@@ -50,7 +50,6 @@ export default {
     data['Program'] = localStorage.getItem('program')
     const key = state.updateData.SK.replace('#', '%23');
     try {
-      console.log(data)
       const result = await this.$apiBase.$put(
         `update-settings?sk=${key}&type=absensi`,
         data

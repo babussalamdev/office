@@ -56,5 +56,25 @@ export default {
   deleteIzin(state, sk) {
     const i = state.santriIzin.findIndex((x) => x.SK === sk)
     state.santriIzin.splice(i, 1)
+  },
+  updateItem(state, sk) {
+    const i = state.santriIzin.findIndex((x) => x.SK === sk)
+    state.updateDataIzin = state.santriIzin[i]
+    $("#modalIzin").modal("show");
+  },
+  updateIzin(state, data) {
+    const i = state.santriIzin.findIndex((x) => x.SK === data.SK)
+    const updatedIzin = state.santriIzin.map((item, index) => {
+      if (index === i) {
+        // Salinan data yang diperbarui
+        const updatedItem = { ...item, ...data };
+
+        return updatedItem;
+      }
+      return item;
+    });
+    state.santriIzin = updatedIzin
+    $("#modalIzin").modal("hide");
+    $('#santriIzinUpdate')[0].reset()
   }
 }

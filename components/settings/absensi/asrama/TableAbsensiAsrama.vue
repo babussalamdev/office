@@ -6,7 +6,6 @@
           <h2>Absensi Asrama</h2>
         </div>
         <div class="col-12 col-md-6 d-flex flex-column flex-md-row gap-2 gap-md-0 justify-content-end">
-          <a href="javascript:;" class="btn btn-sm btn-primary me-2" v-if="permissions.includes('izin')">Izin</a>
           <div class="input-group" v-if="santri.length > 0">
             <label for="search" class="input-group-text">
               <i class="material-icons">search</i>
@@ -91,8 +90,9 @@
                   v-if="permissions.includes('rumah') && data.Logs?.asrama?.status !== 'rumah'"
                   @click="absen(index, 'rumah')">
                   <i class="material-icons"> villa </i> Pulang</a>
+                  {{  }}
                 <a href="javascript:;" class="bg-primary"
-                  v-if="permissions.includes('izin') && data.Logs?.asrama?.status !== 'izin'"
+                  v-if="permissions.includes('izin') && data.Logs?.asrama?.status !== 'izin' && !data.Logs?.asrama?.antrian"
                   @click="absen(index, 'izin')">
                   <i class="material-icons"> villa </i> Izin</a>
               </td>
@@ -127,6 +127,10 @@ export default {
   computed: {
     ...mapState("asramaAbsensi", ["santri", "permissions", "select", 'table', 'perPage']),
     ...mapGetters('asramaAbsensi', ['getSelectKelas', 'filteredDatas', 'getPage', 'getSearch']),
+    tanggalSekarang() {
+      const today = new Date
+      return today.toISOString().split('T')[0]
+    },
     search: {
       get() {
         return this.getSearch

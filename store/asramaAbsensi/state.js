@@ -14,5 +14,6 @@ export default () => ({
   dateIzin: formattedDate,
 
   // izin
-  santriIzin: []
+  santriIzin: [],
+  updateDataIzin: ''
 })

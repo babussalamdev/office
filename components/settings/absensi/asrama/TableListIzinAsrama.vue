@@ -67,43 +67,17 @@
                 {{ data.Note === '' ? '-' : data.Note }}
               </td>
               <td class="text-capitalize align-middle">
-                <span v-if="data.UpdatedAt === ''">-</span>
-                <h1>{{ data.UpdatedAt.split(" ")[0] }}</h1>
-                <p class="mt-1 text-secondary">
-                  {{ data.UpdatedAt.split(" ")[1] }}
-                </p>
+                {{ data.Date }}
               </td>
               <td class="text-capitalize align-middle">
                 {{ data.PIC === '' ? '-' : data.PIC }}
               </td>
               <td class="text-end">
-                <a href="javascript:;" @click="deleteItem(data.SK)">
-                  <button style="font-size: 12px;" class="btn btn-sm btn-danger">delete</button>
-                </a>
+                <button @click="updateItem(data.SK)" style="font-size: 12px;"
+                  class="btn btn-sm btn-warning">edit</button>
+                <button @click="deleteItem(data.SK)" style="font-size: 12px;" class="btn btn-sm btn-danger">delete
+                </button>
               </td>
-              <!-- <td class="text-end align-middle">
-                <a href="javascript:;" class="bg-success"
-                  v-if="permissions.includes('sekolah') && data.Status !== 'sekolah'"
-                  @click="absen(index, 'sekolah')">
-                  <i class="material-icons"> school </i> Sekolah</a>
-                <a href="javascript:;" class="bg-danger"
-                  v-if="permissions.includes('absen') && data.Status !== 'absen'"
-                  @click="absen(index, 'absen')">
-                  <i class="material-icons"> person_off </i>
-                  Absen</a>
-                <a href="javascript:;" class="bg-warning"
-                  v-if="permissions.includes('sakit') && data.Status !== 'sakit'"
-                  @click="absen(index, 'sakit')">
-                  <i class="material-icons"> medication </i> Sakit</a>
-                <a href="javascript:;" class="bg-secondary"
-                  v-if="permissions.includes('rumah') && data.Status !== 'rumah'"
-                  @click="absen(index, 'rumah')">
-                  <i class="material-icons"> villa </i> Pulang</a>
-                <a href="javascript:;" class="bg-primary"
-                  v-if="permissions.includes('izin') && data.Status !== 'izin'"
-                  @click="absen(index, 'izin')">
-                  <i class="material-icons"> villa </i> Izin</a>
-              </td> -->
             </tr>
           </tbody>
         </table>
@@ -117,14 +91,16 @@
         Prev
       </button>
       <button class="btn btn-dark  btn-sm disabled">{{ `${page ? page : 1}` }}</button>
-      <button @click="page++" :disabled="page >= Math.ceil(santriIzin?.length / perPage)" class="btn btn-primary  btn-sm">
+      <button @click="page++" :disabled="page >= Math.ceil(santriIzin?.length / perPage)"
+        class="btn btn-primary  btn-sm">
         Next
       </button>
-      <button @click="page = Math.ceil(santriIzin.length / perPage)" :disabled="page >= Math.ceil(santriIzin.length / perPage)"
-        type="button" class="btn btn-primary  btn-sm">
+      <button @click="page = Math.ceil(santriIzin.length / perPage)"
+        :disabled="page >= Math.ceil(santriIzin.length / perPage)" type="button" class="btn btn-primary  btn-sm">
         &raquo;
       </button>
     </div>
+    <ModalListIzinAsrama />
   </div>
 </template>
 
@@ -154,20 +130,8 @@ export default {
   },
 
   methods: {
-    ...mapActions('asramaAbsensi', ['deleteItem'])
-    // ...mapMutations('asramaAbsensi', ['setState']),
-    // absen(index, type) {
-    //   $("#modalAbsen").modal("show");
-    //   const data = {
-    //     santri: this.santri[index],
-    //     type: type,
-    //   };
-    //   const obj = { key: 'updateData', value: data }
-    //   this.setState(obj)
-    // },
-    // getAbsensi() {
-    //   this.$store.dispatch("asramaAbsensi/getAbsensi");
-    // },
+    ...mapActions('asramaAbsensi', ['deleteItem']),
+    ...mapMutations('asramaAbsensi', ['updateItem'])
   },
 };
 </script>

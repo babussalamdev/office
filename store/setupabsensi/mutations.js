@@ -26,7 +26,6 @@ export default {
   updateStruktur(state, value) {
     const sk = value.SK.replace('%23', '#')
     const i = state.absensi.findIndex((x) => x.SK === sk)
-    console.log(value)
     const data = state.absensi[i];
     data.Struktur = value.Struktur
     data.Permissions = value.Permissions

@@ -11,10 +11,16 @@
 export default {
   middleware: 'permission',
   meta: {
-      Permissions: ['page asrama']
+    Permissions: ['page asrama']
   },
   async asyncData({ store, redirect }) {
-    store.dispatch(`asramaAbsensi/changeUnitSecond`);
+    const data = store.state.asramaAbsensi.permissions
+
+    if ( data.includes('izin')) {
+      store.dispatch(`asramaAbsensi/changeUnitSecond`);
+    } else {
+      redirect('/asrama/absensi')
+    }
   },
 };
 </script>
