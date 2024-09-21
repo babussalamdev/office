@@ -12,7 +12,8 @@ export default {
       dispatch('index/submitLoad', null, { root: true })
     }
   },
-  async getDetail({commit}, data) {
+  async getDetail({commit, dispatch}, data) {
+    dispatch('index/submitLoad', null, { root: true })
     const sk = data.replace('#', '%23')
     const subject = localStorage.getItem('subject')
     const reqDetail = this.$apiSantri.$get(`get-logs?subject=${subject}&sksantri=${sk}`)
@@ -20,6 +21,7 @@ export default {
     const [resSurah, resDetail] = await Promise.all([reqSurah, reqDetail])
     commit('setDetailSantri', resDetail)
     commit('setSurah', resSurah)
+    dispatch('index/submitLoad', null, { root: true })
   },
   // async kelasLoad({ commit, state }) {
   //   const program = localStorage.getItem('program')
