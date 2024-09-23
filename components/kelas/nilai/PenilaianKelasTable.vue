@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div class="animate__animated animate__fadeInUp">
       <h2 class="mb-3 mb-md-3">Penilaian Kelas</h2>
       <div class="head row mb-3">
@@ -41,8 +40,8 @@
           <div v-else-if="santri.length > 0">
             <button class="btn btn-sm btn-warning" @click="handleExport(santri)"><i
                 class="bi bi-upload me-2"></i>Export</button>
-            <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
-              data-bs-target="#modalImport"><i class="bi bi-download me-2"></i>Import</button>
+            <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#modalImport"><i
+                class="bi bi-download me-2"></i>Import</button>
           </div>
         </div>
       </div>
@@ -82,6 +81,8 @@
 import Swal from "sweetalert2";
 import * as XLSX from 'xlsx';
 import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
+// import XLSX from 'xlsx';
+import ExcelJS from 'exceljs';
 export default {
   data() {
     return {
@@ -164,6 +165,7 @@ export default {
     },
     applyFilter() {
       this.filteredData
+      this.santri = []
     },
     setData(event, data) {
       const dataOutside = this.$refs[data];
@@ -269,40 +271,67 @@ export default {
       }
     },
 
-    //
     handleExport(data) {
       if (data.length === 0) return;
 
-      // Mendapatkan semua kunci dari Penilaian untuk menentukan kolom dinamis
       const penilaianKeys = new Set();
       data.forEach(item => {
         Object.keys(item.Penilaian).forEach(key => penilaianKeys.add(key));
       });
 
-      // Membuat array kolom yang mencakup 'Nama', 'SK', semua kunci Penilaian, dan 'TotalScore'
       const columns = ['Nama', 'SK', ...penilaianKeys];
+      const processedData = data.map(item => ({
+        Nama: item.Nama,
+        SK: item.SK,
+        ...item.Penilaian,
+      }));
 
-      // Mengolah data
-      const processedData = data.map(item => {
-        return {
-          Nama: item.Nama,
-          SK: item.SK,
-          ...item.Penilaian,
-        };
+      const workbook = new ExcelJS.Workbook();
+      const worksheet = workbook.addWorksheet(`${this.selectedMapel.Nama} - ${this.selectedMapel.Kelas}.xlsx`);
+
+      // Menambahkan header
+      worksheet.addRow(columns);
+
+      // Menambahkan data
+      processedData.forEach(row => {
+        worksheet.addRow(Object.values(row));
       });
 
-      // Membuat worksheet dari data yang diproses
-      const ws = XLSX.utils.json_to_sheet(processedData, { header: columns });
+      // Mengatur sel di baris lain menjadi tidak terkunci
+      for (let rowIndex = 2; rowIndex <= processedData.length + 1; rowIndex++) { // Mulai dari 2
+        const row = worksheet.getRow(rowIndex);
 
-      // Membuat workbook dan menambahkan worksheet ke dalamnya
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+        // loop melalui penilaianKeys untuk sel dinamis
+        let keyIndex = 0;
+        penilaianKeys.forEach(() => {
+          const cell = row.getCell(keyIndex + 3); // Tambah 3 untuk menggeser kolom sesuai header
+          cell.protection = { locked: false };
+          keyIndex++;
+        });
+      }
+
+      // Mengaktifkan proteksi pada worksheet
+      worksheet.protect('user123');
 
       // Menyimpan workbook sebagai file Excel
-      XLSX.writeFile(wb, `${this.selectedMapel.Nama} - ${this.selectedMapel.Kelas}.xlsx`);
-    },
-  },
-};
+      // workbook.xlsx.writeFile(`${this.selectedMapel.Nama} - ${this.selectedMapel.Kelas}.xlsx`);
+      workbook.xlsx.writeBuffer()
+        .then((buffer) => {
+          const blob = new Blob([buffer], { type: 'application/octet-stream' });
+          const link = document.createElement('a');
+          link.href = window.URL.createObjectURL(blob);
+          link.download = `${this.selectedMapel.Nama} - ${this.selectedMapel.Kelas}.xlsx`;
+          document.body.appendChild(link);
+          link.click(); // Simulasikan klik untuk mendownload
+          document.body.removeChild(link); // Hapus link setelah digunakan
+        })
+        .catch((error) => {
+          console.error('Terjadi kesalahan saat menyimpan file:', error);
+        });
+    }
+
+  }
+}
 </script>
 
 <style scoped>

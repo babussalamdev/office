@@ -45,7 +45,7 @@
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
                 <i class="material-icons animate__animated animate__fadeInRight">
-                  menu_book
+                  school
                 </i>
                 <span class="text animate__animated animate__fadeInRight">Kelas</span>
               </span>
@@ -141,7 +141,7 @@
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
                 <i class="material-icons animate__animated animate__fadeInRight">
-                  accessibility
+                  auto_stories
                 </i>
                 <span class="text animate__animated animate__fadeInRight">Tahfidz</span>
               </span>
@@ -267,7 +267,7 @@
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
                 <i class="material-icons animate__animated animate__fadeInRight">
-                  account_box
+                  analytics
                 </i>
                 <span class="text animate__animated animate__fadeInRight">Report</span>
               </span>
