@@ -1,3 +1,4 @@
+import Swal from "sweetalert2"
 export default {
   async changeUnit({ commit, state, dispatch }) {
     dispatch('index/submitLoad', null, { root: true })
@@ -7,7 +8,10 @@ export default {
     const kelas = this.$auth.user.Kelas[program]
 
     if ( kelas === 'off') {
-      console.log('gagal')
+      Swal.fire({
+        icon: "error",
+        title: 'Anda bukan wali kelas',
+      });
     }
     try {
       const reqPenilaian = this.$apiBase.$get(`get-settings?program=${program}&type=penilaian`)

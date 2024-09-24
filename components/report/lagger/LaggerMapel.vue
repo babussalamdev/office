@@ -18,13 +18,15 @@
             <option value="" selected disabled>Quran</option>
             <option v-for="(data, index) in quranSelect[0]" :value="data" :key="index">{{ data }}</option>
           </select>
-          <button class="btn btn-primary border-0" @click="getSantri" :disabled="selectedMapel && selectedQuran ? false : true">Submit</button>
+          <button class="btn btn-primary border-0" @click="getSantri"
+            :disabled="selectedMapel && selectedQuran ? false : true">Submit</button>
         </div>
         <button class="btn btn-danger border-0" @click="changeUnit">Reset</button>
+        <button class="btn btn-sm btn-success" @click="exportToExcel()">Export</button>
       </div>
     </div>
     <div class="table-responsive" ref="input">
-      <table class="table table-hover table-striped">
+      <table class="table table-hover table-striped" ref="dataTable">
         <thead>
           <tr>
             <th scope="col">Nama</th>
@@ -46,10 +48,11 @@
 
 <script>
 import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
+import * as XLSX from 'xlsx';
 export default {
   computed: {
     ...mapState('report/lagger', ['select', 'mapelSelect', 'quranSelect', 'kelas']),
-    ...mapGetters('report/lagger', ['getSelectedMapel', 'getSelectedQuran', 'getSelectedKelas', 'getDataSantri', 'getNilai', ]),
+    ...mapGetters('report/lagger', ['getSelectedMapel', 'getSelectedQuran', 'getSelectedKelas', 'getDataSantri', 'getNilai',]),
     selectedMapel: {
       get() {
         return this.getSelectedMapel
@@ -104,11 +107,23 @@ export default {
       const allKeys = Object.keys(firstObject);
       // Filter key untuk menghilangkan "Nama" dan "SK"
       return allKeys.filter(key => !excludeKeys.includes(key));
-    }
-
+    },
   },
   methods: {
     ...mapActions('report/lagger', ['getSantri', 'setPenilaian', 'changeUnit']),
+    exportToExcel() {
+      // Ambil tabel dari ref
+      const ws = XLSX.utils.table_to_sheet(this.$refs.dataTable);
+
+      // Buat workbook baru
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Lagger Mapel');
+
+      // Generate file Excel
+      const program = localStorage.getItem('program')
+      const kelas = this.$auth.user.Kelas[program]
+      XLSX.writeFile(wb, `Lagger ${kelas}.xlsx`);
+    }
   },
 };
 </script>
