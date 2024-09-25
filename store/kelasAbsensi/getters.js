@@ -7,6 +7,9 @@ export default {
   },
   getSantri(state) {
     return state.santri
+  },
+  getDate(state) {
+    return state.dateNow
   }
   // getPagi(state) {
   //   return state.pagi

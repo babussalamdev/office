@@ -17,5 +17,6 @@ export default () => ({
     updateData: '',
     date: date,
     selectedMapel: '',
-    selectedJam: ''
+    selectedJam: '',
+    dateNow: date
 })

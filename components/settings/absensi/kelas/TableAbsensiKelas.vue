@@ -16,7 +16,7 @@
           </select>
           <select class="form-select" v-model="selectedJam" style="width: max-content;">
             <option value="" selected disabled>Jam</option>
-            <option v-for="(data, index) in selectedMapel?.Hari" :key="index" :value="data">{{ data }}</option>
+            <option v-for="(data, index) in selectedMapel?.Hari?.split(',')" :key="index" :value="data">{{ data }}</option>
           </select>
         </div>
       </div>
@@ -94,16 +94,16 @@ export default {
   computed: {
     ...mapState("kelasAbsensi", ["permissions", "select", 'date', 'updateData']),
     ...mapGetters('kelasAbsensi', ['getSelectedMapel', 'getSantri', 'getSelectedJam']),
-    hariIni() {
-      const today = new Date();
-      const hariIni = today.toLocaleDateString('id-ID', { weekday: 'long' }).toLowerCase();
-      return hariIni;
-    },
-    firstData() {
-      return this.select.filter(item =>
-        item.Hari.split(", ").some(day => day.includes(this.hariIni))
-      );
-    },
+    // hariIni() {
+    //   const today = new Date();
+    //   const hariIni = today.toLocaleDateString('id-ID', { weekday: 'long' }).toLowerCase();
+    //   return hariIni;
+    // },
+    // firstData() {
+    //   return this.select.filter(item =>
+    //     item.Hari.split(", ").some(day => day.includes(this.hariIni))
+    //   );
+    // },
     selectedMapel: {
       get() {
         return this.getSelectedMapel
@@ -130,11 +130,11 @@ export default {
     },
     uniqueClasses() {
       // Get unique classes from data
-      const classes = this.firstData.map(item => item.Kelas);
+      const classes = this.select.map(item => item.Kelas);
       return [...new Set(classes)];
     },
     filteredData() {
-      return this.firstData.filter(item => {
+      return this.select.filter(item => {
         const matchesClass = item.Kelas === this.selectedKelas;
         this.selectedMapel = '',
         this.selectedJam = ''
@@ -143,22 +143,29 @@ export default {
       });
     },
     uniqueLesson() {
-      return this.filteredData
-        .map(item => {
-          const hariList = item.Hari.split(", ");
-          const hariRelevan = hariList.find(hari => hari.includes(this.hariIni));
-          if (hariRelevan) {
-            const days = item?.Hari?.split(", ");
-            // return
-            return {
-              Nama: item.Nama,
-              SK: item.SK,
-              Hari: days.filter(day => day.includes(this.hariIni))
-            };
-          }
-          return null;
-        })
-        .filter(item => item !== null); // Remove any null values
+      return this.filteredData.map(item => {
+        return {
+          Nama: item.Nama,
+          SK: item.SK,
+          Hari: item.Hari
+        }
+      })
+      // return this.filteredData
+      //   .map(item => {
+      //     const hariList = item.Hari.split(", ");
+      //     // const hariRelevan = hariList.find(hari => hari.includes(this.hariIni));
+      //     const days = item?.Hari?.split(", ");
+      //     // return
+      //     return {
+      //       Nama: item.Nama,
+      //       SK: item.SK,
+      //       Hari: days.filter(day => day.includes(this.hariIni))
+      //     };
+      //     // if (hariRelevan) {
+      //     // }
+      //     // return null;
+      //   })
+      //   .filter(item => item !== null); // Remove any null values
     },
     scheduleMapel() {
       return this.uniqueLesson.find((x) => x.Nama === this.selectedMapel.Nama)

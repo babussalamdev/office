@@ -172,6 +172,12 @@ export default {
       } else {
         this.$router.push('/')
       }
+    } else if (name === 'kelas-absensi') {
+      if (permissions.includes('pengajar')) {
+        dispatch('kelasAbsensi/changeUnit', null, { root: true })
+      } else {
+        this.$router.push('/')
+      }
     }
   },
 }

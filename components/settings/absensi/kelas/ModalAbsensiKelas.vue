@@ -13,10 +13,14 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <div class="form-floating">
+              <div class="form-floating mb-3">
                 <textarea name="Note" class="form-control" style="height: 100px"
                   placeholder="Leave a comment here" id="floatingTextarea"></textarea>
                 <label for="floatingTextarea">Catatan</label>
+              </div>
+              <div>
+                <label class="mb-2">Tanggal</label>
+                <input type="date" class="form-control" v-model="dateNow">
               </div>
             </div>
             <div class="modal-footer">
@@ -42,7 +46,7 @@
 
 <script>
 import Swal from "sweetalert2";
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
 export default {
   data() {
     return {
@@ -50,7 +54,16 @@ export default {
     };
   },
   computed: {
-    ...mapState('kelasAbsensi', ['updateData'])
+    ...mapState('kelasAbsensi', ['updateData']),
+    ...mapGetters('kelasAbsensi', ['getDate']),
+    dateNow: {
+      get() {
+        return this.getDate
+      },
+      set(value) {
+        this.$store.commit('kelasAbsensi/setState', { key: 'dateNow', value })
+      }
+    }
   },
   methods: {
     async santriAbsen() {
@@ -65,7 +78,7 @@ export default {
       const program = localStorage.getItem("program");
       try {
         const result = await this.$apiSantri.$put(
-          `update-absensi-sisalam?sksantri=${skSantri}&type=${time}&thn=${tahun}&smstr=${semester}&program=${program}&subject=${namakelas}`,
+          `update-absensi-sisalam?sksantri=${skSantri}&type=${time}&thn=${tahun}&smstr=${semester}&program=${program}&subject=${namakelas}&date=${this.dateNow}`,
           data
         );
         if (result) {

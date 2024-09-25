@@ -3,8 +3,9 @@ import Swal from "sweetalert2"
 export default {
   async changeUnit({ commit, dispatch }, data) {
     dispatch('index/submitLoad', null, { root: true })
+    const program = localStorage.getItem('program')
     const resSelect = await this.$apiBase.$get(
-      `get-settings?type=absensikelas`
+      `get-settings?type=absensikelas&program=${program}`
     )
     if ( resSelect.length > 0 ) {
       commit('setSelect', resSelect);
@@ -36,7 +37,6 @@ export default {
       type: type
     }
     // console.log(data)
-    console.log(obj)
   },
   async deleteStatus({ commit, state, dispatch }, datas) {
     dispatch('index/submitLoad', null, { root: true })

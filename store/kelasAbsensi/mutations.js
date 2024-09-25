@@ -1,4 +1,7 @@
 export default {
+  setState(state, value) {
+    state[value.key] = value.value
+  },
   setSelectedMapel(state, value) {
     state.selectedMapel = value
   },
@@ -47,6 +50,18 @@ export default {
     });
 
     state.santri = updatedSantri;
+
+    const sekarang = new Date();
+
+    // Mendapatkan tanggal, bulan, dan tahun
+    const tanggal = sekarang.getDate().toString().padStart(2, '0');
+    const bulan = (sekarang.getMonth() + 1).toString().padStart(2, '0');
+    const tahun = sekarang.getFullYear();
+
+    // Membuat string untuk tanggal dengan format "DD/MM/YYYY"
+    const date = `${tahun}-${bulan}-${tanggal}`;
+
+    state.dateNow = date
   },
   deleteAbsen(state, value) {
     const i = state.santri.findIndex((x) => x.SK === value.SK)
