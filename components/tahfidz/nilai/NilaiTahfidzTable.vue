@@ -1,6 +1,12 @@
 <template>
   <div class="animate__animated animate__fadeInUp">
-    <h2 class="mb-3 mb-md-3">Penilaian Tahfidz</h2>
+    <div class="mb-3 d-flex align-items-center justify-content-between">
+      <h2>Penilaian Tahfidz{{ permissions.includes('report tahfidz') ? ' - koordinator' : '' }}</h2>
+      <select v-if="permissions.includes('report tahfidz')" class="form-select" v-model="selectedByKelas" @change="getByKelas()">
+        <option value="">kelas</option>
+        <option v-for="(data, index) in selectKelas" :value="data" :key="index">{{ data }}</option>
+      </select>
+    </div>
     <div class="table-responsive" ref="input">
       <table class="table table-hover table-striped">
         <thead>
@@ -55,8 +61,9 @@ export default {
     document.removeEventListener("click", event => this.setData(event, 'input'));
   },
   computed: {
-    ...mapState("tahfidznilai", ['select', 'openEdit', 'example', 'th', 'nilai']),
-    ...mapGetters('tahfidznilai', ['getSelectedMapel', 'getDataSantri', 'getNilai']),
+    ...mapState("tahfidznilai", ['select', 'openEdit', 'example', 'th', 'nilai', 'selectKelas']),
+    ...mapState('index', ['permissions']),
+    ...mapGetters('tahfidznilai', ['getSelectedMapel', 'getDataSantri', 'getNilai', 'getSelectedKelas']),
     nilai: {
       get() {
         return this.getNilai
@@ -84,6 +91,14 @@ export default {
         this.$store.commit('tahfidznilai/setState', obj)
       }
     },
+    selectedByKelas: {
+      get() {
+        return this.getSelectedKelas
+      },
+      set(value) {
+        this.$store.commit('tahfidznilai/setState', { key: 'selectedByKelas', value })
+      }
+    },
     uniqueClasses() {
       // Get unique classes from data
       const classes = this.select.map(item => item.Kelas);
@@ -104,7 +119,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions('tahfidznilai', ['getSantri', 'setPenilaian']),
+    ...mapActions('tahfidznilai', ['getSantri', 'setPenilaian', 'getByKelas']),
     isNumber(val) {
       // Periksa apakah val adalah angka dan bukan false
       return typeof val === 'number' && !isNaN(val);

@@ -7,5 +7,8 @@ export default {
   },
   getNilai(state) {
     return state.nilai
+  },
+  getSelectedKelas(state) {
+    return state.selectedByKelas
   }
 }

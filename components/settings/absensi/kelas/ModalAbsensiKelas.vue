@@ -18,10 +18,6 @@
                   placeholder="Leave a comment here" id="floatingTextarea"></textarea>
                 <label for="floatingTextarea">Catatan</label>
               </div>
-              <div>
-                <label class="mb-2">Tanggal</label>
-                <input type="date" class="form-control" v-model="dateNow">
-              </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -55,15 +51,6 @@ export default {
   },
   computed: {
     ...mapState('kelasAbsensi', ['updateData']),
-    ...mapGetters('kelasAbsensi', ['getDate']),
-    dateNow: {
-      get() {
-        return this.getDate
-      },
-      set(value) {
-        this.$store.commit('kelasAbsensi/setState', { key: 'dateNow', value })
-      }
-    }
   },
   methods: {
     async santriAbsen() {
@@ -78,7 +65,7 @@ export default {
       const program = localStorage.getItem("program");
       try {
         const result = await this.$apiSantri.$put(
-          `update-absensi-sisalam?sksantri=${skSantri}&type=${time}&thn=${tahun}&smstr=${semester}&program=${program}&subject=${namakelas}&date=${this.dateNow}`,
+          `update-absensi-sisalam?sksantri=${skSantri}&type=${time}&thn=${tahun}&smstr=${semester}&program=${program}&subject=${namakelas}`,
           data
         );
         if (result) {

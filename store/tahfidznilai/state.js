@@ -8,6 +8,8 @@ export default () => ({
   example: '',
   th: { Nama: '', Total: '' },
   selectedQuran: '',
+  selectKelas: [],
+  selectedByKelas: '',
   // kelas: [],
   // jurusan: [],
   // ekskull: [],

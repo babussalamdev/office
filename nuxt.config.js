@@ -2,8 +2,8 @@ let development = process.env.NODE_ENV !== 'production'
 export default {
   env: {
     version: require('./package.json').version,
-    XlsxDev: process.env.API_XLSX_DEV,
-    XlsxPro: process.env.API_XLSX_PRO
+    XlsxDev: process.env.API_XLSX,
+    XlsxPro: process.env.API_XLSX
   },
   server: {
     host: "0.0.0.0",

@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   async asyncData({ store }) {
     store.dispatch("tahfidznilai/changeUnit");

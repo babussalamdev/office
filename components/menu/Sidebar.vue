@@ -560,6 +560,15 @@
               </li>
             </ul>
           </li>
+          <!-- Settings PSB -->
+          <!-- <li>
+            <nuxt-link to="setpsb" class="text-decoration-none d-flex align-items-center gap-2">
+              <i class="material-icons animate__animated animate__fadeInRight">
+                manage_accounts
+              </i>
+              <span class="text animate__animated animate__fadeInRight">Settings PSB</span>
+            </nuxt-link>
+          </li> -->
         </ul>
         <p v-else></p>
       </nav>
