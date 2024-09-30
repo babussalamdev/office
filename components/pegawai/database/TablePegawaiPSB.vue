@@ -7,15 +7,17 @@
         <table class="table table-hover table-striped">
           <thead>
             <tr>
-              <!-- <th scope="col">
-                <input type="checkbox" />
-              </th> -->
+              <th class="text-uppercase" v-for="(value, key) in th" :key="key">{{ key }}</th>
+            </tr>
+          </thead>
+          <!-- <thead>
+            <tr>
               <th scope="col">Nama</th>
               <th scope="col">Program</th>
               <th scope="col">Role</th>
               <th scope="col" class="text-end">Action</th>
             </tr>
-          </thead>
+          </thead> -->
           <tbody>
             <tr v-for="(data, index) in filteredDatas" :key="index">
               <!-- <td>
@@ -82,14 +84,14 @@ import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 
 export default {
   computed: {
-    ...mapState('pegawai/database', ["pegawai", 'perPage']),
-    ...mapGetters('pegawai/database', ['filteredDatas', 'getPage']),
+    ...mapState('psb', ["pegawai", 'perPage', 'th']),
+    ...mapGetters('psb', ['filteredDatas', 'getPage']),
     page: {
       get() {
         return this.getPage
       },
       set(value) {
-        this.$store.commit('pegawai/database/setState', { key: 'page', value })
+        this.$store.commit('psb/setState', { key: 'page', value })
       }
     }
   },

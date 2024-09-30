@@ -6,9 +6,7 @@ export default {
     const table = state.santri.filter((data) => {
       return data.Nama.toLowerCase().includes(state.search.toLowerCase());
     });
-    let start = (state.page - 1) * state.perPage;
-    let end = start + state.perPage;
-    return table.slice(start, end);
+    return table
   },
   getPage(state) {
     return state.page

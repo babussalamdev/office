@@ -40,18 +40,18 @@ export default {
 
   async asyncData({ store }) {
     const program = localStorage.getItem("program");
-    store.dispatch(`pegawai/database/changeUnit`, program);
+    store.dispatch(`psb/changeUnit`, program);
     return program;
   },
 
   computed: {
-    ...mapGetters('pegawai/database', ['getSearch']),
+    ...mapGetters('psb', ['getSearch']),
     search: {
       get() {
         return this.getSearch
       },
       set(value) {
-        this.$store.commit('pegawai/database/setState', { key: 'search', value })
+        this.$store.commit('psb/setState', { key: 'search', value })
       }
     }
   },

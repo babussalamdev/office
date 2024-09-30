@@ -101,22 +101,6 @@
         </table>
       </div>
     </div>
-    <div class="btn-group text-center float-end mt-3 mb-5" role="group">
-      <button @click="page = 1" :disabled="page === 1" type="button" class="btn btn-primary btn-sm">
-        &laquo;
-      </button>
-      <button @click="page--" :disabled="page === 1" type="button" class="btn btn-primary  btn-sm">
-        Prev
-      </button>
-      <button class="btn btn-dark  btn-sm disabled">{{ `${page ? page : 1}` }}</button>
-      <button @click="page++" :disabled="page >= Math.ceil(santri?.length / perPage)" class="btn btn-primary  btn-sm">
-        Next
-      </button>
-      <button @click="page = Math.ceil(santri.length / perPage)" :disabled="page >= Math.ceil(santri.length / perPage)"
-        type="button" class="btn btn-primary  btn-sm">
-        &raquo;
-      </button>
-    </div>
   </div>
 </template>
 

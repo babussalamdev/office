@@ -62,11 +62,13 @@ export default {
     const izinData = [];
     const sakitData = [];
     const absenData = [];
+    const pulangData = [];
 
     Object.keys(value.kelasCounts).forEach(kelas => {
       izinData.push(value.kelasCounts[kelas].asrama_izin);
       sakitData.push(value.kelasCounts[kelas].asrama_sakit);
       absenData.push(value.kelasCounts[kelas].asrama_absen);
+      pulangData.push(value.kelasCounts[kelas].asrama_rumah)
     });
 
     // Menyusun series sesuai dengan format yang diinginkan
@@ -83,6 +85,10 @@ export default {
         name: 'Absen',
         data: absenData
       },
+      {
+        name: 'Pulang',
+        data: pulangData
+      }
     ];
 
     const kelasNames = Object.keys(value.kelasCounts).map(kelas => {
