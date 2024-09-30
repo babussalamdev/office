@@ -7,7 +7,7 @@
         <table class="table table-hover table-striped">
           <thead>
             <tr>
-              <th class="text-uppercase" v-for="(value, key) in th" :key="key">{{ key }}</th>
+              <th class="text-uppercase" :class="key === 'Action' ? 'text-end' : ''" v-for="(value, key) in th" :key="key">{{ key }}</th>
             </tr>
           </thead>
           <!-- <thead>
@@ -25,7 +25,7 @@
               </td> -->
               <td class="text-capitalize">{{ data.Nama }}</td>
               <td scope="row" class="text-uppercase container-permissions">
-                <div style="display: inline" v-for="(value, i) in data?.Program?.split(',')" :key="i">
+                <div style="display: inline" v-for="(value, i) in data?.PSB?.Program?.split(',')" :key="i">
                   <div class="btn-group btn-group-sm px-1 py-1 list-permissions">
                     <div class="btn btn-dark">
                       <span>{{ value }}</span>
@@ -33,7 +33,14 @@
                   </div>
                 </div>
               </td>
-              <td scope="col">Admin</td>
+              <td v-for="(value, key) in repeatColumn" :key="key">
+                <select class="form-select" style="font-size: 12px; width: max-content;">
+                  <option value="">role</option>
+                  <option value="admin">admin</option>
+                  <option value="penguji">penguji</option>
+                </select>
+              </td>
+              <!-- <td scope="col">Admin</td> -->
               <td class="text-end">
                 <div class="action">
                   <!-- <a href="javascript:;" @click="resetPassword(data.SK)">
@@ -84,7 +91,7 @@ import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 
 export default {
   computed: {
-    ...mapState('psb', ["pegawai", 'perPage', 'th']),
+    ...mapState('psb', ["pegawai", 'perPage', 'th', 'repeatColumn']),
     ...mapGetters('psb', ['filteredDatas', 'getPage']),
     page: {
       get() {

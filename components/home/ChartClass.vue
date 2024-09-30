@@ -71,7 +71,7 @@ export default {
         fill: {
           opacity: 1
         },
-        colors: ['#3FA2F6', '#FFB200', '#E4003A']
+        colors: ['#3FA2F6', '#FFB200', '#E4003A', '#6c757d']
       }
       return chartOptions
     }

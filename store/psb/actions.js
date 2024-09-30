@@ -7,7 +7,8 @@ export default {
         `get-pegawai?type=psb`
       );
       if (result) {
-        commit('setDatabaseAll', result.pegawai);
+        // commit('setDatabaseAll', result.pegawai);
+        commit('setState', { key: 'repeatColumn', value: result.Psb_Program })
         dispatch('index/submitLoad', null, { root: true })
 
         const newData = result.Psb_Program || [];
