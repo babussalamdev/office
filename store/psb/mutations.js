@@ -3,6 +3,10 @@ export default {
   setState(state, data) {
     state[data.key] = data.value
   },
+  SET_ROLE(state, { index, sk, role }) {
+    const i = state.pegawai.findIndex((x) => x.SK === index)
+    state.pegawai[i].Psb.role[sk] = role;
+  },
   setDatabaseAll(state, value) {
     state.pegawai = value
   },
@@ -30,17 +34,24 @@ export default {
   },
   updatePegawai(state, value) {
     const i = state.pegawai.findIndex((x) => x.SK === value.SK)
-
     const data = state.pegawai[i]
-    data.Nama = value.Nama;
-    data.Lulusan = value.Lulusan;
-    data.Nip = value.Nip;
-    data.Program = value.Program;
-    data.Personalia = value.Personalia
+    const updatedPegawai = state.pegawai.map((item, index) => {
+      if (index === i) {
+        const updatedItem = { ...item };
 
+        updatedItem['Psb'] = {
+          ...item['Psb'],
+          ...value['Psb']
+        };
+
+        return updatedItem;
+      }
+      return item;
+    });
+
+    state.pegawai = updatedPegawai
     state.value = [];
     state.updateData = ''
-    $("#updatePegawaiAdmin")[0].reset()
     $("#updateDataPegawaiAdmin").modal("hide");
   },
 
@@ -109,7 +120,6 @@ export default {
   editItem(state, value) {
     const i = state.pegawai.findIndex((x) => x.SK === value)
     state.updateData = state.pegawai[i];
-    console.log(state.updateData)
     $("#updateDataPegawaiAdmin").modal("show");
   },
 }

@@ -3,12 +3,12 @@ export default {
   async changeUnit({ commit, dispatch }, data) {
     dispatch('index/submitLoad', null, { root: true })
     if (data === 'root') {
-      const result = await this.$axios.$get(
+      const result = await this.$apiBase.$get(
         `get-pegawai?type=psb`
       );
       if (result) {
-        // commit('setDatabaseAll', result.pegawai);
-        commit('setState', { key: 'repeatColumn', value: result.Psb_Program })
+        commit('setDatabaseAll', result.pegawai);
+        commit('setState', { key: 'options', value: result.Psb_Program })
         dispatch('index/submitLoad', null, { root: true })
 
         const newData = result.Psb_Program || [];
@@ -60,14 +60,13 @@ export default {
   },
   async updatePegawaiAdmin({ commit, state }, event) {
     commit('btn')
-    const data = Object.fromEntries(new FormData(event.target));
-    const program = state.value.map((x) => x.name);
-    data["Program"] = program.join();
+    const data = {}
+    const program = state.value.map((x) => x.SK).join();
+    data["Program"] = program;
     try {
-      const username = state.updateData.Username;
       const sk = state.updateData.SK;
       const result = await this.$apiBase.$put(
-        `update-pegawai?subject=root&username=${username}&sk=${sk}`,
+        `update-pegawai?subject=psb-program&sk=${sk}`,
         data
       );
       if (result) {
@@ -78,9 +77,9 @@ export default {
           showConfirmButton: false,
           timer: 1500,
         });
-        data["SK"] = sk;
+        result["SK"] = sk;
         commit('btn')
-        commit('updatePegawai', data);
+        commit('updatePegawai', result);
       }
     } catch (error) {
       commit('btn')
@@ -265,6 +264,32 @@ export default {
       console.error('Error mereset kata sandi:', error);
     }
 
+  },
+  async updateRole({ commit, dispatch }, payload) {
+    dispatch('index/submitLoad', null, { root: true })
+    try {
+      const data = {}
+      data['Program'] = payload.sk
+      data['Value'] = payload.role
+      const result = await this.$apiBase.$put(`update-pegawai?subject=psb-role&sk=${payload.index}`, data)
+      if ( result ) {
+        commit('SET_ROLE', payload);
+        Swal.fire({
+          icon: "success",
+          text: 'Berhasil diedit!',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        dispatch('index/submitLoad', null, { root: true })
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "warning",
+        text: error,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   }
 }
 

@@ -8,7 +8,7 @@
           <form @submit.prevent="updatePegawaiAdmin" id="updatePegawaiAdmin">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">
-                Update Data Pegawai ( Admin )
+                Update Settings PSB ( Admin )
               </h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -16,37 +16,9 @@
               <div class="mb-3">
                 <label class="typo__label mb-2">Program</label>
                 <multiselect name="Program" v-model="value" tag-placeholder="Add this as new tag"
-                  placeholder="Search or add a tag" label="name" track-by="code" :options="options" :multiple="true"
+                  placeholder="Search or add a tag" label="Name" track-by="SK" :options="options" :multiple="true"
                   :taggable="true" @tag="addTag" required></multiselect>
               </div>
-              <div class="mb-3">
-                <label class="form-label" for="select"></label>
-                <select class="form-select" name="Role" id="select">
-                  <option value="" selected disabled>-- select --</option>
-                  <option value="Admin">Admin</option>
-                  <option value="Admin">Penguji</option>
-                  <option value="Admin">Customer Service</option>
-                </select>
-              </div>
-              <!-- <div class="mb-3">
-                <label for="personalia" class="form-label mb-2">Personalia</label>
-                <div class="d-flex gap-4">
-                  <div class="form-check d-flex align-items-center justify-content-center gap-2">
-                    <input value="off" class="form-check-input" type="radio" name="Personalia" id="flexRadioDefault2"
-                      :checked="updateData?.Personalia === 'on' ? false : true" />
-                    <label class="form-check-label mt-1" for="flexRadioDefault2">
-                      Off
-                    </label>
-                  </div>
-                  <div class="form-check d-flex align-items-center justify-content-center gap-2">
-                    <input value="on" class="form-check-input" type="radio" name="Personalia" id="flexRadioDefault1"
-                      :checked="updateData?.Personalia === 'on' ? true : false" />
-                    <label class="form-check-label mt-1" for="flexRadioDefault1">
-                      On
-                    </label>
-                  </div>
-                </div>
-              </div> -->
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -70,6 +42,7 @@
 </template>
 
 <script>
+import { options } from "@fullcalendar/core/preact";
 import Swal from "sweetalert2";
 import Multiselect from "vue-multiselect";
 import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
@@ -81,14 +54,14 @@ export default {
     }
   },
   computed: {
-    ...mapState('pegawai/database', ["select", 'btn', 'value', 'password', 'options', 'updateData', 'jabatanShow', 'program']),
-    ...mapGetters('pegawai/database', ['getValue', 'getJabatan']),
+    ...mapState('psb', ["select", 'btn', 'value', 'password', 'options', 'updateData', 'jabatanShow', 'program']),
+    ...mapGetters('psb', ['getValue', 'getJabatan']),
     value: {
       get() {
         return this.getValue
       },
       set(value) {
-        this.$store.commit('pegawai/database/setValue', value)
+        this.$store.commit('psb/setValue', value)
       }
     },
     jabatanShow: {
@@ -106,12 +79,12 @@ export default {
   watch: {
     updateData: {
       handler(data) {
-        const program = data?.Program;
+        const program = data?.Psb?.program;
         if (program && program.length > 0) {
           const programArray = program.split(","); // Memisahkan string menjadi array dan menghapus spasi ekstra
           const mappedArray = programArray.map((x) => {
-            const option = this.options.find((option) => option.name === x);
-            return { name: x, code: option ? option.code : null };
+            const option = this.options.find((option) => option.SK === x);
+            return { SK: x, Name: option ? option.Name : null };
           });
           this.value = mappedArray;
         }
@@ -121,8 +94,7 @@ export default {
   },
 
   methods: {
-    ...mapActions('pegawai/database', ['inputPegawai', 'updatePegawaiAdmin', 'updatePegawai']),
-    ...mapMutations('pegawai/database', ['generatePassword']),
+    ...mapActions('psb', ['inputPegawai', 'updatePegawaiAdmin', 'updatePegawai']),
     addTag(newTag) {
       const tag = {
         name: newTag,

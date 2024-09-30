@@ -1,11 +1,6 @@
 export default {
-  filteredDatas(state) {
-    const dataJson = state.pegawai.filter((data) => {
-      return data.Nama.toLowerCase().includes(state.search.toLowerCase());
-    });
-    let start = (state.page - 1) * state.perPage;
-    let end = start + state.perPage;
-    return dataJson.slice(start, end);
+  getPegawai(state) {
+    return state.pegawai
   },
   getValue(state) {
     return state.value
@@ -18,5 +13,8 @@ export default {
   },
   getPage(state) {
     return state.page
+  },
+  getSelectedRole(state) {
+    return state.selectedRole
   }
 }

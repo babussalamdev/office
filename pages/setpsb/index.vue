@@ -3,18 +3,6 @@
     <div v-if="$auth.user.role === 'root'" class="pegawai">
       <div class="mt-3">
         <h2 class="mb-3">Settings PSB - root</h2>
-        <div class="row mb-3">
-          <div class="col-12 col-md-6 pe-2 pe-md-5 mb-3 mb-md-0">
-            <div class="input-group pe-0 pe-md-5" style="font-size: 12px;">
-              <span style="font-size: 12px;" class="material-icons input-group-text"> search </span>
-              <input style="font-size: 12px;" type="text" class="form-control" placeholder="search by name"
-                v-model="search">
-            </div>
-          </div>
-          <div class="col-12 col-md-6 d-flex gap-2">
-
-          </div>
-        </div>
       </div>
 
       <!-- table -->

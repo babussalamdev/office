@@ -10,35 +10,30 @@
               <th class="text-uppercase" :class="key === 'Action' ? 'text-end' : ''" v-for="(value, key) in th" :key="key">{{ key }}</th>
             </tr>
           </thead>
-          <!-- <thead>
-            <tr>
-              <th scope="col">Nama</th>
-              <th scope="col">Program</th>
-              <th scope="col">Role</th>
-              <th scope="col" class="text-end">Action</th>
-            </tr>
-          </thead> -->
           <tbody>
-            <tr v-for="(data, index) in filteredDatas" :key="index">
+            <tr v-for="(data, index) in pegawai" :key="index">
               <!-- <td>
                 <input type="checkbox" />
               </td> -->
               <td class="text-capitalize">{{ data.Nama }}</td>
               <td scope="row" class="text-uppercase container-permissions">
-                <div style="display: inline" v-for="(value, i) in data?.PSB?.Program?.split(',')" :key="i">
+                <div style="display: inline" v-for="(value, i) in data?.Psb?.program?.split(',')" :key="i">
                   <div class="btn-group btn-group-sm px-1 py-1 list-permissions">
                     <div class="btn btn-dark">
-                      <span>{{ value }}</span>
+                      <span style="font-size: 12px;">{{ options[options.findIndex((x) => x.SK.includes(value.trim()))]?.Name }}</span>
+                      <!-- <span>{{ value }}</span> -->
                     </div>
                   </div>
                 </div>
               </td>
-              <td v-for="(value, key) in repeatColumn" :key="key">
-                <select class="form-select" style="font-size: 12px; width: max-content;">
-                  <option value="">role</option>
+              <td v-for="(value, key) in options" :key="key">
+                <select v-if="data?.Psb?.program?.split(',').includes(value.SK)" class="form-select" style="font-size: 12px; width: max-content;" :value="pegawai[index].Psb?.role[value.SK]" @change="setUpdateRole(data.SK, value.SK, $event.target.value)">
+                  <option value="off">off</option>
                   <option value="admin">admin</option>
+                  <option value="registrasi">registrasi</option>
                   <option value="penguji">penguji</option>
                 </select>
+                <span v-else>None</span>
               </td>
               <!-- <td scope="col">Admin</td> -->
               <td class="text-end">
@@ -65,22 +60,7 @@
           </tbody>
         </table>
       </div>
-    </div>
-    <div class="btn-group text-center float-end mt-3 mb-5" role="group">
-      <button @click="page = 1" :disabled="page === 1" type="button" class="btn btn-primary btn-sm">
-        &laquo;
-      </button>
-      <button @click="page--" :disabled="page === 1" type="button" class="btn btn-primary  btn-sm">
-        Prev
-      </button>
-      <button class="btn btn-dark  btn-sm disabled">{{ `${page}` }}</button>
-      <button @click="page++" :disabled="page >= Math.ceil(pegawai.length / perPage)" class="btn btn-primary  btn-sm">
-        Next
-      </button>
-      <button @click="page = Math.ceil(pegawai.length / perPage)"
-        :disabled="page >= Math.ceil(pegawai.length / perPage)" type="button" class="btn btn-primary  btn-sm">
-        &raquo;
-      </button>
+      {{ pegawai }}
     </div>
   </div>
 </template>
@@ -91,8 +71,8 @@ import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 
 export default {
   computed: {
-    ...mapState('psb', ["pegawai", 'perPage', 'th', 'repeatColumn']),
-    ...mapGetters('psb', ['filteredDatas', 'getPage']),
+    ...mapState('psb', ["pegawai", 'perPage', 'th', 'repeatColumn', 'options']),
+    ...mapGetters('psb', ['getPegawai', 'getPage', 'getSelectedRole']),
     page: {
       get() {
         return this.getPage
@@ -100,11 +80,22 @@ export default {
       set(value) {
         this.$store.commit('psb/setState', { key: 'page', value })
       }
-    }
+    },
+    selectedRole: {
+      get() {
+        return this.getSelectedRole
+      },
+      set(value) {
+        this.$store.commit('psb/setState', { key: 'selectedRole', value })
+      }
+    },
+    pegawai() {
+      return this.$store.state.psb.pegawai;
+    },
   },
   methods: {
-    ...mapActions('pegawai/database', ['updateItem', 'resetPassword']),
-    ...mapMutations('pegawai/database', ['editItem']),
+    ...mapActions('psb', ['updateItem', 'resetPassword', 'updateRole']),
+    ...mapMutations('psb', ['editItem']),
     statusPersonalia(username, sk, status) {
       const condition = status === "off" ? "on" : "off";
       const data = {
@@ -117,6 +108,9 @@ export default {
     deleteUpdateData() {
       this.updateData = "";
     },
+    setUpdateRole(index, sk, role) {
+      this.updateRole({ index, sk, role });
+    }
   },
 };
 </script>
