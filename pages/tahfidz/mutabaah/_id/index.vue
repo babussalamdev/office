@@ -22,7 +22,7 @@
         </div>
       </div>
       <div class="table-responsive animate__animated animate__fadeInUp">
-        <table class="table table-hover table-striped table-bordered border-danger">
+        <table v-if="detailMutabaah" class="table table-hover table-striped table-bordered border-danger">
           <thead>
             <tr>
               <th rowspan="2" class="text-start">Tanggal</th>
@@ -86,11 +86,11 @@ export default {
     }
   },
   async asyncData({ store, route, redirect }) {
-    const detail = store.state.mutabaah.detail;
-    if (detail === '') {
-      return redirect('/tahfidz/mutabaah')
+    const detail = store.state.mutabaah.detail
+    if ( detail ) {
+      store.dispatch('mutabaah/getDetail', route.params.id)
     } else {
-      store.dispatch('mutabaah/getDetail', route.params.id )
+      redirect('/tahfidz/mutabaah')
     }
   },
   computed: {
@@ -150,8 +150,8 @@ i {
   cursor: pointer;
 }
 
-tr th, tr td {
+tr th,
+tr td {
   white-space: nowrap;
 }
-
 </style>

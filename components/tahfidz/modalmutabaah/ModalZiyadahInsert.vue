@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Modal -->
-    <div class="modal fade" id="mutabaah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    <div class="modal fade hide" id="mutabaah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
       aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -21,10 +21,9 @@
                   <multiselect v-model="ayatfrom" :options="surahfrom?.ayat" placeholder="Select one" label="number"
                     track-by="number"></multiselect>
                 </div>
-              </div>
-              <div class="row">
+
                 <div class="mb-3 col-12 col-md-8"><label class="typo__label mb-2">Surat To</label>
-                  <multiselect style="font-family: 'Noto Kufi Arabic', sans-serif; font-size: 16px; font-weight: 600"
+                  <multiselect style="font-family: 'Noto Kufi Arabic', sans-serif; font-size: 16px; font-weight: 600;"
                     v-model="surahto" :options="from" placeholder="Select one" label="name" track-by="name">
                   </multiselect>
                 </div>
@@ -92,11 +91,11 @@ export default {
       ],
       page: 0,
       btn: true,
-      subject: localStorage.getItem('subject')
+      subject: localStorage.getItem('subject'),
     }
   },
   computed: {
-    ...mapState('mutabaah', ['surah', 'detail'])
+    ...mapState('mutabaah', ['surah', 'detail']),
   },
   watch: {
     surah(value) {
@@ -153,6 +152,37 @@ export default {
       data['Score'] = +data.Score
       data['From'] = from
       data['To'] = to
+      console.log(data)
+
+      const { Page, Score, Note, From, To } = data;
+      const { name: fromName, ayat: fromAyat } = From;
+      const { name: toName, ayat: toAyat } = To;
+
+      // Cek apakah salah satu data kosong
+      if (
+        Page === 0 ||
+        Score === 0 ||
+        fromName === "" ||
+        fromAyat.number === "" ||
+        fromAyat.page === "" ||
+        fromAyat.juz === "" ||
+        toName === "" ||
+        toAyat.name === "" ||
+        toAyat.page === "" ||
+        toAyat.juz === ""
+      ) {
+        Swal.fire({
+          text: 'Data tidak boleh kosong!',
+          icon: "error",
+          timer: 3000,
+          timerProgressBar: false,
+          showConfirmButton: false,
+        });
+        this.btn = true
+        return
+      }
+
+      // Jika semua data valid, lanjutkan dengan proses
       try {
         const program = localStorage.getItem('program')
         const sk = this.detail.SK.replace('#', '%23')
@@ -190,6 +220,15 @@ export default {
         });
         this.btn = true
       }
+    },
+    onKeyboardShow() {
+      // Menggeser tampilan atau mengubah gaya saat keyboard muncul
+      console.log('berhasil')
+      document.body.style.paddingBottom = '3000px'; // Ubah sesuai kebutuhan
+    },
+    onKeyboardHide() {
+      // Mengembalikan gaya saat keyboard tersembunyi
+      document.body.style.paddingBottom = '0';
     }
   }
 }
@@ -198,4 +237,8 @@ export default {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&display=swap');
+
+.multiselect .multiselect__content-wrapper {
+  max-height: 150px !important;
+}
 </style>

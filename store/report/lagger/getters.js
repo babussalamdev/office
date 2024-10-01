@@ -9,6 +9,6 @@ export default {
       return state.selectedQuran
     },
     getSelectedKelas(state) {
-      return state.selectedQuran
+      return state.selectedKelas
     }
 }

@@ -3,7 +3,7 @@
     <div>
       <div class="row mb-3">
         <div class="col-12 col-md-6 mb-3 mb-md-0 d-flex align-items-center">
-          <h2>Absensi Asrama</h2>
+          <h2>Absensi</h2>
         </div>
         <div class="col-12 col-md-6 d-flex flex-column flex-md-row gap-2 gap-md-0 justify-content-end">
           <div class="input-group" v-if="santri.length > 0">
@@ -14,7 +14,7 @@
           </div>
           <select v-if="select.length > 0" class="form-select order-1 order-md-2" name="Kelas" @change="getAbsensi"
             v-model="selectKelas">
-            <option value="" selected>-- Kelas --</option>
+            <option value="" selected>Kelas</option>
             <option v-for="(data, index) in select" :key="index" :value="data">
               {{ data }}
             </option>

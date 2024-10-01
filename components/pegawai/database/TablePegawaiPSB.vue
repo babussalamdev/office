@@ -60,7 +60,7 @@
           </tbody>
         </table>
       </div>
-      {{ pegawai }}
+      <!-- {{ pegawai }} -->
     </div>
   </div>
 </template>
