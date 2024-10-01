@@ -46,16 +46,16 @@
           <tbody>
             <tr v-for="(data, index) in detailMutabaah" :key="index">
               <td>{{ data.SK }}</td>
-              <td class="text-center">{{ data.From.ayat.juz }}</td>
-              <td class="text-center" style="font-family: 'Noto Kufi Arabic', sans-serif;">{{ data.From.name }}</td>
-              <td class="text-center">{{ data.From.ayat.number }}</td>
-              <td class="text-center">{{ data.From.ayat.page }}</td>
-              <td class="text-center">{{ data.To.ayat.juz }}</td>
-              <td class="text-center" style="font-family: 'Noto Kufi Arabic', sans-serif;">{{ data.To.name }}</td>
-              <td class="text-center">{{ data.To.ayat.number }}</td>
-              <td class="text-center">{{ data.To.ayat.page }}</td>
-              <td class="text-center">{{ data.Score }}</td>
-              <td class="text-center">{{ data.Page }}</td>
+              <td class="text-center">{{ data?.From.ayat.juz }}</td>
+              <td class="text-center" style="font-family: 'Noto Kufi Arabic', sans-serif;">{{ data?.From.name }}</td>
+              <td class="text-center">{{ data?.From.ayat.number }}</td>
+              <td class="text-center">{{ data?.From.ayat.page }}</td>
+              <td class="text-center">{{ data?.To.ayat.juz }}</td>
+              <td class="text-center" style="font-family: 'Noto Kufi Arabic', sans-serif;">{{ data?.To.name }}</td>
+              <td class="text-center">{{ data?.To.ayat.number }}</td>
+              <td class="text-center">{{ data?.To.ayat.page }}</td>
+              <td class="text-center">{{ data?.Score }}</td>
+              <td class="text-center">{{ data?.Page }}</td>
               <td class="text-end">
                 <a href="javascript:;" @click="showNote(data.Note)">
                   <i class='bx bx-message-alt-detail text-white btn btn-sm btn-primary'></i>

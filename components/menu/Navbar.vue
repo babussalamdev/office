@@ -25,7 +25,7 @@
           </span>
         </div>
 
-        <select class="form-select select" @change="setUnit(unit)" v-model="unit" required>
+        <select class="form-select select text-uppercase" @change="setUnit(unit)" v-model="unit" required>
           <option value="" selected disabled>Unit</option>
           <option v-for="(program, i) in $auth.user.Program?.split(',')" :key="i" :value="program"
             class="text-uppercase">
