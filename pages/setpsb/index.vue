@@ -32,6 +32,22 @@ export default {
     return program;
   },
 
+  mounted() {
+    this.closeAllModals();;
+  },
+  methods: {
+    closeAllModals() {
+      const backdrop = document.querySelector('.modal-backdrop');
+      if (backdrop) {
+        backdrop.remove();
+      }
+      // Menghapus kelas dan style dari body
+      document.body.classList.remove('modal-open'); // Menghapus kelas
+      document.body.style.overflow = ''; // Menghapus gaya inline
+      document.body.style.paddingRight = ''; // Menghapus gaya inline
+    }
+  },
+
   computed: {
     ...mapGetters('psb', ['getSearch']),
     search: {
@@ -42,9 +58,6 @@ export default {
         this.$store.commit('psb/setState', { key: 'search', value })
       }
     }
-  },
-
-  methods: {
   },
 };
 </script>

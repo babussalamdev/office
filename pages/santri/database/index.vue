@@ -121,10 +121,23 @@ export default {
   async asyncData({ store }) {
     store.dispatch(`santri/database/changeUnit`);
   },
+  mounted() {
+    this.closeAllModals();;
+  },
 
   methods: {
     ...mapActions('santri/database', ['getSantri']),
     ...mapMutations('santri/database', ['resetTable']),
+    closeAllModals() {
+      const backdrop = document.querySelector('.modal-backdrop');
+      if (backdrop) {
+        backdrop.remove();
+      }
+      // Menghapus kelas dan style dari body
+      document.body.classList.remove('modal-open'); // Menghapus kelas
+      document.body.style.overflow = ''; // Menghapus gaya inline
+      document.body.style.paddingRight = ''; // Menghapus gaya inline
+    },
     async handleUpload() {
       const file = this.$refs.fileInput.files[0]; // Dapatkan file dari input file
       const reader = new FileReader();

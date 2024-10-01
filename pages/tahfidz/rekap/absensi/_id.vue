@@ -23,25 +23,25 @@
 
       <!-- table -->
       <div class="table-responsive animate__animated animate__fadeInUp">
-      <table class="table table-hover table-striped">
-        <thead>
-          <tr>
-            <th scope="col" class="text-start">CreatedAt</th>
-            <th scope="col" class="text-start">Status</th>
-            <th scope="col" class="text-start">Session</th>
-            <th scope="col" class="text-start">Note</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(data, index) in details" :key="index">
-            <td scope="col">{{ data.CreatedAt }}</td>
-            <td scope="col">{{ data.Status }}</td>
-            <td scope="col">{{ data.Session }}</td>
-            <td scope="col">{{ data.Note }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+        <table class="table table-hover table-striped">
+          <thead>
+            <tr>
+              <th scope="col" class="text-start">CreatedAt</th>
+              <th scope="col" class="text-start">Status</th>
+              <th scope="col" class="text-start">Session</th>
+              <th scope="col" class="text-start">Note</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(data, index) in details" :key="index">
+              <td scope="col">{{ data.CreatedAt }}</td>
+              <td scope="col">{{ data.Status }}</td>
+              <td scope="col">{{ data.Session }}</td>
+              <td scope="col">{{ data.Note }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </section>
 </template>
@@ -53,6 +53,9 @@ export default {
     const id = params.id
     store.dispatch('rekap/getDetails', id)
     return { id }
+  },
+  mounted() {
+    this.closeAllModals();;
   },
   computed: {
     ...mapState('rekap', ['santri', 'details']),
@@ -86,6 +89,16 @@ export default {
   },
   methods: {
     ...mapActions('rekap', ['getDetails']),
+    closeAllModals() {
+      const backdrop = document.querySelector('.modal-backdrop');
+      if (backdrop) {
+        backdrop.remove();
+      }
+      // Menghapus kelas dan style dari body
+      document.body.classList.remove('modal-open'); // Menghapus kelas
+      document.body.style.overflow = ''; // Menghapus gaya inline
+      document.body.style.paddingRight = ''; // Menghapus gaya inline
+    },
     backPage() {
       this.$router.push('/tahfidz/rekap/absensi')
     }

@@ -60,6 +60,9 @@ export default {
       selectedAsrama: 'all',
     }
   },
+  mounted() {
+    this.closeAllModals();;
+  },
   async asyncData({ store, route, redirect }) {
     const detail = store.state.home.highlight;
     if (detail === '') {
@@ -88,6 +91,16 @@ export default {
     }
   },
   methods: {
+    closeAllModals() {
+      const backdrop = document.querySelector('.modal-backdrop');
+      if (backdrop) {
+        backdrop.remove();
+      }
+      // Menghapus kelas dan style dari body
+      document.body.classList.remove('modal-open'); // Menghapus kelas
+      document.body.style.overflow = ''; // Menghapus gaya inline
+      document.body.style.paddingRight = ''; // Menghapus gaya inline
+    },
     backPage() {
       this.$router.push('/')
     },

@@ -47,8 +47,21 @@ export default {
     const program = localStorage.getItem("program");
     store.dispatch(`mapel/changeUnit`, program);
   },
+  mounted() {
+    this.closeAllModals();;
+  },
   methods: {
     ...mapMutations('mapel', ['inputModal']),
+    closeAllModals() {
+      const backdrop = document.querySelector('.modal-backdrop');
+      if (backdrop) {
+        backdrop.remove();
+      }
+      // Menghapus kelas dan style dari body
+      document.body.classList.remove('modal-open'); // Menghapus kelas
+      document.body.style.overflow = ''; // Menghapus gaya inline
+      document.body.style.paddingRight = ''; // Menghapus gaya inline
+    },
     kelasLoad() {
       const program = localStorage.getItem("program");
       const data = {
