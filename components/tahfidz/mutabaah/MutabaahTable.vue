@@ -1,7 +1,14 @@
 <template>
   <div>
-    <div class="mb-3">
-      <h2>Mutabaah Tahfidz</h2>
+    <div class="row mb-3">
+      <div class="col-12 col-md-6 d-flex align-items-center">
+        <h2>Mutabaah Tahfidz</h2>
+      </div>
+      <div class="col-12 col-md-6 d-flex justify-content-end">
+        <select class="form-select" style="font-size: 12px; max-width: max-content;">
+          <option value="">halaqah</option>
+        </select>
+      </div>
     </div>
     <div class="table-responsive animate__animated animate__fadeInUp">
       <table class="table table-hover table-striped">
@@ -48,7 +55,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions} from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
   data() {
     return {

@@ -1,9 +1,16 @@
 import Swal from "sweetalert2";
 export default {
-  async changeUnit({ commit, dispatch }, data) {
+  async changeUnit({ commit, dispatch, rootState }, data) {
     dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
     const halaqah = this.$auth.user.Halaqah[program]
+
+    const status = rootState.index.permissions
+    if ( status.includes('report tahfidz') ) {
+      console.log('')
+    }
+
+    console.log(rootState.index.permissions)
     const result = await this.$apiSantri.$get(
       `get-santri-sisalam?subject=halaqah&program=${program}&filter=${halaqah}`
     );

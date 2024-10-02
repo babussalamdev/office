@@ -3,7 +3,7 @@
     <div>
       <div class="row mb-3">
         <div class="col-12 col-md-6 d-flex align-items-center">
-          <h2 class="mb-3 mb-md-0">Absensi Kelas  </h2>
+          <h2 class="mb-3 mb-md-0">Absensi Kelas </h2>
         </div>
         <div class="col-12 col-md-6 d-flex align-items-center justify-content-end">
           <select class="form-select" v-model="selectedKelas" @change="applyFilter">
@@ -16,7 +16,8 @@
           </select>
           <select class="form-select" v-model="selectedJam" style="width: max-content;">
             <option value="" selected disabled>Jam</option>
-            <option v-for="(data, index) in selectedMapel?.Hari?.split(',')" :key="index" :value="data">{{ data }}</option>
+            <option v-for="(data, index) in listJamMapel" :key="index" :value="data">{{ data }}
+            </option>
           </select>
         </div>
       </div>
@@ -83,7 +84,7 @@
 
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
-
+import Swal from "sweetalert2";
 export default {
   data() {
     return {
@@ -94,11 +95,11 @@ export default {
   computed: {
     ...mapState("kelasAbsensi", ["permissions", "select", 'date', 'updateData']),
     ...mapGetters('kelasAbsensi', ['getSelectedMapel', 'getSantri', 'getSelectedJam']),
-    // hariIni() {
-    //   const today = new Date();
-    //   const hariIni = today.toLocaleDateString('id-ID', { weekday: 'long' }).toLowerCase();
-    //   return hariIni;
-    // },
+    hariIni() {
+      const today = new Date();
+      const hariIni = today.toLocaleDateString('id-ID', { weekday: 'long' }).toLowerCase();
+      return hariIni;
+    },
     // firstData() {
     //   return this.select.filter(item =>
     //     item.Hari.split(", ").some(day => day.includes(this.hariIni))
@@ -120,6 +121,24 @@ export default {
         this.$store.commit('kelasAbsensi/setSelectedJam', value)
       }
     },
+    listJamMapel() {
+      let jamHariIni = []; // Inisialisasi dengan array kosong
+
+      if (this.selectedKelas && this.selectedMapel) {
+        const hariArray = this.selectedMapel.Hari.split(', ');
+
+        jamHariIni = hariArray.filter(hari => hari.startsWith(this.hariIni));
+        if (jamHariIni.length === 0) {
+          Swal.fire({
+            position: "center",
+            icon: "warning",
+            text: "Tidak ada jam mengajar",
+          });
+        }
+      }
+
+      return jamHariIni; // Mengembalikan array jamHariIni
+    },
     santri: {
       get() {
         return this.getSantri
@@ -137,7 +156,7 @@ export default {
       return this.select.filter(item => {
         const matchesClass = item.Kelas === this.selectedKelas;
         this.selectedMapel = '',
-        this.selectedJam = ''
+          this.selectedJam = ''
         this.santri = []
         return matchesClass
       });
@@ -178,7 +197,7 @@ export default {
       }
     },
     selectedMapel(value) {
-      if ( value ) {
+      if (value) {
         this.santri = []
         this.selectedJam = ''
       }

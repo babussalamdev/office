@@ -10,10 +10,10 @@
 <script>
 import { mapState } from 'vuex'
 export default {
-  middleware: 'root',
-  meta: {
-    roots: 'root'
-  },
+  // middleware: 'root',
+  // meta: {
+  //   roots: 'root'
+  // },
   // computed: {
   //   ...mapState('kelasAbsensi', ['hari'])
   // },
