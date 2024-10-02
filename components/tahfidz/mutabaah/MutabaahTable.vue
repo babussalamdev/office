@@ -5,8 +5,9 @@
         <h2>Mutabaah Tahfidz</h2>
       </div>
       <div class="col-12 col-md-6 d-flex justify-content-end">
-        <select class="form-select" style="font-size: 12px; max-width: max-content;">
-          <option value="">halaqah</option>
+        <select v-if="listHalaqah.length > 0" class="form-select" style="font-size: 12px; max-width: max-content;" @change="getHalaqahKoordinator()" v-model="selectedHalaqah">
+          <option value="" selected disabled>halaqah</option>
+          <option v-for="(data, index) in listHalaqah" :value="data" :key="index">{{ data }}</option>
         </select>
       </div>
     </div>
@@ -55,7 +56,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 export default {
   data() {
     return {
@@ -68,9 +69,19 @@ export default {
     };
   },
   computed: {
-    ...mapState('mutabaah', ['santri'])
+    ...mapState('mutabaah', ['santri', 'listHalaqah']),
+    ...mapGetters('mutabaah', ['getSelectedHalaqah']),
+    selectedHalaqah: {
+      get() {
+        return this.getSelectedHalaqah
+      },
+      set(value) {
+        this.$store.commit('mutabaah/setState', { key: 'selectedHalaqah', value })
+      }
+    }
   },
   methods: {
+    ...mapActions('mutabaah', ['getHalaqahKoordinator']),
     // ...mapMutations('mutabaah', ['showDetail'])
     showDetail(sk, subject) {
       this.$store.commit('mutabaah/showDetail', { sk, subject })

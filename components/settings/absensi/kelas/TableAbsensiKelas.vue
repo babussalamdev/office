@@ -21,9 +21,9 @@
           </select>
         </div>
       </div>
+      <!-- Modal -->
+      <ModalAbsensiKelas />
       <div class="table-responsive">
-        <!-- Modal -->
-        <ModalAbsensiKelas />
         <table class="table table-hover table-striped">
           <thead>
             <tr>

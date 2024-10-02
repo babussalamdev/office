@@ -1,25 +1,60 @@
 import Swal from "sweetalert2";
 export default {
   async changeUnit({ commit, dispatch, rootState }, data) {
-    dispatch('index/submitLoad', null, { root: true })
-    const program = localStorage.getItem('program')
-    const halaqah = this.$auth.user.Halaqah[program]
+    dispatch('index/submitLoad', null, { root: true });
 
-    const status = rootState.index.permissions
-    if ( status.includes('report tahfidz') ) {
-      console.log('')
+    const program = localStorage.getItem('program');
+    const halaqah = this.$auth.user.Halaqah[program];
+
+    // Fungsi untuk menunggu hingga status terisi
+    const waitForStatus = () => {
+      return new Promise((resolve) => {
+        const checkStatus = () => {
+          const status = rootState.index.permissions;
+          if (status && status.length > 0) {
+            resolve(status);
+          } else {
+            setTimeout(checkStatus, 100); // Cek lagi setelah 100 ms
+          }
+        };
+        checkStatus();
+      });
+    };
+
+    // Tunggu hingga status terisi
+    const status = await waitForStatus();
+
+    if (status.includes('report tahfidz')) {
+      const result = await this.$apiBase.$get(`get-settings?type=options&sk=${program}&category=halaqah`)
+      commit('setHalaqah', result)
+      dispatch('index/submitLoad', null, { root: true });
+      return;
     }
 
-    console.log(rootState.index.permissions)
     const result = await this.$apiSantri.$get(
       `get-santri-sisalam?subject=halaqah&program=${program}&filter=${halaqah}`
     );
-    if ( result ) {
+
+    if (result) {
       commit('setSantri', result);
-      dispatch('index/submitLoad', null, { root: true })
+      dispatch('index/submitLoad', null, { root: true });
     }
   },
-  async getDetail({commit, dispatch}, data) {
+  async getHalaqahKoordinator({ commit, dispatch, state }) {
+    dispatch('index/submitLoad', null, { root: true });
+
+    const program = localStorage.getItem('program');
+    const halaqah = state.selectedHalaqah;
+    const result = await this.$apiSantri.$get(
+      `get-santri-sisalam?subject=halaqah&program=${program}&filter=${halaqah}`
+    );
+
+    if (result) {
+      commit('setSantri', result);
+      dispatch('index/submitLoad', null, { root: true });
+    }
+  },
+  async getDetail({ commit, dispatch }, data) {
     dispatch('index/submitLoad', null, { root: true })
     const sk = data.replace('#', '%23')
     const subject = localStorage.getItem('subject')

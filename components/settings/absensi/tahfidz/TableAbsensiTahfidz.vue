@@ -7,9 +7,9 @@
           <i class="bi bi-eye-fill me-2"></i>Monitoring
         </nuxt-link>
       </div>
+      <!-- Modal -->
+      <ModalAbsensiTahfidz />
       <div class="table-responsive">
-        <!-- Modal -->
-        <ModalAbsensiTahfidz />
         <table class="table table-hover table-striped">
           <thead>
             <tr>

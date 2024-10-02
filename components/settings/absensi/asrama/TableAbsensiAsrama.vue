@@ -22,8 +22,6 @@
         </div>
       </div>
       <div class="table-responsive">
-        <!-- Modal -->
-        <ModalAbsensiAsrama />
         <table class="table table-hover table-striped">
           <thead>
             <tr>
@@ -48,18 +46,18 @@
                     : data.Logs?.asrama?.status === 'sakit'
                       ? 'text-warning'
                       : data.Logs?.asrama?.status === 'izin'
-                        ? 'text-primary'
-                        : 'text-danger'
-                  ">{{
+                      ? 'text-primary'
+                      : 'text-danger'
+                      ">{{
                     data.Logs?.asrama?.status === "sekolah"
                       ? " school "
                       : data.Logs?.asrama?.status === "rumah"
-                        ? " villa "
-                        : data.Logs?.asrama?.status === "sakit"
-                          ? " medication "
-                          : data.Logs?.asrama?.status === "izin"
-                            ? "hourglass_top"
-                            : " person_off "
+                      ? " villa "
+                      : data.Logs?.asrama?.status === "sakit"
+                      ? " medication "
+                      : data.Logs?.asrama?.status === "izin"
+                      ? "hourglass_top"
+                      : " person_off "
                   }}</i>
               </td>
               <td class="text-capitalize align-middle">
@@ -82,7 +80,7 @@
                   @click="absen(data.SK, 'absen')">
                   <i class="material-icons"> person_off </i>
                   Absen</a>
-                <a href="javascript:;" class="bg-warning"
+                  <a href="javascript:;" class="bg-warning"
                   v-if="permissions.includes('sakit') && data.Logs?.asrama?.status !== 'sakit'"
                   @click="absen(data.SK, 'sakit')">
                   <i class="material-icons"> medication </i> Sakit</a>
@@ -92,14 +90,16 @@
                   <i class="material-icons"> villa </i> Pulang</a>
                   {{  }}
                 <a href="javascript:;" class="bg-primary"
-                  v-if="permissions.includes('izin') && data.Logs?.asrama?.status !== 'izin' && !data.Logs?.asrama?.antrian"
-                  @click="absen(data.SK, 'izin')">
+                v-if="permissions.includes('izin') && data.Logs?.asrama?.status !== 'izin' && !data.Logs?.asrama?.antrian"
+                @click="absen(data.SK, 'izin')">
                   <i class="material-icons"> villa </i> Izin</a>
-              </td>
-            </tr>
+                </td>
+              </tr>
           </tbody>
         </table>
       </div>
+      <!-- Modal -->
+      <ModalAbsensiAsrama />
     </div>
   </div>
 </template>

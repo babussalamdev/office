@@ -57,6 +57,14 @@ export default {
   },
   setNote(state, value) {
     state.updateData.Note = value
+  },
+  setHalaqah(state, data) {
+    state.listHalaqah = data
+    state.santri = []
+    state.selectedHalaqah = ''
+  },
+  setState(state, data) {
+    state[data.key] = data.value
   }
 
   // resetmt(state) {

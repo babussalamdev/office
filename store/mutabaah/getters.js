@@ -43,5 +43,8 @@ export default {
   },
   getNote(state) {
     return state.updateData.Note
+  },
+  getSelectedHalaqah(state) {
+    return state.selectedHalaqah
   }
 }

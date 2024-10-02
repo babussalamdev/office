@@ -4,7 +4,9 @@ export default () => ({
   surah: [],
   detailMutabaah: '',
   updateData: '',
-  mt: 0
+  mt: 0,
+  listHalaqah: [],
+  selectedHalaqah: ''
   // selectAsrama: [],
   // select: [],
   // kelas: '',

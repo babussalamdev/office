@@ -101,7 +101,6 @@ export default {
           commit('setState', { key: 'dateIzin', value: formattedDate })
         }
       } else {
-        console.log('bukan izin')
         const today = new Date();
         const formattedDate = today.toISOString().split('T')[0];
         result = await this.$apiSantri.$put(
