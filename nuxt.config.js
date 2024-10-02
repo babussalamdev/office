@@ -68,6 +68,7 @@ export default {
       '~/components',
       '~/components/home',
       '~/components/menu',
+      '~/components/asrama',
       '~/components/ekskull',
       '~/components/ekskull/nilai',
       '~/components/pengampu',

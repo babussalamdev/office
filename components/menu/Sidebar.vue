@@ -127,12 +127,12 @@
                 </nuxt-link>
               </li>
               <!-- waktu tidur -->
-              <!-- <li>
+              <li>
                 <nuxt-link to="/asrama/waktutidur"
                   class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Waktu Tidur</span>
                 </nuxt-link>
-              </li> -->
+              </li>
             </ul>
           </li>
           <!-- Tahfidz -->

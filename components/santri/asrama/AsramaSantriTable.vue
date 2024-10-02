@@ -22,9 +22,9 @@
           </div>
         </div>
       </div>
+      <!-- Modal -->
+      <AsramaSantriModal />
       <div class="table-responsive">
-        <!-- Modal -->
-        <AsramaSantriModal />
         <table class="table table-hover table-striped">
           <thead>
             <tr>

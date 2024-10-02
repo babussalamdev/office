@@ -1,13 +1,19 @@
 <template>
   <section id="waktu-tidur">
     <div class="waktu-tidur">
-      <h1>Waktu Tidur</h1>
+      <WaktuTidurTable />
     </div>
   </section>
 </template>
 
 <script>
-export default {};
+export default {
+  async asyncData({ store }) {
+    store.dispatch('asrama/waktuTidur/changeUnit')
+  }
+};
 </script>
 
-<style lang="scss" scoped></style>
+<style>
+@import url(~/assets/css/santri/santri.css)
+</style>
