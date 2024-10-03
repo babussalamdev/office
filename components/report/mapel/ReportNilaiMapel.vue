@@ -2,11 +2,17 @@
   <div class="animate__animated animate__fadeInUp">
     <h2 class="mb-3 mb-md-3">Nilai Mapel</h2>
     <div class="d-flex justify-content-between mb-3 w-auto">
-      <select class="form-select" aria-label="Default select example" v-model="selectedMapel" @change="addNewData">
-        <option value="" selected disabled>Mapel</option>
-        <option v-for="(data, index) in mapel" :key="index" :value="data">{{ data.Nama }}</option>
-      </select>
-      <button class="btn btn-success border-0">Export</button>
+      <div class="d-flex">
+        <select v-if="kelas.length > 0" class="form-select" aria-label="Default select example" v-model="selectedKelas" @change="changeGetMapel">
+          <option value="" selected disabled>Kelas</option>
+          <option v-for="(data, index) in kelas" :key="index" :value="data">{{ data }}</option>
+        </select>
+        <select class="form-select" aria-label="Default select example" v-model="selectedMapel" @change="addNewData">
+          <option value="" selected disabled>Mapel</option>
+          <option v-for="(data, index) in mapel" :key="index" :value="data">{{ data.Nama }}</option>
+        </select>
+      </div>
+      <!-- <button class="btn btn-success border-0">Export</button> -->
     </div>
     <div class="table-responsive" ref="input">
       <table class="table table-hover table-striped">
@@ -51,8 +57,8 @@ export default {
     document.removeEventListener("click", event => this.setData(event, 'input'));
   },
   computed: {
-    ...mapState("report/nilaimapel", ['mapel']),
-    ...mapGetters('report/nilaimapel', ['getSelectedMapel', 'getDataSantri', 'getNilai']),
+    ...mapState("report/nilaimapel", ['mapel', 'kelas']),
+    ...mapGetters('report/nilaimapel', ['getSelectedMapel', 'getDataSantri', 'getNilai', 'getSelectedKelas']),
     santri: {
       get() {
         return this.getDataSantri
@@ -71,9 +77,21 @@ export default {
         this.$store.commit('report/nilaimapel/setState', obj)
       }
     },
+    selectedKelas: {
+      get() {
+        return this.getSelectedKelas
+      },
+      set(value) {
+        this.$store.commit('report/nilaimapel/setState', { key: 'selectedKelas', value })
+      }
+    }
   },
   methods: {
-    ...mapActions('report/nilaimapel', ['getSantri']),
+    ...mapActions('report/nilaimapel', ['getSantri', 'getMapel']),
+    changeGetMapel() {
+      this.getMapel()
+      this.th = { Nama: '', Total: '' }
+    },
     isNumber(val) {
       // Periksa apakah val adalah angka dan bukan false
       return typeof val === 'number' && !isNaN(val);

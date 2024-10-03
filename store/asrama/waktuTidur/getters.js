@@ -10,5 +10,8 @@ export default {
       const i = state.datas?.findIndex((x) => x.SK.split('#')[1] === 'malam')
       return state.datas[i]
     }
+  },
+  getSelectedAsrama(state) {
+    return state.selectedAsrama
   }
 }

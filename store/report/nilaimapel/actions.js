@@ -4,6 +4,26 @@ export default {
     dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
     const kelas = this.$auth.user.Kelas[program]
+
+    if ( kelas === 'off' ) {
+      const listKelas = await this.$apiBase.$get(`get-settings?type=options&sk=${program}&category=kelas`)
+      commit('setState', { key: 'kelas', value: listKelas })
+      dispatch('index/submitLoad', null, { root: true })
+      return
+    }
+
+    const result = await this.$apiBase.$get(
+      `get-settings?sk=${program}%23${kelas}&type=mapel`
+    )
+    commit('setMapel', result)
+    dispatch('index/submitLoad', null, { root: true })
+  },
+
+  async getMapel({ commit, state, dispatch }) {
+    dispatch('index/submitLoad', null, { root: true })
+    const program = localStorage.getItem('program')
+    const kelas = state.selectedKelas
+
     const result = await this.$apiBase.$get(
       `get-settings?sk=${program}%23${kelas}&type=mapel`
     )

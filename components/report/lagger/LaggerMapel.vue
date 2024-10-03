@@ -6,7 +6,7 @@
       </div>
       <div class="col-12 col-md-6 mb-3 mb-md-0 d-flex flex-column flex-md-row justify-content-end gap-2">
         <div class="input-group d-flex justify-content-end">
-          <select v-if="kelas" style="max-width: max-content !important;" name="" id="" class="form-select" v-model="selectedKelas" @change="changeUnitClass">
+          <select v-if="kelas.length > 0" style="max-width: max-content !important;" name="" id="" class="form-select" v-model="selectedKelas" @change="changeUnitClass">
             <option value="" selected disabled>Kelas</option>
             <option v-for="(data, index) in kelas" :value="data.Nama" :key="index">{{ data.Nama }}</option>
           </select>
@@ -21,7 +21,7 @@
           <button class="btn btn-primary border-0" @click="getSantri"
             :disabled="selectedMapel && selectedQuran ? false : true">Submit</button>
         </div>
-        <button class="btn btn-danger border-0" @click="changeUnit">Reset</button>
+        <button class="btn btn-danger border-0" @click="changeUnitData">Reset</button>
         <button class="btn btn-sm btn-success" @click="exportToExcel()">Export</button>
       </div>
     </div>
@@ -111,6 +111,7 @@ export default {
   },
   methods: {
     ...mapActions('report/lagger', ['getSantri', 'setPenilaian', 'changeUnit', 'changeUnitClass']),
+    ...mapMutations('report/lagger', ['resetUnWalas']),
     exportToExcel() {
       // Ambil tabel dari ref
       const ws = XLSX.utils.table_to_sheet(this.$refs.dataTable);
@@ -123,6 +124,15 @@ export default {
       const program = localStorage.getItem('program')
       const kelas = this.$auth.user.Kelas[program]
       XLSX.writeFile(wb, `Lagger ${kelas}.xlsx`);
+    },
+    changeUnitData() {
+      const program = localStorage.getItem('program')
+      const kelas = this.$auth.user.Kelas[program]
+      if ( kelas === 'off' ) {
+        this.resetUnWalas()
+      } else {
+        this.changeUnit()
+      }
     }
   },
 };

@@ -1,3 +1,6 @@
 export default () => ({
-  datas: ''
+  datas: '',
+  listAsrama: [],
+  selectedAsrama: '',
+  santri: []
 })

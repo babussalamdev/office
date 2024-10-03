@@ -4,5 +4,8 @@ export default {
   },
   getDataSantri(state) {
     return state.santri
+  },
+  getSelectedKelas(state) {
+    return state.selectedKelas
   }
 }

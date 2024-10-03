@@ -1,5 +1,7 @@
 export default () => ({
   mapel: '',
   selectedMapel: '',
-  santri: []
+  santri: [],
+  kelas: [],
+  selectedKelas: ''
 })
