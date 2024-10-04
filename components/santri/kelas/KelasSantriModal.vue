@@ -22,6 +22,15 @@
                   </option>
                 </select>
               </div>
+              <div class="mb-3">
+                <label for="Kelas" class="form-label">Jurusan</label>
+                <select name="value" id="Kelas" class="form-select" v-model="jurusanShow" required>
+                  <option value="non-jurusan" selected>Non Jurusan</option>
+                  <option v-for="(value, index) in listJurusan" :value="value.Nama" :key="index">
+                    {{ value.Nama }}
+                  </option>
+                </select>
+              </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -48,14 +57,22 @@
 import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 export default {
   computed: {
-    ...mapState("santri/kelas", ["select", 'updateData', 'btn']),
-    ...mapGetters('santri/kelas', ['getKelasShow']),
+    ...mapState("santri/kelas", ["select", 'updateData', 'btn', 'listJurusan']),
+    ...mapGetters('santri/kelas', ['getKelasShow', 'getJurusanShow']),
     kelasShow: {
       get() {
         return this.getKelasShow
       },
       set(value) {
         this.$store.commit('santri/kelas/setKelasShow', value)
+      }
+    },
+    jurusanShow: {
+      get() {
+        return this.getJurusanShow
+      },
+      set(value) {
+        this.$store.commit('santri/kelas/setJurusanShow', value )
       }
     }
   },

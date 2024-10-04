@@ -12,9 +12,16 @@ export default {
   },
   setKelas(state, value) {
     state.select = value.kelas
+    state.listJurusan = value.jurusan
+  },
+  setSelectedKelas(state, value) {
+    state.selectedKelas = value
   },
   setAngkatan(state, value) {
     state.angkatan = value
+  },
+  setCategory(state, value) {
+    state.category = value
   },
   inputSantriBulk(state, value) {
     state.santri = [...state.santri, ...value];
@@ -31,6 +38,9 @@ export default {
   setKelasShow(state, value) {
     state.kelasShow = value
   },
+  setJurusanShow(state, value) {
+    state.jurusanShow = value
+  },
   editBulk(state, value) {
     $("#updateDataSantriKelas").modal("show");
     state.updateData = value;
@@ -43,6 +53,7 @@ export default {
         const updatedItem = { ...item };
         // Perbarui nilai 'Kelas' dari objek yang ditemukan
         updatedItem['Kelas'] = data.value;
+        updatedItem['Jurusan'] = data.jurusan
         return updatedItem;
       }
       return item; // Kembalikan objek tanpa modifikasi jika tidak ada yang sesuai
@@ -52,6 +63,7 @@ export default {
     state.santri = updatedData;
 
     state.kelasShow = "";
+    state.jurusanShow = "non-jurusan";
     $("#updateDataSantriKelas").modal("hide");
   },
 
@@ -86,6 +98,11 @@ export default {
   deleteSantri(state, value) {
     const i = state.santri.findIndex((x) => x.SK === value);
     state.santri.splice(i, 1);
+  },
+  changeCategory(state, value) {
+    state.santri = []
+    state.angkatan = ''
+    state.selectedKelas = ''
   },
 
   // partikel

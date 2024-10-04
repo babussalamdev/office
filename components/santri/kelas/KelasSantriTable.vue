@@ -13,28 +13,45 @@
               :disabled="data.length > 0 ? false : true">
               Edit
             </button>
-            <select name="Kelas" id="kelas" v-model="angkatan" @change="changeUnit" class="form-select select"
-              required>
+            <select name="Kelas" id="kelas" v-model="category" @change="changeCategory"
+              class="form-select select bg-body-secondary" required>
+              <option value="" selected disabled>Category</option>
+              <option value="angkatan">Angkatan</option>
+              <option value="kelas">Kelas</option>
+              <!-- <option v-for="(data, index) in years" :key="index" :value="data">
+                {{ data }}
+              </option> -->
+            </select>
+            <select v-if="category === 'angkatan'" name="Kelas" id="kelas" v-model="angkatan" @change="changeUnit"
+              class="form-select select" required>
               <option value="" selected disabled>Angkatan</option>
               <option v-for="(data, index) in years" :key="index" :value="data">
                 {{ data }}
               </option>
             </select>
+            <select v-else name="Kelas" id="kelas" v-model="kelas" @change="changeUnit" class="form-select select"
+              required>
+              <option value="" selected disabled>Kelas</option>
+              <option v-for="(data, index) in select" :key="index" :value="data.Nama">
+                {{ data.Nama }}
+              </option>
+            </select>
           </div>
         </div>
       </div>
+      <!-- <KelasSantriModal @resetSelect="resetSelect" /> -->
+      <KelasSantriModal />
       <div class="table-responsive">
         <!-- Modal -->
-        <!-- <KelasSantriModal @resetSelect="resetSelect" /> -->
-        <KelasSantriModal />
         <table class="table table-hover table-striped">
           <thead>
             <tr>
-              <th scope="col">
+              <th scope="col" class="pe-0">
                 <input class="form-check-input" type="checkbox" v-model="selectAll" @change="selectAllCheckbox" />
               </th>
               <th scope="col">Nama Santri</th>
               <th scope="col">Kelas</th>
+              <th scope="col">Jurusan</th>
               <th scope="col">Asrama</th>
               <th scope="col">Halaqah</th>
               <th scope="col">Ekskull</th>
@@ -43,7 +60,7 @@
           </thead>
           <tbody>
             <tr v-for="(data, index) in santri" :key="index">
-              <td>
+              <td class="pe-0">
                 <input class="form-check-input" type="checkbox" v-model="selectedItems[data.SK]"
                   @change="getCheckedNames" />
               </td>
@@ -53,6 +70,9 @@
               </td>
               <td class="text-capitalize align-middle text-white" style="background: #176b87">
                 {{ data.Kelas ? data.Kelas : "-" }}
+              </td>
+              <td class="text-capitalize align-middle text-white" style="background: #176b87">
+                {{ data.Jurusan ? data.Jurusan : "non-jurusan" }}
               </td>
               <td class="text-capitalize align-middle">
                 {{ data.Asrama ? data.Asrama : "-" }}
@@ -88,7 +108,7 @@ export default {
   },
   computed: {
     ...mapState("santri/kelas", ["santri", 'years', 'select']),
-    ...mapGetters('santri/kelas', ['getAngkatan']),
+    ...mapGetters('santri/kelas', ['getAngkatan', 'getCategory', 'getKelas']),
     angkatan: {
       get() {
         return this.getAngkatan
@@ -96,11 +116,27 @@ export default {
       set(value) {
         this.$store.commit('santri/kelas/setAngkatan', value)
       }
+    },
+    kelas: {
+      get() {
+        return this.getKelas
+      },
+      set(value) {
+        this.$store.commit('santri/kelas/setSelectedKelas', value)
+      }
+    },
+    category: {
+      get() {
+        return this.getCategory
+      },
+      set(value) {
+        this.$store.commit('santri/kelas/setCategory', value)
+      }
     }
   },
   methods: {
     ...mapActions('santri/kelas', ['changeUnit']),
-    ...mapMutations('santri/kelas', ['editBulk']),
+    ...mapMutations('santri/kelas', ['editBulk', 'changeCategory']),
     selectAllCheckbox() {
       for (const item of this.santri) {
         this.$set(this.selectedItems, item.SK, this.selectAll);

@@ -3,9 +3,16 @@ export default {
   async changeUnit({ commit, state, dispatch }, data) {
     dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
-    const reqSantri = this.$apiSantri.$get(
-      `get-santri-sisalam?subject=${state.angkatan}&program=${program}&opsi=kelas`
-    );
+    let reqSantri
+    if ( state.category === 'angkatan') {
+      reqSantri = this.$apiSantri.$get(
+        `get-santri-sisalam?subject=${state.angkatan}&program=${program}&opsi=kelas`
+      );
+    } else {
+      reqSantri = this.$apiSantri.$get(
+        `get-santri-sisalam?subject=kelas&program=${program}&opsi=${state.selectedKelas}`
+      );
+    }
     const reqKelas = this.$apiBase.$get(`get-settings?sk=${program}&type=kelas`)
     const [resSantri, resKelas] = await Promise.all([reqSantri, reqKelas])
 
@@ -18,6 +25,7 @@ export default {
     const data = {};
     const program = localStorage.getItem("program");
     data["value"] = state.kelasShow;
+    data["jurusan"] = state.jurusanShow
     data["sort"] = state.updateData;
     try {
       const result = await this.$apiSantri.$put(
