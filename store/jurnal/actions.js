@@ -2,7 +2,8 @@ import Swal from "sweetalert2"
 export default {
   async changeUnit({ commit, state, dispatch }) {
     dispatch('index/submitLoad', null, { root: true })
-    const result = await this.$apiBase.$get(`get-settings?type=absensikelas`)
+    const program = localStorage.getItem('program')
+    const result = await this.$apiBase.$get(`get-settings?type=absensikelas&program=${program}`)
     if (result.length > 0) {
       dispatch('index/submitLoad', null, { root: true })
       commit('setState', { key: 'datas', value: result })
