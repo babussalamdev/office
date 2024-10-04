@@ -25,8 +25,12 @@ export default {
     const status = await waitForStatus();
 
     if (status.includes('report tahfidz')) {
-      const result = await this.$apiBase.$get(`get-settings?type=options&sk=${program}&category=halaqah`)
-      commit('setHalaqah', result)
+      const result = await this.$apiSantri.$get(
+        `get-santri-sisalam?subject=halaqah&program=${program}&filter=${halaqah}`
+      );
+      const resultDua = await this.$apiBase.$get(`get-settings?type=options&sk=${program}&category=halaqah`)
+      result['MainHalaqah'] = halaqah
+      commit('setHalaqah', { result, resultDua })
       dispatch('index/submitLoad', null, { root: true });
       return;
     }
