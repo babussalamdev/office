@@ -402,12 +402,12 @@
                     </nuxt-link>
                   </li>
                   <!-- qrcode -->
-                  <!-- <li>
+                  <li>
                     <nuxt-link to="/santri/qrcode"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Qr Code</span>
                     </nuxt-link>
-                  </li> -->
+                  </li>
                   <!-- kelas -->
                   <li v-if="hasPermission('kelas')">
                     <nuxt-link to="/santri/kelas" class="text-decoration-none sub-menu d-flex align-items-center gap-2">

@@ -12,6 +12,7 @@
 <script>
 import { mapState } from 'vuex'
 import html2pdf from 'html2pdf.js'
+import html2canvas from 'html2canvas';
 import bcrypt from 'bcryptjs';
 import QrcodeVue from 'qrcode.vue';
 export default {
@@ -33,18 +34,34 @@ export default {
     await this.$emit('sendAction')
   },
   methods: {
+    // downloadCertificate() {
+    //   const certificateElement = this.$el.querySelector('.invoice-page')
+
+    //   var opt = {
+    //     filename: `${this.updateData.id} qrcode`,
+    //     image: { type: 'jpeg', quality: 0.98 },
+    //     html2canvas: { scale: 2 },
+    //     jsPDF: { unit: 'in', format: 'A4', orientation: 'portrait' }
+    //   };
+
+    //   // New Promise-based usage:
+    //   html2pdf().from(certificateElement).set(opt).save();
+    // },
     downloadCertificate() {
-      const certificateElement = this.$el.querySelector('.invoice-page')
+      const certificateElement = this.$el.querySelector('.invoice-page');
 
-      var opt = {
-        filename: `${this.updateData.id} qrcode`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'A4', orientation: 'portrait' }
-      };
+      html2canvas(certificateElement, { scale: 2 }).then(canvas => {
+        // Konversi canvas ke data URL
+        const imgData = canvas.toDataURL('image/jpeg', 0.98);
 
-      // New Promise-based usage:
-      html2pdf().from(certificateElement).set(opt).save();
+        // Buat link untuk mengunduh gambar
+        const link = document.createElement('a');
+        link.href = imgData;
+        link.download = `${this.updateData.id} qrcode.jpg`;
+
+        // Simulasikan klik untuk mengunduh
+        link.click();
+      });
     },
     toHash(code) {
       return bcrypt.hash(code, 10)

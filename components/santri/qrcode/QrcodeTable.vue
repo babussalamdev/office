@@ -12,9 +12,9 @@
         </select>
       </div>
     </div>
+    <!-- Modal -->
+    <KelasSantriModal />
     <div class="table-responsive">
-      <!-- Modal -->
-      <KelasSantriModal />
       <table class="table table-hover table-striped">
         <thead>
           <tr>

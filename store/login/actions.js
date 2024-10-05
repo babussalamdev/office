@@ -13,7 +13,7 @@ export default {
                 commit('btn')
                 this.$router.push("/");
                 if (this.$auth.user.role === "santri") {
-                    this.$cookies.remove("AccessToken");
+                    value.$cookies.remove("AccessToken");
                     this.$auth.logout();
                     Swal.fire({
                         position: "center",
