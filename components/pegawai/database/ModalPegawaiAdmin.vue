@@ -14,7 +14,7 @@
             <div class="modal-body">
               <div class="mb-3">
                 <label for="nama" class="form-label">Nama</label>
-                <input name="Nama" type="text" class="form-control" id="nama" />
+                <input name="Nama" type="text" class="form-control" id="nama" required/>
               </div>
               <div class="mb-3">
                 <label for="lulusan" class="form-label">Lulusan</label>
@@ -31,7 +31,7 @@
               </div>
               <div class="mb-3">
                 <label for="nip" class="form-label">NIP</label>
-                <input name="Nip" type="text" class="form-control" id="nip" />
+                <input name="Nip" type="text" class="form-control" id="nip" required/>
               </div>
               <div class="mb-3">
                 <label class="typo__label mb-2">Program</label>
@@ -219,4 +219,5 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+</style>

@@ -11,7 +11,7 @@
         </select>
         <select class="form-select" v-model="selectedAsrama" @change="applyFilter">
           <option value="all">All</option>
-          <option v-for="(data, index) in uniqueStatus" :key="index" :value="data.status">{{ data.status }}</option>
+          <option v-for="(data, index) in uniqueStatus" :key="index" :value="data">{{ data }}</option>
         </select>
       </div>
     </div>
@@ -79,7 +79,7 @@ export default {
     },
     uniqueStatus() {
       // Get unique classes from data
-      const status = this.detail.map(item => item.Logs.asrama);
+      const status = this.detail.map(item => item.Logs.asrama.status);
       return [...new Set(status)];
     },
     filteredData() {

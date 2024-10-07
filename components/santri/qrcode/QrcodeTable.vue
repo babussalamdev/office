@@ -4,7 +4,8 @@
       <div class="col-6 d-flex align-items-center">
         <h1 style="font-size: 12px;">Create Qr Code</h1>
       </div>
-      <div class="col-6 d-flex justify-content-end">
+      <div class="col-6 d-flex justify-content-end gap-2">
+        <button style="font-size: 12px;" @click="createPDF()" class="btn btn-sm btn-primary">Export All</button>
         <select style="font-size: 12px; max-width: max-content;" class="form-select">
           <option value="">kelas</option>
           <option value="">7a</option>
@@ -49,7 +50,8 @@
               <qrcode-vue :value="card.code" :size="100" />
             </td>
             <td class="align-middle">
-              <button style="font-size: 12px;" class="btn btn-sm btn-primary" @click="createPDF(card)">Create PDF</button>
+              <button style="font-size: 12px;" class="btn btn-sm btn-primary" @click="createPDF(card)">Create
+                PDF</button>
             </td>
           </tr>
         </tbody>
@@ -61,6 +63,11 @@
 
 <script>
 import QrcodeVue from 'qrcode.vue';
+import JSZip from 'jszip';
+import FileSaver from 'file-saver';
+import html2canvas from 'html2canvas';
+import bcrypt from 'bcryptjs';
+// import QrcodeVue from 'qrcode.vue';
 export default {
   components: {
     QrcodeVue,
@@ -70,6 +77,8 @@ export default {
       cncCards: [
         { id: 'Fauzan Gunawan', name: 'Kartu A', code: 'CNC-123457853' },
         { id: 'Yazid Gunawan', name: 'Kartu B', code: 'CNC-678906745' },
+        { id: 'Harun Gunawan', name: 'Kartu C', code: 'CNC-578548598' },
+        { id: 'Shodiq Gunawan', name: 'Kartu D', code: 'CNC-785478547' },
         // Tambahkan data CNC kartu lainnya
       ],
       qrcode: false,

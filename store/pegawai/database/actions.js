@@ -42,7 +42,6 @@ export default {
         text: error,
         icon: "error",
         timer: 3000,
-        timerProgressBar: false,
         showConfirmButton: false,
       });
     }
