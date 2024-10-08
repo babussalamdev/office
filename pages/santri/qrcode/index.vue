@@ -8,6 +8,9 @@
 
 <script>
 export default {
+  async asyncData({ store }) {
+    store.dispatch('qrcode/changeUnit')
+  },
   mounted() {
     this.closeAllModals();;
   },

@@ -6,10 +6,10 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <form @submit.prevent="submit" ref="mutabaahupdate">
-            <div class="modal-header">
+            <!-- <div class="modal-header">
               <h1 class="modal-title fs-5" id="staticBackdropLabel">Input {{ subject }}</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
+            </div> -->
             <div class="modal-body">
               <div class="row">
                 <div class="mb-3 col-12 col-md-8"><label class="typo__label mb-2">Surat From</label>
@@ -35,17 +35,23 @@
               </div>
               <div class="row">
                 <div class="mb-3 col">
-                  <label for="halaman" class="form-label">Halaman</label>
-                  <input type="number" name="Page" id="halaman" class="form-control" :value="page">
+                  <div class="input-group">
+                    <span class="input-group-text">Halaman</span>
+                    <input type="number" name="Page" id="halaman" class="form-control" :value="page">
+                  </div>
                 </div>
                 <div class="mb-3 col">
-                  <label for="score" class="form-label">Nilai</label>
-                  <input type="number" step="any" name="Score" id="score" class="form-control" :value="updateData?.Score" min='0' max="100">
+                  <div class="input-group">
+                    <span class="input-group-text">Nilai</span>
+                    <input type="number" step="any" name="Score" id="score" class="form-control" :value="updateData?.Score" min='0' max="100">
+                  </div>
                 </div>
               </div>
               <div class="mb-3">
-                <label for="catatan" class="form-label">Catatan</label>
-                <textarea name="Note" id="catatan" class="form-control" v-model="note"></textarea>
+                <div class="form-floating">
+                  <textarea name="Note" id="catatan" class="form-control" v-model="note" placeholder="Leave a comment here" style="height: 100px"></textarea>
+                  <label for="catatan">Catatan</label>
+                </div>
               </div>
             </div>
             <div class="modal-footer">
@@ -213,4 +219,8 @@ export default {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&display=swap');
+
+form label {
+  font-size: 14px;
+}
 </style>

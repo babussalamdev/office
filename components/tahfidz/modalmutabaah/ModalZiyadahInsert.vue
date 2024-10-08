@@ -3,48 +3,54 @@
     <!-- Modal -->
     <div class="modal fade hide" id="mutabaah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
       aria-labelledby="staticBackdropLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-dialog">
         <div class="modal-content">
           <form @submit.prevent="submit" ref="mutabaah">
-            <div class="modal-header">
+            <!-- <div class="modal-header">
               <h3 class="modal-title fs-5" id="staticBackdropLabel">Input {{ subject }}</h3>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
+            </div> -->
             <div class="modal-body">
               <div class="row">
-                <div class="mb-3 col-12 col-md-8"><label class="typo__label mb-2">Surat From</label>
+                <div class="mb-3 col-8"><label class="typo__label mb-2">Surat From</label>
                   <multiselect style="font-family: 'Noto Kufi Arabic', sans-serif; font-size: 16px; font-weight: 600"
                     v-model="surahfrom" :options="from" placeholder="Select one" label="name" track-by="name">
                   </multiselect>
                 </div>
-                <div class="mb-3 col-12 col-md-4"><label class="typo__label mb-2">Ayat from</label>
+                <div class="mb-3 col-4"><label class="typo__label mb-2">Ayat from</label>
                   <multiselect v-model="ayatfrom" :options="surahfrom?.ayat" placeholder="Select one" label="number"
                     track-by="number"></multiselect>
                 </div>
 
-                <div class="mb-3 col-12 col-md-8"><label class="typo__label mb-2">Surat To</label>
+                <div class="mb-3 col-8"><label class="typo__label mb-2">Surat To</label>
                   <multiselect style="font-family: 'Noto Kufi Arabic', sans-serif; font-size: 16px; font-weight: 600;"
                     v-model="surahto" :options="from" placeholder="Select one" label="name" track-by="name">
                   </multiselect>
                 </div>
-                <div class="mb-3 col-12 col-md-4"><label class="typo__label mb-2">Ayat To</label>
+                <div class="mb-3 col-4"><label class="typo__label mb-2">Ayat To</label>
                   <multiselect v-model="ayatto" :options="surahto?.ayat" placeholder="Select one" label="number"
                     track-by="number"></multiselect>
                 </div>
               </div>
               <div class="row">
                 <div class="mb-3 col">
-                  <label for="halaman" class="form-label">Halaman</label>
-                  <input type="number" name="Page" id="halaman" class="form-control" :value="page">
+                  <div class="input-group">
+                    <span class="input-group-text">Halaman</span>
+                    <input type="number" name="Page" id="halaman" class="form-control" :value="page">
+                  </div>
                 </div>
                 <div class="mb-3 col">
-                  <label for="score" class="form-label">Nilai</label>
-                  <input type="number" name="Score" id="score" class="form-control" value="0" max="100" min="0">
+                  <div class="input-group">
+                    <span class="input-group-text">Nilai</span>
+                    <input type="number" name="Score" id="score" class="form-control" value="0" max="100" min="0">
+                  </div>
                 </div>
               </div>
-              <div class="mb-3">
-                <label for="catatan" class="form-label">Catatan</label>
-                <textarea name="Note" id="catatan" class="form-control"></textarea>
+              <div>
+                <div class="form-floating">
+                  <textarea name="Note" id="catatan" class="form-control" placeholder="Leave a comment here" style="height: 100px"></textarea>
+                  <label for="catatan">Catatan</label>
+                </div>
               </div>
             </div>
             <div class="modal-footer">
@@ -107,6 +113,7 @@ export default {
       } else {
         this.surahfrom = { name: '', ayat: [] }
       }
+      this.surahto = value
     },
     surahto(value) {
       if (value !== null) {
@@ -128,6 +135,7 @@ export default {
           this.page = Math.abs(this.ayatfrom.page - this.ayatto.page) + 1
         }
       }
+      this.ayatto = value
     }
   },
   methods: {
@@ -152,7 +160,6 @@ export default {
       data['Score'] = +data.Score
       data['From'] = from
       data['To'] = to
-      console.log(data)
 
       const { Page, Score, Note, From, To } = data;
       const { name: fromName, ayat: fromAyat } = From;
@@ -237,6 +244,10 @@ export default {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&display=swap');
+
+label {
+  font-size: 14px;
+}
 
 .multiselect .multiselect__content-wrapper {
   max-height: 150px !important;

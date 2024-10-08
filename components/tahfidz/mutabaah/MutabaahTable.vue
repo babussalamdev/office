@@ -1,16 +1,19 @@
 <template>
   <div>
-    <div class="row mb-3">
+    <div class="d-flex justify-content-between flex-column flex-md-row mb-3 gap-2">
+      <h2>Mutabaah Tahfidz</h2>
+      <select v-if="listHalaqah.length > 0" class="form-select" style="font-size: 12px; max-width: max-content;" @change="getHalaqahKoordinator()" v-model="selectedHalaqah">
+        <option value="" selected disabled>halaqah</option>
+        <option v-for="(data, index) in listHalaqah" :value="data" :key="index">{{ data }}</option>
+      </select>
+
+    </div>
+    <!-- <div class="row mb-3">
       <div class="col-12 col-md-6 d-flex align-items-center">
-        <h2>Mutabaah Tahfidz</h2>
       </div>
       <div class="col-12 col-md-6 d-flex justify-content-end">
-        <select v-if="listHalaqah.length > 0" class="form-select" style="font-size: 12px; max-width: max-content;" @change="getHalaqahKoordinator()" v-model="selectedHalaqah">
-          <option value="" selected disabled>halaqah</option>
-          <option v-for="(data, index) in listHalaqah" :value="data" :key="index">{{ data }}</option>
-        </select>
       </div>
-    </div>
+    </div> -->
     <div class="table-responsive animate__animated animate__fadeInUp">
       <table class="table table-hover table-striped">
         <thead>
