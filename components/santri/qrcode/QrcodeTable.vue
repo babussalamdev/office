@@ -7,7 +7,7 @@
       <div class="col-6 d-flex justify-content-end gap-2">
         <button style="font-size: 12px;" @click="createPDF()" class="btn btn-sm btn-primary">Create All</button>
         <select style="font-size: 12px; max-width: max-content;" class="form-select" @change="getData" v-model="selectedKelas">
-          <option value="">kelas</option>
+          <option value="">none</option>
           <option v-for="(data, index) in kelas" :key="index" :value="data.Nama">{{ data.Nama }}</option>
         </select>
       </div>
@@ -25,26 +25,9 @@
           </tr>
         </thead>
         <tbody>
-          <!-- <tr>
-            <td>Fauzan Gunawan</td>
-            <td>CNC-652586586</td>
-            <td class="text-end">
-              <a style="font-size: 12px;" href="javascript:;" class="btn btn-sm btn-primary">create</a>
-            </td>
-          </tr>
-          <tr>
-            <td>Yazid Gunawan</td>
-            <td>CNC-58549572</td>
-            <td class="text-end">
-              <a style="font-size: 12px;" href="javascript:;" class="btn btn-sm btn-primary">create</a>
-            </td>
-          </tr> -->
           <tr v-for="card in santri" :key="card.id">
             <td class="align-middle">{{ card.Nama }}</td>
             <td class="align-middle">{{ card.CNC }}</td>
-            <!-- <td class="align-middle">
-              <qrcode-vue :value="card.code" :size="100" />
-            </td> -->
             <td class="align-middle text-end">
               <button style="font-size: 12px;" class="btn btn-sm btn-primary" @click="createQR(card)">Create
                 QrCode</button>
@@ -54,16 +37,12 @@
       </table>
     </div>
     <QrcodePdf v-if="qrcode" @sendAction="clear" :updateData="updateData" />
+    <QrcodePdfMultiple />
   </div>
 </template>
 
 <script>
 import QrcodeVue from 'qrcode.vue';
-import JSZip from 'jszip';
-import FileSaver from 'file-saver';
-import html2canvas from 'html2canvas';
-import bcrypt from 'bcryptjs';
-// import QrcodeVue from 'qrcode.vue';
 import { mapState, mapActions, mapGetters, mapMutations } from 'vuex'
 export default {
   components: {
@@ -83,13 +62,6 @@ export default {
   },
   data() {
     return {
-      // cncCards: [
-      //   { id: 'Fauzan Gunawan', name: 'Kartu A', code: 'CNC-123457853' },
-      //   { id: 'Yazid Gunawan', name: 'Kartu B', code: 'CNC-678906745' },
-      //   { id: 'Harun Gunawan', name: 'Kartu C', code: 'CNC-578548598' },
-      //   { id: 'Shodiq Gunawan', name: 'Kartu D', code: 'CNC-785478547' },
-      //   // Tambahkan data CNC kartu lainnya
-      // ],
       qrcode: false,
       updateData: ''
     };
