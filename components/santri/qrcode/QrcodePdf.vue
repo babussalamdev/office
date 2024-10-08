@@ -1,10 +1,10 @@
-<!-- <template>
+<template>
   <section>
     <div class="invoice-page">
-      <h1 class="text-center fw-bold mb-2 fs-1">{{ updateData.id }}</h1>
-      <p class="text-center mb-5">{{ updateData.code }}</p>
-      <p class="text-center mb-3">{{ hashedCode }}</p>
-      <qrcode-vue class="text-center" :value="hashedCode" :size="500" />
+      <h1 class="text-center fw-bold mb-2 fs-1">{{ updateData.Nama }}</h1>
+      <p class="text-center mb-5">{{ updateData.CNC }}</p>
+      <p class="text-center mb-3">{{ updateData.Hashed_CNC }}</p>
+      <qrcode-vue class="text-center" :value="updateData.Hashed_CNC" :size="500" />
     </div>
   </section>
 </template>
@@ -31,26 +31,13 @@ export default {
     ...mapState('partner', ['profile', 'invoice'])
   },
   async mounted() {
-    this.hashedCode = await this.toHash(this.updateData.code);
-    // await this.downloadCertificate();
-    await this.exportRAR()
+    // this.hashedCode = await this.toHash(this.updateData.code);
+    await this.downloadQrCode();
+    // await this.exportRAR()
     await this.$emit('sendAction')
   },
   methods: {
-    // downloadCertificate() {
-    //   const certificateElement = this.$el.querySelector('.invoice-page')
-
-    //   var opt = {
-    //     filename: `${this.updateData.id} qrcode`,
-    //     image: { type: 'jpeg', quality: 0.98 },
-    //     html2canvas: { scale: 2 },
-    //     jsPDF: { unit: 'in', format: 'A4', orientation: 'portrait' }
-    //   };
-
-    //   // New Promise-based usage:
-    //   html2pdf().from(certificateElement).set(opt).save();
-    // },
-    downloadCertificate() {
+    downloadQrCode() {
       const certificateElement = this.$el.querySelector('.invoice-page');
 
       html2canvas(certificateElement, { scale: 2 }).then(canvas => {
@@ -60,7 +47,7 @@ export default {
         // Buat link untuk mengunduh gambar
         const link = document.createElement('a');
         link.href = imgData;
-        link.download = `${this.updateData.id} qrcode.jpg`;
+        link.download = `${this.updateData.Nama} qrcode.jpg`;
 
         // Simulasikan klik untuk mengunduh
         link.click();
@@ -69,32 +56,32 @@ export default {
     toHash(code) {
       return bcrypt.hash(code, 10)
     },
-    async exportRAR() {
-      const zip = new JSZip();
+    // async exportRAR() {
+    //   const zip = new JSZip();
 
-      const cncCards = [
-        { id: 'Fauzan Gunawan', name: 'Kartu A', code: 'CNC-123457853' },
-        { id: 'Yazid Gunawan', name: 'Kartu B', code: 'CNC-678906745' },
-        { id: 'Harun Gunawan', name: 'Kartu C', code: 'CNC-578548598' },
-        { id: 'Shodiq Gunawan', name: 'Kartu D', code: 'CNC-785478547' },
-        // Tambahkan data CNC kartu lainnya
-      ];
+    //   const cncCards = [
+    //     { id: 'Fauzan Gunawan', name: 'Kartu A', code: 'CNC-123457853' },
+    //     { id: 'Yazid Gunawan', name: 'Kartu B', code: 'CNC-678906745' },
+    //     { id: 'Harun Gunawan', name: 'Kartu C', code: 'CNC-578548598' },
+    //     { id: 'Shodiq Gunawan', name: 'Kartu D', code: 'CNC-785478547' },
+    //     // Tambahkan data CNC kartu lainnya
+    //   ];
 
-      for (const card of cncCards) {
-        const certificateElement = this.$el.querySelector('.invoice-page');
+    //   for (const card of cncCards) {
+    //     const certificateElement = this.$el.querySelector('.invoice-page');
 
-        const canvas = await html2canvas(certificateElement, { scale: 2 });
-        const imgData = canvas.toDataURL('image/jpeg', 0.98);
+    //     const canvas = await html2canvas(certificateElement, { scale: 2 });
+    //     const imgData = canvas.toDataURL('image/jpeg', 0.98);
 
-        // Tambahkan gambar ke ZIP dengan nama berdasarkan ID
-        const base64Data = imgData.split(',')[1]; // Hanya ambil bagian base64
-        zip.file(`${card.id}.jpg`, base64Data, { base64: true });
-      }
+    //     // Tambahkan gambar ke ZIP dengan nama berdasarkan ID
+    //     const base64Data = imgData.split(',')[1]; // Hanya ambil bagian base64
+    //     zip.file(`${card.id}.jpg`, base64Data, { base64: true });
+    //   }
 
-      // Buat file ZIP dan simpan
-      const content = await zip.generateAsync({ type: 'blob' });
-      FileSaver.saveAs(content, 'qr-code.zip');
-    }
+    //   // Buat file ZIP dan simpan
+    //   const content = await zip.generateAsync({ type: 'blob' });
+    //   FileSaver.saveAs(content, 'qr-code.zip');
+    // }
   },
 }
 </script>
@@ -110,11 +97,11 @@ export default {
   height: 270mm;
   margin: 0;
 }
-</style> -->
+</style>
 
 
 <!-- percobaan 1 -->
-<template>
+<!-- <template>
   <div>
     <div class="invoice-page" v-if="currentCard">
       <h1 class="text-center fw-bold mb-2 fs-1">{{ currentCard.id }}</h1>
@@ -183,6 +170,6 @@ export default {
   height: 270mm;
   margin: 0;
 }
-</style>
+</style> -->
 
 
