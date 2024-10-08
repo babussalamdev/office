@@ -38,6 +38,7 @@ export default {
   },
   methods: {
     downloadQrCode() {
+      this.$store.dispatch('index/submitLoad')
       const certificateElement = this.$el.querySelector('.invoice-page');
 
       html2canvas(certificateElement, { scale: 2 }).then(canvas => {
@@ -51,6 +52,7 @@ export default {
 
         // Simulasikan klik untuk mengunduh
         link.click();
+        this.$store.dispatch('index/submitLoad')
       });
     },
     toHash(code) {

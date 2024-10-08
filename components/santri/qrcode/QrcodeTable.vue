@@ -5,8 +5,15 @@
         <h1 style="font-size: 12px;">Create Qr Code</h1>
       </div>
       <div class="col-6 d-flex justify-content-end gap-2">
-        <button style="font-size: 12px;" @click="createPDF()" class="btn btn-sm btn-primary">Create All</button>
-        <select style="font-size: 12px; max-width: max-content;" class="form-select" @change="getData" v-model="selectedKelas">
+        <span>
+          <button v-if="multibtn" style="font-size: 12px;" @click="createAll()" class="btn btn-sm btn-primary">Create All</button>
+          <button v-else style="font-size: 12px;" class="btn btn-primary" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+            <span role="status">Loading...</span>
+          </button>
+        </span>
+        <select style="font-size: 12px; max-width: max-content;" class="form-select" @change="getData"
+          v-model="selectedKelas">
           <option value="">none</option>
           <option v-for="(data, index) in kelas" :key="index" :value="data.Nama">{{ data.Nama }}</option>
         </select>
@@ -37,7 +44,7 @@
       </table>
     </div>
     <QrcodePdf v-if="qrcode" @sendAction="clear" :updateData="updateData" />
-    <QrcodePdfMultiple />
+    <QrcodePdfMultiple v-if="multiqr" @sendActionMulti="clearMulti" />
   </div>
 </template>
 
@@ -56,14 +63,16 @@ export default {
         return this.getSelectedKelas
       },
       set(value) {
-        this.$store.commit('qrcode/SET_STATE', { key: 'selectedKelas', value})
+        this.$store.commit('qrcode/SET_STATE', { key: 'selectedKelas', value })
       }
     }
   },
   data() {
     return {
       qrcode: false,
-      updateData: ''
+      multiqr: false,
+      updateData: '',
+      multibtn: true
     };
   },
   methods: {
@@ -72,9 +81,17 @@ export default {
       this.updateData = card
       this.qrcode = true
     },
+    async createAll() {
+      this.multibtn = false
+      this.multiqr = true
+    },
     clear() {
       this.qrcode = false
     },
+    clearMulti() {
+      this.multiqr = false
+      this.multibtn = true
+    }
   },
 }
 </script>
