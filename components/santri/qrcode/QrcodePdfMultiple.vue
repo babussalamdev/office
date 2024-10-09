@@ -36,7 +36,7 @@ export default {
 
             html2canvas(certificateElement, { scale: 2 }).then(canvas => {
               const imgData = canvas.toDataURL('image/jpeg', 0.98);
-              resolve({ name: `${item.Nama} qrcode.jpg`, data: imgData });
+              resolve({ name: `${item.Nama} - ${item.CNC}.jpg`, data: imgData });
             });
           });
         });

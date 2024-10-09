@@ -31,13 +31,16 @@ export default {
     }
   },
   async inputCard({ commit, state, dispatch }, event) {
+    commit('BTN')
     try {
       const data = Object.fromEntries(new FormData(event.target))
       const result = await this.$apiCard.$post(`create-card`, data)
       if ( result ) {
         commit('INPUT_CARD', result)
+        commit('BTN')
       }
     } catch (error) {
+      commit('BTN')
       Swal.fire({
         icon: 'error',
         text: error,

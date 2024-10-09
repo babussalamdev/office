@@ -1,5 +1,6 @@
 export default () => ({
   santri: [],
   kelas: [],
-  selectedKelas: ''
+  selectedKelas: '',
+  btn: true
 })

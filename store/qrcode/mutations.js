@@ -7,14 +7,16 @@ export default {
     state.santri.splice(i, 1)
   },
   INPUT_CARD(state, data) {
-    const transformedData = data.map(item => ({
-      Nama: "Kartu belum dikaitkan",
-      Kelas: "empty",
-      CNC: item.SK,
-      cardName: item.Name,
-      SK: "empty"
-    }));
+    const updatedArray = [
+      ...state.santri,
+      ...data
+    ];
+    state.santri = updatedArray
 
-    state.santri.push(transformedData)
+    $('#cardModal').modal('hide')
+    $('#formInput')[0].reset()
+  },
+  BTN(state) {
+    state.btn = !state.btn
   }
 }

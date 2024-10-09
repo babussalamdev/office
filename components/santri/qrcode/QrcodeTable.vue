@@ -2,11 +2,11 @@
   <div>
     <div class="row mb-3">
       <div class="col-12 col-md-6 d-flex align-items-center mb-3 mb-md-0">
-        <h1 style="font-size: 12px;">Create Qr Code</h1>
+        <h1 style="font-size: 14px;">Create Qr Code</h1>
       </div>
-      <div class="col-12 col-md-6 d-flex justify-content-end gap-2">
+      <div class="col-12 col-md-6 d-flex justify-content-end align-items-center gap-2">
         <span>
-          <button style="font-size: 12px;" class="btn btn-sm btn-success" data-bs-toggle="modal"
+          <button v-if="!selectedKelas" style="font-size: 12px;" class="btn btn-sm btn-success" data-bs-toggle="modal"
             data-bs-target="#cardModal">Tambah Kartu</button>
           <button v-if="multibtn" style="font-size: 12px;" @click="createAll()" class="btn btn-sm btn-primary">Create
             All</button>
@@ -23,7 +23,6 @@
       </div>
     </div>
     <!-- Modal -->
-     {{ santri }}
     <CardModal />
     <div class="table-responsive">
       <table class="table table-hover table-striped">
@@ -36,7 +35,7 @@
           </tr>
         </thead>
         <tbody v-if="santri.length > 0">
-          <tr v-for="card in santri" :key="card.id">
+          <tr v-for="(card, index) in santri" :key="index">
             <td class="align-middle">{{ card.Nama }}</td>
             <td class="align-middle">{{ card.CNC }}</td>
             <td class="align-middle text-end">
