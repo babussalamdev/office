@@ -33,7 +33,7 @@ export default {
   computed: {
   },
   methods: {
-    ...mapActions('card', ['inputCard'])
+    ...mapActions('qrcode', ['inputCard'])
   },
 }
 </script>

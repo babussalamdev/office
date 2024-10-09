@@ -42,18 +42,19 @@ export default {
         });
       });
 
-      // Promise.all(promises).then(images => {
-      //   const zip = new JSZip();
+      Promise.all(promises).then(images => {
+        const zip = new JSZip();
 
-      //   images.forEach(image => {
-      //     const imgBlob = this.dataURLtoBlob(image.data);
-      //     zip.file(image.name, imgBlob);
-      //   });
+        images.forEach(image => {
+          const imgBlob = this.dataURLtoBlob(image.data);
+          zip.file(image.name, imgBlob);
+        });
+        const kelas = this.$store.state.qrcode.selectedKelas
 
-      //   zip.generateAsync({ type: 'blob' }).then(content => {
-      //     saveAs(content, 'qrcodes.zip');
-      //   });
-      // });
+        zip.generateAsync({ type: 'blob' }).then(content => {
+          saveAs(content, `qrcodes ${kelas}.zip`);
+        });
+      });
     },
 
     dataURLtoBlob(dataURL) {

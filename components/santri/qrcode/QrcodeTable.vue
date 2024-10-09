@@ -1,12 +1,15 @@
 <template>
   <div>
     <div class="row mb-3">
-      <div class="col-6 d-flex align-items-center">
+      <div class="col-12 col-md-6 d-flex align-items-center mb-3 mb-md-0">
         <h1 style="font-size: 12px;">Create Qr Code</h1>
       </div>
-      <div class="col-6 d-flex justify-content-end gap-2">
+      <div class="col-12 col-md-6 d-flex justify-content-end gap-2">
         <span>
-          <button v-if="multibtn" style="font-size: 12px;" @click="createAll()" class="btn btn-sm btn-primary">Create All</button>
+          <button style="font-size: 12px;" class="btn btn-sm btn-success" data-bs-toggle="modal"
+            data-bs-target="#cardModal">Tambah Kartu</button>
+          <button v-if="multibtn" style="font-size: 12px;" @click="createAll()" class="btn btn-sm btn-primary">Create
+            All</button>
           <button v-else style="font-size: 12px;" class="btn btn-primary" type="button" disabled>
             <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
             <span role="status">Loading...</span>
@@ -20,7 +23,8 @@
       </div>
     </div>
     <!-- Modal -->
-    <KelasSantriModal />
+     {{ santri }}
+    <CardModal />
     <div class="table-responsive">
       <table class="table table-hover table-striped">
         <thead>
@@ -31,14 +35,21 @@
             <!-- <th scope="col" class="text-end">Action</th> -->
           </tr>
         </thead>
-        <tbody>
+        <tbody v-if="santri.length > 0">
           <tr v-for="card in santri" :key="card.id">
             <td class="align-middle">{{ card.Nama }}</td>
             <td class="align-middle">{{ card.CNC }}</td>
             <td class="align-middle text-end">
               <button style="font-size: 12px;" class="btn btn-sm btn-primary" @click="createQR(card)">Create
                 QrCode</button>
+              <a v-if="card.cardName === '-'" style="font-size: 12px;" href="javascript:;" class="btn btn-sm btn-danger"
+                @click="deleteItem(card.CNC)">delete</a>
             </td>
+          </tr>
+        </tbody>
+        <tbody v-else>
+          <tr>
+            <td class="py-3 text-center" colspan="3">Data tidak ada</td>
           </tr>
         </tbody>
       </table>
@@ -76,7 +87,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions('qrcode', ['getData']),
+    ...mapActions('qrcode', ['getData', 'deleteItem']),
     createQR(card) {
       this.updateData = card
       this.qrcode = true

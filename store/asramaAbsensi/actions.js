@@ -171,7 +171,7 @@ export default {
       try {
         const datas = await this.$apiSantri.$delete(`delete-logs?type=antrian&sk=${skList}`)
         if (datas) {
-          commit('deleteIzin', sk)
+          commit('deleteIzin', cnc)
           Swal.fire({
             position: "center",
             icon: "success",

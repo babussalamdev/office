@@ -8,7 +8,9 @@
 
 <script>
   export default {
-
+    async asyncData({ store }) {
+      store.dispatch('card/changeUnit')
+    }
   }
 </script>
 
