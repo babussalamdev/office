@@ -3,7 +3,7 @@
     <!-- Modal update -->
     <div class="modal fade hide" id="mutabaahupdate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
       aria-labelledby="staticBackdropLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-dialog">
         <div class="modal-content">
           <form @submit.prevent="submit" ref="mutabaahupdate">
             <!-- <div class="modal-header">

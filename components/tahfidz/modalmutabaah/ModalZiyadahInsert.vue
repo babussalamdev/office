@@ -48,7 +48,8 @@
               </div>
               <div>
                 <div class="form-floating">
-                  <textarea name="Note" id="catatan" class="form-control" placeholder="Leave a comment here" style="height: 100px"></textarea>
+                  <textarea name="Note" id="catatan" class="form-control" placeholder="Leave a comment here"
+                    style="height: 100px"></textarea>
                   <label for="catatan">Catatan</label>
                 </div>
               </div>
@@ -139,12 +140,6 @@ export default {
     }
   },
   methods: {
-    // changefrom(){
-
-    // },
-    // changeto(){
-
-    // },
     async submit(event) {
       this.btn = false
       const data = Object.fromEntries(new FormData(event.target))
@@ -168,7 +163,6 @@ export default {
       // Cek apakah salah satu data kosong
       if (
         Page === 0 ||
-        Score === 0 ||
         fromName === "" ||
         fromAyat.number === "" ||
         fromAyat.page === "" ||
