@@ -102,9 +102,11 @@ export default {
         const updatedItem = { ...item };
 
         // Memperbarui Logs dengan data baru
-        updatedItem.Logs.catatan.pagi = {
-          ...item.Logs.catatan.pagi,
-          ...data.Pagi
+        updatedItem['Logs']['catatan'] = {
+          ...updatedItem['Logs']['catatan'],
+          pagi: {
+            ...data.Pagi
+          }
         };
 
         return updatedItem;
@@ -127,9 +129,11 @@ export default {
         const updatedItem = { ...item };
 
         // Memperbarui Logs dengan data baru
-        updatedItem.Logs.catatan.pagi = {
-          ...item.Logs.catatan.pagi,
-          ...data.pagi
+        updatedItem['Logs']['catatan'] = {
+          ...updatedItem['Logs']['catatan'],
+          pagi: {
+            ...data.pagi
+          }
         };
 
         return updatedItem;
@@ -152,9 +156,11 @@ export default {
         const updatedItem = { ...item };
 
         // Memperbarui Logs dengan data baru
-        updatedItem.Logs.catatan.sore = {
-          ...item.Logs.catatan.sore,
-          ...data.Sore
+        updatedItem['Logs']['catatan'] = {
+          ...updatedItem['Logs']['catatan'],
+          sore: {
+            ...data.Sore
+          }
         };
 
         return updatedItem;
@@ -177,10 +183,14 @@ export default {
         const updatedItem = { ...item };
 
         // Memperbarui Logs dengan data baru
-        updatedItem.Logs.catatan.sore = {
-          ...item.Logs.catatan.sore,
-          ...data.sore
+        updatedItem['Logs']['catatan'] = {
+          ...updatedItem['Logs']['catatan'],
+          sore: {
+            ...data.sore
+          }
         };
+
+        console.log(updatedItem)
 
         return updatedItem;
       }
@@ -195,7 +205,7 @@ export default {
   //
   setMonitoring(state, data) {
     state.santri = [],
-    state.listHalaqah = data
+      state.listHalaqah = data
     state.monitoring = ''
   }
 }
