@@ -18,7 +18,7 @@ export default {
     });
   },
   inputSantriSingle(state, value) {
-    state.santri.push(value)
+    state.santri.push(value.lowercaseData)
     state.santri.sort((a, b) => {
       return a.Nama - b.Nama;
     });

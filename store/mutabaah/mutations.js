@@ -18,7 +18,7 @@ export default {
     state.detailMutabaah = value
   },
   pushDetail(state, value) {
-    state.detailMutabaah.push(value)
+    state.detailMutabaah.unshift(value)
   },
   editItem(state, value) {
     const i = state.detailMutabaah.findIndex((x) => x.SK === value)

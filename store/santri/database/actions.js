@@ -42,9 +42,8 @@ export default {
         Swal.fire({
           position: "center",
           icon: "success",
-          text: "Your work has been saved",
-          showConfirmButton: false,
-          timer: 1500,
+          title: `${result.Password}`,
+          text: "Password diatas harap disimpan!",
         });
         commit('btn')
         commit('inputSantriSingle', result);
@@ -145,7 +144,6 @@ export default {
       if (result.isConfirmed) {
         const username = state.santri[i].Username
         const result = await this.$apiSantri.$put(`change-password-sisalam?username=${username}`)
-        console.log(result)
         if ( result ) {
           await Swal.fire({
             title: 'Reset Berhasil!',

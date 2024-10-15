@@ -1,9 +1,9 @@
 <template>
   <div>
     <div>
+      <!-- Modal -->
+      <ModalSantri />
       <div class="table-responsive">
-        <!-- Modal -->
-        <ModalSantri />
         <table class="table table-hover table-striped">
           <thead>
             <tr>

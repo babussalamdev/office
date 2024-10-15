@@ -14,7 +14,7 @@
             </div>
             <div class="modal-body">
               <div class="mb-3">
-                <label class="typo__label mb-2">Permissions</label>
+                <label class="typo__label mb-2">List Ekskull</label>
                 <multiselect v-model="ekskullShow" class="text-capitalize"
                   tag-placeholder="Add this as new tag" placeholder="Search or add a tag" label="name" track-by="code"
                   :options="selectEkskull" :multiple="true" :taggable="true" @tag="addTag" required></multiselect>

@@ -4,5 +4,8 @@ export default {
     },
     getEnd(state) {
         return state.end
+    },
+    getKelas(state) {
+      return state.selectedKelas
     }
 }

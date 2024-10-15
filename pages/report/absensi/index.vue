@@ -1,7 +1,7 @@
 <template>
   <section id="report">
     <div class="report">
-      <h2 class="mb-3">Report Absensi</h2>
+      <h2 class="mb-3">Report Absensi Kelas</h2>
       <!-- table -->
       <ReportAbsensiKelas />
     </div>
@@ -10,10 +10,10 @@
 
 <script>
 export default {
-  middleware: 'permission',
-  meta: {
-    permissions: ['report absensi']
-  },
+  // middleware: 'permission',
+  // meta: {
+  //   permissions: ['report absensi']
+  // },
   async asyncData({ store }) {
     store.dispatch('report/absensi/changeUnit')
   },
