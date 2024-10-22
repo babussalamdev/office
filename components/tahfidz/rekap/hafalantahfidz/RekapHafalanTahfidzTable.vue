@@ -4,7 +4,7 @@
       <div class="col-12 col-md-6 mb-2 mb-md-0">
         <div class="input-group d-flex align-items-center">
           <span class="input-group-text bg-secondary text-white" id="basic-addon1">{{ santri.length }} Santri</span>
-          <button class="btn btn-success border-0">Export</button>
+          <button class="btn btn-success border-0" @click="exportToExcel">Export</button>
         </div>
       </div>
       <div class="col-12 col-md-6 d-flex justify-content-end">
@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="table-responsive animate__animated animate__fadeInUp">
-      <table class="table table-hover table-striped">
+      <table ref="dataTable" class="table table-hover table-striped">
         <thead>
           <tr>
             <th scope="col" rowspan="2" class="text-start">Nama</th>
@@ -46,6 +46,7 @@
 
 <script>
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
+import * as XLSX from 'xlsx'
 export default {
   computed: {
     ...mapState('rekaphafalan', ['santri']),
@@ -83,6 +84,13 @@ export default {
     juz(value) {
       const juz = value / 20
       return juz
+    },
+    exportToExcel() {
+      const program = localStorage.getItem('program')
+      const halaqah = this.$auth.user.Halaqah[program]
+      const table = this.$refs.dataTable;
+      const wb = XLSX.utils.table_to_book(table, { sheet: 'Hafalan Santri' });
+      XLSX.writeFile(wb, `Rekap Nilai ${halaqah}.xlsx`);
     }
   },
 };
