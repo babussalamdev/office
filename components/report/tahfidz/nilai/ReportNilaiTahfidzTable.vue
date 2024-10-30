@@ -8,10 +8,11 @@
           <option v-for="(data, index) in listKelas" :key="index" :value="data">{{ data.SK.split('#')[1] }}</option>
         </select>
       </span>
-      <button class="btn btn-success border-0">Export</button>
+      <button class="btn btn-success border-0" @click="exportToExcel"
+        :disabled="santri.length > 0 ? false : true">Export</button>
     </div>
     <div class="table-responsive" ref="input">
-      <table class="table table-hover table-striped">
+      <table ref="dataTable" class="table table-hover table-striped">
         <thead>
           <tr>
             <th class="text-uppercase" v-for="(value, key) in th" :key="key">{{ key }}</th>
@@ -42,6 +43,7 @@
 
 <script>
 import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
+import * as XLSX from 'xlsx'
 export default {
   data() {
     return {
@@ -100,6 +102,12 @@ export default {
       this.th = newHeaders;
       this.getSantri()
     },
+    exportToExcel() {
+      const halaqah = this.selectedKelas
+      const table = this.$refs.dataTable;
+      const wb = XLSX.utils.table_to_book(table, { sheet: 'Hafalan Santri' });
+      XLSX.writeFile(wb, `Report Nilai Tahfidz ${halaqah.SK.split('#')[1]}.xlsx`);
+    }
   },
 };
 </script>

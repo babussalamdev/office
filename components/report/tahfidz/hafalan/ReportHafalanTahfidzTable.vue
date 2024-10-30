@@ -3,8 +3,10 @@
     <div class="row mb-3">
       <div class="col-12 col-md-6 mb-2 mb-md-0">
         <div class="input-group d-flex align-items-center">
-          <span class="input-group-text bg-secondary text-white" id="basic-addon1">{{ santri ? santri.length : 0 }} Santri</span>
-          <button class="btn btn-success border-0">Export</button>
+          <span class="input-group-text bg-secondary text-white" id="basic-addon1">{{ santri ? santri.length : 0 }}
+            Santri</span>
+          <button class="btn btn-success border-0" @click="exportToExcel"
+            :disabled="santri.length > 0 ? false : true">Export</button>
         </div>
       </div>
       <div class="col-12 col-md-6 d-flex justify-content-end">
@@ -15,7 +17,7 @@
       </div>
     </div>
     <div class="table-responsive animate__animated animate__fadeInUp">
-      <table class="table table-hover table-striped">
+      <table ref="dataTable" class="table table-hover table-striped">
         <thead>
           <tr>
             <th scope="col" rowspan="2" class="text-start">Nama</th>
@@ -33,8 +35,11 @@
           <tr v-for="(data, index) in santri" :key="index">
             <td class="text-capitalize align-middle">{{ data.Nama }}</td>
             <td class="text-capitalize align-middle">{{ data.Halaqah }}</td>
-            <td class="text-capitalize align-middle" style="font-family: 'Noto Kufi Arabic', sans-serif; font-size: 12px; font-weight: 600">{{ data.From }}</td>
-            <td class="text-capitalize align-middle" style="font-family: 'Noto Kufi Arabic', sans-serif; font-size: 12px; font-weight: 600">{{ data.To }}</td>
+            <td class="text-capitalize align-middle"
+              style="font-family: 'Noto Kufi Arabic', sans-serif; font-size: 12px; font-weight: 600">{{ data.From }}
+            </td>
+            <td class="text-capitalize align-middle"
+              style="font-family: 'Noto Kufi Arabic', sans-serif; font-size: 12px; font-weight: 600">{{ data.To }}</td>
             <td class="text-capitalize align-middle">{{ data.Page }} Hal</td>
             <td class="text-capitalize align-middle">{{ data.Juz }} Juz</td>
           </tr>
@@ -46,6 +51,7 @@
 
 <script>
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
+import * as XLSX from 'xlsx'
 export default {
   computed: {
     ...mapState('report/tahfidz/hafalan', ['santri', 'listKelas']),
@@ -65,13 +71,20 @@ export default {
     juz(value) {
       const juz = value / 20
       return juz
+    },
+    exportToExcel() {
+      const halaqah = this.selectedKelas
+      const table = this.$refs.dataTable;
+      const wb = XLSX.utils.table_to_book(table, { sheet: 'Hafalan Santri' });
+      XLSX.writeFile(wb, `Report Hafalan Tahfidz ${halaqah.Nama}.xlsx`);
     }
   },
 };
 </script>
 
 <style scoped>
-tr th, tr td {
+tr th,
+tr td {
   white-space: nowrap;
 }
 
