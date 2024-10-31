@@ -28,7 +28,7 @@
             <th scope="col" class="text-center bg-warning">S</th>
             <th scope="col" class="text-center bg-secondary">I</th>
             <th scope="col" class="text-center bg-danger">A</th>
-            <th scope="col" class="text-center">Jumlah</th>
+            <th scope="col" rowspan="2" class="text-center">Jumlah</th>
           </tr>
         </thead>
         <tbody>

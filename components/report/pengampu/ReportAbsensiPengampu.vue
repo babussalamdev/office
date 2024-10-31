@@ -22,6 +22,7 @@
           <tr>
             <th scope="col" rowspan="2" class="text-start align-middle">Nama</th>
             <th scope="col" colspan="5" class="text-center">Ketidakhadiran</th>
+            <th scope="col" rowspan="2" class="text-end">Action</th>
           </tr>
           <tr>
             <th scope="col" class="text-center bg-primary">T</th>
@@ -39,6 +40,15 @@
             <td class="text-capitalize align-middle text-center">{{ data.Izin }}</td>
             <td class="text-capitalize align-middle text-center">{{ data.Absen }}</td>
             <td class="text-capitalize align-middle text-center">{{ data.Terlambat + data.Sakit + data.Izin + data.Absen }}</td>
+            <td class="text-end align-middle">
+              <nuxt-link :to="`/report/pengampu/${data.SK}`">
+                <button class="btn btn-primary">
+                  <i class="material-symbols-outlined">
+                    info
+                  </i>
+                </button>
+              </nuxt-link>
+            </td>
           </tr>
         </tbody>
       </table>
