@@ -8,12 +8,14 @@
         <span>
           <button v-if="!selectedKelas" style="font-size: 12px;" class="btn btn-sm btn-success" data-bs-toggle="modal"
             data-bs-target="#cardModal">Tambah Kartu</button>
-          <button v-if="multibtn" style="font-size: 12px;" @click="createAll()" class="btn btn-sm btn-primary">Create
-            All</button>
-          <button v-else style="font-size: 12px;" class="btn btn-primary" type="button" disabled>
+          <button v-if="selectedCards.length > 0 && !load" style="font-size: 12px;" @click="downloadQr()"
+            class="btn btn-sm btn-primary">QRCode</button>
+          <button v-else-if="selectedCards.length > 0 && load" style="font-size: 12px;" class="btn btn-sm btn-primary"
+            type="button" disabled>
             <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
             <span role="status">Loading...</span>
           </button>
+          <button v-else style="font-size: 12px;" class="btn btn-sm btn-primary" disabled>QRCode</button>
         </span>
         <select style="font-size: 12px; max-width: max-content;" class="form-select" @change="getData"
           v-model="selectedKelas">
@@ -28,6 +30,9 @@
       <table class="table table-hover table-striped">
         <thead>
           <tr>
+            <th class="text-start"><label>
+                <input type="checkbox" @change="selectAll($event)" />
+              </label></th>
             <th scope="col" class="text-start">Nama Santri</th>
             <th scope="col" class="text-start">CNC</th>
             <th scope="col" class="text-end">Action</th>
@@ -36,13 +41,14 @@
         </thead>
         <tbody v-if="santri.length > 0">
           <tr v-for="(card, index) in santri" :key="index">
+            <td><label>
+                <input type="checkbox" v-model="selectedCards" :value="card.CNC" />
+              </label></td>
             <td class="align-middle">{{ card.Nama }}</td>
             <td class="align-middle">{{ card.CNC }}</td>
             <td class="align-middle text-end">
-              <button style="font-size: 12px;" class="btn btn-sm btn-primary" @click="createQR(card)">Create
-                QrCode</button>
               <a v-if="card.cardName === '-'" style="font-size: 12px;" href="javascript:;" class="btn btn-sm btn-danger"
-                @click="deleteItem(card.CNC)">delete</a>
+                @click="deleteItem(card.CNC)"> <i class="material-icons">delete</i></a>
             </td>
           </tr>
         </tbody>
@@ -53,8 +59,6 @@
         </tbody>
       </table>
     </div>
-    <QrcodePdf v-if="qrcode" @sendAction="clear" :updateData="updateData" />
-    <QrcodePdfMultiple v-if="multiqr" @sendActionMulti="clearMulti" />
   </div>
 </template>
 
@@ -66,44 +70,41 @@ export default {
     QrcodeVue,
   },
   computed: {
-    ...mapState('qrcode', ['kelas', 'santri']),
-    ...mapGetters('qrcode', ['getSelectedKelas']),
+    ...mapState('qrcode', ['kelas', 'santri', 'load']),
+    ...mapGetters('qrcode', ['getSelectedKelas', 'getSelectedCards']),
     selectedKelas: {
       get() {
         return this.getSelectedKelas
       },
       set(value) {
-        this.$store.commit('qrcode/SET_STATE', { key: 'selectedKelas', value })
+        const obj = { key: 'selectedKelas', value }
+        this.setState(obj)
+      },
+
+    },
+    selectedCards: {
+      get() {
+        return this.getSelectedCards
+      },
+      set(value) {
+        const obj = { key: 'selectedCards', value }
+        this.setState(obj)
       }
-    }
-  },
-  data() {
-    return {
-      qrcode: false,
-      multiqr: false,
-      updateData: '',
-      multibtn: true
-    };
+    },
   },
   methods: {
-    ...mapActions('qrcode', ['getData', 'deleteItem']),
-    createQR(card) {
-      this.updateData = card
-      this.qrcode = true
+    ...mapActions('qrcode', ['getData', 'deleteItem', 'downloadQr']),
+    ...mapMutations('qrcode', ['setState']),
+    selectAll(event) {
+      const value = event.target.checked ? this.santri.map(card => card.CNC) : []
+      const obj = { key: 'selectedCards', value }
+      this.setState(obj)
     },
-    async createAll() {
-      this.multibtn = false
-      this.multiqr = true
-    },
-    clear() {
-      this.qrcode = false
-    },
-    clearMulti() {
-      this.multiqr = false
-      this.multibtn = true
-    }
-  },
+  }
 }
 </script>
-
-<style scoped></style>
+<style scoped>
+.material-icons {
+  font-size: 12pt;
+}
+</style>

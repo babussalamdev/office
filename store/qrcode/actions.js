@@ -6,9 +6,9 @@ export default {
     const reqKelas = this.$apiBase.$get(`get-settings?sk=${program}&type=kelas`)
     const reqSantri = this.$apiSantri.$get(`get-santri-sisalam?program=smp&opsi=&method=card&type=`)
     const [resKelas, resSantri] = await Promise.all([reqKelas, reqSantri])
-    if ( resKelas, resSantri ) {
-      commit('SET_STATE', { key: 'kelas', value: resKelas.kelas })
-      commit('SET_STATE', { key: 'santri', value: resSantri })
+    if (resKelas, resSantri) {
+      commit('setState', { key: 'kelas', value: resKelas.kelas })
+      commit('setState', { key: 'santri', value: resSantri })
       dispatch('index/submitLoad', null, { root: true })
     }
   },
@@ -17,7 +17,7 @@ export default {
     const kelas = state.selectedKelas
     try {
       const result = await this.$apiSantri.$get(`get-santri-sisalam?program=smp&opsi=${kelas}&method=card&type=kelas`)
-      commit('SET_STATE', { key: 'santri', value: result })
+      commit('setState', { key: 'santri', value: result })
       dispatch('index/submitLoad', null, { root: true })
     } catch (error) {
       dispatch('index/submitLoad', null, { root: true })
@@ -35,7 +35,7 @@ export default {
     try {
       const data = Object.fromEntries(new FormData(event.target))
       const result = await this.$apiCard.$post(`create-card`, data)
-      if ( result ) {
+      if (result) {
         commit('INPUT_CARD', result)
         commit('BTN')
       }
@@ -48,7 +48,25 @@ export default {
         timer: 1500
       })
     }
-
+  },
+  async downloadQr({ commit, state, dispatch }, event) {
+    commit('load')
+    try {
+      const data = state.selectedCards
+      const file = await this.$apiSantri.$post(`input-santri-sisalam?method=card-xlsx`, data)
+      if (file) {
+        commit('load')
+        downloadZip(file, `QRCode CNC`)
+      }
+    } catch (error) {
+      commit('load')
+      Swal.fire({
+        icon: 'error',
+        text: error,
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
   },
   async deleteItem({ commit, state, dispatch }, cnc) {
     const i = state.santri.findIndex((x) => x.CNC === cnc)
@@ -90,3 +108,26 @@ export default {
     }
   },
 }
+
+
+const downloadZip = (base64String, fileName = "file.zip") => {
+
+  const base64ToBlob = (base64, type = 'application/zip') => {
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    return new Blob([byteArray], { type });
+  };
+
+  const blob = base64ToBlob(base64String);
+
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};

@@ -1,6 +1,9 @@
 export default {
-  SET_STATE(state, data) {
+  setState(state, data) {
     state[data.key] = data.value
+  },
+  load(state) {
+    state.load = state.load ? false : true
   },
   DELETE_ITEM(state, data) {
     const i = state.santri.findIndex((x) => x.CNC === data)

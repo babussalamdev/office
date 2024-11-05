@@ -2,5 +2,7 @@ export default () => ({
   santri: [],
   kelas: [],
   selectedKelas: '',
-  btn: true
+  btn: true,
+  selectedCards: [],
+  load: false
 })
