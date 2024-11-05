@@ -3,13 +3,19 @@
     <div class="row mb-3">
       <div class="col-12 col-md-6 mb-2 mb-md-0">
         <div class="input-group d-flex align-items-center">
-          <span class="input-group-text bg-secondary text-white" id="basic-addon1">{{ santri ? santri.length : 0 }}
+          <span class="input-group-text bg-secondary text-white">{{ santri ? santri.length : 0 }}
             Santri</span>
           <button class="btn btn-success border-0" @click="exportToExcel"
             :disabled="santri.length > 0 ? false : true">Export</button>
         </div>
       </div>
       <div class="col-12 col-md-6 d-flex justify-content-end">
+        <div class="input-group me-2">
+          <span class="input-group-text">Start</span>
+          <input type="date" class="form-control" v-model="start" id="start">
+          <span class="input-group-text">End</span>
+          <input type="date" class="form-control" v-model="end">
+        </div>
         <select class="form-select" v-model="selectedKelas" @change="getSantri()">
           <option selected disabled value="">Kelas</option>
           <option v-for="(data, index) in listKelas" :key="index" :value="data">{{ data.Nama }}</option>
@@ -36,10 +42,14 @@
             <td class="text-capitalize align-middle">{{ data.Nama }}</td>
             <td class="text-capitalize align-middle">{{ data.Halaqah }}</td>
             <td class="text-capitalize align-middle"
-              style="font-family: 'Noto Kufi Arabic', sans-serif; font-size: 12px; font-weight: 600">{{ data.From }}
+              style="font-family: 'Noto Kufi Arabic', sans-serif; font-size: 12px; font-weight: 600">{{ data.From ===
+                '-' ? data.From : `${data.From.ayat.number} : ${data.From.name}`
+              }}
             </td>
             <td class="text-capitalize align-middle"
-              style="font-family: 'Noto Kufi Arabic', sans-serif; font-size: 12px; font-weight: 600">{{ data.To }}</td>
+              style="font-family: 'Noto Kufi Arabic', sans-serif; font-size: 12px; font-weight: 600">{{ data.To ===
+                '-' ? data.To : `${data.To.ayat.number} : ${data.To.name}`
+              }}</td>
             <td class="text-capitalize align-middle">{{ data.Page }} Hal</td>
             <td class="text-capitalize align-middle">{{ data.Juz }} Juz</td>
           </tr>
@@ -54,20 +64,46 @@ import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 import * as XLSX from 'xlsx'
 export default {
   computed: {
-    ...mapState('report/tahfidz/hafalan', ['santri', 'listKelas']),
+    ...mapState('report/tahfidz/hafalan', ['santri', 'listKelas', 'start', 'end']),
     ...mapGetters('report/tahfidz/hafalan', ['getSelectedKelas']),
+    start: {
+      get() {
+        return this.getStart
+      },
+      set(value) {
+        const obj = {
+          key: 'start', value
+        }
+        this.setState(obj)
+      }
+    },
+    end: {
+      get() {
+        return this.getEnd
+      },
+      set(value) {
+        const obj = {
+          key: 'end', value
+        }
+        this.setState(obj)
+      }
+    },
     selectedKelas: {
       get() {
         return this.getSelectedKelas
       },
       set(value) {
-        this.$store.commit('report/tahfidz/hafalan/setState', { key: 'selectedKelas', value })
+        const obj = {
+          key: 'selectedKelas', value
+        }
+        this.setState(obj)
       }
     }
   },
   methods: {
+    ...mapMutations('report/tahfidz/hafalan', ['setState']),
     ...mapActions('report/tahfidz/hafalan', ['changeUnit', 'getSantri']),
-    // ...mapMutations('mutabaah', ['showDetail'])
+
     juz(value) {
       const juz = value / 20
       return juz

@@ -409,8 +409,7 @@
                     </nuxt-link>
                   </li>
                   <!-- <li>
-                    <nuxt-link to="/santri/card"
-                      class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                    <nuxt-link to="/santri/card" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Card</span>
                     </nuxt-link>
                   </li> -->
