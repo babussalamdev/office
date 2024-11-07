@@ -8,18 +8,18 @@
             @click="exportToExcel()">Export</button>
         </div>
       </div>
-      <div v-if="kelas.length > 0" class="col-12 col-md-6 d-flex justify-content-end">
-        <select style="font-size: 12px; max-width: max-content;" class="form-select" @change="getSantri"
-          v-model="selectedKelas">
+      <div class="col-12 col-md-6 d-flex justify-content-end">
+        <select v-if="kelas.length > 0" style="font-size: 12px; max-width: max-content;" class="form-select"
+          @change="getSantri" v-model="selectedKelas">
           <option value="">Kelas</option>
           <option v-for="(data, index) in kelas" :value="data.Nama" :key="index">{{ data.Nama }}</option>
         </select>
-        <!-- <div class="input-group">
+        <div class="input-group">
           <span class="input-group-text" id="basic-addon1">From</span>
-          <input type="date" class="form-control" v-model="start">
+          <input type="date" class="form-control" v-model="start" @change="getSantri">
           <span class="input-group-text" id="basic-addon1">To</span>
-          <input type="date" class="form-control" v-model="end">
-        </div> -->
+          <input type="date" class="form-control" v-model="end" @change="getSantri">
+        </div>
       </div>
     </div>
     <div class="table-responsive animate__animated animate__fadeInUp">
@@ -58,14 +58,6 @@ import { formatDate } from '@fullcalendar/core';
 import * as XLSX from 'xlsx'
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 export default {
-  watch: {
-    start() {
-      this.changeUnit()
-    },
-    end() {
-      this.changeUnit()
-    }
-  },
   computed: {
     ...mapState('report/absensi', ['santri', 'kelas']),
     ...mapGetters('report/absensi', ['getStart', 'getEnd', 'getKelas']),
@@ -101,10 +93,6 @@ export default {
     // ...mapMutations('mutabaah', ['showDetail'])
     showDetail(sk, subject) {
       this.$store.commit('mutabaah/showDetail', { sk, subject })
-    },
-    juz(value) {
-      const juz = value / 20
-      return juz
     },
     exportToExcel() {
       const updatedData = this.santri.map(item => {
