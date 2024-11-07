@@ -1,4 +1,7 @@
 export default () => ({
     halaqah: [],
-    asrama: []
+    asrama: [],
+    selectKelas: [],
+    btn: true,
+    updateData: ''
 })

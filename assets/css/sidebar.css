@@ -1,12 +1,16 @@
 .sidebar {
   position: fixed;
-  left: 10px;
-  top: 0;
-  padding-top: 20px;
-  height: 100vh !important;
+  background-color: #176b87;
+  left: 7px;
+  top: 7px;
+  padding-top: 40px;
+  padding-left: 15px;
+  height: calc(100vh - 13px);
   width: 198px;
+  width: 208px;
   overflow-y: scroll;
-  height: max-content;
+  border-radius: 10px;
+  /* height: max-content; */
   color: #fff;
   z-index: 99;
 }
@@ -21,7 +25,7 @@
   align-items: center;
   padding-left: 10px;
   animation-duration: 1s;
-  margin-bottom: 27px;
+  margin-bottom: 50px;
 }
 .logo img {
   width: 28px;
@@ -42,7 +46,8 @@
 .menu ul li {
   cursor: pointer;
   transition: background-color 0.3s;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
+  margin-top: 15px;
 }
 
 .menu ul li a {
@@ -50,6 +55,9 @@
   margin: 2px 0;
   padding: 17px;
 }
+/* .menu ul li .sub-menu {
+  border-left: 1px solid #fff;
+} */
 .menu ul li .nuxt-link-exact-active {
   background-color: #f1f5f9;
   border-top-left-radius: 30px;
@@ -125,18 +133,8 @@
 } */
 
 /* desain tambahan sidebar link */
-
-@media screen and (max-width: 1200px) {
-  .menu ul li span,
-  .logo span {
-    display: none;
-  }
-  .sidebar {
-    width: 58px;
-  }
-}
-
 @media screen and (max-width: 576px) {
+  /*ini awalnya 576px*/
   .sidebar {
     position: absolute;
     top: 0;
@@ -145,6 +143,7 @@
     height: 111vh !important;
     padding: 0 20px;
     background: #176b87;
+    border-radius: 0px !important;
     color: #fff;
     z-index: 99;
     transform: translateX(-100%);
@@ -164,6 +163,45 @@
 
   .menu ul li .nuxt-link-exact-active {
     border-radius: 30px;
+  }
+  .menu ul li .nuxt-link-exact-active::before,
+  .menu ul li .nuxt-link-exact-active::after {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 1200px) {
+  /* Masukkan kode CSS Anda di sini */
+  .sidebar {
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    min-height: calc(100vh - 14px);
+
+    /* width: max-content; */
+    /* height: 111vh !important; */
+    padding: 40px 20px 0;
+    background: #176b87;
+    border-radius: 10px;
+    color: #fff;
+    z-index: 9999;
+    transform: translateX(calc(-100% - 7px));
+    transition: transform 0.3s ease;
+  }
+  .sidebar-open {
+    transform: translateX(0);
+  }
+  /* .logo {
+    display: none;
+  } */
+  .menu ul li span {
+    display: block;
+  }
+
+  /* menu list */
+
+  .menu ul li .nuxt-link-exact-active {
+    border-radius: 5px;
   }
   .menu ul li .nuxt-link-exact-active::before,
   .menu ul li .nuxt-link-exact-active::after {

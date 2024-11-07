@@ -2,6 +2,9 @@
 
 body {
   font-family: "Poppins", sans-serif;
+  background: #f1f5f9 !important;
+  translate: no;
+  unicode-bidi: plaintext;
 }
 
 :root {
@@ -9,8 +12,73 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 1px;
+  width: 0;
 }
-::-webkit-scrollbar-track {
+
+/* .sidebar::-webkit-scrollbar {
+  width: 7px;
+  cursor: pointer;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #c5c5c5;
+  border-radius: 20px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: #9b9b9b;
+  border-radius: 20px;
+}
+
+.sidebar::-webkit-scrollbar-track {
   background: #f1f5f9;
+  border-radius: 20px;
+} */
+
+/* overflow-x: scroll;
+      &::-webkit-scrollbar {
+        width: 1px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: var(--componentFourthColor);
+        border-radius: 20px;
+      }
+      &::-webkit-scrollbar-track {
+        background: #e7e7e7;
+        margin-inline: 100px;
+        border-radius: 20px;
+      } */
+
+.table-responsive::-webkit-scrollbar {
+  width: 0.1px;
+  height: 7px;
+  cursor: pointer;
 }
+
+.table-responsive::-webkit-scrollbar-thumb {
+  background: #c5c5c5;
+  border-radius: 20px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb:hover {
+  background: #9b9b9b;
+  border-radius: 20px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+  background: #e7e7e7;
+  border-radius: 20px;
+}
+
+tr th,
+tr td {
+  white-space: nowrap;
+}
+
+/* * {
+  scrollbar-width: 0px;
+  scrollbar-color: #f1f5f9 #f1f5f9;
+} */
+/* ::-webkit-scrollbar-track {
+  background: #f1f5f9;
+} */

@@ -1,5 +1,14 @@
 let development = process.env.NODE_ENV !== 'production'
 export default {
+  env: {
+    version: require('./package.json').version,
+    XlsxDev: process.env.API_XLSX,
+    XlsxPro: process.env.API_XLSX
+  },
+  server: {
+    host: "0.0.0.0",
+    port: 3000
+  },
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
@@ -17,12 +26,17 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { name: 'view-transition', content: 'same-origin' },
       { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
+      { name: 'format-detection', content: 'telephone=no' },
+      { name: 'google', content: 'notranslate' },
+      { name: 'robots', content: 'noindex, nofollow' },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/Logo-Mahad.png' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/icon?family=Material+Icons' },
-      { rel: 'stylesheet', href: 'https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' }
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" },
+      { href: "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css", rel: "stylesheet" },
+      { rel: 'stylesheet', href: 'https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' },
+      { rel: 'stylesheet', href: 'https://unpkg.com/vue-multiselect@2.1.6/dist/vue-multiselect.min.css' },
     ],
     script: [
       { src: 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js', type: 'text/javascript' },
@@ -38,22 +52,70 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: '~/plugins/bootstrap.js', mode: 'client' },
-    { src: '~/plugins/cookies.client.js', mode: 'client' }
+    { src: '~/plugins/cookies.client.js', mode: 'client' },
+    { src: '~/plugins/axios-instances.js' },
+    { src: '~/plugins/moment.js', ssr: false },
+    { src: '~/plugins/notifications.js' },
+    '~/plugins/websocket.client.js',
   ],
+
+  loading: '~/components/Loader.vue',
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: {
     dirs: [
       '~/components',
-      '~/components/all',
-      '~/components/utama',
       '~/components/home',
+      '~/components/menu',
+      '~/components/asrama',
+      '~/components/ekskull',
+      '~/components/ekskull/nilai',
+      '~/components/pengampu',
+      '~/components/pengampu/absensi',
       '~/components/kelas',
-      '~/components/kelompok',
-      '~/components/mapel',
-      '~/components/kaldik',
+      '~/components/kelas/nilai',
+      '~/components/pelanggaran',
+      '~/components/pelanggaran/record',
+      '~/components/tahfidz',
+      '~/components/tahfidz/mutabaah',
+      '~/components/tahfidz/modalmutabaah',
+      '~/components/tahfidz/rekap',
+      '~/components/tahfidz/rekap/absensitahfidz',
+      '~/components/tahfidz/rekap/nilaitahfidz',
+      '~/components/tahfidz/rekap/hafalantahfidz',
       '~/components/santri',
       '~/components/santri/database',
+      '~/components/santri/halaqah',
+      '~/components/santri/kelas',
+      '~/components/santri/asrama',
+      '~/components/santri/qrcode',
+      '~/components/pegawai',
+      '~/components/pegawai/database',
+      '~/components/pegawai/halaqah',
+      '~/components/pegawai/walas',
+      '~/components/pegawai/musyrif',
+      '~/components/report/absensi',
+      '~/components/report/mapel',
+      '~/components/report/lagger',
+      '~/components/report/jurnal',
+      '~/components/report/pengampu',
+      '~/components/report/tahfidz',
+      '~/components/report/tahfidz/nilai',
+      '~/components/report/tahfidz/hafalan',
+      '~/components/settings/kaldik',
+      '~/components/settings/kelas',
+      '~/components/settings/kelompok',
+      '~/components/settings/mapel',
+      '~/components/settings/periode',
+      '~/components/settings/struktur',
+      '~/components/settings/nilaiquran',
+      '~/components/settings/absensi',
+      '~/components/settings/absensi/asrama',
+      '~/components/settings/absensi/tahfidz',
+      '~/components/settings/absensi/tahfidz/monitoring',
+      '~/components/settings/absensi/kelas',
+      '~/components/settings/setupabsensi',
+      '~/components/settings/setuppelanggaran',
     ]
   },
 
@@ -70,10 +132,18 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: 'https://x5y7lm8kml.execute-api.ap-southeast-1.amazonaws.com/prod/',
-    mode: "cors"
+    baseURL: process.env.API_BASE,
   },
+  publicRuntimeConfig: {
+    axios: {
+      baseURL: process.env.API_BASE,
+    },
+    base: process.env.API_BASE,
+    santri: process.env.API_SANTRI,
+    card: process.env.API_CARD,
+    websocket: process.env.API_WEBSOCKET
+  },
+
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

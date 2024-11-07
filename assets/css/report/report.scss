@@ -1,0 +1,70 @@
+#report {
+  .report {
+    h2 {
+      font-size: 14px;
+    }
+    .input-group {
+      width: max-content;
+      input, span, button {
+        font-size: 12px !important;
+      }
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+      border-radius: 7px !important;
+      box-shadow: 0 0 15px #b1b1b166;
+      .table {
+        width: 100%;
+        margin-bottom: 0 !important;
+        thead {
+          tr {
+            th {
+              padding: 12px 20px;
+              background: #176b87;
+              font-size: 12px;
+              color: #fff;
+            }
+          }
+        }
+        tbody {
+          tr {
+            td {
+              padding: 17px 20px;
+              margin: auto;
+              font-size: 12px;
+              a {
+                padding: 5px 7px;
+                border-radius: 2px;
+                text-decoration: none;
+                color: #fff;
+                i {
+                  font-size: 10px;
+                }
+              }
+              i {
+                font-size: 12px;
+              }
+            }
+          }
+        }
+        @media screen and (max-width: 576px) {
+          thead {
+            tr {
+              th {
+                font-size: 12px;
+              }
+            }
+          }
+          tbody {
+            tr {
+              td {
+                font-size: 12px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,9 @@
 #halaqoh .halaqoh .row {
   margin-bottom: 18px;
 }
+#halaqoh .halaqoh .row h3 {
+  font-size: 14px;
+}
 #halaqoh .halaqoh .row .upload-data-santri {
   transform: scale(0.85);
   border-radius: 10px;
@@ -11,9 +14,12 @@
 }
 #halaqoh .halaqoh .table-responsive {
   overflow-x: auto;
+  border-radius: 7px !important;
+  box-shadow: 0 0 15px rgba(177, 177, 177, 0.4);
 }
 #halaqoh .halaqoh .table-responsive .table {
   width: 100%;
+  margin-bottom: 0 !important;
 }
 #halaqoh .halaqoh .table-responsive .table thead tr th {
   padding: 15px 20px;
@@ -22,9 +28,16 @@
   color: #fff;
 }
 #halaqoh .halaqoh .table-responsive .table tbody tr td {
-  padding: 15px 20px;
+  padding: 12px 20px;
   margin: auto;
   font-size: 12px;
+}
+#halaqoh .halaqoh .table-responsive .table tbody tr td button {
+  padding: 2px 5px 0.5px !important;
+}
+#halaqoh .halaqoh .table-responsive .table tbody tr td button i {
+  font-size: 14px !important;
+  padding: -5px !important;
 }
 @media screen and (max-width: 576px) {
   #halaqoh .halaqoh .table-responsive .table thead tr th {
@@ -38,6 +51,9 @@
 #kelas .kelas .row {
   margin-bottom: 18px;
 }
+#kelas .kelas .row h3 {
+  font-size: 14px;
+}
 #kelas .kelas .row .upload-data-santri {
   transform: scale(0.85);
   border-radius: 10px;
@@ -48,9 +64,12 @@
 }
 #kelas .kelas .table-responsive {
   overflow-x: auto;
+  border-radius: 7px !important;
+  box-shadow: 0 0 15px rgba(177, 177, 177, 0.4);
 }
 #kelas .kelas .table-responsive .table {
   width: 100%;
+  margin-bottom: 0 !important;
 }
 #kelas .kelas .table-responsive .table thead tr th {
   padding: 15px 20px;
@@ -59,9 +78,16 @@
   color: #fff;
 }
 #kelas .kelas .table-responsive .table tbody tr td {
-  padding: 15px 20px;
+  padding: 10px 20px;
   margin: auto;
   font-size: 12px;
+}
+#kelas .kelas .table-responsive .table tbody tr td button {
+  padding: 2px 5px 0.5px !important;
+}
+#kelas .kelas .table-responsive .table tbody tr td button i {
+  font-size: 14px !important;
+  padding: -5px !important;
 }
 @media screen and (max-width: 576px) {
   #kelas .kelas .table-responsive .table thead tr th {
@@ -95,9 +121,12 @@
 }
 #kaldiksetup .kaldiksetup .table-responsive {
   overflow-x: auto;
+  border-radius: 7px !important;
+  box-shadow: 0 0 15px rgba(177, 177, 177, 0.4);
 }
 #kaldiksetup .kaldiksetup .table-responsive .table {
   width: 100%;
+  margin-bottom: 0 !important;
 }
 #kaldiksetup .kaldiksetup .table-responsive .table thead tr th {
   padding: 15px 20px;
@@ -109,6 +138,13 @@
   padding: 15px 20px;
   margin: auto;
   font-size: 12px;
+}
+#kaldiksetup .kaldiksetup .table-responsive .table tbody tr td button {
+  padding: 2px 5px 0.5px !important;
+}
+#kaldiksetup .kaldiksetup .table-responsive .table tbody tr td button i {
+  font-size: 14px !important;
+  padding: -5px !important;
 }
 @media screen and (max-width: 576px) {
   #kaldiksetup .kaldiksetup .table-responsive .table thead tr th {
@@ -125,6 +161,10 @@
 #mapel .mapel .row {
   margin-bottom: 18px;
 }
+#mapel .mapel .row .select {
+  font-size: 12px;
+  width: 100px;
+}
 #mapel .mapel .row .upload-data-santri {
   transform: scale(0.85);
   border-radius: 10px;
@@ -135,9 +175,12 @@
 }
 #mapel .mapel .table-responsive {
   overflow-x: auto;
+  border-radius: 7px !important;
+  box-shadow: 0 0 15px rgba(177, 177, 177, 0.4);
 }
 #mapel .mapel .table-responsive .table {
   width: 100%;
+  margin-bottom: 0 !important;
 }
 #mapel .mapel .table-responsive .table thead tr th {
   padding: 15px 20px;
@@ -146,9 +189,27 @@
   color: #fff;
 }
 #mapel .mapel .table-responsive .table tbody tr td {
-  padding: 15px 20px;
+  padding: 8px 20px;
   margin: auto;
   font-size: 12px;
+}
+#mapel .mapel .table-responsive .table tbody tr td button {
+  padding: 2px 5px 0.5px !important;
+}
+#mapel .mapel .table-responsive .table tbody tr td button i {
+  font-size: 14px !important;
+  padding: -5px !important;
+}
+#mapel .mapel .table-responsive .table tbody tr .container-hari .list-hari .btn {
+  background: #000;
+}
+#mapel .mapel .table-responsive .table tbody tr .container-hari .list-hari .btn span {
+  font-size: 10px;
+}
+@media screen and (max-width: 576px) {
+  #mapel .mapel .table-responsive .table tbody tr .container-hari .list-hari .btn span {
+    font-size: 8px;
+  }
 }
 @media screen and (max-width: 576px) {
   #mapel .mapel .table-responsive .table thead tr th {
@@ -162,6 +223,9 @@
 #utama .utama .row {
   margin-bottom: 18px;
 }
+#utama .utama .row h3 {
+  font-size: 14px;
+}
 #utama .utama .row .upload-data-santri {
   transform: scale(0.85);
   border-radius: 10px;
@@ -172,9 +236,12 @@
 }
 #utama .utama .table-responsive {
   overflow-x: auto;
+  border-radius: 7px !important;
+  box-shadow: 0 0 15px rgba(177, 177, 177, 0.4);
 }
 #utama .utama .table-responsive .table {
   width: 100%;
+  margin-bottom: 0 !important;
 }
 #utama .utama .table-responsive .table thead tr th {
   padding: 15px 20px;
@@ -188,8 +255,11 @@
   font-size: 12px;
 }
 #utama .utama .table-responsive .table tbody tr td button {
-  font-size: 10px;
-  padding: 3px 10px;
+  padding: 2px 5px 0.5px !important;
+}
+#utama .utama .table-responsive .table tbody tr td button i {
+  font-size: 14px !important;
+  padding: -5px !important;
 }
 #utama .utama .table-responsive .table tbody tr td .item {
   font-size: 10px;
@@ -202,6 +272,118 @@
     font-size: 12px;
   }
   #utama .utama .table-responsive .table tbody tr td {
+    font-size: 12px;
+  }
+}
+
+#struktur .struktur .row {
+  margin-bottom: 18px;
+}
+#struktur .struktur .row h3 {
+  font-size: 14px;
+}
+#struktur .struktur .row .upload-data-santri {
+  transform: scale(0.85);
+  border-radius: 10px;
+}
+#struktur .struktur .row .button-santri button {
+  font-size: 12px;
+  width: 150px;
+}
+#struktur .struktur .table-responsive {
+  overflow-x: auto;
+  border-radius: 7px !important;
+  box-shadow: 0 0 15px rgba(177, 177, 177, 0.4);
+}
+#struktur .struktur .table-responsive .table {
+  width: 100%;
+  margin-bottom: 0 !important;
+}
+#struktur .struktur .table-responsive .table thead tr th {
+  padding: 15px 20px;
+  background: #176b87;
+  font-size: 12px;
+  color: #fff;
+}
+#struktur .struktur .table-responsive .table tbody tr td {
+  padding: 5px 20px;
+  margin: auto;
+  font-size: 12px;
+}
+#struktur .struktur .table-responsive .table tbody tr td button {
+  padding: 2px 5px 0.5px !important;
+}
+#struktur .struktur .table-responsive .table tbody tr td button i {
+  font-size: 14px !important;
+  padding: -5px !important;
+}
+#struktur .struktur .table-responsive .table tbody tr .container-permissions .list-permissions .btn {
+  background: #000;
+}
+#struktur .struktur .table-responsive .table tbody tr .container-permissions .list-permissions .btn span {
+  font-size: 10px;
+}
+@media screen and (max-width: 576px) {
+  #struktur .struktur .table-responsive .table tbody tr .container-permissions .list-permissions .btn span {
+    font-size: 8px;
+  }
+}
+@media screen and (max-width: 576px) {
+  #struktur .struktur .table-responsive .table thead tr th {
+    font-size: 12px;
+  }
+  #struktur .struktur .table-responsive .table tbody tr td {
+    font-size: 12px;
+  }
+}
+
+#nilai-quran .nilai-quran .row {
+  margin-bottom: 18px;
+}
+#nilai-quran .nilai-quran .row h3 {
+  font-size: 14px;
+}
+#nilai-quran .nilai-quran .row .upload-data-santri {
+  transform: scale(0.85);
+  border-radius: 10px;
+}
+#nilai-quran .nilai-quran .row .button-santri button {
+  font-size: 12px;
+  width: -moz-max-content;
+  width: max-content;
+}
+#nilai-quran .nilai-quran .table-responsive {
+  overflow-x: auto;
+  border-radius: 7px !important;
+  box-shadow: 0 0 15px rgba(177, 177, 177, 0.4);
+}
+#nilai-quran .nilai-quran .table-responsive .table {
+  width: 100%;
+  margin-bottom: 0 !important;
+}
+#nilai-quran .nilai-quran .table-responsive .table thead tr th {
+  padding: 15px 20px;
+  background: #176b87;
+  font-size: 12px;
+  color: #fff;
+}
+#nilai-quran .nilai-quran .table-responsive .table tbody tr td {
+  padding: 12px 20px;
+  margin: auto;
+  font-size: 12px;
+}
+#nilai-quran .nilai-quran .table-responsive .table tbody tr td button {
+  padding: 2px 5px 0.5px !important;
+}
+#nilai-quran .nilai-quran .table-responsive .table tbody tr td button i {
+  font-size: 14px !important;
+  padding: -5px !important;
+}
+@media screen and (max-width: 576px) {
+  #nilai-quran .nilai-quran .table-responsive .table thead tr th {
+    font-size: 12px;
+  }
+  #nilai-quran .nilai-quran .table-responsive .table tbody tr td {
     font-size: 12px;
   }
 }/*# sourceMappingURL=setting.css.map */

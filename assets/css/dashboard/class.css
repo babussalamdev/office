@@ -3,6 +3,7 @@
   border-radius: 15px;
   background-color: #fff;
   box-shadow: 1px 1px 15px #e1e1e1;
+  height: 100% !important;
 }
 
 thead tr th {

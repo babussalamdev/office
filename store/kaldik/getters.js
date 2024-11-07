@@ -1,14 +1,20 @@
 export default {
     getKaldik(state) {
-        const kaldik = state.kaldik.map(({ Nama, Mulai, Berakhir, Warna }) => (
+        const kaldik = state.kaldik.map(({ Nama, TanggalMulai, TanggalAkhir, WarnaLabel }) => (
             {
                 title: Nama,
-                start: Mulai,
-                end: Berakhir,
-                backgroundColor: Warna,
-                borderColor: Warna
+                start: TanggalMulai,
+                end: TanggalAkhir,
+                backgroundColor: WarnaLabel,
+                borderColor: WarnaLabel
             }
         ))
         return kaldik
+    },
+    getStart(state) {
+      return state.start
+    },
+    getEnd(state) {
+      return state.end
     }
 }

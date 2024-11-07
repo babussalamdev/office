@@ -3,12 +3,14 @@
   position: relative;
   overflow: hidden;
 }
+
 .container .row .col-md-6 {
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
 }
+
 .mainImage {
   width: 300px;
   /* margin-top: 70px; */
@@ -38,6 +40,7 @@ h2 {
   font-size: 24px;
   margin-bottom: 40px;
 }
+
 .input-group-manual {
   border: 1px solid #ffffff;
   height: 45px;
@@ -53,15 +56,20 @@ h2 {
   color: #ffffff;
   width: 70%;
 }
+
 i {
   color: #ffffff;
+  cursor: pointer;
 }
+
 p {
   font-size: 14px;
 }
+
 .input::placeholder {
   color: #c7c7c7;
 }
+
 a {
   color: #bee5f2;
 }
@@ -81,10 +89,12 @@ a {
   width: 150px;
   transition: all 1s ease;
 }
+
 .btn:hover {
   background: linear-gradient(135deg, #258bac, #2396bd);
   transition: all 1s ease;
 }
+
 .loginPage::before {
   content: "";
   position: absolute;
@@ -96,11 +106,11 @@ a {
   margin-bottom: -12%;
   margin-right: -13%;
   width: 67%;
-  transform: translateX(0) translateY(0) rotate(4deg) skewX(0) skewY(0)
-    scaleX(1) scaleY(1);
+  transform: translateX(0) translateY(0) rotate(4deg) skewX(0) skewY(0) scaleX(1) scaleY(1);
   border-radius: 100%;
   background-color: #176b87;
 }
+
 .loginPage::after {
   content: "";
   position: absolute;
@@ -112,8 +122,7 @@ a {
   margin-bottom: -12%;
   margin-right: -13%;
   width: 69%;
-  transform: translateX(0) translateY(0) rotate(-7deg) skewX(0) skewY(0)
-    scaleX(1) scaleY(1);
+  transform: translateX(0) translateY(0) rotate(-7deg) skewX(0) skewY(0) scaleX(1) scaleY(1);
   border-radius: 100%;
   background-color: #176b87;
   opacity: 0.4;
@@ -125,28 +134,35 @@ a {
     /* overflow: visible; */
     background: #176b87;
   }
+
   .loginPage::before {
     display: none;
   }
+
   .loginPage::after {
     display: none;
   }
+
   form {
     margin-left: 0px;
     margin-top: 50px;
   }
+
   .input {
     width: 80%;
   }
+
   .input-group-manual {
     border: 1px solid #ffffff;
     height: 45px;
     width: 100%;
     border-radius: 8px;
   }
+
   .logo-right {
     top: 50px;
   }
+
   .container-right-side {
     padding: 0 16px;
   }
@@ -156,10 +172,12 @@ a {
   .input {
     width: 70%;
   }
+
   .btn {
     width: 100%;
     height: 40px;
   }
+
   .note {
     position: fixed;
     bottom: 50px;

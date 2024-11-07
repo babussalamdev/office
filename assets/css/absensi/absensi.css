@@ -1,3 +1,57 @@
-#absensi {
-  height: 100vh;
+#absensi .absensi h2 {
+  font-size: 14px;
+}
+#absensi .absensi select {
+  font-size: 12px;
+  width: 100px;
+}
+@media screen and (max-width: 576px) {
+  #absensi .absensi select {
+    width: 100% !important;
+  }
+}
+#absensi .absensi .table-responsive {
+  overflow-x: auto;
+  border-radius: 7px !important;
+  box-shadow: 0 0 15px rgba(177, 177, 177, 0.4);
+}
+#absensi .absensi .table-responsive .table {
+  width: 100%;
+  margin-bottom: 0 !important;
+}
+#absensi .absensi .table-responsive .table thead tr th {
+  padding: 15px 20px;
+  background: #176b87;
+  font-size: 12px;
+  color: #fff;
+}
+#absensi .absensi .table-responsive .table tbody tr td {
+  padding: 15px 20px;
+  margin: auto;
+  font-size: 12px;
+}
+#absensi .absensi .table-responsive .table tbody tr td a {
+  font-size: 12px;
+  color: #fff;
+  text-decoration: none;
+  padding: 5px 10px;
+}
+#absensi .absensi .table-responsive .table tbody tr td a i {
+  font-size: 12px;
+  text-decoration: none;
+}
+#absensi .absensi .table-responsive .table tbody tr td button {
+  padding: 2px 5px 0.5px !important;
+}
+#absensi .absensi .table-responsive .table tbody tr td button i {
+  font-size: 14px !important;
+  padding: -5px !important;
+}
+@media screen and (max-width: 576px) {
+  #absensi .absensi .table-responsive .table thead tr th {
+    font-size: 12px;
+  }
+  #absensi .absensi .table-responsive .table tbody tr td {
+    font-size: 12px;
+  }
 }/*# sourceMappingURL=absensi.css.map */
