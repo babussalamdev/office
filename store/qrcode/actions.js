@@ -4,7 +4,7 @@ export default {
     dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
     const reqKelas = this.$apiBase.$get(`get-settings?sk=${program}&type=kelas`)
-    const reqSantri = this.$apiSantri.$get(`get-santri-sisalam?program=smp&opsi=&method=card&type=`)
+    const reqSantri = this.$apiSantri.$get(`get-santri-sisalam?program=${program}&opsi=&method=card&type=`)
     const [resKelas, resSantri] = await Promise.all([reqKelas, reqSantri])
     if (resKelas, resSantri) {
       commit('setState', { key: 'kelas', value: resKelas.kelas })
@@ -14,9 +14,10 @@ export default {
   },
   async getData({ commit, state, dispatch }) {
     dispatch('index/submitLoad', null, { root: true })
+    const program = localStorage.getItem('program')
     const kelas = state.selectedKelas
     try {
-      const result = await this.$apiSantri.$get(`get-santri-sisalam?program=smp&opsi=${kelas}&method=card&type=kelas`)
+      const result = await this.$apiSantri.$get(`get-santri-sisalam?program=${program}&opsi=${kelas}&method=card&type=kelas`)
       commit('setState', { key: 'santri', value: result })
       dispatch('index/submitLoad', null, { root: true })
     } catch (error) {
