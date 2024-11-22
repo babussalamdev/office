@@ -27,6 +27,7 @@
                 'bg-danger': data?.Logs?.asrama.status === 'absen',
                 'bg-primary': data?.Logs?.asrama.status === 'izin',
                 'bg-warning': data?.Logs?.asrama.status === 'sakit',
+                'bg-secondary': data?.Logs?.asrama.status === 'rumah',
               }">
                 <!-- <span class="bg-danger"> -->
                 {{ data?.Logs?.asrama.status }}

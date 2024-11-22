@@ -14,9 +14,9 @@
           <div class="input-group">
             <span class="input-group-text" id="basic-addon1">From</span>
             <input type="date" class="form-control" aria-label="Username" aria-describedby="basic-addon1"
-              v-model="start">
+              v-model="startdetail">
             <span class="input-group-text" id="basic-addon1">To</span>
-            <input type="date" class="form-control" aria-label="Username" aria-describedby="basic-addon1" v-model="end">
+            <input type="date" class="form-control" aria-label="Username" aria-describedby="basic-addon1" v-model="enddetail">
           </div>
         </div>
       </div>
@@ -51,36 +51,36 @@ import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 export default {
   async asyncData({ store, params }) {
     const id = params.id
-    store.dispatch('report/tahfidz/absensi/getDetails', id)
+    store.dispatch('report/tahfidz/absensi/getPageDetails', id)
     return { id }
   },
   computed: {
     ...mapState('report/tahfidz/absensi', ['santri', 'details']),
-    ...mapGetters('report/tahfidz/absensi', ['getStart', 'getEnd']),
-    start: {
+    ...mapGetters('report/tahfidz/absensi', ['getStartDetail', 'getEndDetail']),
+    startdetail: {
       get() {
-        return this.getStart
+        return this.getStartDetail
       },
       set(value) {
-        const obj = { key: 'start', value }
+        const obj = { key: 'startdetail', value }
         this.$store.commit('report/tahfidz/absensi/setState', obj)
       }
     },
-    end: {
+    enddetail: {
       get() {
-        return this.getEnd
+        return this.getEndDetail
       },
       set(value) {
-        const obj = { key: 'end', value }
+        const obj = { key: 'enddetail', value }
         this.$store.commit('report/tahfidz/absensi/setState', obj)
       }
     }
   },
   watch: {
-    start() {
+    startdetail() {
       this.getDetails(this.id)
     },
-    end() {
+    enddetail() {
       this.getDetails(this.id)
     }
   },

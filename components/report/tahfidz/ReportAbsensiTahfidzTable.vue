@@ -8,7 +8,13 @@
         </div>
       </div>
       <div class="col-12 col-md-6 d-flex justify-content-end">
-        <select class="form-select" @change="getSantri()" v-model="selectedKelas">
+        <div class="input-group me-2">
+          <span class="input-group-text">Start</span>
+          <input type="date" class="form-control" v-model="start">
+          <span class="input-group-text">End</span>
+          <input type="date" class="form-control" v-model="end">
+        </div>
+        <select class="form-select" @change="getSantri()" v-model="selectedKelas" :disabled="!start || !end">
           <option value="">-- kelas --</option>
           <option v-for="(data, index) in kelas" :key="index" :value="data">{{ data.Nama }}</option>
         </select>
@@ -62,7 +68,7 @@ import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 export default {
   computed: {
     ...mapState('report/tahfidz/absensi', ['santri', 'kelas']),
-    ...mapGetters('report/tahfidz/absensi', ['getKelas']),
+    ...mapGetters('report/tahfidz/absensi', ['getKelas', 'getStart', 'getEnd']),
     selectedKelas: {
       get() {
         return this.getKelas
@@ -72,10 +78,26 @@ export default {
         this.$store.commit('report/tahfidz/absensi/setState', obj)
       }
     },
+    start: {
+      get() {
+        return this.getStart
+      },
+      set(value) {
+        this.setState({ key: 'start', value })
+      }
+    },
+    end: {
+      get() {
+        return this.getEnd
+      },
+      set(value) {
+        this.setState({ key: 'end', value })
+      }
+    }
   },
   methods: {
     ...mapActions('report/tahfidz/absensi', ['getSantri']),
-    // ...mapMutations('mutabaah', ['showDetail'])
+    ...mapMutations('report/tahfidz/absensi', ['setState']),
     juz(value) {
       const juz = value / 20
       return juz

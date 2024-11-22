@@ -28,7 +28,7 @@
           <tr>
             <th scope="col" rowspan="2" class="text-start">Nama</th>
             <th scope="col" rowspan="2" class="text-start">Halaqah</th>
-            <th scope="col" colspan="4">Hafalan Baru</th>
+            <th scope="col" colspan="4">Tahsin</th>
           </tr>
           <tr>
             <th scope="col" class="text-start">Awal</th>
@@ -64,8 +64,8 @@ import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 import * as XLSX from 'xlsx'
 export default {
   computed: {
-    ...mapState('report/tahfidz/hafalan', ['santri', 'listKelas']),
-    ...mapGetters('report/tahfidz/hafalan', ['getSelectedKelas', 'getStart', 'getEnd']),
+    ...mapState('report/tahfidz/tahsin', ['santri', 'listKelas']),
+    ...mapGetters('report/tahfidz/tahsin', ['getSelectedKelas', 'getStart', 'getEnd']),
     start: {
       get() {
         return this.getStart
@@ -101,8 +101,8 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('report/tahfidz/hafalan', ['setState']),
-    ...mapActions('report/tahfidz/hafalan', ['changeUnit', 'getSantri']),
+    ...mapMutations('report/tahfidz/tahsin', ['setState']),
+    ...mapActions('report/tahfidz/tahsin', ['changeUnit', 'getSantri']),
 
     juz(value) {
       const juz = value / 20

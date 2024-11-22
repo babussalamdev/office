@@ -1,5 +1,5 @@
 export default {
-  getKelas(state) {
+  getSelectedKelas(state) {
     return state.selectedKelas
   },
   getStart(state) {
@@ -7,11 +7,5 @@ export default {
   },
   getEnd(state) {
     return state.end
-  },
-  getStartDetail(state) {
-    return state.startdetail
-  },
-  getEndDetail(state) {
-    return state.enddetail
   }
 }

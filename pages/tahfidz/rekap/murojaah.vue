@@ -1,8 +1,8 @@
 <template>
   <section id="rekap">
     <div class="rekap">
-      <h1 class="mb-3">Rekap Nilai Ziyadah</h1>
-      <RekapHafalanTahfidzTable />
+      <h1 class="mb-3">Rekap Nilai Murojaah</h1>
+      <RekapMurojaahTahfidzTable />
     </div>
   </section>
 </template>
@@ -10,7 +10,7 @@
 <script>
 export default {
   async asyncData({ store }) {
-    store.dispatch('rekaphafalan/changeUnit')
+    store.dispatch('rekapmurojaah/changeUnit')
   },
   mounted() {
     this.closeAllModals();;

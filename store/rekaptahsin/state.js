@@ -9,12 +9,8 @@ const tahun = sekarang.getFullYear();
 const date = `${tahun}-${bulan}-${tanggal}`;
 
 export default () => ({
-  start: '',
-  startdetail: '',
-  end: '',
-  enddetail: '',
+  start: date,
+  end: date,
   santri: [],
   details: [],
-  kelas: [],
-  selectedKelas: ''
 })

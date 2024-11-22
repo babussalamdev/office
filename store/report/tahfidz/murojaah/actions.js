@@ -17,7 +17,7 @@ export default {
       const program = localStorage.getItem('program')
       const tahun = this.$auth.user.Label
       const semester = this.$auth.user.Semester
-      const result = await this.$apiSantri.$get(`get-tahfidz-sisalam?type=report&kls=${kelas}&program=${program}&thn=${tahun}&smstr=${semester}&startdate=${start}&enddate=${end}&searchterm=ziyadah`)
+      const result = await this.$apiSantri.$get(`get-tahfidz-sisalam?type=report&kls=${kelas}&program=${program}&thn=${tahun}&smstr=${semester}&startdate=${start}&enddate=${end}&searchterm=murojaah`)
       if (result) {
         dispatch('index/submitLoad', null, { root: true })
         commit('setState', { key: 'santri', value: result })

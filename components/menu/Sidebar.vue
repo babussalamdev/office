@@ -199,6 +199,18 @@
                       <span class="text animate__animated animate__fadeInRight">Hafalan</span>
                     </nuxt-link>
                   </li>
+                  <li>
+                    <nuxt-link to="/tahfidz/rekap/tahsin"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Tahsin</span>
+                    </nuxt-link>
+                  </li>
+                  <li>
+                    <nuxt-link to="/tahfidz/rekap/murojaah"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Murojaah</span>
+                    </nuxt-link>
+                  </li>
                 </ul>
               </li>
             </ul>
@@ -304,11 +316,25 @@
                       <span class="text animate__animated animate__fadeInRight">Absensi</span>
                     </nuxt-link>
                   </li>
-                  <!-- Absensi -->
+                  <!-- Hafalan -->
                   <li>
                     <nuxt-link to="/report/tahfidz/hafalan"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Hafalan</span>
+                    </nuxt-link>
+                  </li>
+                  <!-- Tahsin -->
+                  <li>
+                    <nuxt-link to="/report/tahfidz/tahsin"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Tahsin</span>
+                    </nuxt-link>
+                  </li>
+                  <!-- Murojaah -->
+                  <li>
+                    <nuxt-link to="/report/tahfidz/murojaah"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Murojaah</span>
                     </nuxt-link>
                   </li>
                   <!-- Nilai -->
