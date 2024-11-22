@@ -112,7 +112,7 @@ export default {
       const halaqah = this.selectedKelas
       const table = this.$refs.dataTable;
       const wb = XLSX.utils.table_to_book(table, { sheet: 'Hafalan Santri' });
-      XLSX.writeFile(wb, `Report Hafalan Tahfidz ${halaqah.Nama}.xlsx`);
+      XLSX.writeFile(wb, `Report Tahsin Tahfidz ${halaqah.Nama}.xlsx`);
     }
   },
 };
