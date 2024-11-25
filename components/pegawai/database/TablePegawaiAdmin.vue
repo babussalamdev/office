@@ -1,9 +1,9 @@
 <template>
   <div>
     <div>
+      <ModalPegawaiAdmin />
       <div class="table-responsive">
         <!-- Modal -->
-        <ModalPegawaiAdmin />
         <table class="table table-hover table-striped">
           <thead>
             <tr>
@@ -88,9 +88,7 @@
 </template>
 
 <script>
-import Swal from "sweetalert2";
 import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
-
 export default {
   computed: {
     ...mapState('pegawai/database', ["pegawai", 'perPage']),

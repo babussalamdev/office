@@ -4,7 +4,8 @@
       <div class="col-12 col-md-6 mb-2 mb-md-0">
         <div class="input-group d-flex align-items-center">
           <span class="input-group-text bg-secondary text-white" id="basic-addon1">{{ santri.length }} Santri</span>
-          <button class="btn btn-success border-0">Export</button>
+          <button class="btn btn-success border-0" @click="exportToExcel"
+            :disabled="santri.length > 0 ? false : true">Export</button>
         </div>
       </div>
       <div class="col-12 col-md-6 d-flex justify-content-end">
@@ -21,7 +22,7 @@
       </div>
     </div>
     <div class="table-responsive animate__animated animate__fadeInUp">
-      <table class="table table-hover table-striped">
+      <table ref="dataTable" class="table table-hover table-striped">
         <thead>
           <tr>
             <th scope="col" rowspan="2" class="text-start">Nama</th>
@@ -34,7 +35,8 @@
             <th scope="col" class="text-center bg-warning">S</th>
             <th scope="col" class="text-center bg-secondary">I</th>
             <th scope="col" class="text-center bg-danger">A</th>
-            <th scope="col" rowspan="2" class="text-center">Jumlah</th>
+            <th scope="col" class="text-center">Jumlah</th>
+            <th scope="col" rowspan="2" class="text-end" hidden>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -65,6 +67,7 @@
 
 <script>
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
+import * as XLSX from 'xlsx'
 export default {
   computed: {
     ...mapState('report/tahfidz/absensi', ['santri', 'kelas']),
@@ -101,6 +104,25 @@ export default {
     juz(value) {
       const juz = value / 20
       return juz
+    },
+    exportToExcel() {
+      const halaqah = this.selectedKelas
+      const table = this.$refs.dataTable;
+
+      const clonedTable = table.cloneNode(true);  // Clone tabel tanpa mempengaruhi tampilan asli
+
+      // Menghapus kolom 'Action' dari salinan tabel
+      const rows = clonedTable.querySelectorAll('tr');
+      rows.forEach(row => {
+        const actionColumn = row.querySelector('td:last-child, th:last-child');  // Menargetkan kolom terakhir
+        if (actionColumn) {
+          actionColumn.remove();  // Menghapus kolom Action dari salinan
+        }
+      });
+
+      // Mengonversi salinan tabel (tanpa kolom Action) menjadi workbook Excel
+      const wb = XLSX.utils.table_to_book(clonedTable, { sheet: 'Absensi Tahfidz Santri' });
+      XLSX.writeFile(wb, `Report Absensi Tahfidz ${halaqah.Nama}.xlsx`);
     }
   },
 };

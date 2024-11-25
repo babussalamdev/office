@@ -1,7 +1,8 @@
 <template>
   <div>
     <!-- input database pegawai -->
-    <div class="modal fade" id="InputDataPegawai" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="InputDataPegawai" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+      aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <form @submit.prevent="inputPegawai" id="inputPegawaiForm">
@@ -14,7 +15,7 @@
             <div class="modal-body">
               <div class="mb-3">
                 <label for="nama" class="form-label">Nama</label>
-                <input name="Nama" type="text" class="form-control" id="nama" required/>
+                <input name="Nama" type="text" class="form-control" id="nama" required />
               </div>
               <div class="mb-3">
                 <label for="lulusan" class="form-label">Lulusan</label>
@@ -31,7 +32,7 @@
               </div>
               <div class="mb-3">
                 <label for="nip" class="form-label">NIP</label>
-                <input name="Nip" type="text" class="form-control" id="nip" required/>
+                <input name="Nip" type="text" class="form-control" id="nip" required />
               </div>
               <div class="mb-3">
                 <label class="typo__label mb-2">Program</label>
@@ -60,8 +61,8 @@
       </div>
     </div>
     <!-- update database pegawai Admin -->
-    <div class="modal fade" id="updateDataPegawaiAdmin" tabindex="-1" aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
+    <div class="modal fade" id="updateDataPegawaiAdmin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+      aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <form @submit.prevent="updatePegawaiAdmin" id="updatePegawaiAdmin">
@@ -111,25 +112,6 @@
                   </select>
                 </div>
               </div>
-              <!-- <div class="mb-3">
-                <label for="personalia" class="form-label mb-2">Personalia</label>
-                <div class="d-flex gap-4">
-                  <div class="form-check d-flex align-items-center justify-content-center gap-2">
-                    <input value="off" class="form-check-input" type="radio" name="Personalia" id="flexRadioDefault2"
-                      :checked="updateData?.Personalia === 'on' ? false : true" />
-                    <label class="form-check-label mt-1" for="flexRadioDefault2">
-                      Off
-                    </label>
-                  </div>
-                  <div class="form-check d-flex align-items-center justify-content-center gap-2">
-                    <input value="on" class="form-check-input" type="radio" name="Personalia" id="flexRadioDefault1"
-                      :checked="updateData?.Personalia === 'on' ? true : false" />
-                    <label class="form-check-label mt-1" for="flexRadioDefault1">
-                      On
-                    </label>
-                  </div>
-                </div>
-              </div> -->
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -219,5 +201,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

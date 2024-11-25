@@ -109,7 +109,6 @@ export default {
   editItem(state, value) {
     const i = state.pegawai.findIndex((x) => x.SK === value)
     state.updateData = state.pegawai[i];
-    console.log(state.updateData)
     $("#updateDataPegawaiAdmin").modal("show");
   },
 }

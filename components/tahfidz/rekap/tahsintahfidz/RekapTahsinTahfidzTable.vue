@@ -88,7 +88,7 @@ export default {
       const program = localStorage.getItem('program')
       const halaqah = this.$auth.user.Halaqah[program]
       const table = this.$refs.dataTable;
-      const wb = XLSX.utils.table_to_book(table, { sheet: 'Hafalan Santri' });
+      const wb = XLSX.utils.table_to_book(table, { sheet: 'Rekap Tahsin' });
       XLSX.writeFile(wb, `Rekap Tahsin ${halaqah}.xlsx`);
     }
   },

@@ -105,7 +105,7 @@ export default {
     exportToExcel() {
       const halaqah = this.selectedKelas
       const table = this.$refs.dataTable;
-      const wb = XLSX.utils.table_to_book(table, { sheet: 'Hafalan Santri' });
+      const wb = XLSX.utils.table_to_book(table, { sheet: 'Nilai Santri' });
       XLSX.writeFile(wb, `Report Nilai Tahfidz ${halaqah.SK.split('#')[1]}.xlsx`);
     }
   },

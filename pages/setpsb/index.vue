@@ -26,10 +26,11 @@ export default {
     };
   },
 
-  async asyncData({ store }) {
-    const program = localStorage.getItem("program");
-    store.dispatch(`psb/changeUnit`, program);
-    return program;
+  async asyncData({ store, redirect }) {
+    redirect('/')
+    // const program = localStorage.getItem("program");
+    // store.dispatch(`psb/changeUnit`, program);
+    // return program;
   },
 
   mounted() {
