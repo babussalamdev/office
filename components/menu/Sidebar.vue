@@ -298,7 +298,7 @@
                   <span class="text animate__animated animate__fadeInRight">Lagger Mapel</span>
                 </nuxt-link>
               </li>
-              <!-- rekap -->
+              <!-- report -->
               <li v-if="hasRoot && hasPermission('report tahfidz')">
                 <div @click="notClickSub('tahfidz2')"
                   class="dropdown d-flex align-items-center justify-content-between gap-2">

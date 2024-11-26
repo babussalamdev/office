@@ -4,7 +4,14 @@ export default {
     const program = localStorage.getItem('program')
     const result = await this.$apiBase.$get(`get-settings?sk=${program}&type=kelas`)
     if (result) {
-      commit('setState', { key: 'listKelas', value: result.kelas })
+      const kelas = this.$auth.user.Kelas[program]
+      if ( kelas ) {
+        const changedKelas = [{ Nama: kelas }]
+        commit('setState', { key: 'listKelas', value: changedKelas })
+      } else {
+        commit('setState', { key: 'listKelas', value: result.kelas })
+      }
+      commit('resetPage')
       dispatch('index/submitLoad', null, { root: true })
     }
   },

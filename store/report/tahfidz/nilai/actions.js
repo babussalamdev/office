@@ -7,7 +7,13 @@ export default {
     const result = await this.$apiBase.$get(`get-settings?program=${program}&type=quran`)
     if (result.quran.length > 0) {
       const data = result.quran.filter(item => item.SK.includes(`${program}`) && item.SK.includes(`${semester}`))
-      commit('setState', { key: 'listKelas', value: data })
+      const kelas = this.$auth.user.Kelas[program]
+      if ( kelas ) {
+        const findKelas = data.find((x) => x.SK.split('#')[1] === kelas)
+        commit('setState', { key: 'listKelas', value: [findKelas] })
+      } else {
+        commit('setState', { key: 'listKelas', value: data })
+      }
       dispatch('index/submitLoad', null, { root: true })
     } else {
       Swal.fire({

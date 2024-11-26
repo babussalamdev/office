@@ -7,5 +7,10 @@ export default {
     } else {
       state[data.key] = data.value
     }
+  },
+  resetPage(state) {
+    state.start = ''
+    state.end = ''
+    state.santri = []
   }
 }
