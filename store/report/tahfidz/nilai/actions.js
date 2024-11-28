@@ -8,7 +8,7 @@ export default {
     if (result.quran.length > 0) {
       const data = result.quran.filter(item => item.SK.includes(`${program}`) && item.SK.includes(`${semester}`))
       const kelas = this.$auth.user.Kelas[program]
-      if ( kelas ) {
+      if (kelas !== 'off') {
         const findKelas = data.find((x) => x.SK.split('#')[1] === kelas)
         commit('setState', { key: 'listKelas', value: [findKelas] })
       } else {

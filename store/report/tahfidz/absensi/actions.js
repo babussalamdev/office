@@ -12,9 +12,9 @@ export default {
     dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
     const result = await this.$apiBase.$get(`get-settings?sk=${program}&type=kelas`)
-    if ( result ) {
+    if (result) {
       const kelas = this.$auth.user.Kelas[program]
-      if ( kelas ) {
+      if (kelas !== 'off') {
         const changedKelas = [{ Nama: kelas }]
         commit('setState', { key: 'kelas', value: changedKelas })
       } else {
@@ -24,7 +24,7 @@ export default {
       dispatch('index/submitLoad', null, { root: true })
     }
   },
-  async getSantri({ commit, state, dispatch}, data) {
+  async getSantri({ commit, state, dispatch }, data) {
     dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
     const value = state.selectedKelas.Nama
@@ -40,13 +40,13 @@ export default {
   async getPageDetails({ commit, state, dispatch }, data) {
     dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
-    commit('setState', { key: 'startdetail', value: date})
-    commit('setState', { key: 'enddetail', value: date})
+    commit('setState', { key: 'startdetail', value: date })
+    commit('setState', { key: 'enddetail', value: date })
     const start = state.startdetail
     const end = state.enddetail
     const sk = data.replace('#', '%23')
     const result = await this.$apiSantri.$get(`get-recapabsensi-sisalam?program=${program}&details=halaqah&startdate=${start}&enddate=${end}&sksantri=${sk}`)
-    if ( result ) {
+    if (result) {
       dispatch('index/submitLoad', null, { root: true })
       commit('setState', { key: 'details', value: result })
     }
@@ -58,7 +58,7 @@ export default {
     const end = state.enddetail
     const sk = data.replace('#', '%23')
     const result = await this.$apiSantri.$get(`get-recapabsensi-sisalam?program=${program}&details=halaqah&startdate=${start}&enddate=${end}&sksantri=${sk}`)
-    if ( result ) {
+    if (result) {
       dispatch('index/submitLoad', null, { root: true })
       commit('setState', { key: 'details', value: result })
     }

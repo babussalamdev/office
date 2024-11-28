@@ -5,7 +5,7 @@ export default {
     const result = await this.$apiBase.$get(`get-settings?sk=${program}&type=kelas`)
     if (result) {
       const kelas = this.$auth.user.Kelas[program]
-      if ( kelas ) {
+      if (kelas !== 'off') {
         const changedKelas = [{ Nama: kelas }]
         commit('setState', { key: 'listKelas', value: changedKelas })
       } else {
