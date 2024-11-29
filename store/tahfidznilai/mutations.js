@@ -26,6 +26,11 @@ export default {
       state[data.key] = remappedData
     } else if (data.key === 'selectedMapel') {
       state[data.key] = data.value
+    } else if (data.key === 'selectKelas') {
+      state.santri = []
+      state.th = { Nama: '', Total: '' },
+      state.selectedByKelas = ''
+      state[data.key] = data.value
     } else {
       state[data.key] = data.value
     }

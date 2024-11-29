@@ -173,7 +173,7 @@
 @media only screen and (min-width: 576px) and (max-width: 1200px) {
   /* Masukkan kode CSS Anda di sini */
   .sidebar {
-    position: absolute;
+    position: fixed;
     top: 7px;
     left: 7px;
     min-height: calc(100vh - 14px);
@@ -190,6 +190,7 @@
   }
   .sidebar-open {
     transform: translateX(0);
+    position: fixed;
   }
   /* .logo {
     display: none;
