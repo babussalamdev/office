@@ -24,7 +24,7 @@ export default {
     // Tunggu hingga status terisi
     const status = await waitForStatus();
 
-    if (status.includes('report tahfidz')) {
+    if (status.includes('absensi pengampu')) {
       const result = await this.$apiSantri.$get(
         `get-santri-sisalam?subject=halaqah&program=${program}&filter=${halaqah}`
       );

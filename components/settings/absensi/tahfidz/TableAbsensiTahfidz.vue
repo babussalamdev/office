@@ -3,7 +3,7 @@
     <div>
       <div class="head d-flex align-items-center mb-3 justify-content-between">
         <h2 class="mb-0">Absensi Tahfidz</h2>
-        <nuxt-link v-if="permissionsIndex.includes('report tahfidz')" to="/tahfidz/absensi/monitoring" style="font-size: 12px;" class="btn btn-sm btn-secondary text-decoration-none">
+        <nuxt-link v-if="permissionsIndex.includes('absensi pengampu')" to="/tahfidz/absensi/monitoring" style="font-size: 12px;" class="btn btn-sm btn-secondary text-decoration-none">
           <i class="bi bi-eye-fill me-2"></i>Monitoring
         </nuxt-link>
       </div>

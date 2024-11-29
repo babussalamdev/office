@@ -1,8 +1,9 @@
 <template>
   <div class="animate__animated animate__fadeInUp">
     <div class="mb-3 d-flex align-items-center justify-content-between">
-      <h2>Penilaian Tahfidz{{ permissions.includes('report tahfidz') ? ' - koordinator' : '' }}</h2>
-      <select v-if="permissions.includes('report tahfidz')" class="form-select" v-model="selectedByKelas" @change="getByKelas()">
+      <h2>Penilaian Tahfidz{{ permissions.includes('absensi pengampu') ? ' - koordinator' : '' }}</h2>
+      <select v-if="permissions.includes('absensi pengampu')" class="form-select" v-model="selectedByKelas"
+        @change="getByKelas()">
         <option value="">kelas</option>
         <option v-for="(data, index) in selectKelas" :value="data" :key="index">{{ data }}</option>
       </select>
@@ -20,11 +21,11 @@
               <h1>{{ data.Nama }}</h1>
             </td>
             <td v-for="(value, key) in data.Penilaian" :key="key">
-              <div v-if="isNumber(value)" @click.prevent="setEdit(index, value, key)" class="cursor-pointer">
+              <div v-if="isNumber(value) || isNaN(value)" @click.prevent="setEdit(index, value, key)" class="cursor-pointer" :class="isNaN(value) ? 'text-danger' : ''">
                 {{ value }}
               </div>
               <div v-else class="flex items-center gap-1">
-                <input type="number" class="form-control" v-model="nilai" :placeholder="value" max="100">
+                <input type="number" class="form-control" v-model="nilai" max="100">
               </div>
             </td>
             <td class="text-capitalize align-middle">
@@ -136,8 +137,15 @@ export default {
 
       // Memeriksa apakah elemen yang diklik berada di luar profile
       if (dataOutside && !dataOutside.contains(event.target)) {
-        // this.falseData(data);
-        if (this.nilai && this.openEdit) {
+        if (!this.nilai && this.openEdit) {
+          Swal.fire({
+            title: 'Warning!',
+            text: 'Nilai tidak boleh kosong!',
+            icon: 'warning',
+            timer: 1500,
+            showConfirmButton: false
+          });
+        } else if (this.nilai && this.openEdit) {
           this.setPenilaian({ type: 'button' })
         }
       }

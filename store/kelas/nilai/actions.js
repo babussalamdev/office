@@ -75,7 +75,7 @@ export default {
         dispatch('index/submitLoad', null, { root: true })
       }
     } else {
-      if (state.openEdit) {
+      if (state.openEdit && state.nilai) {
         dispatch('index/submitLoad', null, { root: true })
         data['type'] = 'close'
         const skSantri = state.santri[state.openEdit.index].SK.replace('#', '%23')
@@ -83,9 +83,6 @@ export default {
         const tahun = this.$auth.user.Label
         const semester = this.$auth.user.Semester
         try {
-          // "Subject": "fiqh",
-          // "SubAttribute": "uas",
-          // "Fiqh": "10/30" //30 = bobot untuk uas
           const mapelKey = convertToCapitalizedFormat(state.selectedMapel.Nama)
           const datas = {}
           datas['Subject'] = state.selectedMapel.Nama
@@ -122,7 +119,17 @@ export default {
       // close
       if (data) {
         data['type'] = 'set'
-        commit('setPenilaian', data)
+        if (!state.nilai && state.openEdit) {
+          Swal.fire({
+            title: 'Warning!',
+            text: 'Nilai tidak boleh kosong!',
+            icon: 'warning',
+            timer: 1500,
+            showConfirmButton: false
+          });
+        } else {
+          commit('setPenilaian', data)
+        }
       }
     }
   }

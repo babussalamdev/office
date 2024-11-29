@@ -36,7 +36,7 @@ export default {
   },
   setPenilaian(state, data) {
     if (data['type'] === 'set' && !state.nilai) {
-      state.santri[data.index].Penilaian[data.key] = state.santri[data.index].Penilaian[data.key].toString()
+      state.santri[data.index].Penilaian[data.key] = isNaN(state.santri[data.index].Penilaian[data.key]) ? "0" : state.santri[data.index].Penilaian[data.key].toString()
       state.nilai = state.santri[data.index].Penilaian[data.key]
       if (state.santri[data.index].Penilaian[data.key]) {
         state.openEdit = data
@@ -45,6 +45,7 @@ export default {
       state.santri[state.openEdit.index].Penilaian[state.openEdit.key] = +state.nilai
       state.santri[state.openEdit.index].TotalScore = +data.result.Total
       state.nilai = ''
+      state.openEdit = ''
     } else if (data['type'] === 'button') {
       state.santri[state.openEdit.index].Penilaian[state.openEdit.key] = +state.nilai
       state.santri[state.openEdit.index].TotalScore = +data.result.Total
