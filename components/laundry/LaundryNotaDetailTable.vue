@@ -6,12 +6,12 @@
       </nuxt-link>
       <h2 class="fw-bold">Detail Nota</h2>
     </div>
-    <div class="row">
-      <div class="col-8">
+    <div class="row mb-3">
+      <div class="col-6">
         <p class="mb-2">No Keranjang : {{ keranjang }}</p>
-        <p class="mb-3">Tanggal : {{ tanggal }}</p>
+        <p class="mb-0">Tanggal : {{ tanggal }}</p>
       </div>
-      <div class="col-4 d-flex justify-content-end align-items-center">
+      <div class="col-6 d-flex justify-content-end align-items-center">
         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
           Tambah Data
         </button>

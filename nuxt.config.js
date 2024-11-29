@@ -74,6 +74,7 @@ export default {
       '~/components/pengampu/absensi',
       '~/components/kelas',
       '~/components/kelas/nilai',
+      '~/components/inputdata',
       '~/components/pelanggaran',
       '~/components/pelanggaran/record',
       '~/components/tahfidz',

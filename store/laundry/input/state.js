@@ -51,5 +51,7 @@ export default () => ({
       Keterangan: 'Belum Lunas'
     },
   ],
-
+  search: '',
+  updateData: '',
+  btn: true
 })

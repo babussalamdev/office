@@ -9,10 +9,10 @@
 
 <script>
 export default {
-  middleware: 'permission',
-  meta: {
-    permissions: ['laundry']
-  },
+  // middleware: 'permission',
+  // meta: {
+  //   permissions: ['laundry']
+  // },
   name: "mutabaah",
   async asyncData({ store }) {
     store.dispatch('mutabaah/changeUnit')
