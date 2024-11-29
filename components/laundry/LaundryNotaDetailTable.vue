@@ -21,11 +21,9 @@
       <table class="table table-hover table-striped">
         <thead>
           <tr>
-            <th scope="col" class="text-start">No</th>
             <th scope="col" class="nowrap">Nama Santri</th>
             <th scope="col" class="nowrap">Asrama</th>
             <th scope="col">Jumlah</th>
-            <th scope="col">Lunas</th>
           </tr>
         </thead>
         <tbody>
