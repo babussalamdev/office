@@ -74,7 +74,8 @@ export default {
       '~/components/pengampu/absensi',
       '~/components/kelas',
       '~/components/kelas/nilai',
-      '~/components/inputdata',
+      '~/components/laundry/inputdata',
+      '~/components/laundry/inventory',
       '~/components/pelanggaran',
       '~/components/pelanggaran/record',
       '~/components/tahfidz',
@@ -146,7 +147,8 @@ export default {
     base: process.env.API_BASE,
     santri: process.env.API_SANTRI,
     card: process.env.API_CARD,
-    websocket: process.env.API_WEBSOCKET
+    websocket: process.env.API_WEBSOCKET,
+    laundry: process.env.API_LAUNDRY
   },
 
 

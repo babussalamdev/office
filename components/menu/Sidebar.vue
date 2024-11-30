@@ -228,17 +228,24 @@
               <i class="bx bx-chevron-down"></i>
             </div>
             <ul v-if="listLaundry" class="dropdown-list">
-              <!-- nota -->
-              <li>
-                <nuxt-link to="/laundry/nota" class="custom-link text-decoration-none d-flex align-items-center gap-2">
-                  <span class="text animate__animated animate__fadeInRight">Nota</span>
-                </nuxt-link>
-              </li>
               <!-- input data -->
               <li>
                 <nuxt-link to="/laundry/inputdata"
                   class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Input Data</span>
+                </nuxt-link>
+              </li>
+              <!-- input data -->
+              <li>
+                <nuxt-link to="/laundry/inventory"
+                  class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Inventory</span>
+                </nuxt-link>
+              </li>
+              <!-- nota -->
+              <li>
+                <nuxt-link to="/laundry/nota" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Nota</span>
                 </nuxt-link>
               </li>
               <li>
