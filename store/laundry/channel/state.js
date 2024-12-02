@@ -1,7 +1,7 @@
 export default () => ({
   datas: [],
-  btn: true,
   search: '',
-  updateData: '',
-  changeOptions: ''
+  type: '',
+  btn: true,
+  updateData: ''
 })

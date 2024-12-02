@@ -3,7 +3,10 @@
     <div class="sidebar-container scrollarea">
       <!-- Logo -->
       <div class="logo animate__animated animate__zoomIn">
-        <a href="/">
+        <a v-if="hasPermission('laundry')" href="/">
+          <img src="~/assets/img/logo-2.png" />
+        </a>
+        <a v-else href="/">
           <img src="~/assets/img/logo-1.png" />
         </a>
         <span>Sisalam {{ version }}</span>
@@ -266,6 +269,13 @@
                 <nuxt-link to="/laundry/lembur"
                   class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Lembur</span>
+                </nuxt-link>
+              </li>
+              <!-- rekap -->
+              <li>
+                <nuxt-link to="/laundry/channel"
+                  class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Channel</span>
                 </nuxt-link>
               </li>
             </ul>

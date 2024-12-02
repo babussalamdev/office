@@ -1,9 +1,9 @@
 import Swal from "sweetalert2"
 export default {
-  async changeUnit({ commit, state, dispatch }) {
+  async changeUnit({ dispatch, commit }) {
     dispatch('index/submitLoad', null, { root: true })
     try {
-      const result = await this.$apiLaundry.$get(`get-default?value=inventory`)
+      const result = await this.$apiLaundry.$get(`get-default?type=channel`)
       if (result) {
         commit('setPage', result)
         dispatch('index/submitLoad', null, { root: true })
@@ -21,10 +21,9 @@ export default {
   async addData({ commit, state }, event) {
     commit('btn')
     const data = Object.fromEntries(new FormData(event.target))
-    data['Qty'] = +data.Qty
-    data['Amount'] = +data.Amount
+    data['Series'] = 'channel'
     try {
-      const result = await this.$apiLaundry.$post(`input-default?value=inventory`, data)
+      const result = await this.$apiLaundry.$post(`input-default?value=${state.type}`, data)
       if (result) {
         commit('addData', result)
         commit('btn')
@@ -45,14 +44,13 @@ export default {
       });
     }
   },
-  async editItem({ commit, state }, event) {
+  async editData({ commit, state }, event) {
     commit('btn')
     const datas = Object.fromEntries(new FormData(event.target))
-    datas['Qty'] = +datas.Qty
-    datas['Amount'] = +datas.Amount
     const sk = state.updateData.SK
+    const value = state.updateData.PK
     try {
-      const result = await this.$apiLaundry.$put(`update-default?value=inventory&sk=${sk}`, datas);
+      const result = await this.$apiLaundry.$put(`update-default?value=${value}&sk=${sk}`, datas);
       if (result) {
         Swal.fire({
           position: "center",
@@ -77,6 +75,7 @@ export default {
   },
   async deleteItem({ commit, state }, sk) {
     const i = state.datas.findIndex((x) => x.SK === sk)
+    const data = state.datas[i]
     const name = state.datas[i].Name
     const result = await Swal.fire({
       title: name,
@@ -90,7 +89,7 @@ export default {
 
     if (result.isConfirmed) {
       await this.$apiLaundry.$delete(
-        `delete-default?value=inventory&sk=${sk}`
+        `delete-default?value=${data.PK}&sk=${sk}`
       );
       commit('deleteItem', sk);
       Swal.fire({

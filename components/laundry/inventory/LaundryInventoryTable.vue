@@ -14,6 +14,7 @@
       </div>
     </div>
     <LaundryInventoryModalAdd />
+    <LaundryInventoryModalEdit />
     <div class="table-responsive white-space-nowrap animate__animated animate__fadeInUp">
       <table class="table table-hover table-striped">
         <thead>
@@ -32,12 +33,12 @@
             <td class="text-capitalize align-middle nowrap text-center">{{ data.Qty }}</td>
             <td class="text-capitalize align-middle nowrap">{{ rupiah(data.Amount) }}</td>
             <td class="text-capitalize align-middle text-end">
-              <a href="javascript:;">
+              <a href="javascript:;" @click="editItem(data.SK)">
                 <button class="btn btn-sm btn-warning">
                   <i class="bx bx-pencil text-dark"></i>
                 </button>
               </a>
-              <a href="javascript:;">
+              <a href="javascript:;" @click="deleteItem(data.SK)">
                 <button class="btn btn-sm btn-danger">
                   <i class="bx bx-trash text-white"></i>
                 </button>
@@ -66,6 +67,10 @@ export default {
         this.$store.commit('laundry/inventory/setState', { key: 'search', value })
       }
     }
+  },
+  methods: {
+    ...mapActions('laundry/inventory', ['deleteItem']),
+    ...mapMutations('laundry/inventory', ['editItem'])
   },
 };
 </script>
