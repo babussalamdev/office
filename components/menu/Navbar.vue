@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar">
+  <div class="navbar" v-if="this.$route.path !== '/laundry/finance'" >
     <div class="navbar-content d-flex align-items-center justify-content-between">
       <div>
         <h1 class="text-capitalize">

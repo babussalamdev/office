@@ -22,7 +22,7 @@
     <div class="content" :class="!isSidebarOpen ? 'fix' : ''">
       <!-- <div class="animate__animated animate__fadeInUp"> -->
       <Navbar />
-      <hr class="mb-4 d-block d-md-none" />
+      <hr class="mb-4 d-block d-md-none" v-if="this.$route.path !== '/laundry/finance'" />
       <!-- </div> -->
       <div class="nuxt position-relative">
         <nuxt />

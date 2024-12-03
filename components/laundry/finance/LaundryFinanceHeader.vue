@@ -6,20 +6,29 @@
     <div class="col-12 col-md-6">
       <div class="input-group">
         <button class="btn btn-sm btn-success" style="font-size: 12px;">Export</button>
-        <span class="input-group-text" style="font-size: 12px; padding: 6px 8px !important;">start</span>
+        <select class="form-select" style="font-size: 12px;" v-model="selectedYear">
+          <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
+        </select>
+
+        <!-- Dropdown untuk memilih bulan -->
+        <select class="form-select" style="font-size: 12px;" v-model="selectedMonth">
+          <option v-for="month in months" :key="month.value" :value="month.value">{{ month.name }}</option>
+        </select>
+        <!-- <span class="input-group-text" style="font-size: 12px; padding: 6px 8px !important;">start</span>
         <input type="date" class="form-control" style="font-size: 12px;" v-model="start">
         <span class="input-group-text" style="font-size: 12px; padding: 6px 8px !important;">end</span>
-        <input type="date" class="form-control" style="font-size: 12px;" v-model="end">
+        <input type="date" class="form-control" style="font-size: 12px;" v-model="end"> -->
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 export default {
   computed: {
-    ...mapGetters('laundry/finance', ['getStart', 'getEnd']),
+    ...mapState('laundry/finance', ['months', 'years']),
+    ...mapGetters('laundry/finance', ['getStart', 'getEnd', 'getSelectedYear', 'getSelectedMonth']),
     start: {
       get() {
         return this.getStart
@@ -35,7 +44,23 @@ export default {
       set(value) {
         this.$store.commit('laundry/finance/setState', { key: 'end', value })
       }
-    }
+    },
+    selectedYear: {
+      get() {
+        return this.getSelectedYear
+      },
+      set(value) {
+        this.$store.commit('laundry/finance/setState', { key: 'selectedYear', value })
+      }
+    },
+    selectedMonth: {
+      get() {
+        return this.getSelectedMonth
+      },
+      set(value) {
+        this.$store.commit('laundry/finance/setState', { key: 'selectedMonth', value })
+      }
+    },
   },
 }
 </script>

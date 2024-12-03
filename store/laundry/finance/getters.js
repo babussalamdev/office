@@ -4,5 +4,11 @@ export default {
   },
   getEnd(state) {
     return state.end
+  },
+  getSelectedYear(state) {
+    return state.selectedYear
+  },
+  getSelectedMonth(state) {
+    return state.selectedMonth
   }
 }
