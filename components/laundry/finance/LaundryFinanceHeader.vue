@@ -5,13 +5,13 @@
     </div>
     <div class="col-12 col-md-6">
       <div class="input-group">
-        <button class="btn btn-sm btn-success" style="font-size: 12px;">Export</button>
-        <select class="form-select" style="font-size: 12px;" v-model="selectedYear">
+        <button class="btn btn-sm text-white fw-bold" style="font-size: 12px; background-color: #34A853;">Export</button>
+        <select class="form-select" style="font-size: 12px;" v-model="selectedYear" @change="getData">
           <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
         </select>
 
         <!-- Dropdown untuk memilih bulan -->
-        <select class="form-select" style="font-size: 12px;" v-model="selectedMonth">
+        <select class="form-select" style="font-size: 12px;" v-model="selectedMonth" @change="getData">
           <option v-for="month in months" :key="month.value" :value="month.value">{{ month.name }}</option>
         </select>
         <!-- <span class="input-group-text" style="font-size: 12px; padding: 6px 8px !important;">start</span>
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapState, mapActions } from 'vuex'
 export default {
   computed: {
     ...mapState('laundry/finance', ['months', 'years']),
@@ -61,6 +61,9 @@ export default {
         this.$store.commit('laundry/finance/setState', { key: 'selectedMonth', value })
       }
     },
+  },
+  methods: {
+    ...mapActions('laundry/finance', ['getData'])
   },
 }
 </script>

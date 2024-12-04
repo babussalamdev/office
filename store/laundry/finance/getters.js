@@ -10,5 +10,8 @@ export default {
   },
   getSelectedMonth(state) {
     return state.selectedMonth
+  },
+  getTransaction(state) {
+    return state.transaction
   }
 }

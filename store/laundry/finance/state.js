@@ -19,5 +19,8 @@ export default () => ({
     { value: 10, name: "Oktober" },
     { value: 11, name: "November" },
     { value: 12, name: "Desember" }
-  ]
+  ],
+  updateData: '',
+  transaction: '',
+  btn: true
 })
