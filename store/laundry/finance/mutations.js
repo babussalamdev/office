@@ -14,24 +14,21 @@ export default {
   setPage(state, data) {
     state.datas = data.result
     const groupedData = data.result.finance.reduce((acc, curr) => {
-      // Ambil tanggal dari SK (tanpa waktu)
       const date = curr.SK.split(' ')[0];
-
-      // Jika sudah ada grup dengan tanggal ini, tambahkan ke grup tersebut
       if (!acc[date]) {
         acc[date] = [];
       }
       acc[date].push(curr);
-
       return acc;
     }, {});
-
-    // Set hasil pengelompokan ke state
-    // Mengurutkan tanggal dalam urutan terbalik (dari yang terbaru)
-    const sortedGroupedData = Object.keys(groupedData)
-      .sort((a, b) => new Date(b) - new Date(a)) // Urutkan berdasarkan tanggal terbaru
+    const sortedData = Object.keys(groupedData).reduce((result, key) => {
+      result[key] = groupedData[key].sort((a, b) => new Date(b.SK) - new Date(a.SK));
+      return result;
+    }, {});
+    const sortedGroupedData = Object.keys(sortedData)
+      .sort((a, b) => new Date(b) - new Date(a))
       .reduce((acc, date) => {
-        acc[date] = groupedData[date];
+        acc[date] = sortedData[date];
         return acc;
       }, {});
     state.groupedTransactions = sortedGroupedData
@@ -40,24 +37,21 @@ export default {
   setGetPage(state, data) {
     state.datas = data
     const groupedData = data.finance.reduce((acc, curr) => {
-      // Ambil tanggal dari SK (tanpa waktu)
       const date = curr.SK.split(' ')[0];
-
-      // Jika sudah ada grup dengan tanggal ini, tambahkan ke grup tersebut
       if (!acc[date]) {
         acc[date] = [];
       }
       acc[date].push(curr);
-
       return acc;
     }, {});
-
-    // Set hasil pengelompokan ke state
-    // Mengurutkan tanggal dalam urutan terbalik (dari yang terbaru)
-    const sortedGroupedData = Object.keys(groupedData)
-      .sort((a, b) => new Date(b) - new Date(a)) // Urutkan berdasarkan tanggal terbaru
+    const sortedData = Object.keys(groupedData).reduce((result, key) => {
+      result[key] = groupedData[key].sort((a, b) => new Date(b.SK) - new Date(a.SK));
+      return result;
+    }, {});
+    const sortedGroupedData = Object.keys(sortedData)
+      .sort((a, b) => new Date(b) - new Date(a))
       .reduce((acc, date) => {
-        acc[date] = groupedData[date];
+        acc[date] = sortedData[date];
         return acc;
       }, {});
     state.groupedTransactions = sortedGroupedData

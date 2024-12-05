@@ -2,10 +2,10 @@
   <div class="animate__animated animate__fadeInUp">
     <div class="mb-3 d-flex align-items-center justify-content-between">
       <h2>Penilaian Tahfidz{{ permissions.includes('absensi pengampu') ? ' - koordinator' : '' }}</h2>
-      <select v-if="permissions.includes('absensi pengampu')" class="form-select" v-model="selectedByKelas"
-        @change="getByKelas()">
-        <option value="">kelas</option>
-        <option v-for="(data, index) in selectKelas" :value="data" :key="index">{{ data }}</option>
+      <select v-if="permissions.includes('absensi pengampu')" class="form-select" v-model="selectedByHalaqah"
+        @change="getByHalaqah()">
+        <option value="">halaqah</option>
+        <option v-for="(data, index) in selectHalaqah" :value="data" :key="index">{{ data }}</option>
       </select>
     </div>
     <div class="table-responsive" ref="input">
@@ -62,9 +62,9 @@ export default {
     document.removeEventListener("click", event => this.setData(event, 'input'));
   },
   computed: {
-    ...mapState("tahfidznilai", ['select', 'openEdit', 'example', 'th', 'nilai', 'selectKelas']),
+    ...mapState("tahfidznilai", ['select', 'openEdit', 'example', 'th', 'nilai', 'selectHalaqah']),
     ...mapState('index', ['permissions']),
-    ...mapGetters('tahfidznilai', ['getSelectedMapel', 'getDataSantri', 'getNilai', 'getSelectedKelas']),
+    ...mapGetters('tahfidznilai', ['getSelectedMapel', 'getDataSantri', 'getNilai', 'getSelectedHalaqah']),
     nilai: {
       get() {
         return this.getNilai
@@ -92,12 +92,12 @@ export default {
         this.$store.commit('tahfidznilai/setState', obj)
       }
     },
-    selectedByKelas: {
+    selectedByHalaqah: {
       get() {
-        return this.getSelectedKelas
+        return this.getSelectedHalaqah
       },
       set(value) {
-        this.$store.commit('tahfidznilai/setState', { key: 'selectedByKelas', value })
+        this.$store.commit('tahfidznilai/setState', { key: 'selectedByHalaqah', value })
       }
     },
     uniqueClasses() {
@@ -120,7 +120,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions('tahfidznilai', ['getSantri', 'setPenilaian', 'getByKelas']),
+    ...mapActions('tahfidznilai', ['getSantri', 'setPenilaian', 'getByHalaqah']),
     isNumber(val) {
       // Periksa apakah val adalah angka dan bukan false
       return typeof val === 'number' && !isNaN(val);

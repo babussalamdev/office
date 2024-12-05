@@ -15,10 +15,36 @@ export default {
           return
         }
         if (userPermissions.includes('absensi pengampu')) {
-          const Kelas = await this.$apiBase.$get(`get-settings?sk=${program}&type=kelas`)
-          const arrayKelas = Kelas.kelas.map(kelas => kelas.Nama)
-          commit('setState', { key: 'selectKelas', value: arrayKelas })
-          dispatch('index/submitLoad', null, { root: true })
+          const Halaqah = await this.$apiBase.$get(`get-settings?type=options&sk=${program}&category=halaqah`)
+          commit('setState', { key: 'selectHalaqah', value: Halaqah })
+          const datas = {}
+          datas['Filter'] = 'pengampu'
+          datas['Halaqah'] = this.$auth.user.Halaqah[program]
+          datas['Subject'] = 'quran'
+          datas['Tahun'] = this.$auth.user.Label
+          datas['Semester'] = this.$auth.user.Semester
+          datas['Penilaian'] = state.selectedQuran.Penilaian
+          const result = await this.$apiSantri.$put(
+            `get-nilai-sisalam?program=${program}&type=pengampu`, datas
+          )
+          if (result) {
+            commit('setState', { key: 'santri', value: result.data })
+            commit('setState', { key: 'selectedByHalaqah', value: this.$auth.user.Halaqah[program]})
+
+            const newData = state.selectedQuran.Penilaian || {};
+            const newHeaders = { Nama: '' };
+
+            for (const [key, value] of Object.entries(newData)) {
+              newHeaders[key] = value;
+            }
+
+            if (state.th.hasOwnProperty('Total')) {
+              newHeaders['Total'] = state.th['Total'];
+            }
+
+            commit('setState', { key: 'th', value: newHeaders });
+            dispatch('index/submitLoad', null, { root: true })
+          }
         } else {
           const datas = {}
           datas['Filter'] = 'pengampu'
@@ -65,22 +91,28 @@ export default {
       });
     }
   },
-  async getByKelas({ commit, state, dispatch }) {
+  async getByHalaqah({ commit, state, dispatch }) {
     dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
-    const halaqah = this.$auth.user.Halaqah[program]
+    const halaqah = state.selectedByHalaqah
     const semester = this.$auth.user.Semester
     try {
       const data = await this.$apiBase.$get(`get-settings?program=${program}&type=nilaiquran&hlq=${halaqah}&smstr=${semester}`)
       commit('setState', { key: 'selectedQuran', value: data.quran })
       if (data.quran) {
         const datas = {}
-        datas['Filter'] = 'koordinator'
-        datas['Kelas'] = state.selectedByKelas
+        datas['Filter'] = 'pengampu'
+        datas['Halaqah'] = state.selectedByHalaqah
         datas['Subject'] = 'quran'
         datas['Tahun'] = this.$auth.user.Label
         datas['Semester'] = this.$auth.user.Semester
         datas['Penilaian'] = state.selectedQuran.Penilaian
+        // datas['Filter'] = 'koordinator'
+        // datas['Kelas'] = state.selectedByKelas
+        // datas['Subject'] = 'quran'
+        // datas['Tahun'] = this.$auth.user.Label
+        // datas['Semester'] = this.$auth.user.Semester
+        // datas['Penilaian'] = state.selectedQuran.Penilaian
         const result = await this.$apiSantri.$put(
           `get-nilai-sisalam?program=${program}&type=pengampu`, datas
         )
