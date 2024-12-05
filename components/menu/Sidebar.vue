@@ -278,6 +278,13 @@
                   <span class="text animate__animated animate__fadeInRight">Channel</span>
                 </nuxt-link>
               </li>
+              <!-- absensi laundry -->
+              <li>
+                <nuxt-link to="/laundry/absensi"
+                  class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Absensi</span>
+                </nuxt-link>
+              </li>
             </ul>
           </li>
           <!-- Pelanggaran -->
