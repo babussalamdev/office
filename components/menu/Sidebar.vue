@@ -273,6 +273,13 @@
               </li>
               <!-- rekap -->
               <li>
+                <nuxt-link to="/laundry/tagregister"
+                  class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Tag Register</span>
+                </nuxt-link>
+              </li>
+              <!-- rekap -->
+              <li>
                 <nuxt-link to="/laundry/channel"
                   class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Channel</span>

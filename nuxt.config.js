@@ -80,6 +80,7 @@ export default {
       '~/components/laundry/channel',
       '~/components/laundry/finance',
       '~/components/laundry/absensi',
+      '~/components/laundry/register',
       '~/components/pelanggaran',
       '~/components/pelanggaran/record',
       '~/components/tahfidz',
