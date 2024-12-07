@@ -3,6 +3,9 @@ export default () => ({
   selectedAsrama: '',
   search: '',
   datas: [],
+  datasModal: [],
   updateData: '',
-  btn: true
+  btn: true,
+  selectedAsramaModal: '',
+  selectedDataModal: ''
 })

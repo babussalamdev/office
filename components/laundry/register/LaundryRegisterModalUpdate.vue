@@ -6,9 +6,8 @@
         <div class="modal-content">
           <form @submit.prevent="updateDataRegister" id="formRegisterUpdate">
             <div class="modal-body">
-              {{ updateData }} <br>
               <label class="form-label mb-2">Sebab Nonaktif</label>
-              <select name="Status" class="form-select">
+              <select name="Status" class="form-select" required>
                 <option value="">choose a cause</option>
                 <option value="lost">Hilang</option>
                 <option value="damaged">Rusak</option>

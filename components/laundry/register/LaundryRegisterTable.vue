@@ -14,12 +14,13 @@
           <span style="font-size: 12px !important;" class="bi bi-search input-group-text"></span>
           <input style="font-size: 12px !important;" type="text" v-model="search" class="form-control"
             placeholder="Search">
-          <button @click="addDataLaundry" style="font-size: 12px !important;" class="btn btn-sm btn-primary">Input
+          <button style="font-size: 12px !important;" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalAddDataBag">Input
             Data</button>
         </div>
       </div>
     </div>
     <LaundryRegisterModalUpdate />
+    <LaundryRegisterModalAdd />
     <div class="table-responsive white-space-nowrap animate__animated animate__fadeInUp">
       <table class="table table-hover table-striped">
         <thead>
@@ -79,12 +80,12 @@ export default {
     }
   },
   methods: {
-    ...mapActions('laundry/register', ['getDataByAsrama', 'editRegisterToActive']),
-    ...mapMutations('laundry/register', ['editRegisterLaundry', 'addDataLaundry']),
+    ...mapActions('laundry/register', ['getDataByAsrama', 'editRegisterToActive', 'addDataBag']),
+    ...mapMutations('laundry/register', ['editRegisterLaundry']),
     editItem(sk) {
       const data = this.datas.find((x) => x.BagID === sk)
       if ( data.Status === 'lost') {
-        this.editRegisterToActive
+        this.editRegisterToActive(sk)
       } else {
         this.editRegisterLaundry(sk)
       }
