@@ -14,7 +14,7 @@
       </div>
     </div>
     <LaundryModalEdit />
-    <LaundryModalAdd />
+    <!-- <LaundryModalAdd /> -->
     <div class="table-responsive white-space-nowrap animate__animated animate__fadeInUp">
       <table class="table table-hover table-striped">
         <thead>

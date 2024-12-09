@@ -111,13 +111,16 @@ export default {
     }
   },
   async addDataTag({ commit, state}, event) {
+    commit('btn')
     const data = Object.fromEntries(new FormData(event.target))
     data['Name'] = state.selectedDataModal.Name
     data['Subject'] = state.selectedDataModal.SK
     try {
-      // const result = await this.$apiLaundry.$post(`input-bag`, data)
-      commit('addTagToSantri', data)
+      const result = await this.$apiLaundry.$post(`input-bag`, data)
+      commit('addTagToSantri', result)
+      commit('btn')
     } catch (error) {
+      commit('btn')
       Swal.fire({
         icon: "warning",
         text: error,

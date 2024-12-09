@@ -1,4 +1,10 @@
 export default () => ({
+  datas: [],
+  btn: true,
+  datasDetail: [],
+  tag: '',
+  timeout: null,
+  dataFromTag: '',
   dummy: [
     {
       Receipt: '1#080824',

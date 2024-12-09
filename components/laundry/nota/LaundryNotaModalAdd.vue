@@ -1,15 +1,15 @@
 <template>
   <div>
     <!-- Modal -->
-    <div class="modal fade" id="laundryModalAdd" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    <div class="modal fade" id="laundryNotaModalAdd" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
       aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form @submit.prevent="dataLaundryAdd" id="formModalAdd">
+          <form @submit.prevent="dataNotaLaundryAdd" id="formNotaModalAdd">
             <div class="modal-body">
               <div class="mb-3">
                 <label for="keranjang" class="form-label">Keranjang</label>
-                <input type="number" class="form-control" name="Keranjang" :value="dummy.length + 1">
+                <input type="number" class="form-control" name="Keranjang" :value="amountCart" readonly>
               </div>
               <div>
                 <label for="total" class="form-label">Total</label>
@@ -38,11 +38,20 @@
 import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
 export default {
   computed: {
-    ...mapState('laundry/nota', ['dummy']),
-    ...mapState('laundry/input', ['btn'])
+    ...mapState('laundry/nota', ['datas', 'btn']),
+    amountCart() {
+      if (this.datas.length > 0) {
+        let lastChart = this.datas[this.datas.length - 1].Chart;
+        let nextNumber = parseInt(lastChart) + 1;
+        let nextChart = nextNumber.toString().padStart(3, '0');
+        return nextChart;
+      } else {
+        return '001'
+      }
+    }
   },
   methods: {
-    ...mapActions('laundry/input', ['dataLaundryAdd']),
+    ...mapActions('laundry/nota', ['dataNotaLaundryAdd']),
   },
 }
 </script>

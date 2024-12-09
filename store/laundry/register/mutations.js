@@ -49,13 +49,32 @@ export default {
   addTagToSantri(state, data) {
     if (state.selectedAsrama === state.selectedAsramaModal) {
       const find = state.datas.find((x => x.SK === data.Subject))
-      if ( find.BagID === 'santri tidak memiliki tas') {
-        console.log('kosong')
+      if (find.BagID === 'santri tidak memiliki tas') {
+        const i = state.datas.findIndex((x) => x.SK === data.Subject)
+        state.datas[i].BagID = data.SK
+        state.datas[i].Status = 'active'
       } else {
-        console.log('punya satu atau lebih')
+        let index = state.datas.findIndex(item => item.SK === data.Subject);
+        const datas = {
+          SK: data.Subject,
+          Name: data.Name,
+          Asrama: state.selectedAsramaModal,
+          BagID: data.SK,
+          Status: data.Status
+        }
+        if (index !== -1) {
+          state.datas.splice(index + 1, 0, datas);
+        }
       }
-      // const count = state.datas.filter(item => item.SK === data.Subject).length;
-      // if ( count === 1 )
     }
+    $('#formModalAdd')[0].reset()
+    $('#modalAddDataBag').modal('hide')
+    state.selectedAsramaModal = ''
+    state.selectedDataModal = ''
+  },
+  resetFormAdd(state) {
+    $('#formModalAdd')[0].reset()
+    state.selectedAsramaModal = ''
+    state.selectedDataModal = ''
   }
 }

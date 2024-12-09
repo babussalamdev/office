@@ -11,6 +11,7 @@
 export default {
   async asyncData({ store, params, redirect }) {
     const id = params.id
+    store.dispatch('laundry/nota/getDetail', id)
     return { id }
     // if (store.state.pelanggaran.santri.length < 1) {
     //   return redirect("/pelanggaran");

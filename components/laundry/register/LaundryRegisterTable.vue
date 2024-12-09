@@ -33,7 +33,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(dataItem, index) in datas" :key="index">
+          <tr v-for="(dataItem, index) in filteredDatas" :key="index">
             <td class="text-capitalize align-middle nowrap">{{ dataItem.Name }}</td>
             <td class="text-capitalize align-middle nowrap">{{ dataItem.Asrama }}</td>
             <td class="text-capitalize align-middle nowrap">{{ dataItem.BagID }}</td>
@@ -61,7 +61,7 @@ import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 export default {
   computed: {
     ...mapState('laundry/register', ['listAsrama', 'datas']),
-    ...mapGetters('laundry/register', ['getSearch', 'getSelectedAsrama']),
+    ...mapGetters('laundry/register', ['getSearch', 'getSelectedAsrama', 'filteredDatas']),
     search: {
       get() {
         return this.getSearch

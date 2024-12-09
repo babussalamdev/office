@@ -2,21 +2,18 @@
   <section id="laundry">
     <div class="laundry">
       <!-- table -->
-      <LaundryNotaTable />
+      <LaundryNotaDetailAddForm :sk="sk" />
     </div>
   </section>
 </template>
 
 <script>
 export default {
-  // middleware: 'permission',
-  // meta: {
-  //   permissions: ['laundry']
-  // },
-  async asyncData({ store }) {
-    store.dispatch('laundry/nota/changeUnit')
-  }
-};
+  async asyncData({ store, params, redirect }) {
+    const sk = params.sk
+    return { sk }
+  },
+}
 </script>
 
 <style>

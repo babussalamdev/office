@@ -2,10 +2,10 @@
   <div>
     <!-- Modal -->
     <div class="modal fade" id="modalAddDataBag" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      aria-labelledby="staticBackdropLabel">
       <div class="modal-dialog">
         <div class="modal-content">
-          <form @submit.prevent="addDataTag">
+          <form @submit.prevent="addDataTag" id="formModalAdd">
             <div class="modal-body">
               <div class="mb-3">
                 <label for="nfc" class="form-label">NFC Tag</label>
@@ -31,7 +31,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="resetFormAdd">Close</button>
               <span>
                 <button v-if="btn" type="submit" class="btn btn-primary">Save</button>
                 <button v-else class="btn btn-primary" type="button" disabled>
@@ -71,7 +71,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions('laundry/register', ['addDataTag'])
+    ...mapActions('laundry/register', ['addDataTag']),
+    ...mapMutations('laundry/register', ['resetFormAdd'])
   },
   watch: {
     selectedAsramaModal(data) {
