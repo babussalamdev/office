@@ -5,6 +5,7 @@ export default () => ({
   tag: '',
   timeout: null,
   dataFromTag: '',
+  qty: 0,
   dummy: [
     {
       Receipt: '1#080824',

@@ -292,6 +292,25 @@
                   <span class="text animate__animated animate__fadeInRight">Absensi</span>
                 </nuxt-link>
               </li>
+              <li>
+                <div @click="notClickSub('settingLaundry')"
+                  class="dropdown d-flex align-items-center justify-content-between gap-2">
+                  <span class="d-flex align-items-center gap-2">
+                    <span class="text animate__animated animate__fadeInRight">Settings</span>
+                  </span>
+                  <i class="bx bx-chevron-down"></i>
+                </div>
+                <!-- sub menu santri -->
+                <ul v-if="settingLaundrySubList" class="dropdown-list">
+                  <!-- Absensi -->
+                  <li>
+                    <nuxt-link to="/laundry/settings/inputkeranjang"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Keranjang</span>
+                    </nuxt-link>
+                  </li>
+                </ul>
+              </li>
             </ul>
           </li>
           <!-- Pelanggaran -->
@@ -661,7 +680,7 @@ export default {
   computed: {
     ...mapState("index", ["unit", "permissions", "pengajar", "pengampu", "personalia",]),
     ...mapState("sidebar", ["activeMenu", "listAsrama", "listTahfidz", "listSettings", 'listEkskull', "listKelas", "listReport", 'listLaundry',
-      "absensiSubList", "santriSubList", "pegawaiSubList", "databaseSubList", 'tahfidzSubList', 'tahfidz2SubList', 'isSidebar', 'isSidebarOpen']),
+      "absensiSubList", "santriSubList", "pegawaiSubList", "databaseSubList", 'tahfidzSubList', 'tahfidz2SubList', 'settingLaundrySubList', 'isSidebar', 'isSidebarOpen']),
     permissionsIzin() {
       return this.$store.state.asramaAbsensi.permissions
     },

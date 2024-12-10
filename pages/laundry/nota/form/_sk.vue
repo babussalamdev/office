@@ -11,6 +11,7 @@
 export default {
   async asyncData({ store, params, redirect }) {
     const sk = params.sk
+    store.commit('laundry/nota/addDataPerSantri')
     return { sk }
   },
 }

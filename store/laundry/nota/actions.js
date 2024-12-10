@@ -88,4 +88,39 @@ export default {
       });
     }
   },
+  async addDataPerSantri({ commit, state }, { event, route }) {
+    commit('btn')
+    const data = Object.fromEntries(new FormData(event.target))
+    data['QTY'] = +data.QTY
+    const part2 = route.sk.split("#")[1];
+    const identity = part2.slice(-3);
+    const program = localStorage.getItem('program')
+    try {
+      const result = await this.$apiLaundry.$post(`input-laundry?program=${program}&type=inchart&chart=${identity}`, data)
+      if (result) {
+        this.$router.push(`/laundry/nota/${route.sk.replace('#', '%23')}`);
+        commit('btn')
+      }
+    } catch (error) {
+      commit('btn')
+      if (error.response) {
+        const { status, data } = error.response
+        if (status === 409) {
+          Swal.fire({
+            icon: "warning",
+            text: 'Santri tersebut sudah terdata!',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        } else {
+          Swal.fire({
+            icon: "warning",
+            text: error,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      }
+    }
+  },
 }

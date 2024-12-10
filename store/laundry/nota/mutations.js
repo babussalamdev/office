@@ -19,10 +19,16 @@ export default {
     $('#laundryNotaModalAdd').modal('hide')
   },
   setGetDetail(state, data) {
+    state.datasDetail = ''
     state.datasDetail = data
   },
   setDataFromTag(state, data) {
     state.dataFromTag = data
+  },
+  addDataPerSantri(state) {
+    state.dataFromTag = ''
+    state.tag = ''
+    state.qty = 0
   },
 
   // debounce

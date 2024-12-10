@@ -9,22 +9,31 @@
     <div class="row">
       <div class="col-12 col-md-5">
         <div class="card p-4 border-0 rounded-3 shadow">
-          <div class="mb-3">
-            <label for="tag" class="form-label">Scan Tag</label>
-            <input type="number" id="tag" name="BagID" class="form-control" v-model="tag" autofocus>
-          </div>
-          <div class="mb-3">
-            <label for="name" class="form-label">Nama</label>
-            <input type="text" id="name" name="Name" class="form-control" :value="dataFromTag.Name">
-          </div>
-          <div class="mb-3">
-            <label for="subject" class="form-label">Subject</label>
-            <input type="text" id="subject" name="Subject" class="form-control" :value="dataFromTag.Subject">
-          </div>
-          <div class="">
-            <label for="qty" class="form-label">Kuantiti</label>
-            <input type="number" id="qty" name="QTY" class="form-control">
-          </div>
+          <form @submit.prevent="addDataPerSantri" id="formAddBySantri">
+            <div class="mb-3">
+              <label for="tag" class="form-label">Scan Tag</label>
+              <input type="number" id="tag" name="BagID" class="form-control" v-model="tag" autofocus>
+            </div>
+            <div class="mb-3">
+              <label for="name" class="form-label">Nama</label>
+              <input type="text" id="name" name="Name" class="form-control" :value="dataFromTag.Name">
+            </div>
+            <div class="mb-3">
+              <label for="subject" class="form-label">Subject</label>
+              <input type="text" id="subject" name="Subject" class="form-control" :value="dataFromTag.Subject">
+            </div>
+            <div class="mb-3">
+              <label for="qty" class="form-label">Kuantiti</label>
+              <input type="number" id="qty" name="QTY" class="form-control" min="1" :value="qty" required>
+            </div>
+            <span class="float-end">
+              <button v-if="btn" type="submit" class="btn btn-primary btn-sm">Tambah</button>
+              <button v-else class="btn btn-primary" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                <span role="status">Loading...</span>
+              </button>
+            </span>
+          </form>
         </div>
       </div>
     </div>
@@ -36,8 +45,8 @@ import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
   props: ['sk'],
   computed: {
-    ...mapState('laundry/nota', ['datasDetail', 'dataFromTag']),
-    ...mapGetters('laundry/nota', ['getTag']),
+    ...mapState('laundry/nota', ['datasDetail', 'dataFromTag', 'btn']),
+    ...mapGetters('laundry/nota', ['getTag', 'getQty']),
     tag: {
       get() {
         return this.getTag
@@ -45,16 +54,21 @@ export default {
       set(value) {
         this.$store.commit('laundry/nota/setState', { key: 'tag', value })
       }
+    },
+    qty: {
+      get() {
+        return this.getQty
+      },
+      set(value) {
+        this.$store.commit('laundry/nota/setState', { key: 'qty', value })
+      }
     }
   },
   methods: {
-    // ...mapMutations('mutabaah', ['showDetail'])
-    showDetail(sk, subject) {
-      this.$store.commit('mutabaah/showDetail', { sk, subject })
-    },
-    detailView(receipt) {
-      this.$router.push(`/laundry/nota/${receipt}`)
-    },
+    ...mapActions('laundry/nota', { changeAdd: 'addDataPerSantri' }),
+    addDataPerSantri(event) {
+      this.changeAdd({ event, route: this.$route.params })
+    }
   },
   watch: {
     tag() {
@@ -69,12 +83,13 @@ export default {
   white-space: nowrap;
 }
 
-label, input {
+label,
+input {
   font-size: 14px;
 }
 
 button {
-  font-size: 12px;
+  font-size: 14px;
 }
 
 #tag::-webkit-inner-spin-button,
