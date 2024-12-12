@@ -21,10 +21,8 @@ export default {
   },
   async dataNotaLaundryAdd({ commit, state }) {
     commit('btn')
-    const program = localStorage.getItem('program')
     try {
-      const data = {}
-      const result = await this.$apiLaundry.$post(`input-laundry?program=${program}&type=chart`, data)
+      const result = await this.$apiLaundry.$get(`get-laundry?type=updatechart`)
       if (result) {
         commit('setAddNota', result)
         commit('btn')
@@ -39,19 +37,48 @@ export default {
       });
     }
   },
+  async deleteItem({ commit, state }, { sk, id }) {
+    const i = state.datasDetail.findIndex((x) => x.SK === sk)
+    const name = state.datasDetail[i].Name
+    const identity = id.replace('#', '%23')
+    const result = await Swal.fire({
+      title: name,
+      text: "Data akan dihapus secara permanen!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (result.isConfirmed) {
+      await this.$apiLaundry.$delete(
+        `delete-laundry?value=${identity}&sk=${sk}`
+      );
+      commit('deleteItem', sk);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        text: "Data berhasil dihapus!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  },
 
   //detail
-  async getDetail({ commit, dispatch }, id) {
+  async getDetail({ commit, dispatch, state }, id) {
     dispatch('index/submitLoad', null, { root: true })
-    const part2 = id.split("#")[1];
-    const identity = part2.slice(-3);
+    const identity = id.replace('#', '%23')
     const program = localStorage.getItem('program')
     try {
-      const result = await this.$apiLaundry.$get(`get-laundry?program=${program}&type=inchart&chart=${identity}`)
-      if (result) {
-        commit('setGetDetail', result)
-        dispatch('index/submitLoad', null, { root: true })
+      if (!state.chart) {
+        const result = await this.$apiLaundry.$get(`get-laundry?program=${program}&type=inchart&chart=${identity}`)
+        if (result) {
+          commit('setGetDetail', result)
+        }
       }
+      dispatch('index/submitLoad', null, { root: true })
     } catch (error) {
       dispatch('index/submitLoad', null, { root: true })
       Swal.fire({
@@ -92,6 +119,8 @@ export default {
     commit('btn')
     const data = Object.fromEntries(new FormData(event.target))
     data['QTY'] = +data.QTY
+    data['Volume'] = state.datasDetail.length + 1
+    data['Series'] = 'laundry'
     const part2 = route.sk.split("#")[1];
     const identity = part2.slice(-3);
     const program = localStorage.getItem('program')

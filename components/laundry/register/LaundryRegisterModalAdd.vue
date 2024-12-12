@@ -27,7 +27,7 @@
               </div>
               <div class="">
                 <label for="subject" class="form-label">Subject</label>
-                <input type="text" class="form-control" :value="selectedDataModal ? selectedDataModal.SK : ''" required>
+                <input type="text" class="form-control" :value="selectedDataModal ? selectedDataModal.SK : ''" required readonly>
               </div>
             </div>
             <div class="modal-footer">

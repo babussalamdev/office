@@ -25,7 +25,7 @@
             <th scope="col" class="nowrap">Nama Santri</th>
             <th scope="col" class="nowrap">Asrama</th>
             <th scope="col" class="text-center">Jumlah</th>
-            <!-- <th scope="col" class="nowrap text-end">Action</th> -->
+            <th scope="col" class="nowrap text-end">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -33,18 +33,13 @@
             <td class="text-capitalize align-middle">{{ data.Name }}</td>
             <td class="text-capitalize align-middle">{{ data.Asrama ? data.Asrama : '-' }}</td>
             <td class="text-capitalize align-middle text-center">{{ data.QTY }}</td>
-            <!-- <td class="text-capitalize align-middle text-end">
-              <a href="javascript:;">
-                <button class="btn btn-sm btn-warning">
-                  <i class="bx bx-pencil text-dark"></i>
-                </button>
-              </a>
-              <a href="javascript:;">
+            <td class="text-capitalize align-middle text-end">
+              <a href="javascript:;" @click="deleteItem(data.SK)">
                 <button class="btn btn-sm btn-danger">
                   <i class="bx bx-trash text-white"></i>
                 </button>
               </a>
-            </td> -->
+            </td>
           </tr>
         </tbody>
       </table>
@@ -78,7 +73,11 @@ export default {
     // }
   },
   methods: {
+    ...mapActions('laundry/nota', { changeDelete: 'deleteItem' }),
     // ...mapMutations('mutabaah', ['showDetail'])
+    deleteItem(sk) {
+      this.changeDelete({sk, id: this.id})
+    },
     showDetail(sk, subject) {
       this.$store.commit('mutabaah/showDetail', { sk, subject })
     },

@@ -5,7 +5,7 @@
         <h2 class="mb-0">Nota</h2>
       </div>
       <div class="col-4 d-flex justify-content-end">
-        <button type="button" class="btn btn-primary btn-sm add" data-bs-toggle="modal" data-bs-target="#laundryNotaModalAdd">
+        <button type="button" class="btn btn-primary btn-sm add" @click="dataNotaLaundryAdd">
           Tambah Data
         </button>
       </div>
@@ -26,15 +26,15 @@
         </thead>
         <tbody>
           <tr v-for="(data, index) in datas" :key="index">
-            <td class="align-middle">{{ data.SK }}</td>
+            <td class="align-middle">{{ data.SK.split('#')[1] }}</td>
             <td class="align-middle">{{ data.Name }}</td>
             <td class="align-middle">{{ data.Volume }}</td>
             <td class="align-middle">{{ data.Status }}</td>
             <td
               class="text-capitalize align-middle text-end w-auto d-flex align-items-center gap-1 justify-content-end">
               <a href="javascript:;" @click="detailView(data.SK)">
-                <button class="btn btn-sm btn-primary">
-                  <i class="bx bx-detail text-white"></i>
+                <button class="btn btn-sm btn-warning">
+                  <i class="bx bx-pencil text-dark"></i>
                 </button>
               </a>
             </td>
@@ -52,6 +52,7 @@ export default {
     ...mapState('laundry/nota', ['datas'])
   },
   methods: {
+    ...mapActions('laundry/nota', ['dataNotaLaundryAdd']),
     detailView(receipt) {
       this.$router.push(`/laundry/nota/${receipt.replace('#', '%23')}`)
     },

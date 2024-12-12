@@ -6,6 +6,7 @@ export default () => ({
   timeout: null,
   dataFromTag: '',
   qty: 0,
+  chart: false,
   dummy: [
     {
       Receipt: '1#080824',

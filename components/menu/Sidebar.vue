@@ -231,13 +231,13 @@
               <i class="bx bx-chevron-down"></i>
             </div>
             <ul v-if="listLaundry" class="dropdown-list">
-              <!-- input data -->
+              <!-- input data
               <li>
                 <nuxt-link to="/laundry/inputdata"
                   class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Input Data</span>
                 </nuxt-link>
-              </li>
+              </li> -->
               <!-- input data -->
               <li>
                 <nuxt-link to="/laundry/inventory"
@@ -265,12 +265,12 @@
                 </nuxt-link>
               </li>
               <!-- rekap -->
-              <li>
+              <!-- <li>
                 <nuxt-link to="/laundry/lembur"
                   class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Lembur</span>
                 </nuxt-link>
-              </li>
+              </li> -->
               <!-- rekap -->
               <li>
                 <nuxt-link to="/laundry/tagregister"
@@ -291,25 +291,6 @@
                   class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Absensi</span>
                 </nuxt-link>
-              </li>
-              <li>
-                <div @click="notClickSub('settingLaundry')"
-                  class="dropdown d-flex align-items-center justify-content-between gap-2">
-                  <span class="d-flex align-items-center gap-2">
-                    <span class="text animate__animated animate__fadeInRight">Settings</span>
-                  </span>
-                  <i class="bx bx-chevron-down"></i>
-                </div>
-                <!-- sub menu santri -->
-                <ul v-if="settingLaundrySubList" class="dropdown-list">
-                  <!-- Absensi -->
-                  <li>
-                    <nuxt-link to="/laundry/settings/inputkeranjang"
-                      class="text-decoration-none sub-menu d-flex align-items-center gap-2">
-                      <span class="text animate__animated animate__fadeInRight">Keranjang</span>
-                    </nuxt-link>
-                  </li>
-                </ul>
               </li>
             </ul>
           </li>
