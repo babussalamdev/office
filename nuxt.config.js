@@ -131,6 +131,7 @@ export default {
       '~/components/settings/absensi/kelas',
       '~/components/settings/setupabsensi',
       '~/components/settings/setuppelanggaran',
+      '~/components/settings/authority',
     ]
   },
 

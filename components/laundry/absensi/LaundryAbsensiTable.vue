@@ -16,45 +16,49 @@
         <table class="table table-hover table-striped">
           <thead>
             <tr>
-              <th scope="col">Nama / NIP</th>
+              <th scope="col">Nama</th>
               <th scope="col" class="text-center">Pagi</th>
-              <!-- <th scope="col" class="text-end">Action</th> -->
+              <th scope="col" class="text-end">Action</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(data, index) in pegawai" :key="index">
-              <td class="text-capitalize align-middle">
-                <h1>{{ data.Nama }}</h1>
-                <p class="mt-1 text-secondary">{{ data.Nis }}</p>
-              </td>
-              <!-- pagi -->
+              <td class="text-capitalize align-middle">{{ data.Nama }}</td>
+              <!-- laundry -->
               <td class="text-capitalize py-2">
                 <div class="select-input mx-auto">
                   <div class="box-radio">
                     <button
-                      @click="setAbsensi(data.SK, 'absen', 'pagi', data.pagi?.status, data.pagi?.time?.split(' ')[0])"
-                      :class="(!data.pagi?.status || (data.pagi?.status === '' && data.pagi?.time?.split(' ')[0] === date)) ? 'bg-white' : (data.pagi?.status && data.pagi?.time?.split(' ')[0] !== date) ? 'bg-white' : data.pagi?.status === 'absen' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.pagi?.status && data.pagi?.time?.split(' ')[0] === date && (data.pagi?.status !== '' && data.pagi?.status !== 'absen')) ? true : false">Absen</button>
+                      @click="setAbsensi(data.SK, 'absen', 'laundry', data.laundry?.status, data.laundry?.time?.split(' ')[0])"
+                      :class="(!data.laundry?.status || (data.laundry?.status === '' && data.laundry?.time?.split(' ')[0] === date)) ? 'bg-white' : (data.laundry?.status && data.laundry?.time?.split(' ')[0] !== date) ? 'bg-white' : data.laundry?.status === 'absen' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="(data.laundry?.status && data.laundry?.time?.split(' ')[0] === date && (data.laundry?.status !== '' && data.laundry?.status !== 'absen')) ? true : false">Absen</button>
                   </div>
                   <div class="box-radio">
                     <button
-                      @click="setAbsensi(data.SK, 'terlambat', 'pagi', data.pagi?.status, data.pagi?.time?.split(' ')[0])"
-                      :class="(!data.pagi?.status || (data.pagi?.status === '' && data.pagi?.time?.split(' ')[0] === date)) ? 'bg-white' : (data.pagi?.status && data.pagi?.time?.split(' ')[0] !== date) ? 'bg-white' : data.pagi?.status === 'terlambat' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.pagi?.status && data.pagi?.time?.split(' ')[0] === date && (data.pagi?.status !== '' && data.pagi?.status !== 'terlambat')) ? true : false">Terlambat</button>
+                      @click="setAbsensi(data.SK, 'terlambat', 'laundry', data.laundry?.status, data.laundry?.time?.split(' ')[0])"
+                      :class="(!data.laundry?.status || (data.laundry?.status === '' && data.laundry?.time?.split(' ')[0] === date)) ? 'bg-white' : (data.laundry?.status && data.laundry?.time?.split(' ')[0] !== date) ? 'bg-white' : data.laundry?.status === 'terlambat' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="(data.laundry?.status && data.laundry?.time?.split(' ')[0] === date && (data.laundry?.status !== '' && data.laundry?.status !== 'terlambat')) ? true : false">Terlambat</button>
                   </div>
                   <div class="box-radio">
                     <button
-                      @click="setAbsensi(data.SK, 'sakit', 'pagi', data.pagi?.status, data.pagi?.time?.split(' ')[0])"
-                      :class="(!data.pagi?.status || (data.pagi?.status === '' && data.pagi?.time?.split(' ')[0] === date)) ? 'bg-white' : (data.pagi?.status && data.pagi?.time?.split(' ')[0] !== date) ? 'bg-white' : data.pagi?.status === 'sakit' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.pagi?.status && data.pagi?.time?.split(' ')[0] === date && (data.pagi?.status !== '' && data.pagi?.status !== 'sakit')) ? true : false">Sakit</button>
+                      @click="setAbsensi(data.SK, 'sakit', 'laundry', data.laundry?.status, data.laundry?.time?.split(' ')[0])"
+                      :class="(!data.laundry?.status || (data.laundry?.status === '' && data.laundry?.time?.split(' ')[0] === date)) ? 'bg-white' : (data.laundry?.status && data.laundry?.time?.split(' ')[0] !== date) ? 'bg-white' : data.laundry?.status === 'sakit' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="(data.laundry?.status && data.laundry?.time?.split(' ')[0] === date && (data.laundry?.status !== '' && data.laundry?.status !== 'sakit')) ? true : false">Sakit</button>
                   </div>
                   <div class="box-radio">
                     <button
-                      @click="setAbsensi(data.SK, 'izin', 'pagi', data.pagi?.status, data.pagi?.time?.split(' ')[0])"
-                      :class="(!data.pagi?.status || (data.pagi?.status === '' && data.pagi?.time?.split(' ')[0] === date)) ? 'bg-white' : (data.pagi?.status && data.pagi?.time?.split(' ')[0] !== date) ? 'bg-white' : data.pagi?.status === 'izin' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
-                      :disabled="(data.pagi?.status && data.pagi?.time?.split(' ')[0] === date && (data.pagi?.status !== '' && data.pagi?.status !== 'izin')) ? true : false">Izin</button>
+                      @click="setAbsensi(data.SK, 'izin', 'laundry', data.laundry?.status, data.laundry?.time?.split(' ')[0])"
+                      :class="(!data.laundry?.status || (data.laundry?.status === '' && data.laundry?.time?.split(' ')[0] === date)) ? 'bg-white' : (data.laundry?.status && data.laundry?.time?.split(' ')[0] !== date) ? 'bg-white' : data.laundry?.status === 'izin' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="(data.laundry?.status && data.laundry?.time?.split(' ')[0] === date && (data.laundry?.status !== '' && data.laundry?.status !== 'izin')) ? true : false">Izin</button>
                   </div>
                 </div>
+              </td>
+              <td class="text-capitalize align-middle text-end">
+                <nuxt-link :to="`/laundry/absensi/${data.SK}`">
+                  <button class="btn btn-sm btn-primary">
+                    <i class="bi bi-info-lg text-white"></i>
+                  </button>
+                </nuxt-link>
               </td>
             </tr>
           </tbody>
@@ -79,7 +83,7 @@ export default {
   methods: {
     ...mapActions('laundry/absensi', ['setStatus', 'deleteStatus']),
     ...mapMutations('laundry/absensi', { changeStep: 'setAbsensi' }),
-    setAbsensi(sk, type, time, condition, dateTime) {
+    setAbsensi(sk, type, time, condition, dateTime ) {
       const obj = {
         sk, type, time, condition
       }

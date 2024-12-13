@@ -15,5 +15,11 @@ export default () => ({
   pagi: '',
   sore: '',
   updateData: '',
-  date: tanggalDalamFormat
+  date: tanggalDalamFormat,
+  start: '',
+  end: '',
+  startRekap: '',
+  endRekap: '',
+  absensiDetail: [],
+  dataRekap: []
 })

@@ -32,6 +32,7 @@ export default () => ({
     { name: "absensi pengampu", code: 26 },
     { name: "card", code: 27 },
     { name: "none", code: 28 },
+    { name: "authority", code: 29 },
   ],
 
   // partikel

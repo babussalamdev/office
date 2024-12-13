@@ -8,6 +8,9 @@ export default {
       state.permissions = []
     }
   },
+  setState(state, data) {
+    state[data.key] = data.value
+  },
   updateAbsen(state, value) {
     const i = state.pegawai.findIndex((x) => x.SK === value.SK)
     const data = state.pegawai[i]
@@ -18,9 +21,9 @@ export default {
         const updatedItem = { ...item };
 
         // Memperbarui Logs dengan data baru
-        updatedItem[value.time] = {
-          ...item[value.time],
-          ...value.Logs.pengampu[value.time]
+        updatedItem.laundry = {
+          ...item.laundry,
+          ...value.Logs.laundry
         };
 
         return updatedItem;
@@ -41,9 +44,9 @@ export default {
         const updatedItem = { ...item };
 
         // Memperbarui Logs dengan data baru
-        updatedItem[value.time] = {
-          ...item[value.time],
-          ...value.Logs.pengampu[value.time]
+        updatedItem.laundry = {
+          ...item.laundry,
+          ...value.Logs.laundry
         };
 
         return updatedItem;
@@ -64,4 +67,14 @@ export default {
     state.updateData = obj
     $("#modalAbsen").modal("show");
   },
+
+  // detail
+  setAbsensiDetail(state, data) {
+    state.absensiDetail = data
+  },
+
+  // rekap
+  setRekap(state, data) {
+    state.dataRekap = data
+  }
 }

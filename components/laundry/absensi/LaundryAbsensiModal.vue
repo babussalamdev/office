@@ -62,7 +62,7 @@ export default {
       const program = localStorage.getItem("program");
       try {
         const result = await this.$apiBase.$put(
-          `update-absensi?type=pengampu${time}&skpegawai=${skSantri}`,
+          `update-absensi?authority=laundry&skpegawai=${skSantri}`,
           data
         );
         if (result) {

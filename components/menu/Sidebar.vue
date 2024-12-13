@@ -292,6 +292,13 @@
                   <span class="text animate__animated animate__fadeInRight">Absensi</span>
                 </nuxt-link>
               </li>
+              <!-- rekap absensi laundry -->
+              <li>
+                <nuxt-link to="/laundry/absensi/rekap"
+                  class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Rekap Absensi</span>
+                </nuxt-link>
+              </li>
             </ul>
           </li>
           <!-- Pelanggaran -->
@@ -616,6 +623,13 @@
                     <nuxt-link to="/settings/struktur"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Struktur</span>
+                    </nuxt-link>
+                  </li>
+                  <!-- Authority -->
+                  <li v-if="hasPersonalia">
+                    <nuxt-link to="/settings/authority"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Authority</span>
                     </nuxt-link>
                   </li>
                 </ul>
