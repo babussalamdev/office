@@ -85,6 +85,8 @@ export default {
       '~/components/laundry/settings/keranjang',
       '~/components/laundry/nota',
       '~/components/laundry/datasantri',
+      '~/components/laundry/report',
+      '~/components/laundry/report/log',
       '~/components/pelanggaran',
       '~/components/pelanggaran/record',
       '~/components/tahfidz',

@@ -10,8 +10,13 @@
 <script>
 export default {
   async asyncData({ store, params, redirect }) {
+    const data = store.state.laundry.nota.datasDetail
     const sk = params.sk
-    store.commit('laundry/nota/addDataPerSantri')
+    if (data.length === 0) {
+      redirect(`/laundry/nota/${sk.replace('#', '%23')}`)
+    } else {
+      store.commit('laundry/nota/addDataPerSantri')
+    }
     return { sk }
   },
 }

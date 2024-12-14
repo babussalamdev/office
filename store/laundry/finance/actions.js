@@ -1,4 +1,5 @@
 import Swal from "sweetalert2";
+import * as XLSX from 'xlsx'
 export default {
   async changeUnit({ commit, state, dispatch }) {
     dispatch('index/submitLoad', null, { root: true })
@@ -107,6 +108,30 @@ export default {
         showConfirmButton: false,
         timer: 1500,
       });
+    }
+  },
+  async downloadFinance({ commit, state, dispatch }, data) {
+    dispatch('index/submitLoad', null, { root: true })
+    try {
+      const datas = await this.$apiLaundry.$get(`get-finance?subject=finance-excel&startdate=${state.start}&enddate=${state.end}`)
+      const base64WithPrefix = `data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${datas.base64data}`
+      const byteString = atob(base64WithPrefix.split(',')[1]);
+      const ab = new ArrayBuffer(byteString.length);
+      const ia = new Uint8Array(ab);
+      for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+      const wb = XLSX.read(ab, { type: 'array' });
+      XLSX.writeFile(wb, `${datas.filename}.xlsx`)
+      dispatch('index/submitLoad', null, { root: true })
+    } catch (error) {
+      dispatch('index/submitLoad', null, { root: true })
+      Swal.fire({
+        text: error,
+        icon: 'error',
+        showConfirmButton: false,
+        // timer: 1500,
+      })
     }
   }
 }

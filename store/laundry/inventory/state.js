@@ -3,5 +3,6 @@ export default () => ({
   btn: true,
   search: '',
   updateData: '',
-  changeOptions: ''
+  changeOptions: '',
+  supplier: []
 })

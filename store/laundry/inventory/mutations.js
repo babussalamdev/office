@@ -3,7 +3,9 @@ export default {
     state[data.key] = data.value
   },
   setPage(state, data) {
-    state.datas = data
+    state.datas = data.responseDB
+    const supplier = data.responseDB2.map((item) => item.Name)
+    state.supplier = supplier
   },
   btn(state) {
     state.btn = !state.btn

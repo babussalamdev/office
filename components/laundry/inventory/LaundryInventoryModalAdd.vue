@@ -21,6 +21,13 @@
                 <label for="kuantitas" class="form-label">Kuantitas</label>
                 <input type="number" id="kuantitas" class="form-control" name="Qty">
               </div>
+              <div class="mb-3">
+                <label for="supplier" class="form-label">Supplier</label>
+                <select name="Supplier" id="supplier">
+                  <option value="">Select Supplier</option>
+                  <option v-for="(data, index) in supplier" :key="index" :value="data">{{ data }}</option>
+                </select>
+              </div>
               <div>
                 <label for="harga" class="form-label">Harga</label>
                 <div class="input-group">
@@ -50,7 +57,7 @@
 import { mapActions, mapMutations, mapGetters, mapState } from 'vuex'
 export default {
   computed: {
-    ...mapState('laundry/inventory', ['btn'])
+    ...mapState('laundry/inventory', ['btn', 'supplier'])
   },
   methods: {
     ...mapActions('laundry/inventory', ['addData'])

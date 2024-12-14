@@ -299,6 +299,13 @@
                   <span class="text animate__animated animate__fadeInRight">Rekap Absensi</span>
                 </nuxt-link>
               </li>
+              <!-- report log -->
+              <li>
+                <nuxt-link to="/laundry/report/log"
+                  class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Report Log</span>
+                </nuxt-link>
+              </li>
             </ul>
           </li>
           <!-- Pelanggaran -->

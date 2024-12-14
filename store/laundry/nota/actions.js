@@ -99,10 +99,23 @@ export default {
   },
   async fetchTagData({ state, commit, dispatch }) {
     dispatch('index/submitLoad', null, { root: true })
+    console.log(state.tag)
     try {
-      const result = await this.$apiLaundry.$get(`get-bag?type=input-laundry&SK=${state.tag}`)
-      if (result) {
-        commit('setDataFromTag', result)
+      if (state.tag) {
+        const result = await this.$apiLaundry.$get(`get-bag?type=input-laundry&SK=${state.tag}`)
+        if (result) {
+          commit('setDataFromTag', result)
+          dispatch('index/submitLoad', null, { root: true })
+        } else {
+          dispatch('index/submitLoad', null, { root: true })
+          Swal.fire({
+            icon: "warning",
+            text: 'Tag tidak ditemukan!',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      } else {
         dispatch('index/submitLoad', null, { root: true })
       }
     } catch (error) {

@@ -11,9 +11,9 @@
       <div class="col-12 col-md-6 d-flex justify-content-end">
         <div class="input-group">
           <span class="input-group-text" id="basic-addon1">From</span>
-          <input type="date" class="form-control" v-model="startRekap">
+          <input type="date" class="form-control" v-model="startRekap" :max="endRekap">
           <span class="input-group-text" id="basic-addon1">To</span>
-          <input type="date" class="form-control" v-model="endRekap">
+          <input type="date" class="form-control" v-model="endRekap" :min="startRekap">
         </div>
       </div>
     </div>
@@ -44,7 +44,7 @@
             <td class="text-capitalize align-middle text-center">{{ data.Terlambat + data.Izin + data.Sakit + data.Absen
               }}</td>
             <td class="text-end align-middle">
-              <nuxt-link :to="`/tahfidz/rekap/absensi/${data.SK.replace('#', '%23')}`">
+              <nuxt-link :to="`/laundry/absensi/${data.SK}`">
                 <button class="btn btn-primary">
                   <i class="material-symbols-outlined">
                     info
@@ -87,6 +87,12 @@ export default {
     }
   },
   watch: {
+    startRekap() {
+      this.$store.dispatch('laundry/absensi/getRekapAbsensi')
+    },
+    endRekap() {
+      this.$store.dispatch('laundry/absensi/getRekapAbsensi')
+    }
   },
   methods: {
   },

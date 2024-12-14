@@ -85,5 +85,23 @@ export default {
         timer: 1500,
       });
     }
+  },
+  async getRekapAbsensi({ commit, state, dispatch }) {
+    dispatch('index/submitLoad', null, { root: true })
+    try {
+      const result = await this.$apiBase.$get(`get-absensi?subject=recapauthority&authority=laundry&startdate=${state.startRekap}&enddate=${state.endRekap}`)
+      if (result) {
+        commit('setRekap', result)
+        dispatch('index/submitLoad', null, { root: true })
+      }
+    } catch (error) {
+      dispatch('index/submitLoad', null, { root: true })
+      Swal.fire({
+        icon: "warning",
+        text: error,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   }
 }

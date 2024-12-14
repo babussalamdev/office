@@ -5,7 +5,7 @@
     </div>
     <div class="col-12 col-md-6">
       <div class="input-group">
-        <button class="btn btn-sm text-white fw-bold" style="font-size: 12px; background-color: #34A853;">Export</button>
+        <button class="btn btn-sm text-white fw-bold" style="font-size: 12px; background-color: #34A853;" @click="downloadFinance()">Export</button>
         <select class="form-select" style="font-size: 12px;" v-model="selectedYear" @change="getData">
           <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
         </select>
@@ -63,7 +63,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions('laundry/finance', ['getData'])
+    ...mapActions('laundry/finance', ['getData', 'downloadFinance'])
   },
 }
 </script>

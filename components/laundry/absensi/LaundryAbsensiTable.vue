@@ -18,7 +18,6 @@
             <tr>
               <th scope="col">Nama</th>
               <th scope="col" class="text-center">Pagi</th>
-              <th scope="col" class="text-end">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -52,13 +51,6 @@
                       :disabled="(data.laundry?.status && data.laundry?.time?.split(' ')[0] === date && (data.laundry?.status !== '' && data.laundry?.status !== 'izin')) ? true : false">Izin</button>
                   </div>
                 </div>
-              </td>
-              <td class="text-capitalize align-middle text-end">
-                <nuxt-link :to="`/laundry/absensi/${data.SK}`">
-                  <button class="btn btn-sm btn-primary">
-                    <i class="bi bi-info-lg text-white"></i>
-                  </button>
-                </nuxt-link>
               </td>
             </tr>
           </tbody>
