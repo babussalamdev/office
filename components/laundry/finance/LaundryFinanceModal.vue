@@ -25,10 +25,6 @@
                 </div>
               </div>
               <div class="mb-3" v-if="transaction === 'credit' || transaction === 'debit'">
-                <label for="name" class="form-label">Nama</label>
-                <input type="text" id="name" class="form-control" name="Name">
-              </div>
-              <div class="mb-3" v-if="transaction === 'credit' || transaction === 'debit'">
                 <label for="type" class="form-label">Type</label>
                 <!-- <select name="Type" id="type" class="form-control">
                   <option value="">select Type</option>
@@ -45,21 +41,32 @@
                   <label for="other" class="radio_label">Other</label>
                 </div>
               </div>
-              <div class="mb-3" v-if="transaction === 'credit' || transaction === 'debit'">
-                <label for="note" class="form-label">Note</label>
-                <input type="text" id="note" class="form-control" name="Note">
+              <!-- Name -->
+              <div class="mb-3" v-if="transaction === 'debit'">
+                <label for="name" class="form-label">Nama</label>
+                <input type="text" id="name" class="form-control" name="Name">
               </div>
               <div class="mb-3" v-if="transaction === 'credit'">
-                <label for="supplier" class="form-label">Supplier</label>
-                <select name="Supplier" id="supplier" class="form-control">
+                <label for="name" class="form-label">Nama</label>
+                <select name="Name" id="name" class="form-select text-capitalize" v-model="selectedInventory">
                   <option value="">select Supplier</option>
-                  <option v-for="(data, index) in datas.inventory" :key="index" :value="data.SK">{{ data.Supplier }}
+                  <option v-for="(data, index) in datas.inventory" :key="index" :value="data">{{ data.Name }}
                   </option>
                 </select>
+              </div>
+              <!-- Supplier -->
+              <div class="mb-3" v-if="transaction === 'credit'">
+                <label for="supplier" class="form-label">Supplier</label>
+                <input type="text" class="form-control" name="Supplier" :value="selectedInventory.Supplier" readonly>
               </div>
               <div class="mb-3" v-if="transaction === 'debit'">
                 <label for="supplier" class="form-label">Supplier</label>
                 <input type="text" id="supplier" class="form-control" name="Supplier">
+              </div>
+              <!-- Note -->
+              <div class="mb-3" v-if="transaction === 'credit' || transaction === 'debit'">
+                <label for="note" class="form-label">Note</label>
+                <input type="text" id="note" class="form-control" name="Note">
               </div>
               <div class="mb-3" v-if="transaction === 'credit'">
                 <label for="price" class="form-label">Price</label>
@@ -107,13 +114,21 @@ import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
 export default {
   computed: {
     ...mapState('laundry/finance', ['datas', 'transaction', 'btn']),
-    ...mapGetters('laundry/finance', ['getTransaction']),
+    ...mapGetters('laundry/finance', ['getTransaction', 'getSelectedInventory']),
     transaction: {
       get() {
         return this.getTransaction
       },
       set(value) {
         this.$store.commit('laundry/finance/setState', { key: 'transaction', value })
+      }
+    },
+    selectedInventory: {
+      get() {
+        return this.getSelectedInventory
+      },
+      set(value) {
+        this.$store.commit('laundry/finance/setState', { key: 'selectedInventory', value })
       }
     }
   },

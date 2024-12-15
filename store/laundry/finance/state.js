@@ -5,6 +5,7 @@ export default () => ({
   groupedTransactions: {},
   selectedYear: new Date().getFullYear(),
   selectedMonth: new Date().getMonth() + 1,
+  selectedInventory: '',
   years: [],
   months: [
     { value: 1, name: "Januari" },

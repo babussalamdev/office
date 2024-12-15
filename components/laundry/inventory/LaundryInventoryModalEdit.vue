@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="modal fade" id="laundryInventoryModalEdit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-      aria-labelledby="staticBackdropLabel">
+    <div class="modal fade" id="laundryInventoryModalEdit" data-bs-backdrop="static" data-bs-keyboard="false"
+      tabindex="-1" aria-labelledby="staticBackdropLabel">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <form @submit.prevent="editItem" id="formInventoryModalEdit">
@@ -18,6 +18,13 @@
                 </div>
               </div>
               <div class="mb-3">
+                <label for="supplier" class="form-label">Supplier</label>
+                <select name="Supplier" id="supplier" class="form-select" v-model="updateData.Supplier">
+                  <option value="">Select Supplier</option>
+                  <option v-for="(data, index) in supplier" :key="index" :value="data">{{ data }}</option>
+                </select>
+              </div>
+              <div class="mb-3">
                 <label for="kuantitas" class="form-label">Kuantitas</label>
                 <input type="number" id="kuantitas" class="form-control" name="Qty" :value="updateData.Qty">
               </div>
@@ -30,7 +37,8 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="resetUpdateData">Close</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                @click="resetUpdateData">Close</button>
               <span>
                 <button v-if="btn" type="submit" class="btn btn-primary">Simpan</button>
                 <button v-else class="btn btn-primary" type="button" disabled>
@@ -50,7 +58,7 @@
 import { mapActions, mapMutations, mapGetters, mapState } from 'vuex'
 export default {
   computed: {
-    ...mapState('laundry/inventory', ['btn', 'updateData']),
+    ...mapState('laundry/inventory', ['btn', 'updateData', 'supplier']),
     ...mapGetters('laundry/inventory', ['getOptions']),
     option: {
       get() {

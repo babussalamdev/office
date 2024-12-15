@@ -18,15 +18,15 @@
                 </div>
               </div>
               <div class="mb-3">
-                <label for="kuantitas" class="form-label">Kuantitas</label>
-                <input type="number" id="kuantitas" class="form-control" name="Qty">
-              </div>
-              <div class="mb-3">
                 <label for="supplier" class="form-label">Supplier</label>
-                <select name="Supplier" id="supplier">
+                <select name="Supplier" id="supplier" class="form-select">
                   <option value="">Select Supplier</option>
                   <option v-for="(data, index) in supplier" :key="index" :value="data">{{ data }}</option>
                 </select>
+              </div>
+              <div class="mb-3">
+                <label for="kuantitas" class="form-label">Kuantitas</label>
+                <input type="number" id="kuantitas" class="form-control" name="Qty">
               </div>
               <div>
                 <label for="harga" class="form-label">Harga</label>

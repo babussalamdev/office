@@ -13,5 +13,8 @@ export default {
   },
   getTransaction(state) {
     return state.transaction
+  },
+  getSelectedInventory(state) {
+    return state.selectedInventory
   }
 }

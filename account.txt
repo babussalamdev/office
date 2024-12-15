@@ -1,7 +1,12 @@
-musyrif : khalid, azmi
-wali kelas : zuhudi
-kesantrian : ryandi
-kesehatan : taufieq'
-
-aldi : 581847
-
+{
+    "name": "ValidationException",
+    "$fault": "client",
+    "$metadata": {
+        "httpStatusCode": 400,
+        "requestId": "1BBE6VC9BEEU975AAN6PGPKFRVVV4KQNSO5AEMVJF66Q9ASUAAJG",
+        "attempts": 1,
+        "totalRetryDelay": 0
+    },
+    "__type": "com.amazon.coral.validate#ValidationException",
+    "message": "The provided expression refers to an attribute that does not exist in the item"
+}

@@ -13,6 +13,7 @@ export default {
           { length: tahunSekarang - tahunMulai + 2 },
           (_, index) => tahunMulai + index
         );
+        console.log(result)
         commit('setPage', { result, years: years })
         dispatch('index/submitLoad', null, { root: true })
       }
@@ -50,25 +51,25 @@ export default {
     const data = Object.fromEntries(new FormData(event.target))
     try {
       if (data.Transaction === 'credit') {
-        const find = state.datas.inventory.find((x) => x.SK === data.Supplier)
-        data['Supplier'] = find.Supplier
-        data['InventorySK'] = find.SK
-        data['Price'] = '-' + data.Price
+        data['Name'] = state.selectedInventory.Name
+        data['InventorySK'] = state.selectedInventory.SK
+        data['Price'] = -Math.abs(+data.Price)
         data['QTY'] = Number(data.QTY)
         const result = await this.$apiLaundry.$post(`input-finance?type=${data.Type}`, data)
-        if ( result ) {
+        if (result) {
           commit('setAdd', result)
           commit('btn')
         }
       } else {
         data['Amount'] = Number(data.Amount)
         const result = await this.$apiLaundry.$post(`input-finance?type=${data.Type}`, data)
-        if ( result ) {
+        if (result) {
           commit('setAdd', result)
           commit('btn')
         }
       }
     } catch (error) {
+      console.log(error)
       commit('btn')
       Swal.fire({
         icon: "warning",

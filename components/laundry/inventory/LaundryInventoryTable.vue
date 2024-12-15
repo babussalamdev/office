@@ -9,7 +9,8 @@
           <span style="font-size: 12px !important;" class="bi bi-search input-group-text"></span>
           <input style="font-size: 12px !important;" v-model="search" type="text" class="form-control"
             placeholder="Search">
-          <button style="font-size: 12px !important;" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#laundryInventoryModal">Input Data</button>
+          <button style="font-size: 12px !important;" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+            data-bs-target="#laundryInventoryModal">Input Data</button>
         </div>
       </div>
     </div>
@@ -20,6 +21,7 @@
         <thead>
           <tr>
             <th scope="col" class="nowrap">CreatedAt</th>
+            <th scope="col" class="nowrap">Supplier</th>
             <th scope="col" class="nowrap">Item</th>
             <th scope="col" class="nowrap text-center">Kuantitas</th>
             <th scope="col" class="nowrap">Amount</th>
@@ -29,6 +31,7 @@
         <tbody>
           <tr v-for="(data, index) in filteredDatas" :key="index">
             <td class="text-capitalize align-middle nowrap">{{ data.CreatedAt }}</td>
+            <td class="text-capitalize align-middle nowrap">{{ data.Supplier }}</td>
             <td class="text-capitalize align-middle nowrap">{{ data.Name }}</td>
             <td class="text-capitalize align-middle nowrap text-center">{{ data.Qty }}</td>
             <td class="text-capitalize align-middle nowrap">{{ rupiah(data.Amount) }}</td>
