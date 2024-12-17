@@ -49,7 +49,7 @@
               <div class="mb-3" v-if="transaction === 'credit'">
                 <label for="name" class="form-label">Nama</label>
                 <select name="Name" id="name" class="form-select text-capitalize" v-model="selectedInventory">
-                  <option value="">select Supplier</option>
+                  <option value="">select Inventory</option>
                   <option v-for="(data, index) in datas.inventory" :key="index" :value="data">{{ data.Name }}
                   </option>
                 </select>

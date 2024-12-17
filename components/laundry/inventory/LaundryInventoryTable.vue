@@ -33,7 +33,7 @@
             <td class="text-capitalize align-middle nowrap">{{ data.CreatedAt }}</td>
             <td class="text-capitalize align-middle nowrap">{{ data.Supplier }}</td>
             <td class="text-capitalize align-middle nowrap">{{ data.Name }}</td>
-            <td class="text-capitalize align-middle nowrap text-center">{{ data.Qty }}</td>
+            <td class="text-capitalize align-middle nowrap text-center">{{ data.QTY }}</td>
             <td class="text-capitalize align-middle nowrap">{{ rupiah(data.Amount) }}</td>
             <td class="text-capitalize align-middle text-end">
               <a href="javascript:;" @click="editItem(data.SK)">

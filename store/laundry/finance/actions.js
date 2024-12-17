@@ -55,6 +55,7 @@ export default {
         data['InventorySK'] = state.selectedInventory.SK
         data['Price'] = -Math.abs(+data.Price)
         data['QTY'] = Number(data.QTY)
+        console.log(data)
         const result = await this.$apiLaundry.$post(`input-finance?type=${data.Type}`, data)
         if (result) {
           commit('setAdd', result)

@@ -26,7 +26,7 @@
               </div>
               <div class="mb-3">
                 <label for="kuantitas" class="form-label">Kuantitas</label>
-                <input type="number" id="kuantitas" class="form-control" name="Qty" :value="updateData.Qty">
+                <input type="number" id="kuantitas" class="form-control" name="QTY" :value="updateData.QTY">
               </div>
               <div>
                 <label for="harga" class="form-label">Harga</label>

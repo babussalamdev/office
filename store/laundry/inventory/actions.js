@@ -21,7 +21,7 @@ export default {
   async addData({ commit, state }, event) {
     commit('btn')
     const data = Object.fromEntries(new FormData(event.target))
-    data['Qty'] = +data.Qty
+    data['QTY'] = +data.QTY
     data['Amount'] = +data.Amount
     try {
       const result = await this.$apiLaundry.$post(`input-default?value=inventory`, data)
@@ -48,7 +48,7 @@ export default {
   async editItem({ commit, state }, event) {
     commit('btn')
     const datas = Object.fromEntries(new FormData(event.target))
-    datas['Qty'] = +datas.Qty
+    datas['QTY'] = +datas.QTY
     datas['Amount'] = +datas.Amount
     const sk = state.updateData.SK
     try {
