@@ -3,5 +3,11 @@ export default () => ({
   selectedMapel: '',
   santri: [],
   kelas: [],
-  selectedKelas: ''
+  selectedKelas: '',
+  periode: [],
+  label: [],
+  semester: [],
+  selectedLabel: '',
+  selectedSemester: '',
+  th: { Nama: '', Total: '' },
 })

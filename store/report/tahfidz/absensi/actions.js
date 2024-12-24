@@ -24,12 +24,12 @@ export default {
       dispatch('index/submitLoad', null, { root: true })
     }
   },
-  async getSantri({ commit, state, dispatch }, data) {
+  async getSantri({ commit, state, dispatch, rootState }, data) {
     dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
     const value = state.selectedKelas.Nama
-    const tahun = this.$auth.user.Label
-    const semester = this.$auth.user.Semester
+    const tahun = rootState.index.label
+    const semester = rootState.index.semester
     const result = await this.$apiSantri.$get(`get-recapabsensi-sisalam?value=${value}&program=${program}&method=halaqah&thn=${tahun}&smstr=${semester}&startdate=${state.start}&enddate=${state.end}`)
     if (result) {
       const obj = { key: 'santri', value: result }

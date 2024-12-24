@@ -4,7 +4,7 @@ export default {
     dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
     const halaqah = this.$auth.user.Halaqah[program]
-    const semester = this.$auth.user.Semester
+    const semester = rootState.index.semester
     try {
       const data = await this.$apiBase.$get(`get-settings?program=${program}&type=nilaiquran&hlq=${halaqah}&smstr=${semester}`)
       commit('setState', { key: 'selectedQuran', value: data.quran })
@@ -21,15 +21,15 @@ export default {
           datas['Filter'] = 'pengampu'
           datas['Halaqah'] = this.$auth.user.Halaqah[program]
           datas['Subject'] = 'quran'
-          datas['Tahun'] = this.$auth.user.Label
-          datas['Semester'] = this.$auth.user.Semester
+          datas['Tahun'] = rootState.index.label
+          datas['Semester'] = rootState.index.semester
           datas['Penilaian'] = state.selectedQuran.Penilaian
           const result = await this.$apiSantri.$put(
             `get-nilai-sisalam?program=${program}&type=pengampu`, datas
           )
           if (result) {
             commit('setState', { key: 'santri', value: result.data })
-            commit('setState', { key: 'selectedByHalaqah', value: this.$auth.user.Halaqah[program]})
+            commit('setState', { key: 'selectedByHalaqah', value: this.$auth.user.Halaqah[program] })
 
             const newData = state.selectedQuran.Penilaian || {};
             const newHeaders = { Nama: '' };
@@ -50,8 +50,8 @@ export default {
           datas['Filter'] = 'pengampu'
           datas['Halaqah'] = this.$auth.user.Halaqah[program]
           datas['Subject'] = 'quran'
-          datas['Tahun'] = this.$auth.user.Label
-          datas['Semester'] = this.$auth.user.Semester
+          datas['Tahun'] = rootState.index.label
+          datas['Semester'] = rootState.index.semester
           datas['Penilaian'] = state.selectedQuran.Penilaian
           const result = await this.$apiSantri.$put(
             `get-nilai-sisalam?program=${program}&type=pengampu`, datas
@@ -91,11 +91,11 @@ export default {
       });
     }
   },
-  async getByHalaqah({ commit, state, dispatch }) {
+  async getByHalaqah({ commit, state, dispatch, rootState }) {
     dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
     const halaqah = state.selectedByHalaqah
-    const semester = this.$auth.user.Semester
+    const semester = rootState.index.semester
     try {
       const data = await this.$apiBase.$get(`get-settings?program=${program}&type=nilaiquran&hlq=${halaqah}&smstr=${semester}`)
       commit('setState', { key: 'selectedQuran', value: data.quran })
@@ -104,8 +104,8 @@ export default {
         datas['Filter'] = 'pengampu'
         datas['Halaqah'] = state.selectedByHalaqah
         datas['Subject'] = 'quran'
-        datas['Tahun'] = this.$auth.user.Label
-        datas['Semester'] = this.$auth.user.Semester
+        datas['Tahun'] = rootState.index.label
+        datas['Semester'] = rootState.index.semester
         datas['Penilaian'] = state.selectedQuran.Penilaian
         // datas['Filter'] = 'koordinator'
         // datas['Kelas'] = state.selectedByKelas
@@ -176,14 +176,14 @@ export default {
   //   const obj = { key: 'santri', value: result.data }
   //   commit('setState', obj)
   // },
-  async setPenilaian({ commit, state, dispatch }, data) {
+  async setPenilaian({ commit, state, dispatch, rootState }, data) {
     const program = localStorage.getItem('program')
     if (data.type === 'button') {
       dispatch('index/submitLoad', null, { root: true })
       const skSantri = state.santri[state.openEdit.index].SK.replace('#', '%23')
       const kelas = state.santri[state.openEdit.index].Kelas
-      const tahun = this.$auth.user.Label
-      const semester = this.$auth.user.Semester
+      const tahun = rootState.index.label
+      const semester = rootState.index.semester
       try {
         const Key = 'Quran'
         const datas = {}
@@ -223,8 +223,8 @@ export default {
         data['type'] = 'close'
         const skSantri = state.santri[state.openEdit.index].SK.replace('#', '%23')
         const kelas = state.santri[state.openEdit.index].Kelas
-        const tahun = this.$auth.user.Label
-        const semester = this.$auth.user.Semester
+        const tahun = rootState.index.label
+        const semester = rootState.index.semester
         try {
           const Key = 'Quran'
           const datas = {}

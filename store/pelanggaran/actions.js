@@ -72,15 +72,15 @@ export default {
     // }
   },
 
-  async inputForm({ commit, state }, event) {
+  async inputForm({ commit, state, rootState }, event) {
     commit('setLoad')
     const data = Object.fromEntries(new FormData(event.target));
     data['Kelas'] = state.updateData.Kelas
     data['Asrama'] = state.updateData.Asrama
     const skSantri = state.updateData.SK.replace('#', '%23')
     const program = localStorage.getItem("program");
-    const tahun = this.$auth.user.Label
-    const semester = this.$auth.user.Semester
+    const tahun = rootState.index.label
+    const semester = rootState.index.semester
     try {
       const result = await this.$apiSantri.$post(
         `input-pelanggaran-sisalam?program=${program}&sksantri=${skSantri}&thn=${tahun}&smstr=${semester}`,
@@ -109,11 +109,11 @@ export default {
       });
     }
   },
-  async getRecord({ dispatch, commit }, data) {
+  async getRecord({ dispatch, commit, rootState }, data) {
     dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
     const skSantri = data.replace('#', '%23')
-    const tahun = this.$auth.user.Label
+    const tahun = rootState.index.label
     const result = await this.$apiSantri.$get(`get-pelanggaran-sisalam?program=${program}&sksantri=${skSantri}&tahun=${tahun}`)
     if (result) {
       commit('setRecord', result)

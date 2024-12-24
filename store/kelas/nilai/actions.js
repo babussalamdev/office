@@ -18,15 +18,15 @@ export default {
       dispatch('index/submitLoad', null, { root: true })
     }
   },
-  async getSantri({ commit, state, dispatch }, data) {
+  async getSantri({ commit, state, dispatch, rootState }, data) {
     dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
     const datas = {}
     datas['Filter'] = state.selectedMapel.Jurusan
     datas['Kelas'] = state.selectedMapel.Kelas
     datas['Subject'] = state.selectedMapel.Nama
-    datas['Tahun'] = this.$auth.user.Label
-    datas['Semester'] = this.$auth.user.Semester
+    datas['Tahun'] = rootState.index.label
+    datas['Semester'] = rootState.index.semester
     datas['Penilaian'] = state.selectedMapel.Penilaian
     const result = await this.$apiSantri.$put(
       `get-nilai-sisalam?program=${program}`, datas
@@ -35,13 +35,13 @@ export default {
     commit('setState', obj)
     dispatch('index/submitLoad', null, { root: true })
   },
-  async setPenilaian({ commit, state, dispatch }, data) {
+  async setPenilaian({ commit, state, dispatch, rootState }, data) {
     if (data.type === 'button') {
       dispatch('index/submitLoad', null, { root: true })
       const skSantri = state.santri[state.openEdit.index].SK.replace('#', '%23')
       const kelas = state.santri[state.openEdit.index].Kelas
-      const tahun = this.$auth.user.Label
-      const semester = this.$auth.user.Semester
+      const tahun = rootState.index.label
+      const semester = rootState.index.semester
       try {
         const mapelKey = convertToCapitalizedFormat(state.selectedMapel.Nama)
         const datas = {}
@@ -80,8 +80,8 @@ export default {
         data['type'] = 'close'
         const skSantri = state.santri[state.openEdit.index].SK.replace('#', '%23')
         const kelas = state.santri[state.openEdit.index].Kelas
-        const tahun = this.$auth.user.Label
-        const semester = this.$auth.user.Semester
+        const tahun = rootState.index.label
+        const semester = rootState.index.semester
         try {
           const mapelKey = convertToCapitalizedFormat(state.selectedMapel.Nama)
           const datas = {}

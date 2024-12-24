@@ -11,11 +11,11 @@ export default {
       dispatch('index/submitLoad', null, { root: true })
     }
   },
-  async getSantri({ commit, state, dispatch }, data) {
+  async getSantri({ commit, state, dispatch, rootState }, data) {
     dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
-    const tahun = this.$auth.user.Label
-    const semester = this.$auth.user.Semester
+    const tahun = rootState.index.label
+    const semester = rootState.index.semester
     const methode = state.selectedEkskull
     const result = await this.$apiSantri.$get(
       `get-logs?thn=${tahun}&smstr=${semester}&methode=${methode}&program=${program}`
@@ -26,15 +26,15 @@ export default {
       dispatch('index/submitLoad', null, { root: true })
     }
   },
-  async setPenilaian({ commit, state, dispatch }, data) {
+  async setPenilaian({ commit, state, dispatch, rootState }, data) {
     // close
     if (data.type === 'button') {
       dispatch('index/submitLoad', null, { root: true })
       const skSantri = state.santri[state.openEdit.index].SKsantri.replace('#', '%23')
       const kelas = state.santri[state.openEdit.index].Kelas
       const skLogs = state.santri[state.openEdit.index].SKlogs.replace(/#/g, '%23')
-      const tahun = this.$auth.user.Label
-      const semester = this.$auth.user.Semester
+      const tahun = rootState.index.label
+      const semester = rootState.index.semester
       const nilai = { Nilai: +state.nilai }
       try {
         const result = await this.$apiSantri.$put(`update-logs?methode=${state.selectedEkskull}&sksantri=${skSantri}&thn=${tahun}&kls=${kelas}&smstr=${semester}&sklogs=${skLogs}`, nilai)

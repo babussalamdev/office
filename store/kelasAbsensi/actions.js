@@ -7,7 +7,7 @@ export default {
     const resSelect = await this.$apiBase.$get(
       `get-settings?type=absensikelas&program=${program}`
     )
-    if ( resSelect.length > 0 ) {
+    if (resSelect.length > 0) {
       commit('setSelect', resSelect);
       dispatch('index/submitLoad', null, { root: true })
     } else {
@@ -38,7 +38,7 @@ export default {
     }
     // console.log(data)
   },
-  async deleteStatus({ commit, state, dispatch }, datas) {
+  async deleteStatus({ commit, state, dispatch, rootState }, datas) {
     dispatch('index/submitLoad', null, { root: true })
     const i = state.santri.findIndex((x) => x.SK === datas.sk)
     const data = state.santri[i]
@@ -52,8 +52,8 @@ export default {
       sk = data.Logs.mapeltigatime
     }
     const skSantri = datas.sk.replace('#', '%23')
-    const tahun = this.$auth.user.Label
-    const semester = this.$auth.user.Semester
+    const tahun = rootState.index.label
+    const semester = rootState.index.semester
     const program = localStorage.getItem("program");
     const req = await this.$apiSantri.$delete(
       `delete-absensi-sisalam?sksantri=${skSantri}&type=${time}&thn=${tahun}&smstr=${semester}&program=${program}&sk=${skSantri}&status=${datas.condition}`

@@ -3,7 +3,17 @@
     <h2 class="mb-3 mb-md-3">Nilai Mapel</h2>
     <div class="d-flex justify-content-between mb-3 w-auto">
       <div class="d-flex">
-        <select v-if="kelas.length > 0" class="form-select" aria-label="Default select example" v-model="selectedKelas" @change="changeGetMapel">
+        <select class="form-select" aria-label="Default select example" v-model="selectedLabel">
+          <option value="" selected disabled>Label</option>
+          <option v-for="(data, index) in label" :key="index" :value="index">{{ index }}</option>
+        </select>
+        <select class="form-select" aria-label="Default select example" v-model="selectedSemester"
+          @change="changeGetMapelSemester">
+          <option value="" selected disabled>Semester</option>
+          <option v-for="(data, index) in semester" :key="index" :value="data">{{ data.Semester }}</option>
+        </select>
+        <select v-if="kelas.length > 0" class="form-select" aria-label="Default select example" v-model="selectedKelas"
+          @change="changeGetMapel">
           <option value="" selected disabled>Kelas</option>
           <option v-for="(data, index) in kelas" :key="index" :value="data">{{ data }}</option>
         </select>
@@ -47,7 +57,6 @@ export default {
   data() {
     return {
       btn: true,
-      th: { Nama: '', Total: '' },
     };
   },
   mounted() {
@@ -57,8 +66,8 @@ export default {
     document.removeEventListener("click", event => this.setData(event, 'input'));
   },
   computed: {
-    ...mapState("report/nilaimapel", ['mapel', 'kelas']),
-    ...mapGetters('report/nilaimapel', ['getSelectedMapel', 'getDataSantri', 'getNilai', 'getSelectedKelas']),
+    ...mapState("report/nilaimapel", ['mapel', 'kelas', 'label', 'semester', 'th']),
+    ...mapGetters('report/nilaimapel', ['getSelectedMapel', 'getDataSantri', 'getNilai', 'getSelectedKelas', 'getSelectedLabel', 'getSelectedSemester']),
     santri: {
       get() {
         return this.getDataSantri
@@ -84,13 +93,28 @@ export default {
       set(value) {
         this.$store.commit('report/nilaimapel/setState', { key: 'selectedKelas', value })
       }
+    },
+    selectedLabel: {
+      get() {
+        return this.getSelectedLabel
+      },
+      set(value) {
+        this.$store.commit('report/nilaimapel/setState', { key: 'selectedLabel', value })
+      }
+    },
+    selectedSemester: {
+      get() {
+        return this.getSelectedSemester
+      },
+      set(value) {
+        this.$store.commit('report/nilaimapel/setState', { key: 'selectedSemester', value })
+      }
     }
   },
   methods: {
-    ...mapActions('report/nilaimapel', ['getSantri', 'getMapel']),
+    ...mapActions('report/nilaimapel', ['getSantri', 'getMapel', 'changeGetMapelSemester']),
     changeGetMapel() {
       this.getMapel()
-      this.th = { Nama: '', Total: '' }
     },
     isNumber(val) {
       // Periksa apakah val adalah angka dan bukan false
@@ -115,19 +139,6 @@ export default {
       }
     },
     addNewData() {
-      const newData = this.selectedMapel?.Penilaian || {};
-      // Menyiapkan objek header baru
-      const newHeaders = { Nama: '' };
-      // Tambahkan data baru dari selectedMapel.Penilaian
-      for (const [key, value] of Object.entries(newData)) {
-        newHeaders[key] = value;
-      }
-      // Tambahkan 'Total' jika ada sebelumnya
-      if (this.th.hasOwnProperty('Total')) {
-        newHeaders['Total'] = this.th['Total'];
-      }
-      // Update th dengan header baru
-      this.th = newHeaders;
       this.getSantri()
     },
     setEdit(index, i, key) {

@@ -24,15 +24,15 @@ export default {
       dispatch('index/submitLoad', null, { root: true })
     }
   },
-  async getSantri({ commit, state, dispatch }) {
+  async getSantri({ commit, state, dispatch, rootState }) {
     dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
     const datas = {}
     datas['Filter'] = 'koordinator';
     datas['Kelas'] = state.selectedKelas.SK.split('#')[1]
     datas['Subject'] = 'quran';
-    datas['Tahun'] = this.$auth.user.Label
-    datas['Semester'] = this.$auth.user.Semester
+    datas['Tahun'] = rootState.index.label
+    datas['Semester'] = rootState.index.semester
     datas['Penilaian'] = state.selectedKelas.Penilaian
     try {
       const result = await this.$apiSantri.$put(

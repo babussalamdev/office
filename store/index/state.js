@@ -5,4 +5,6 @@ export default () => ({
     pengampu: '',
     personalia: '',
     globalLoad: false,
+    label: '',
+    semester: '',
 })

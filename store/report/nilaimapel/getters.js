@@ -7,5 +7,11 @@ export default {
   },
   getSelectedKelas(state) {
     return state.selectedKelas
+  },
+  getSelectedLabel(state) {
+    return state.selectedLabel
+  },
+  getSelectedSemester(state) {
+    return state.selectedSemester
   }
 }

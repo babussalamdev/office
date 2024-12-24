@@ -55,13 +55,13 @@ export default {
     const [resSantri, resPermissions] = await Promise.all([reqSantri, reqPermissions])
     commit('setSantriAsramaManual', { resSantri, resPermissions });
   },
-  async santriAbsen({ commit, state }, event) {
+  async santriAbsen({ commit, state, rootState }, event) {
     commit('setLoad')
     const data = Object.fromEntries(new FormData(event.target));
     data["Status"] = state.updateData.type;
     const skSantri = state.updateData.santri.SK.replace('#', '%23')
-    const tahun = this.$auth.user.Label
-    const semester = this.$auth.user.Semester
+    const tahun = rootState.index.label
+    const semester = rootState.index.semester
     const subject = state.updateData.santri.Asrama
     const program = localStorage.getItem("program");
     try {

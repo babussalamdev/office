@@ -1,10 +1,10 @@
 export default {
-  async changeUnit({ commit, state, dispatch }) {
+  async changeUnit({ commit, state, dispatch, rootState }) {
     dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
     const kelas = this.$auth.user.Kelas[program]
-    const tahun = this.$auth.user.Label
-    const semester = this.$auth.user.Semester
+    const tahun = rootState.index.label
+    const semester = rootState.index.semester
     const start = state.start
     const end = state.end
     if (kelas === 'off') {
@@ -22,11 +22,11 @@ export default {
       }
     }
   },
-  async getSantri({ commit, state, dispatch }) {
+  async getSantri({ commit, state, dispatch, rootState }) {
     const program = localStorage.getItem('program')
     const kelas = state.selectedKelas
-    const tahun = this.$auth.user.Label
-    const semester = this.$auth.user.Semester
+    const tahun = rootState.index.label
+    const semester = rootState.index.semester
     const start = state.start
     const end = state.end
     if (start && end) {

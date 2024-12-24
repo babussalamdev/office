@@ -43,15 +43,15 @@ export default {
     }
     // console.log(data)
   },
-  async deleteStatus({ commit, state, dispatch }, datas) {
+  async deleteStatus({ commit, state, dispatch, rootState }, datas) {
     dispatch('index/submitLoad', null, { root: true })
     const i = state.santri.findIndex((x) => x.SK === datas.sk)
     const data = state.santri[i]
     const time = datas.time
     const sk = data.Logs.halaqah[time].time
     const skSantri = datas.sk.replace('#', '%23')
-    const tahun = this.$auth.user.Label
-    const semester = this.$auth.user.Semester
+    const tahun = rootState.index.label
+    const semester = rootState.index.semester
     const program = localStorage.getItem("program");
     const req = await this.$apiSantri.$delete(
       `delete-absensi-sisalam?sksantri=${skSantri}&type=halaqah${time}&thn=${tahun}&smstr=${semester}&program=${program}&sk=${sk}&status=${datas.condition}`
@@ -65,14 +65,14 @@ export default {
   },
 
   // catatan
-  async updatecatatanpagi({ commit, state }, event) {
+  async updatecatatanpagi({ commit, state, rootState }, event) {
     const data = Object.fromEntries(new FormData(event.target))
     const skSantri = state.updateDataCatatan.SK.replace('#', '%23')
     const program = localStorage.getItem('program')
     commit('btncatatan')
     if (data.Note !== '') {
-      const tahun = this.$auth.user.Label
-      const semester = this.$auth.user.Semester
+      const tahun = rootState.index.label
+      const semester = rootState.index.semester
       const halaqah = state.updateDataCatatan.Halaqah
       const result = await this.$apiSantri.$put(`update-catatan-sisalam?thn=${tahun}&smstr=${semester}&program=${program}&type=catatanpagi&sksantri=${skSantri}&halaqah=${halaqah}`, data)
       if (result) {
@@ -89,14 +89,14 @@ export default {
       }
     }
   },
-  async updatecatatansore({ commit, state }, event) {
+  async updatecatatansore({ commit, state, rootState }, event) {
     const data = Object.fromEntries(new FormData(event.target))
     const skSantri = state.updateDataCatatan.SK.replace('#', '%23')
     const program = localStorage.getItem('program')
     commit('btncatatan')
     if (data.Note !== '') {
-      const tahun = this.$auth.user.Label
-      const semester = this.$auth.user.Semester
+      const tahun = rootState.index.label
+      const semester = rootState.index.semester
       const halaqah = state.updateDataCatatan.Halaqah
       const result = await this.$apiSantri.$put(`update-catatan-sisalam?thn=${tahun}&smstr=${semester}&program=${program}&type=catatansore&sksantri=${skSantri}&halaqah=${halaqah}`, data)
       if (result) {
