@@ -18,7 +18,7 @@ export default {
           const Halaqah = await this.$apiBase.$get(`get-settings?type=options&sk=${program}&category=halaqah`)
           commit('setState', { key: 'selectHalaqah', value: Halaqah })
           const datas = {}
-          datas['Filter'] = 'pengampu'
+          datas['Filter'] = 'penilaian-quran'
           datas['Halaqah'] = this.$auth.user.Halaqah[program]
           datas['Subject'] = 'quran'
           datas['Tahun'] = rootState.index.label
@@ -47,7 +47,7 @@ export default {
           }
         } else {
           const datas = {}
-          datas['Filter'] = 'pengampu'
+          datas['Filter'] = 'penilaian-quran'
           datas['Halaqah'] = this.$auth.user.Halaqah[program]
           datas['Subject'] = 'quran'
           datas['Tahun'] = rootState.index.label
@@ -101,7 +101,7 @@ export default {
       commit('setState', { key: 'selectedQuran', value: data.quran })
       if (data.quran) {
         const datas = {}
-        datas['Filter'] = 'pengampu'
+        datas['Filter'] = 'penilaian-quran'
         datas['Halaqah'] = state.selectedByHalaqah
         datas['Subject'] = 'quran'
         datas['Tahun'] = rootState.index.label
