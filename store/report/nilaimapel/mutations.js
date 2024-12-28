@@ -50,7 +50,6 @@ export default {
         // Update th dengan header baru
         state.th = newHeaders;
       }
-      console.log(data.status)
       state[data.key] = data.value
     } else {
       state[data.key] = data.value
@@ -87,12 +86,9 @@ export default {
     state.label = groupedData
     state.selectedLabel = data.label
     if (groupedData[data.label]) {
-      console.log(data.semester)
       const datas = groupedData[data.label]
-      console.log(datas)
       state.selectedSemester = datas.find(item => item.Semester === data.semester);
       state.semester = groupedData[data.label]
-      console.log(state.semester)
     }
     // console.log(!groupedData[data.label])
     // const uniqueLabels = [...new Set(data.resPeriode.map(item => item.Label))];

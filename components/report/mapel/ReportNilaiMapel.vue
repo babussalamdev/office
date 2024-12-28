@@ -112,7 +112,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('report/nilaimapel', ['getSantri', 'getMapel', 'changeGetMapelSemester']),
+    ...mapActions('report/nilaimapel', ['getSantri', 'getMapel', 'changeGetMapelSemester', 'changeUnit']),
     changeGetMapel() {
       this.getMapel()
     },

@@ -1,12 +1,21 @@
 <template>
   <div class="animate__animated animate__fadeInUp">
     <div class="row mb-3">
+      <h2 class="mb-3">Lagger Mapel</h2>
       <div class="col-12 col-md-6 mb-3 mb-md-0 d-flex align-items-center">
-        <h2 class="mb-0">Lagger Mapel</h2>
+        <select class="form-select" aria-label="Default select example" v-model="selectedLabel">
+          <option value="" selected disabled>Label</option>
+          <option v-for="(data, index) in label" :key="index" :value="index">{{ index }}</option>
+        </select>
+        <select class="form-select" aria-label="Default select example" v-model="selectedSemester">
+          <option value="" selected disabled>Semester</option>
+          <option v-for="(data, index) in semester" :key="index" :value="data">{{ data.Semester }}</option>
+        </select>
       </div>
       <div class="col-12 col-md-6 mb-3 mb-md-0 d-flex flex-column flex-md-row justify-content-end gap-2">
         <div class="input-group d-flex justify-content-end">
-          <select v-if="kelas.length > 0" style="max-width: max-content !important;" name="" id="" class="form-select" v-model="selectedKelas" @change="changeUnitClass">
+          <select v-if="kelas.length > 0" style="max-width: max-content !important;" name="" id="" class="form-select"
+            v-model="selectedKelas" @change="changeUnitClass">
             <option value="" selected disabled>Kelas</option>
             <option v-for="(data, index) in kelas" :value="data.Nama" :key="index">{{ data.Nama }}</option>
           </select>
@@ -51,8 +60,8 @@ import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
 import * as XLSX from 'xlsx';
 export default {
   computed: {
-    ...mapState('report/lagger', ['select', 'mapelSelect', 'quranSelect', 'kelas']),
-    ...mapGetters('report/lagger', ['getSelectedMapel', 'getSelectedQuran', 'getSelectedKelas', 'getDataSantri', 'getNilai',]),
+    ...mapState('report/lagger', ['select', 'mapelSelect', 'quranSelect', 'kelas', 'semester', 'label']),
+    ...mapGetters('report/lagger', ['getSelectedMapel', 'getSelectedQuran', 'getSelectedKelas', 'getDataSantri', 'getNilai', 'getSelectedSemester', 'getSelectedLabel']),
     selectedMapel: {
       get() {
         return this.getSelectedMapel
@@ -108,6 +117,24 @@ export default {
       // Filter key untuk menghilangkan "Nama" dan "SK"
       return allKeys.filter(key => !excludeKeys.includes(key));
     },
+
+    // periode
+    selectedLabel: {
+      get() {
+        return this.getSelectedLabel
+      },
+      set(value) {
+        this.$store.commit('report/lagger/setState', { key: 'selectedLabel', value })
+      }
+    },
+    selectedSemester: {
+      get() {
+        return this.getSelectedSemester
+      },
+      set(value) {
+        this.$store.commit('report/lagger/setState', { key: 'selectedSemester', value })
+      }
+    }
   },
   methods: {
     ...mapActions('report/lagger', ['getSantri', 'setPenilaian', 'changeUnit', 'changeUnitClass']),
@@ -128,7 +155,7 @@ export default {
     changeUnitData() {
       const program = localStorage.getItem('program')
       const kelas = this.$auth.user.Kelas[program]
-      if ( kelas === 'off' ) {
+      if (kelas === 'off') {
         this.resetUnWalas()
       } else {
         this.changeUnit()

@@ -8,10 +8,10 @@
 
 <script>
 export default {
-  middleware: 'permission',
-  meta: {
-    permissions: ['report mapel']
-  },
+  // middleware: 'permission',
+  // meta: {
+  //   permissions: ['report mapel']
+  // },
   async asyncData({ store }) {
     store.dispatch('report/lagger/changeUnit');
   },

@@ -132,6 +132,7 @@ export default {
         const result = await this.$apiSantri.$put(
           `get-nilai-sisalam?program=${program}`, datas
         )
+        console.log(result)
         if (result) {
           const obj = { key: 'santri', value: result.data, status }
           commit('setState', obj)

@@ -22,7 +22,7 @@ export default {
     dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
     const datas = {}
-    datas['Filter'] = state.selectedMapel.Jurusan
+    datas['Filter'] = `penilaian-${state.selectedMapel.Jurusan}`
     datas['Kelas'] = state.selectedMapel.Kelas
     datas['Subject'] = state.selectedMapel.Nama
     datas['Tahun'] = rootState.index.label

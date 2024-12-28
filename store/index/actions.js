@@ -6,6 +6,7 @@ export default {
         const datas = {
             result, program: data
         }
+        console.log(datas)
         commit('setUnit', datas);
     },
     async submitLoad({ commit, state }) {

@@ -94,6 +94,12 @@ export default {
       } else {
         this.$router.push('/')
       }
+    } else if (name === 'report-lagger') {
+      if (permissions.includes('report mapel')) {
+        dispatch('report/lagger/changeUnit', null, { root: true })
+      } else {
+        this.$router.push('/')
+      }
     } else if (name === 'report-tahfidz-absensi') {
       dispatch('report/tahfidz/absensi/changeUnit', null, { root: true })
     } else if (name === 'report-tahfidz-hafalan') {

@@ -5,5 +5,10 @@ export default () => ({
     selectedQuran: '',
     selectedMapel: '',
     kelas: [],
-    selectedKelas: ''
+    selectedKelas: '',
+    periode: [],
+    label: [],
+    semester: [],
+    selectedLabel: '',
+    selectedSemester: '',
 })
