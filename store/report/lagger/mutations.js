@@ -38,7 +38,6 @@ export default {
 
   // periode
   setPeriode(state, data) {
-    console.log(data)
     // Menggunakan reduce untuk mengelompokkan data berdasarkan Label
     const groupedData = data.resPeriode.reduce((acc, item) => {
       // Jika key untuk Label belum ada, buat array untuk menyimpan objek
@@ -53,7 +52,6 @@ export default {
       return acc;
     }, {});
 
-    // console.log(groupedData);
     state.periode = data.resPeriode
     state.label = groupedData
     state.selectedLabel = data.tahun
@@ -62,12 +60,6 @@ export default {
       state.selectedSemester = datas.find(item => item.Semester === data.semester);
       state.semester = groupedData[data.tahun]
     }
-
-    console.log(state.periode)
-    console.log(state.label)
-    console.log(state.selectedLabel)
-    console.log(state.selectedSemester)
-    console.log(state.semester)
   },
 
   // reset semester

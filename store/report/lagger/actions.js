@@ -50,7 +50,6 @@ export default {
     const semester = state.selectedSemester.Semester
 
     const kelas = this.$auth.user.Kelas[program]
-    console.log(kelas, tahun, semester)
     if (kelas === 'off') {
       const listKelas = await this.$apiBase.$get(`get-settings?type=kelas&sk=${program}`)
       commit('setState', { key: 'kelas', value: listKelas.kelas })
