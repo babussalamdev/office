@@ -7,7 +7,8 @@
           <option value="" selected disabled>Label</option>
           <option v-for="(data, index) in label" :key="index" :value="index">{{ index }}</option>
         </select>
-        <select class="form-select" aria-label="Default select example" v-model="selectedSemester">
+        <select class="form-select" aria-label="Default select example" v-model="selectedSemester"
+          @change="changeUnitSemester">
           <option value="" selected disabled>Semester</option>
           <option v-for="(data, index) in semester" :key="index" :value="data">{{ data.Semester }}</option>
         </select>
@@ -137,7 +138,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('report/lagger', ['getSantri', 'setPenilaian', 'changeUnit', 'changeUnitClass']),
+    ...mapActions('report/lagger', ['getSantri', 'setPenilaian', 'changeUnit', 'changeUnitClass', 'changeUnitSemester']),
     ...mapMutations('report/lagger', ['resetUnWalas']),
     exportToExcel() {
       // Ambil tabel dari ref

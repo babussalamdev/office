@@ -42,19 +42,15 @@ export default {
       dispatch('index/submitLoad', null, { root: true })
     }
   },
-  async changeUnit({ commit, state, dispatch, rootState }) {
+  async changeUnitSemester({ commit, state, dispatch, rootState }) {
     dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
 
-    // get periode
-    const resPeriode = await this.$apiBase.$get(
-      `get-settings?sk=${program}&type=periode`
-    );
-    const tahun = rootState.index.label
-    const semester = rootState.index.semester
-    commit('setPeriode', { tahun, semester, resPeriode });
+    const tahun = state.selectedLabel
+    const semester = state.selectedSemester.Semester
 
     const kelas = this.$auth.user.Kelas[program]
+    console.log(kelas, tahun, semester)
     if (kelas === 'off') {
       const listKelas = await this.$apiBase.$get(`get-settings?type=kelas&sk=${program}`)
       commit('setState', { key: 'kelas', value: listKelas.kelas })
@@ -87,8 +83,8 @@ export default {
   async changeUnitClass({ commit, state, dispatch, rootState }) {
     dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
-    const tahun = rootState.index.label
-    const semester = rootState.index.semester
+    const tahun = state.selectedLabel
+    const semester = state.selectedSemester.Semester
     const kelas = state.selectedKelas
 
     try {

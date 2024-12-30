@@ -69,4 +69,16 @@ export default {
     console.log(state.selectedSemester)
     console.log(state.semester)
   },
+
+  // reset semester
+  resetWithSemester(state) {
+    state.selectedQuran = ''
+    state.selectedMapel = ''
+  },
+  resetUnSemester(state) {
+    state.santri = ''
+    state.selectedKelas = ''
+    state.selectedQuran = ''
+    state.selectedMapel = ''
+  }
 }
