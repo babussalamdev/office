@@ -1,5 +1,11 @@
 export default () => ({
   listKelas: [],
   selectedKelas: '',
-  santri: []
+  santri: [],
+  periode: [],
+  label: [],
+  semester: [],
+  selectedLabel: '',
+  selectedSemester: '',
+  th: { Nama: '', Halaqah: '', Total: '' },
 })

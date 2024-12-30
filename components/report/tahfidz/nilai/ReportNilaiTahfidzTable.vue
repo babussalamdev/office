@@ -1,16 +1,31 @@
 <template>
   <div class="animate__animated animate__fadeInUp">
     <h2 class="mb-3 mb-md-3">Report Nilai Tahfidz</h2>
-    <div class="d-flex justify-content-between mb-3 w-auto">
-      <span class="d-flex gap-2">
-        <select class="form-select" aria-label="Default select example" v-model="selectedKelas" @change="addNewData">
-          <option value="" selected disabled>Kelas</option>
-          <option v-for="(data, index) in listKelas" :key="index" :value="data">{{ data.SK.split('#')[1] }}</option>
-        </select>
-      </span>
-      <button class="btn btn-success border-0" @click="exportToExcel"
-        :disabled="santri.length > 0 ? false : true">Export</button>
+    <div class="row mb-3">
+      <div class="col-md-6 col-lg-4 col-12">
+        <span class="d-flex input-group">
+          <select class="form-select" aria-label="Default select example" v-model="selectedLabel">
+            <option value="" selected disabled>Label</option>
+            <option v-for="(data, index) in label" :key="index" :value="index">{{ index }}</option>
+          </select>
+          <select class="form-select" aria-label="Default select example" v-model="selectedSemester"
+            @change="changeUnitBySemester">
+            <option value="" selected disabled>Semester</option>
+            <option v-for="(data, index) in semester" :key="index" :value="data">{{ data.Semester }}</option>
+          </select>
+          <select class="form-select" aria-label="Default select example" v-model="selectedKelas" @change="addNewData">
+            <option value="" selected disabled>Kelas</option>
+            <option v-for="(data, index) in listKelas" :key="index" :value="data">{{ data.SK.split('#')[1] }}</option>
+          </select>
+        </span>
+      </div>
+      <div class="col-12 col-md-6 col-lg-8 d-flex justify-content-end">
+        <button class="btn btn-success border-0" @click="exportToExcel"
+          :disabled="santri.length > 0 ? false : true">Export</button>
+      </div>
     </div>
+    <!-- <div class="d-flex justify-content-between mb-3 w-auto">
+    </div> -->
     <div class="table-responsive" ref="input">
       <table ref="dataTable" class="table table-hover table-striped">
         <thead>
@@ -48,12 +63,11 @@ export default {
   data() {
     return {
       btn: true,
-      th: { Nama: '', Halaqah: '', Total: '' },
     };
   },
   computed: {
-    ...mapState("report/tahfidz/nilai", ['listKelas']),
-    ...mapGetters('report/tahfidz/nilai', ['getSelectedKelas', 'getDataSantri', 'getNilai']),
+    ...mapState("report/tahfidz/nilai", ['listKelas', 'label', 'semester', 'th']),
+    ...mapGetters('report/tahfidz/nilai', ['getSelectedKelas', 'getDataSantri', 'getNilai', 'getSelectedLabel', 'getSelectedSemester']),
     santri: {
       get() {
         return this.getDataSantri
@@ -72,9 +86,25 @@ export default {
         this.$store.commit('report/tahfidz/nilai/setState', obj)
       }
     },
+    selectedLabel: {
+      get() {
+        return this.getSelectedLabel
+      },
+      set(value) {
+        this.$store.commit('report/tahfidz/nilai/setState', { key: 'selectedLabel', value })
+      }
+    },
+    selectedSemester: {
+      get() {
+        return this.getSelectedSemester
+      },
+      set(value) {
+        this.$store.commit('report/tahfidz/nilai/setState', { key: 'selectedSemester', value })
+      }
+    }
   },
   methods: {
-    ...mapActions('report/tahfidz/nilai', ['getSantri']),
+    ...mapActions('report/tahfidz/nilai', ['getSantri', 'changeUnitBySemester']),
     isNumber(val) {
       // Periksa apakah val adalah angka dan bukan false
       return typeof val === 'number' && !isNaN(val);
@@ -87,19 +117,6 @@ export default {
       this.filteredData
     },
     addNewData() {
-      const newData = this.selectedKelas?.Penilaian || {};
-      // Menyiapkan objek header baru
-      const newHeaders = { Nama: '', Halaqah: '' };
-      // Tambahkan data baru dari selectedMapel.Penilaian
-      for (const [key, value] of Object.entries(newData)) {
-        newHeaders[key] = value;
-      }
-      // Tambahkan 'Total' jika ada sebelumnya
-      if (this.th.hasOwnProperty('Total')) {
-        newHeaders['Total'] = this.th['Total'];
-      }
-      // Update th dengan header baru
-      this.th = newHeaders;
       this.getSantri()
     },
     exportToExcel() {
