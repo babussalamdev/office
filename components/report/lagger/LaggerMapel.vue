@@ -20,15 +20,17 @@
             <option value="" selected disabled>Kelas</option>
             <option v-for="(data, index) in kelas" :value="data.Nama" :key="index">{{ data.Nama }}</option>
           </select>
-          <select style="max-width: max-content !important;" name="" id="" class="form-select" v-model="selectedMapel">
+          <select v-if="selectedSemester.Status === 'active'" style="max-width: max-content !important;" name="" id=""
+            class="form-select" v-model="selectedMapel">
             <option class="fw-bold" value="" selected disabled>Mapel</option>
             <option v-for="(data, index) in mapelSelect[0]" :value="data" :key="index">{{ data }}</option>
           </select>
-          <select style="max-width: max-content !important;" name="" id="" class="form-select" v-model="selectedQuran">
+          <select v-if="selectedSemester.Status === 'active'" style="max-width: max-content !important;" name="" id=""
+            class="form-select" v-model="selectedQuran">
             <option class="fw-bold" value="" selected disabled>Quran</option>
             <option v-for="(data, index) in quranSelect[0]" :value="data" :key="index">{{ data }}</option>
           </select>
-          <button class="btn btn-primary border-0" @click="getSantri"
+          <button v-if="selectedSemester.Status === 'active'" class="btn btn-primary border-0" @click="getSantri"
             :disabled="selectedMapel && selectedQuran ? false : true">Submit</button>
         </div>
         <button class="btn btn-danger border-0" @click="changeUnitData">Reset</button>

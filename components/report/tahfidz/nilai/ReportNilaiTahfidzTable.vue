@@ -2,22 +2,20 @@
   <div class="animate__animated animate__fadeInUp">
     <h2 class="mb-3 mb-md-3">Report Nilai Tahfidz</h2>
     <div class="row mb-3">
-      <div class="col-md-6 col-lg-4 col-12">
-        <span class="d-flex input-group">
-          <select class="form-select" aria-label="Default select example" v-model="selectedLabel">
-            <option value="" selected disabled>Label</option>
-            <option v-for="(data, index) in label" :key="index" :value="index">{{ index }}</option>
-          </select>
-          <select class="form-select" aria-label="Default select example" v-model="selectedSemester"
-            @change="changeUnitBySemester">
-            <option value="" selected disabled>Semester</option>
-            <option v-for="(data, index) in semester" :key="index" :value="data">{{ data.Semester }}</option>
-          </select>
-          <select class="form-select" aria-label="Default select example" v-model="selectedKelas" @change="addNewData">
-            <option value="" selected disabled>Kelas</option>
-            <option v-for="(data, index) in listKelas" :key="index" :value="data">{{ data.SK.split('#')[1] }}</option>
-          </select>
-        </span>
+      <div class="col-md-6 col-lg-4 col-12 d-flex">
+        <select class="form-select" aria-label="Default select example" v-model="selectedLabel">
+          <option value="" selected disabled>Label</option>
+          <option v-for="(data, index) in label" :key="index" :value="index">{{ index }}</option>
+        </select>
+        <select class="form-select" aria-label="Default select example" v-model="selectedSemester"
+          @change="changeUnitBySemester">
+          <option value="" selected disabled>Semester</option>
+          <option v-for="(data, index) in semester" :key="index" :value="data">{{ data.Semester }}</option>
+        </select>
+        <select class="form-select" aria-label="Default select example" v-model="selectedKelas" @change="addNewData">
+          <option value="" selected disabled>Kelas</option>
+          <option v-for="(data, index) in listKelas" :key="index" :value="data">{{ data.SK.split('#')[1] }}</option>
+        </select>
       </div>
       <div class="col-12 col-md-6 col-lg-8 d-flex justify-content-end">
         <button class="btn btn-success border-0" @click="exportToExcel"
