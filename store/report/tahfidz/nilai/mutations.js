@@ -1,7 +1,6 @@
 export default {
   setState(state, data) {
     if (data.key === 'listKelas') {
-      console.log(data)
       state.selectedKelas = ''
       state.santri = []
       state[data.key] = data.value

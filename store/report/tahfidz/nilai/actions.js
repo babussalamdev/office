@@ -20,7 +20,6 @@ export default {
         const findKelas = data.find((x) => x.SK.split('#')[1] === kelas)
         commit('setState', { key: 'listKelas', value: [findKelas] })
       } else {
-        console.log('bawah')
         commit('setState', { key: 'listKelas', value: data })
       }
       dispatch('index/submitLoad', null, { root: true })
@@ -46,7 +45,6 @@ export default {
         const findKelas = data.find((x) => x.SK.split('#')[1] === kelas)
         commit('setState', { key: 'listKelas', value: [findKelas] })
       } else {
-        console.log('bawah')
         commit('setState', { key: 'listKelas', value: data })
       }
       dispatch('index/submitLoad', null, { root: true })

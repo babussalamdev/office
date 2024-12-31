@@ -2,9 +2,14 @@ import Swal from "sweetalert2";
 export default {
   async changeUnit({ commit, state, dispatch, rootState }) {
     dispatch('index/submitLoad', null, { root: true })
+    // commit('resetBeforeRender')
     const program = localStorage.getItem('program')
     const halaqah = this.$auth.user.Halaqah[program]
     const semester = rootState.index.semester
+    if (!semester) {
+      dispatch('index/submitLoad', null, { root: true })
+      return;
+    }
     try {
       const data = await this.$apiBase.$get(`get-settings?program=${program}&type=nilaiquran&hlq=${halaqah}&smstr=${semester}`)
       commit('setState', { key: 'selectedQuran', value: data.quran })

@@ -4,6 +4,16 @@ export default {
   globalLoad(state) {
     state.globalLoad = state.globalLoad ? false : true
   },
+  resetBeforeRender(state) {
+    state.select = []
+    state.santri = []
+    state.openEdit = ''
+    state.nilai = 0
+    state.th = { Nama: '', Total: '' }
+    state.selectedQuran = ''
+    state.selectHalaqah = []
+    state.selectedByHalaqah = ''
+  },
   setState(state, data) {
     if (data.key === 'santri') {
       const remappedData = data.value.map(item => {
@@ -29,7 +39,7 @@ export default {
     } else if (data.key === 'selectHalaqah') {
       state.santri = []
       state.th = { Nama: '', Total: '' },
-      state.selectedByKelas = ''
+        state.selectedByKelas = ''
       state[data.key] = data.value
     } else {
       state[data.key] = data.value
