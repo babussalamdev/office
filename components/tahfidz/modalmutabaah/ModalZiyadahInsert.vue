@@ -103,6 +103,7 @@ export default {
   },
   computed: {
     ...mapState('mutabaah', ['surah', 'detail']),
+    ...mapState('index', ['label', 'semester'])
   },
   watch: {
     surah(value) {
@@ -189,8 +190,8 @@ export default {
         const sk = this.detail.SK.replace('#', '%23')
         const kelas = this.detail.Kelas
         const subject = localStorage.getItem('subject')
-        const tahun = this.$auth.user.Label
-        const semester = this.$auth.user.Semester
+        const tahun = this.label
+        const semester = this.semester
         const halaqah = this.$auth.user.Halaqah[program]
         const result = await this.$apiSantri.$post(`input-logs?kls=${kelas}&subject=${subject}&sksantri=${sk}&halaqah=${halaqah}&thn=${tahun}&smstr=${semester}`, data)
         if (result) {
