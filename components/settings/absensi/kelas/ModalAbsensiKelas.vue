@@ -51,6 +51,7 @@ export default {
   },
   computed: {
     ...mapState('kelasAbsensi', ['updateData']),
+    ...mapState('index', ['label', 'semester'])
   },
   methods: {
     async santriAbsen() {
@@ -58,8 +59,8 @@ export default {
       const data = Object.fromEntries(new FormData(event.target));
       data["Status"] = this.updateData.type;
       const skSantri = this.updateData.santri.SK.replace('#', '%23')
-      const tahun = this.$auth.user.Label
-      const semester = this.$auth.user.Semester
+      const tahun = this.label
+      const semester = this.semester
       const time = this.updateData.time
       const namakelas = this.updateData.santri.Kelas
       const program = localStorage.getItem("program");

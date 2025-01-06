@@ -22,9 +22,9 @@
           </select>
         </div> -->
       </div>
+      <!-- Modal -->
+      <ModalAbsensiAsrama />
       <div class="table-responsive">
-        <!-- Modal -->
-        <ModalAbsensiAsrama />
         <table class="table table-hover table-striped">
           <thead>
             <tr>

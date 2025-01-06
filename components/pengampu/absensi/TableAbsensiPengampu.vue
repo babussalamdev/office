@@ -10,9 +10,9 @@
           </option>
         </select> -->
       </div>
+      <ModalAbsensiPengampu />
       <div class="table-responsive">
         <!-- Modal -->
-        <ModalAbsensiPengampu />
         <table class="table table-hover table-striped">
           <thead>
             <tr>

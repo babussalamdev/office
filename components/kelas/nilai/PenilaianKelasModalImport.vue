@@ -44,7 +44,8 @@ export default {
     }
   },
   computed: {
-    ...mapState('kelas/nilai', ['selectedMapel'])
+    ...mapState('kelas/nilai', ['selectedMapel']),
+    ...mapState('index', ['label', 'semester'])
   },
   methods: {
     async handleUpload() {
@@ -88,8 +89,8 @@ export default {
         try {
           const base64String = reader.result.split(",")[1];
           const program = localStorage.getItem("program");
-          const tahun = this.$auth.user.Label
-          const semester = this.$auth.user.Semester
+          const tahun = this.label
+          const semester = this.semester
           const kelas = this.selectedMapel.Kelas
           const Subject = this.selectedMapel.Nama
           const Penilaian = this.selectedMapel.Penilaian

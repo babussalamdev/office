@@ -19,13 +19,15 @@ export default {
       dispatch('index/submitLoad', null, { root: true })
     }
   },
-  async getDataSantri({ commit }, data) {
+  async getDataSantri({ commit, dispatch }, data) {
+    dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
     const result = await this.$apiSantri.$get(
       `get-absensi-sisalam?type=every&subject=kelas&program=${program}&value=${data}`
     );
 
     commit('setDataSantri', result);
+    dispatch('index/submitLoad', null, { root: true })
   },
   setStatus({ commit, state }, data) {
     const waktu = data

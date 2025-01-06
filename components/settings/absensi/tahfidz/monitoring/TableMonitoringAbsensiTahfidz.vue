@@ -8,9 +8,9 @@
           <option v-for="(data, index) in listHalaqah" :key="index" :value="data.Nama">{{ data.Nama }}</option>
         </select>
       </div>
+      <ModalMonitoringAbsensiTahfidz />
       <div class="table-responsive">
         <!-- Modal -->
-        <ModalMonitoringAbsensiTahfidz />
         <table class="table table-hover table-striped">
           <thead>
             <tr>
