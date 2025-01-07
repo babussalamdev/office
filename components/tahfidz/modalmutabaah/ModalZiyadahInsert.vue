@@ -193,7 +193,7 @@ export default {
         const tahun = this.label
         const semester = this.semester
         const halaqah = this.$auth.user.Halaqah[program]
-        const result = await this.$apiSantri.$post(`input-logs?kls=${kelas}&subject=${subject}&sksantri=${sk}&halaqah=${halaqah}&thn=${tahun}&smstr=${semester}`, data)
+        const result = await this.$apiSantri.$post(`input-logs?kls=${kelas}&subject=${subject}&sksantri=${sk}&halaqah=${halaqah}&thn=${tahun}`, data)
         if (result) {
           Swal.fire({
             position: "center",
