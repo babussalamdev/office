@@ -5,6 +5,12 @@ export default {
     const value = this.$auth.user.Halaqah[program]
     const tahun = rootState.index.label
     const semester = rootState.index.semester
+
+    if(!tahun && !semester) {
+      dispatch('index/submitLoad', null, { root: true })
+      return
+    }
+
     const result = await this.$apiSantri.$get(`get-recapabsensi-sisalam?value=${value}&program=${program}&type=halaqah&thn=${tahun}&smstr=${semester}`)
     if (result) {
       const obj = { key: 'santri', value: result }

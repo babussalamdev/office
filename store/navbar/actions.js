@@ -86,6 +86,10 @@ export default {
       dispatch('rekap/changeUnit', null, { root: true })
     } else if (name === 'tahfidz-rekap-hafalan') {
       dispatch('rekaphafalan/changeUnit', null, { root: true })
+    } else if (name === 'tahfidz-rekap-tahsin') {
+      dispatch('rekaptahsin/changeUnit', null, { root: true })
+    } else if (name === 'tahfidz-rekap-murojaah') {
+      dispatch('rekapmurojaah/changeUnit', null, { root: true })
     } else if (name === 'pelanggaran') {
       dispatch('pelanggaran/changeUnit', null, { root: true })
     } else if (name === 'report-mapel') {
