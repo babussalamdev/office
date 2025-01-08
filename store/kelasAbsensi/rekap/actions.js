@@ -63,7 +63,7 @@ export default {
     const kelas = state.selectedKelas
     const start = state.start
     const end = state.end
-    const mapel = tambahkanGarisBawah(state.selectedMapel.Nama)
+    const mapel = state.selectedMapel.Nama
 
     if (!tahun && !semester) {
       dispatch('index/submitLoad', null, { root: true })
