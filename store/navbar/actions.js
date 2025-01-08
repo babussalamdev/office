@@ -188,6 +188,12 @@ export default {
       } else {
         this.$router.push('/')
       }
+    } else if (name === 'kelas-rekap-absensi') {
+      if (permissions.includes('pengajar')) {
+        dispatch('kelasAbsensi/rekap/changeUnit', null, { root: true })
+      } else {
+        this.$router.push('/')
+      }
     }
   },
 }

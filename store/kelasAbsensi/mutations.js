@@ -95,9 +95,18 @@ export default {
     const obj = {
       santri: state.santri[i],
       type: value.type,
-      time: value.time
+      time: value.time,
+      mapel: tambahkanGarisBawah(state.selectedMapel.Nama),
+      jam: state.selectedJam
     }
     state.updateData = obj
     $("#modalAbsen").modal("show");
   },
+}
+
+let tambahkanGarisBawah = (teks) => {
+  if (teks.includes(' ')) {
+      return teks.split(' ').join('_');
+  }
+  return teks;
 }

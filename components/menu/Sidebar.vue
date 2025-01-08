@@ -73,6 +73,25 @@
                   <span class="text animate__animated animate__fadeInRight">Penilaian</span>
                 </nuxt-link>
               </li>
+              <li v-if="hasRoot">
+                <div @click="notClickSub('kelas')"
+                  class="dropdown d-flex align-items-center justify-content-between gap-2">
+                  <span class="d-flex align-items-center gap-2">
+                    <span class="text animate__animated animate__fadeInRight">Rekap</span>
+                  </span>
+                  <i class="bx bx-chevron-down"></i>
+                </div>
+                <!-- sub menu santri -->
+                <ul v-if="kelasSubList" class="dropdown-list">
+                  <!-- Absensi -->
+                  <li>
+                    <nuxt-link to="/kelas/rekap/absensi"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Absensi</span>
+                    </nuxt-link>
+                  </li>
+                </ul>
+              </li>
             </ul>
           </li>
           <!-- Ekskull -->
@@ -682,7 +701,7 @@ export default {
   computed: {
     ...mapState("index", ["unit", "permissions", "pengajar", "pengampu", "personalia",]),
     ...mapState("sidebar", ["activeMenu", "listAsrama", "listTahfidz", "listSettings", 'listEkskull', "listKelas", "listReport", 'listLaundry',
-      "absensiSubList", "santriSubList", "pegawaiSubList", "databaseSubList", 'tahfidzSubList', 'tahfidz2SubList', 'settingLaundrySubList', 'isSidebar', 'isSidebarOpen']),
+      "absensiSubList", "santriSubList", "pegawaiSubList", "databaseSubList", 'tahfidzSubList', 'tahfidz2SubList', 'kelasSubList', 'settingLaundrySubList', 'isSidebar', 'isSidebarOpen']),
     permissionsIzin() {
       return this.$store.state.asramaAbsensi.permissions
     },

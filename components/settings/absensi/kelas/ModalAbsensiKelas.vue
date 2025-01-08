@@ -58,6 +58,8 @@ export default {
       this.btn = false;
       const data = Object.fromEntries(new FormData(event.target));
       data["Status"] = this.updateData.type;
+      data['Mapel'] = this.updateData.mapel
+      data['Jam'] = this.updateData.jam
       const skSantri = this.updateData.santri.SK.replace('#', '%23')
       const tahun = this.label
       const semester = this.semester

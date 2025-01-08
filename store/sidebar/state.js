@@ -13,6 +13,7 @@ export default () => ({
     databaseSubList: false,
     tahfidzSubList: false,
     tahfidz2SubList: false,
+    kelasSubList: false,
     settingLaundrySubList: false,
 
     isSidebar: true,

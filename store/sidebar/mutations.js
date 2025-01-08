@@ -10,6 +10,7 @@ export default {
         state.databaseSubList = false;
         state.tahfidzSubList = false;
         state.tahfidz2SubList = false;
+        state.kelasSubList = false
         state.settingLaundrySubList = false
       } else {
         state.absensiSubList = false;
@@ -18,6 +19,7 @@ export default {
         state.databaseSubList = false;
         state.tahfidzSubList = false;
         state.tahfidz2SubList = false;
+        state.kelasSubList = false
         state.settingLaundrySubList = false
         state[list + 'SubList'] = !state[list + 'SubList'];
       }

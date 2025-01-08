@@ -169,22 +169,6 @@ export default {
           Hari: item.Hari
         }
       })
-      // return this.filteredData
-      //   .map(item => {
-      //     const hariList = item.Hari.split(", ");
-      //     // const hariRelevan = hariList.find(hari => hari.includes(this.hariIni));
-      //     const days = item?.Hari?.split(", ");
-      //     // return
-      //     return {
-      //       Nama: item.Nama,
-      //       SK: item.SK,
-      //       Hari: days.filter(day => day.includes(this.hariIni))
-      //     };
-      //     // if (hariRelevan) {
-      //     // }
-      //     // return null;
-      //   })
-      //   .filter(item => item !== null); // Remove any null values
     },
     scheduleMapel() {
       return this.uniqueLesson.find((x) => x.Nama === this.selectedMapel.Nama)

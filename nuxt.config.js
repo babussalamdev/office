@@ -74,6 +74,8 @@ export default {
       '~/components/pengampu/absensi',
       '~/components/kelas',
       '~/components/kelas/nilai',
+      '~/components/kelas/jurnal',
+      '~/components/kelas/rekap',
       '~/components/laundry',
       '~/components/laundry/inputdata',
       '~/components/laundry/inventory',
