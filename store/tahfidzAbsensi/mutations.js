@@ -17,7 +17,6 @@ export default {
 
   },
   updateAbsen(state, value) {
-    console.log(value)
     const i = state.santri.findIndex((x) => x.SK === value.SK)
     const data = state.santri[i]
     // Membuat salinan data dan memperbarui salinan tersebut

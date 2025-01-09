@@ -81,14 +81,14 @@ export default {
   },
   watch: {
     start() {
-      this.getDetails(this.id)
+      this.getDetailsByDate(this.id)
     },
     end() {
-      this.getDetails(this.id)
+      this.getDetailsByDate(this.id)
     }
   },
   methods: {
-    ...mapActions('rekap', ['getDetails']),
+    ...mapActions('rekap', ['getDetails', 'getDetailsByDate']),
     closeAllModals() {
       const backdrop = document.querySelector('.modal-backdrop');
       if (backdrop) {

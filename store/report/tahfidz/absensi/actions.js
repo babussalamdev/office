@@ -29,8 +29,7 @@ export default {
     const program = localStorage.getItem('program')
     const value = state.selectedKelas.Nama
     const tahun = rootState.index.label
-    const semester = rootState.index.semester
-    const result = await this.$apiSantri.$get(`get-recapabsensi-sisalam?value=${value}&program=${program}&method=halaqah&thn=${tahun}&smstr=${semester}&startdate=${state.start}&enddate=${state.end}`)
+    const result = await this.$apiSantri.$get(`get-recapabsensi-sisalam?value=${value}&program=${program}&method=halaqah&thn=${tahun}&startdate=${state.start}&enddate=${state.end}&searchterm=Kelas`)
     if (result) {
       const obj = { key: 'santri', value: result }
       commit('setState', obj)

@@ -100,6 +100,18 @@ export default {
       }
     }
   },
+  watch: {
+    start() {
+      if (this.selectedKelas) {
+        this.getSantri()
+      }
+    },
+    end() {
+      if (this.selectedKelas) {
+        this.getSantri()
+      }
+    }
+  },
   methods: {
     ...mapMutations('report/tahfidz/tahsin', ['setState']),
     ...mapActions('report/tahfidz/tahsin', ['changeUnit', 'getSantri']),

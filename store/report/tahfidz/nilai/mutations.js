@@ -3,6 +3,7 @@ export default {
     if (data.key === 'listKelas') {
       state.selectedKelas = ''
       state.santri = []
+      state.th = { Nama: '', Halaqah: '', Total: '' }
       state[data.key] = data.value
     } else if (data.key === 'selectedLabel') {
       state[data.key] = data.value

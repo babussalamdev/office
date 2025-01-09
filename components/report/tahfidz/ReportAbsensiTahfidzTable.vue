@@ -98,6 +98,18 @@ export default {
       }
     }
   },
+  watch: {
+    start() {
+      if (this.selectedKelas) {
+        this.getSantri()
+      }
+    },
+    end() {
+      if (this.selectedKelas) {
+        this.getSantri()
+      }
+    }
+  },
   methods: {
     ...mapActions('report/tahfidz/absensi', ['getSantri']),
     ...mapMutations('report/tahfidz/absensi', ['setState']),

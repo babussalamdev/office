@@ -100,6 +100,18 @@ export default {
       }
     }
   },
+  watch: {
+    start() {
+      if (this.selectedKelas) {
+        this.getSantri()
+      }
+    },
+    end() {
+      if (this.selectedKelas) {
+        this.getSantri()
+      }
+    }
+  },
   methods: {
     ...mapMutations('report/tahfidz/hafalan', ['setState']),
     ...mapActions('report/tahfidz/hafalan', ['changeUnit', 'getSantri']),

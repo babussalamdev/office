@@ -100,6 +100,18 @@ export default {
       }
     }
   },
+  watch: {
+    start() {
+      if (this.selectedKelas) {
+        this.getSantri()
+      }
+    },
+    end() {
+      if (this.selectedKelas) {
+        this.getSantri()
+      }
+    }
+  },
   methods: {
     ...mapMutations('report/tahfidz/murojaah', ['setState']),
     ...mapActions('report/tahfidz/murojaah', ['changeUnit', 'getSantri']),

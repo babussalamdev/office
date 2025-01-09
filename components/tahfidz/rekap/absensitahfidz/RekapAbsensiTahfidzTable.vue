@@ -9,12 +9,12 @@
         </div>
       </div>
       <div class="col-12 col-md-6 d-flex justify-content-end">
-        <!-- <div class="input-group">
-          <span class="input-group-text" id="basic-addon1">From</span>
-          <input type="date" class="form-control" aria-label="Username" aria-describedby="basic-addon1" v-model="start">
-          <span class="input-group-text" id="basic-addon1">To</span>
-          <input type="date" class="form-control" aria-label="Username" aria-describedby="basic-addon1" v-model="end">
-        </div> -->
+        <div class="input-group me-2">
+          <span class="input-group-text">Start</span>
+          <input type="date" class="form-control" v-model="start">
+          <span class="input-group-text">End</span>
+          <input type="date" class="form-control" v-model="end">
+        </div>
       </div>
     </div>
     <div class="table-responsive animate__animated animate__fadeInUp">
@@ -88,14 +88,14 @@ export default {
   },
   watch: {
     start() {
-      this.changeUnit()
+      this.getDataByDate()
     },
     end() {
-      this.changeUnit()
+      this.getDataByDate()
     }
   },
   methods: {
-    ...mapActions('rekap', ['changeUnit']),
+    ...mapActions('rekap', ['changeUnit', 'getDataByDate']),
     // ...mapMutations('mutabaah', ['showDetail'])
     juz(value) {
       const juz = value / 20

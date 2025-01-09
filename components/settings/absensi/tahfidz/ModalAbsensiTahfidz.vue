@@ -64,9 +64,10 @@ export default {
       const time = this.updateData.time
       const namahalaqah = this.updateData.santri.Halaqah
       const program = localStorage.getItem("program");
+      const kelas = this.updateData.santri.Kelas
       try {
         const result = await this.$apiSantri.$put(
-          `update-absensi-sisalam?sksantri=${skSantri}&type=halaqah${time}&thn=${tahun}&smstr=${semester}&program=${program}&subject=${namahalaqah}`,
+          `update-absensi-sisalam?sksantri=${skSantri}&type=halaqah${time}&thn=${tahun}&smstr=${semester}&program=${program}&subject=${namahalaqah}&kls=${kelas}`,
           data
         );
         if (result) {
