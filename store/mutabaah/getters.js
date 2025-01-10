@@ -13,36 +13,37 @@ export default {
 
     return state.updateData
   },
+
+  // insert
+  getSurah(state) {
+    return state.surah
+  },
+  GET_SURAH_FROM(state) {
+    return state.surahfrom
+  },
+  GET_AYAT_FROM(state) {
+    return state.ayatfrom
+  },
+  GET_SURAH_TO(state) {
+    return state.surahto
+  },
+  GET_AYAT_TO(state) {
+    return state.ayatto
+  },
+
+
+  // update
   getSurahFrom(state) {
-    let data = { name: '', ayat: [] }
-    if ( state.updateData ) {
-      data = state.surah.find(x => x.name === state.updateData?.From?.name)
-    }
-    return data
+    return state.surahfromupdate
   },
   getSurahTo(state) {
-    let data = { name: '', ayat: [] }
-    if ( state.updateData ) {
-      data = state.surah.find(x => x.name === state.updateData?.To?.name)
-    }
-    return data
+    return state.surahtoupdate
   },
   getAyatFrom(state) {
-    let data = { number: '', page: '', juz: '' }
-    if ( state.updateData ) {
-      data = state.updateData?.From?.ayat
-    }
-    return data
+    return state.ayatfromupdate
   },
   getAyatTo(state) {
-    let data = { number: '', page: '', juz: '' }
-    if ( state.updateData ) {
-      data = state.updateData?.To?.ayat
-    }
-    return data
-  },
-  getNote(state) {
-    return state.updateData.Note
+    return state.ayattoupdate
   },
   getSelectedHalaqah(state) {
     return state.selectedHalaqah

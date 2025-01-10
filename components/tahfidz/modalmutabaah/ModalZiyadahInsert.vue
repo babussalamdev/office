@@ -2,10 +2,10 @@
   <div>
     <!-- Modal -->
     <div class="modal fade hide" id="mutabaah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      aria-labelledby="staticBackdropLabel">
       <div class="modal-dialog">
         <div class="modal-content">
-          <form @submit.prevent="submit" ref="mutabaah">
+          <form @submit.prevent="submit" id="mutabaahForm">
             <!-- <div class="modal-header">
               <h3 class="modal-title fs-5" id="staticBackdropLabel">Input {{ subject }}</h3>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -14,7 +14,7 @@
               <div class="row">
                 <div class="mb-3 col-8"><label class="typo__label mb-2">Surat From</label>
                   <multiselect style="font-family: 'Noto Kufi Arabic', sans-serif; font-size: 16px; font-weight: 600"
-                    v-model="surahfrom" :options="from" placeholder="Select one" label="name" track-by="name">
+                    v-model="surahfrom" :options="surah" placeholder="Select one" label="name" track-by="name">
                   </multiselect>
                 </div>
                 <div class="mb-3 col-4"><label class="typo__label mb-2">Ayat from</label>
@@ -24,7 +24,7 @@
 
                 <div class="mb-3 col-8"><label class="typo__label mb-2">Surat To</label>
                   <multiselect style="font-family: 'Noto Kufi Arabic', sans-serif; font-size: 16px; font-weight: 600;"
-                    v-model="surahto" :options="from" placeholder="Select one" label="name" track-by="name">
+                    v-model="surahto" :options="surah" placeholder="Select one" label="name" track-by="name">
                   </multiselect>
                 </div>
                 <div class="mb-3 col-4"><label class="typo__label mb-2">Ayat To</label>
@@ -36,7 +36,7 @@
                 <div class="mb-3 col">
                   <div class="input-group">
                     <span class="input-group-text">Halaman</span>
-                    <input type="number" name="Page" id="halaman" class="form-control" :value="page">
+                    <input type="number" name="Page" id="halaman" class="form-control" :value="page" readonly>
                   </div>
                 </div>
                 <div class="mb-3 col">
@@ -75,154 +75,60 @@
 <script>
 import Swal from 'sweetalert2';
 import Multiselect from 'vue-multiselect'
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
 export default {
   components: {
     Multiselect
   },
   data() {
     return {
-      surahfrom: { name: '', ayat: [] },
-      surahto: { name: '', ayat: [] },
-      ayatfrom: { number: '', page: '', juz: '' },
-      ayatto: { name: '', page: '', juz: '' },
-      from: [
-        {
-          name: "", ayat: [
-            {
-              "number": '',
-              "page": '',
-              "juz": ''
-            }],
-        }
-      ],
-      page: 0,
-      btn: true,
       subject: localStorage.getItem('subject'),
     }
   },
   computed: {
-    ...mapState('mutabaah', ['surah', 'detail']),
-    ...mapState('index', ['label', 'semester'])
-  },
-  watch: {
-    surah(value) {
-      this.from = value
+    ...mapState('mutabaah', ['detail', 'page', 'btn']),
+    ...mapGetters('mutabaah', ['getSurah', 'GET_SURAH_FROM', 'GET_SURAH_TO', 'GET_AYAT_FROM', 'GET_AYAT_TO']),
+
+    surah: {
+      get() {
+        return this.getSurah
+      },
     },
-    surahfrom(value) {
-      if (value !== null) {
-        this.ayatfrom = { number: '', page: '', juz: '' }
-      } else {
-        this.surahfrom = { name: '', ayat: [] }
-      }
-      this.surahto = value
-    },
-    surahto(value) {
-      if (value !== null) {
-        this.ayatto = { number: '', page: '', juz: '' }
-      } else {
-        this.surahto = { name: '', ayat: [] }
+    surahfrom: {
+      get() {
+        return this.GET_SURAH_FROM
+      },
+      set(value) {
+        this.$store.commit('mutabaah/SET_SURAH_FROM', value)
       }
     },
-    ayatto(value) {
-      if (value !== null) {
-        if (this.ayatfrom.page !== '' && value.page !== '') {
-          this.page = Math.abs(this.ayatfrom.page - this.ayatto.page) + 1
-        }
+    ayatfrom: {
+      get() {
+        return this.GET_AYAT_FROM
+      },
+      set(value) {
+        this.$store.commit('mutabaah/SET_AYAT_FROM', value)
       }
     },
-    ayatfrom(value) {
-      if (value !== null) {
-        if (this.ayatto.page !== '' && value.page !== '') {
-          this.page = Math.abs(this.ayatfrom.page - this.ayatto.page) + 1
-        }
+    surahto: {
+      get() {
+        return this.GET_SURAH_TO
+      },
+      set(value) {
+        this.$store.commit('mutabaah/SET_SURAH_TO', value)
       }
-      this.ayatto = value
+    },
+    ayatto: {
+      get() {
+        return this.GET_AYAT_TO
+      },
+      set(value) {
+        this.$store.commit('mutabaah/SET_AYAT_TO', value)
+      }
     }
   },
   methods: {
-    async submit(event) {
-      this.btn = false
-      const data = Object.fromEntries(new FormData(event.target))
-      const from = {
-        name: this.surahfrom.name,
-        ayat: this.ayatfrom
-      }
-      const to = {
-        name: this.surahto.name,
-        ayat: this.ayatto
-      }
-      data['Page'] = +data.Page
-      data['Score'] = +data.Score
-      data['From'] = from
-      data['To'] = to
-
-      const { Page, Score, Note, From, To } = data;
-      const { name: fromName, ayat: fromAyat } = From;
-      const { name: toName, ayat: toAyat } = To;
-
-      // Cek apakah salah satu data kosong
-      if (
-        Page === 0 ||
-        fromName === "" ||
-        fromAyat.number === "" ||
-        fromAyat.page === "" ||
-        fromAyat.juz === "" ||
-        toName === "" ||
-        toAyat.name === "" ||
-        toAyat.page === "" ||
-        toAyat.juz === ""
-      ) {
-        Swal.fire({
-          text: 'Data tidak boleh kosong!',
-          icon: "error",
-          timer: 3000,
-          timerProgressBar: false,
-          showConfirmButton: false,
-        });
-        this.btn = true
-        return
-      }
-
-      // Jika semua data valid, lanjutkan dengan proses
-      try {
-        const program = localStorage.getItem('program')
-        const sk = this.detail.SK.replace('#', '%23')
-        const kelas = this.detail.Kelas
-        const subject = localStorage.getItem('subject')
-        const tahun = this.label
-        const semester = this.semester
-        const halaqah = this.$auth.user.Halaqah[program]
-        const result = await this.$apiSantri.$post(`input-logs?kls=${kelas}&subject=${subject}&sksantri=${sk}&halaqah=${halaqah}&thn=${tahun}`, data)
-        if (result) {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            text: "Data berhasil di input",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          this.btn = true
-          this.$store.commit('mutabaah/pushDetail', result)
-          $('#mutabaah').modal('hide')
-          this.$refs.mutabaah.reset()
-          this.surahfrom = { name: '', ayat: [] }
-          this.surahto = { name: '', ayat: [] }
-          this.ayatfrom = { number: '', page: '', juz: '' }
-          this.ayatto = { name: '', page: '', juz: '' }
-          this.page = 0
-        }
-      } catch (error) {
-        Swal.fire({
-          position: "center",
-          icon: "error",
-          text: error,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        this.btn = true
-      }
-    },
+    ...mapActions('mutabaah', ['submit']),
     onKeyboardShow() {
       // Menggeser tampilan atau mengubah gaya saat keyboard muncul
       console.log('berhasil')
