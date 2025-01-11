@@ -1,7 +1,7 @@
 import Swal from "sweetalert2"
 
 export default {
-  async changeUnit({ commit, dispatch }, data) {
+  async changeUnit({ commit, dispatch, state }, data) {
     dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
     const resSelect = await this.$apiBase.$get(
@@ -40,6 +40,49 @@ export default {
     }
     // console.log(data)
   },
+
+  async santriAbsen({ commit, state, rootState}, event) {
+    commit('btn')
+    const data = Object.fromEntries(new FormData(event.target));
+    data["Status"] = state.updateData.type;
+    data['Mapel'] = state.updateData.mapel
+    const skSantri = state.updateData.santri.SK.replace('#', '%23')
+    const tahun = rootState.index.label
+    const semester = rootState.index.semester
+    const time = state.updateData.time
+    const namakelas = state.updateData.santri.Kelas
+    const program = localStorage.getItem("program");
+    try {
+      const result = await this.$apiSantri.$put(
+        `update-absensi-sisalam?sksantri=${skSantri}&type=${time}&thn=${tahun}&smstr=${semester}&program=${program}&subject=${namakelas}`,
+        data
+      );
+      if (result) {
+        commit('btn')
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          text: "Data berhasil diupdate",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        result['time'] = time
+        result["SK"] = state.updateData.santri.SK;
+        commit('updateAbsen', result);
+      }
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        text: error,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      commit('btn')
+    }
+  },
+
   async deleteStatus({ commit, state, dispatch, rootState }, datas) {
     dispatch('index/submitLoad', null, { root: true })
     const i = state.santri.findIndex((x) => x.SK === datas.sk)

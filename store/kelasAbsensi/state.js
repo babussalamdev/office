@@ -18,5 +18,6 @@ export default () => ({
     date: date,
     selectedMapel: '',
     selectedJam: '',
-    dateNow: date
+    dateNow: date,
+    btn: true
 })

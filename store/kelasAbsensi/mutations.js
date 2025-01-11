@@ -18,6 +18,9 @@ export default {
   setDataSantri(state, value) {
     state.santri = value
   },
+  btn(state) {
+    state.btn = !state.btn
+  },
   // setSantriTahfidz(state, value) {
   //   // if (value) {
   //   //   state.santri = value
@@ -62,6 +65,9 @@ export default {
     const date = `${tahun}-${bulan}-${tanggal}`;
 
     state.dateNow = date
+
+    $('#santriAbsen')[0].reset()
+    $("#modalAbsen").modal("hide");
   },
   deleteAbsen(state, value) {
     const i = state.santri.findIndex((x) => x.SK === value.SK)
