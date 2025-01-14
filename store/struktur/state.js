@@ -33,6 +33,7 @@ export default () => ({
     { name: "card", code: 27 },
     { name: "none", code: 28 },
     { name: "authority", code: 29 },
+    { name: "sarpras", code: 30 },
   ],
 
   // partikel

@@ -585,7 +585,7 @@
               </li>
               <!-- Database Menu -->
               <li
-                v-if="hasRoot && ['setup halaqah', 'setup asrama', 'setup kelas', 'setup mapel'].some(name => hasPermission(name)) || hasPersonalia">
+                v-if="hasRoot && ['setup halaqah', 'setup asrama', 'setup kelas', 'setup mapel', 'sarpras'].some(name => hasPermission(name)) || hasPersonalia">
                 <div @click="notClickSub('database')"
                   class="dropdown d-flex align-items-center justify-content-between gap-2">
                   <span class="d-flex align-items-center gap-2">
@@ -656,6 +656,20 @@
                     <nuxt-link to="/settings/authority"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Authority</span>
+                    </nuxt-link>
+                  </li>
+                  <!-- Ruangan OB -->
+                  <li v-if="hasPermission('sarpras')">
+                    <nuxt-link to="/settings/ruangan"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Ruangan</span>
+                    </nuxt-link>
+                  </li>
+                  <!-- Gedung -->
+                  <li v-if="hasPermission('sarpras')">
+                    <nuxt-link to="/settings/gedung"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Gedung</span>
                     </nuxt-link>
                   </li>
                 </ul>

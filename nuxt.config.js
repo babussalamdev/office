@@ -136,6 +136,8 @@ export default {
       '~/components/settings/setupabsensi',
       '~/components/settings/setuppelanggaran',
       '~/components/settings/authority',
+      '~/components/settings/ruangan',
+      '~/components/settings/gedung',
     ]
   },
 
@@ -162,7 +164,8 @@ export default {
     santri: process.env.API_SANTRI,
     card: process.env.API_CARD,
     websocket: process.env.API_WEBSOCKET,
-    laundry: process.env.API_LAUNDRY
+    laundry: process.env.API_LAUNDRY,
+    ob: process.env.API_OB
   },
 
 
