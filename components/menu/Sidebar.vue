@@ -672,6 +672,13 @@
                       <span class="text animate__animated animate__fadeInRight">Gedung</span>
                     </nuxt-link>
                   </li>
+                  <!-- Job -->
+                  <li v-if="hasPermission('sarpras')">
+                    <nuxt-link to="/settings/job"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Job</span>
+                    </nuxt-link>
+                  </li>
                 </ul>
               </li>
             </ul>

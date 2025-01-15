@@ -138,6 +138,7 @@ export default {
       '~/components/settings/authority',
       '~/components/settings/ruangan',
       '~/components/settings/gedung',
+      '~/components/settings/job',
     ]
   },
 

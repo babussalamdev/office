@@ -1,7 +1,9 @@
 export default () => ({
   listGedung: [],
   selectedGedung: '',
-  ruangan: [],
   btn: true,
-  selectedRooms: []
+  job: [],
+  inputs: [''],
+  pegawai: [],
+  ruangan: []
 })
