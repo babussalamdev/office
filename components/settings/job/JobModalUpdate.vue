@@ -1,25 +1,11 @@
 <template>
   <div>
     <!-- Modal -->
-    <div class="modal fade" id="jobModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="jobModalUpdate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form @submit.prevent="tambahData" id="jobForm">
+          <form @submit.prevent="ubahData" id="jobFormUpdate">
             <div class="modal-body">
-              <div class="mb-3">
-                <label for="pegawai" class="form-label">Pegawai</label>
-                <select name="PK" id="pegawai" class="form-select">
-                  <option value="" selected disabled>-- select pegawai --</option>
-                  <option v-for="(data, index) in pegawai" :key="index" :value="data.SK">{{ data.Nama }}</option>
-                </select>
-              </div>
-              <div class="mb-3">
-                <label for="ruangan" class="form-label">Ruangan</label>
-                <select name="SK" id="ruangan" class="form-select">
-                  <option value="" selected disabled>-- select ruangan --</option>
-                  <option v-for="(data, index) in ruangan" :key="index" :value="data.SK">{{ data.Name }}</option>
-                </select>
-              </div>
               <div>
                 <label class="form-label">Pekerjaan</label>
                 <div v-for="(input, index) in inputs" :key="index" class="input-group mb-2">
@@ -57,18 +43,21 @@ export default {
     };
   },
   computed: {
-    ...mapState('job', ['btn', 'pegawai', 'ruangan', 'job']),
+    ...mapState('job', ['btn', 'pegawai', 'ruangan', 'updateData']),
     ...mapGetters('job', ['getInputs'])
   },
   watch: {
+    updateData(data) {
+      this.inputs = data.Name.split(',')
+    },
     job() {
       this.inputs = ['']
     }
   },
   methods: {
-    ...mapActions('job', ['inputData']),
-    tambahData(event) {
-      this.inputData({ event, input: this.inputs})
+    ...mapActions('job', ['updateItem']),
+    ubahData() {
+      this.updateItem({ input: this.inputs})
     },
     addInput() {
       if (this.inputs.length < 5 && this.inputs[0]) {

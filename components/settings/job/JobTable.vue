@@ -19,6 +19,7 @@
           </div>
         </div>
       </div>
+    <JobModalUpdate />
     <JobModal />
     <div class="table-responsive animate__animated animate__fadeInUp">
       <table class="table table-hover table-striped">
@@ -37,11 +38,19 @@
               {{ data.Ruangan }}
             </td>
             <td scope="row" class="text-capitalize align-middle">
-              {{ data.Name }}
+              <div v-if="data.Name && data.Name.trim() !== ''">
+                <div v-for="(value, index) in data.Name.split(',')" :key="index" style="display: inline">
+                  <div class="btn-group btn-group-sm px-1">
+                    <div class="btn btn-dark">
+                      <span style="font-size: 12px;">{{ value }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </td>
             <td class="text-end align-middle">
               <a href="javascript:;">
-                <button class="btn btn-sm btn-warning">
+                <button class="btn btn-sm btn-warning" @click="updateItem(data.PK)">
                   <i class='bx bx-pencil'></i>
                 </button>
               </a>
@@ -74,14 +83,17 @@ export default {
     },
   },
   methods: {
-    ...mapActions('job', ['deleteItem', 'updateItem']),
+    ...mapActions('job', ['deleteItem']),
+    ...mapMutations('job', ['updateItem']),
     ubahData(sk, status) {
       this.updateItem({ sk, status })
     },
   },
   watch: {
-    selectedGedung() {
-      this.$store.dispatch('job/getJob')
+    selectedGedung(value) {
+      if (value) {
+        this.$store.dispatch('job/getJob')
+      }
     }
   },
 }

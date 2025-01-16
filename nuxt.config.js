@@ -116,6 +116,7 @@ export default {
       '~/components/report/lagger',
       '~/components/report/jurnal',
       '~/components/report/pengampu',
+      '~/components/report/ekskull',
       '~/components/report/tahfidz',
       '~/components/report/tahfidz/nilai',
       '~/components/report/tahfidz/hafalan',

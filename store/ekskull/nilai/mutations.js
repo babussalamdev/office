@@ -5,7 +5,9 @@ export default {
     state.globalLoad = state.globalLoad ? false : true
   },
   setState(state, data) {
-    if ( data.key === 'santri') {
+    if (data.key === 'santri') {
+      state[data.key] = data.value
+    } else if (data.key === 'select') {
       state.santri = []
       state.selectedEkskull = ''
       state[data.key] = data.value
@@ -15,7 +17,7 @@ export default {
   },
   setPenilaian(state, data) {
     if (data['type'] === 'set') {
-      if( data['skSantri'] ) {
+      if (data['skSantri']) {
         state.santri[data.index].Nilai = state.santri[data.index].Nilai.toString()
         state.nilai = state.santri[data.index].Nilai
 

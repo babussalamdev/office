@@ -5,5 +5,6 @@ export default () => ({
   job: [],
   inputs: [''],
   pegawai: [],
-  ruangan: []
+  ruangan: [],
+  updateData: ''
 })

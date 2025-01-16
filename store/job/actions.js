@@ -41,11 +41,60 @@ export default {
     commit('btn')
     const data = Object.fromEntries(new FormData(event.target))
     const gedung = state.selectedGedung
-    data['Name'] = input.map(item => item.trim()).join(', ')
+    data['Name'] = input.map(item => item.trim()).join(',')
+
+    // cek ruangan
+    const job = state.job
+    const inputRuangan = state.ruangan.find((x) => x.SK === data.SK)?.Name
+    const inputPK = data.PK
+    const cekRuangan = (job, inputRuangan, inputPK) => {
+      return job.some(item => item.Ruangan === inputRuangan && item.PK === inputPK)
+    }
     try {
-      const result = await this.$apiOB.$post(`input-job?type=${gedung}`, data)
+      // Pengecekan dan peringatan
+      if (cekRuangan(job, inputRuangan, inputPK)) {
+        Swal.fire({
+          icon: 'warning',
+          text: 'Ruangan sudah terisi!',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      } else {
+        const result = await this.$apiOB.$post(`input-job?type=${gedung}`, data)
+        if (result) {
+          commit('inputData', result)
+          commit('btn')
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            text: "Data berhasil diupdate!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      }
+    } catch (error) {
+      commit('btn')
+      Swal.fire({
+        icon: 'error',
+        text: error,
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
+  },
+  async updateItem({ commit, state, dispatch }, { input }) {
+    commit('btn')
+    const data = Object.fromEntries(new FormData(event.target))
+    const value = state.updateData.PK
+    const sk = state.updateData.SK
+    data['Name'] = input.map(item => item.trim()).join(',')
+    try {
+      const result = await this.$apiOB.$put(`update-job?value=${value}&sk=${sk}`, data)
+      result['PK'] = value
+      result['SK'] = sk
       if (result) {
-        commit('inputData', result)
+        commit('updateData', result)
         commit('btn')
         Swal.fire({
           position: "center",
@@ -67,7 +116,6 @@ export default {
   },
   async deleteItem({ commit, state, dispatch }, sk) {
     const i = state.job.findIndex((x) => x.SK === sk)
-    const gedung = state.selectedGedung
     const result = await Swal.fire({
       title: state.job[i].SK,
       text: "Data akan dihapus secara permanen!",
@@ -80,7 +128,7 @@ export default {
 
     if (result.isConfirmed) {
       await this.$apiOB.$delete(
-        `delete-default?type=${gedung}&sk=${sk}`
+        `delete-job?value=${state.job[i].PK}&sk=${sk}`
       );
       commit('deleteItem', sk);
       Swal.fire({

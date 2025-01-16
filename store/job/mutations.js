@@ -1,6 +1,12 @@
 export default {
   setState(state, data) {
-    state[data.key] = data.value
+    if (data.key === 'listGedung') {
+      state.job = []
+      state.selectedGedung = ''
+      state[data.key] = data.value
+    } else {
+      state[data.key] = data.value
+    }
   },
   btn(state) {
     state.btn = !state.btn
@@ -16,5 +22,21 @@ export default {
     state.job.push(data)
     $('#jobModal').modal('hide')
     $('#jobForm')[0].reset()
-  }
+  },
+  updateData(state, data) {
+    const i = state.job.findIndex((x) => x.SK === data.SK && x.PK === data.PK)
+    state.job[i].Name = data.Name
+    $('#jobModalUpdate').modal('hide')
+  },
+  deleteItem(state, sk) {
+    const i = state.job.findIndex((x) => x.SK === sk)
+    state.job.splice(i, 1)
+  },
+
+  //
+  updateItem(state, data) {
+    const i = state.job.findIndex((x) => x.PK === data)
+    state.updateData = state.job[i]
+    $('#jobModalUpdate').modal('show')
+  },
 }

@@ -37,9 +37,21 @@ export default {
       const semester = rootState.index.semester
       const nilai = { Nilai: +state.nilai }
       try {
-        const result = await this.$apiSantri.$put(`update-logs?methode=${state.selectedEkskull}&sksantri=${skSantri}&thn=${tahun}&kls=${kelas}&smstr=${semester}&sklogs=${skLogs}`, nilai)
-        data['result'] = result
-        commit('setPenilaian', data)
+        if (state.nilai > 100) {
+          Swal.fire({
+            title: 'Warning!',
+            text: 'Nilai tidak boleh lebih dari 100.',
+            icon: 'warning',
+            showConfirmButton: false,
+            timer: 3000
+          });
+          dispatch('index/submitLoad', null, { root: true })
+        } else {
+          const result = await this.$apiSantri.$put(`update-logs?methode=${state.selectedEkskull}&sksantri=${skSantri}&thn=${tahun}&kls=${kelas}&smstr=${semester}&sklogs=${skLogs}`, nilai)
+          dispatch('index/submitLoad', null, { root: true })
+          data['result'] = result
+          commit('setPenilaian', data)
+        }
       } catch (error) {
         Swal.fire({
           icon: "warning",
@@ -47,10 +59,10 @@ export default {
           showConfirmButton: false,
           timer: 1500
         });
+        dispatch('index/submitLoad', null, { root: true })
       }
-      dispatch('index/submitLoad', null, { root: true })
     } else {
-      if (state.openEdit) {
+      if (state.openEdit && state.nilai) {
         data['type'] = 'close'
         dispatch('index/submitLoad', null, { root: true })
         const skSantri = state.santri[state.openEdit.index].SKsantri.replace('#', '%23')
@@ -60,10 +72,23 @@ export default {
         const semester = this.$auth.user.Semester
         const nilai = { Nilai: +state.nilai }
         try {
-          const result = await this.$apiSantri.$put(`update-logs?methode=${state.selectedEkskull}&sksantri=${skSantri}&thn=${tahun}&kls=${kelas}&smstr=${semester}&sklogs=${skLogs}`, nilai)
-          data['result'] = result
-          commit('setPenilaian', data)
+          if (state.nilai > 100) {
+            Swal.fire({
+              title: 'Warning!',
+              text: 'Nilai tidak boleh lebih dari 100.',
+              icon: 'warning',
+              timer: 3000,
+              showConfirmButton: false
+            });
+            dispatch('index/submitLoad', null, { root: true })
+          } else {
+            const result = await this.$apiSantri.$put(`update-logs?methode=${state.selectedEkskull}&sksantri=${skSantri}&thn=${tahun}&kls=${kelas}&smstr=${semester}&sklogs=${skLogs}`, nilai)
+            data['result'] = result
+            commit('setPenilaian', data)
+            dispatch('index/submitLoad', null, { root: true })
+          }
         } catch (error) {
+          dispatch('index/submitLoad', null, { root: true })
           Swal.fire({
             icon: "warning",
             title: "Perubahan tidak tersimpan",
@@ -71,12 +96,21 @@ export default {
             timer: 1500
           });
         }
-        dispatch('index/submitLoad', null, { root: true })
       }
     }
     if (data) {
       data['type'] = 'set'
-      commit('setPenilaian', data)
+      if (!state.nilai && state.openEdit) {
+        Swal.fire({
+          title: 'Warning!',
+          text: 'Nilai tidak boleh kosong!',
+          icon: 'warning',
+          timer: 1500,
+          showConfirmButton: false
+        });
+      } else {
+        commit('setPenilaian', data)
+      }
     }
   },
 }

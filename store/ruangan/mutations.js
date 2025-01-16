@@ -1,6 +1,8 @@
 export default {
   setState(state, data) {
-    if (data.key === 'ruangan') {
+    if (data.key === 'listGedung') {
+      state.ruangan = []
+      state.selectedGedung = ''
       state[data.key] = data.value
     } else {
       state[data.key] = data.value

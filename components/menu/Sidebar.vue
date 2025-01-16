@@ -362,6 +362,12 @@
                   <span class="text animate__animated animate__fadeInRight">Lagger Mapel</span>
                 </nuxt-link>
               </li>
+              <!-- ekskull -->
+              <li v-if="hasPermission('report ekskull')">
+                <nuxt-link to="/report/ekskull" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Ekskull</span>
+                </nuxt-link>
+              </li>
               <!-- report -->
               <li v-if="hasRoot && hasPermission('report tahfidz')">
                 <div @click="notClickSub('tahfidz2')"
@@ -658,18 +664,18 @@
                       <span class="text animate__animated animate__fadeInRight">Authority</span>
                     </nuxt-link>
                   </li>
-                  <!-- Ruangan OB -->
-                  <li v-if="hasPermission('sarpras')">
-                    <nuxt-link to="/settings/ruangan"
-                      class="text-decoration-none sub-menu d-flex align-items-center gap-2">
-                      <span class="text animate__animated animate__fadeInRight">Ruangan</span>
-                    </nuxt-link>
-                  </li>
                   <!-- Gedung -->
                   <li v-if="hasPermission('sarpras')">
                     <nuxt-link to="/settings/gedung"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Gedung</span>
+                    </nuxt-link>
+                  </li>
+                  <!-- Ruangan OB -->
+                  <li v-if="hasPermission('sarpras')">
+                    <nuxt-link to="/settings/ruangan"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Ruangan</span>
                     </nuxt-link>
                   </li>
                   <!-- Job -->

@@ -106,8 +106,10 @@ export default {
     },
   },
   watch: {
-    selectedGedung() {
-      this.$store.dispatch('ruangan/getRuangan')
+    selectedGedung(value) {
+      if (value) {
+        this.$store.dispatch('ruangan/getRuangan')
+      }
     }
   },
 }
