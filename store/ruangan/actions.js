@@ -22,9 +22,10 @@ export default {
     dispatch('index/submitLoad', null, { root: true })
     const type = state.selectedGedung
     try {
-      const result = await this.$apiOB.$get(`get-default?type=${type}`)
+      const result = await this.$apiOB.$get(`get-default?value=${type}`)
       if (result) {
-        commit('setState', { key: 'ruangan', value: result })
+        commit('setState', { key: 'ruangan', value: result.ruang })
+        commit('setState', { key: 'options', value: result.job })
         dispatch('index/submitLoad', null, { root: true })
       }
     } catch (error) {
@@ -40,19 +41,72 @@ export default {
   async inputData({ commit, state, dispatch }, event) {
     commit('btn')
     const data = Object.fromEntries(new FormData(event.target))
+    const job = state.value.map((x) => x.name);
+    data["Job"] = job.join();
     const value = state.selectedGedung
     try {
-      const result = await this.$apiOB.$post(`input-default?value=${value}`, data)
-      if (result) {
-        commit('setInput', result)
+      if (job.length > 0) {
+        const result = await this.$apiOB.$post(`input-default?value=${value}`, data)
+        if (result) {
+          commit('setInput', result)
+          commit('btn')
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            text: "Data berhasil diupdate!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      } else {
         commit('btn')
         Swal.fire({
-          position: "center",
-          icon: "success",
-          text: "Data berhasil diupdate!",
+          icon: 'error',
+          text: 'Job tidak boleh kosong!',
           showConfirmButton: false,
-          timer: 1500,
-        });
+          timer: 1500
+        })
+      }
+    } catch (error) {
+      commit('btn')
+      Swal.fire({
+        icon: 'error',
+        text: error,
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
+  },
+  async updateRuangan({ commit, state, dispatch }) {
+    commit('btn')
+    const data = {}
+    const job = state.value.map((x) => x.name);
+    data["Job"] = job.join();
+    const value = state.selectedGedung
+    const sk = state.updateData.SK
+    try {
+      if (job.length > 0) {
+        const result = await this.$apiOB.$put(`update-default?value=${value}&sk=${sk}`, data)
+        if (result) {
+          result['SK'] = sk
+          commit('updateRuangan', result)
+          commit('btn')
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            text: "Data berhasil diupdate!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      } else {
+        commit('btn')
+        Swal.fire({
+          icon: 'error',
+          text: 'Job tidak boleh kosong!',
+          showConfirmButton: false,
+          timer: 1500
+        })
       }
     } catch (error) {
       commit('btn')
@@ -122,7 +176,11 @@ export default {
     commit('btn')
     try {
       const data = state.selectedRooms
-      const file = await this.$apiOB.$post(`input-default?value=qrcode`, data)
+      const updatedData = data.map(item => ({
+        ...item,
+        gedung: state.selectedGedung
+      }));
+      const file = await this.$apiOB.$post(`input-default?value=qrcode`, updatedData)
       if (file) {
         commit('btn')
         downloadZip(file, `QRCode Ruangan`)

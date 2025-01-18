@@ -2,6 +2,9 @@ export default () => ({
   listGedung: [],
   selectedGedung: '',
   ruangan: [],
+  options: [],
   btn: true,
-  selectedRooms: []
+  value: [],
+  selectedRooms: [],
+  updateData: ''
 })

@@ -28,6 +28,7 @@
         </div>
       </div>
     <RuanganModal />
+    <RuanganModalUpdate />
     <div class="table-responsive animate__animated animate__fadeInUp">
       <table class="table table-hover table-striped">
         <thead>
@@ -37,6 +38,7 @@
               </label></th>
             <th scope="col">Ruangan</th>
             <th scope="col">Gedung</th>
+            <th scope="col">Job</th>
             <th scope="col">Status</th>
             <th scope="col" class="text-end">Action</th>
           </tr>
@@ -51,12 +53,28 @@
               {{ data.PK }}
             </td>
             <td scope="row" class="text-capitalize align-middle">
+              <div v-if="data.Job && data.Job.trim() !== ''">
+                <div v-for="(value, index) in data.Job.split(',')" :key="index" style="display: inline">
+                  <div class="btn-group btn-group-sm px-1">
+                    <div class="btn btn-dark">
+                      <span style="font-size: 12px;">{{ value }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td scope="row" class="text-capitalize align-middle">
               {{ data.Status }}
             </td>
             <td class="text-end align-middle">
               <a href="javascript:;">
                 <button class="btn btn-sm" :class="data.Status === 'active' ? 'btn-primary' : 'btn-secondary'" @click="ubahData(data.SK, data.Status)">
                   <i class='bx bx-power-off'></i>
+                </button>
+              </a>
+              <a href="javascript:;">
+                <button class="btn btn-sm btn-warning" @click="updateData(data.SK)">
+                  <i class='bx bx-pencil'></i>
                 </button>
               </a>
               <a>
@@ -97,6 +115,7 @@ export default {
   },
   methods: {
     ...mapActions('ruangan', ['deleteItem', 'updateItem', 'downloadQr']),
+    ...mapMutations('ruangan', ['updateData']),
     ubahData(sk, status) {
       this.updateItem({ sk, status })
     },

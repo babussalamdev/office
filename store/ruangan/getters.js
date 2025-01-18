@@ -4,5 +4,8 @@ export default {
   },
   getSelectedRooms(state) {
     return state.selectedRooms
+  },
+  getValue(state) {
+    return state.value
   }
 }

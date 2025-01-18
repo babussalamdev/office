@@ -1,15 +1,11 @@
 <template>
   <div>
     <!-- Modal -->
-    <div class="modal fade" id="ruanganModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="ruanganModalUpdate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <form @submit.prevent="inputData" id="ruanganForm">
+          <form @submit.prevent="updateRuangan" id="ruanganFormUpdate">
             <div class="modal-body">
-              <div class="mb-3">
-                <label for="nama" class="form-label">Nama Ruangan</label>
-                <input type="text" id="nama" name="Name" class="form-control" required>
-              </div>
               <div class="">
                 <label class="typo__label mb-2">Job</label>
                 <multiselect name="Job" v-model="value" tag-placeholder="Add this as new tag"
@@ -43,7 +39,7 @@ export default {
     Multiselect,
   },
   computed: {
-    ...mapState('ruangan', ['btn', 'options']),
+    ...mapState('ruangan', ['btn', 'options', 'updateData']),
     ...mapGetters('ruangan', ['getValue']),
     value: {
       get() {
@@ -54,8 +50,24 @@ export default {
       }
     }
   },
+  watch: {
+    updateData: {
+      handler(data) {
+        const job = data?.Job;
+        if (job && job.length > 0) {
+          const jobArray = job.split(","); // Memisahkan string menjadi array dan menghapus spasi ekstra
+          const mappedArray = jobArray.map((x) => {
+            const option = this.options.find((option) => option.name === x);
+            return { name: x, code: option ? option.code : null };
+          });
+          this.value = mappedArray;
+        }
+      },
+      immediate: true,
+    },
+  },
   methods: {
-    ...mapActions('ruangan', ['inputData']),
+    ...mapActions('ruangan', ['updateRuangan']),
     addTag(newTag) {
       const tag = {
         name: newTag,

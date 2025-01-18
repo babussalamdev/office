@@ -3,9 +3,9 @@ export default {
   async changeUnit({ commit, state, dispatch }) {
     dispatch('index/submitLoad', null, { root: true })
     try {
-      const result = await this.$apiOB.$get(`get-default?type=gedung`)
+      const result = await this.$apiOB.$get(`get-default?type=job`)
       if (result) {
-        commit('setState', { key: 'listGedung', value: result })
+        commit('setState', { key: 'job', value: result })
         dispatch('index/submitLoad', null, { root: true })
       }
     } catch (error) {
@@ -18,60 +18,41 @@ export default {
       })
     }
   },
-  async getJob({ commit, state, dispatch }) {
-    dispatch('index/submitLoad', null, { root: true })
-    const type = state.selectedGedung
-    try {
-      const result = await this.$apiOB.$get(`get-job?type=${type}`)
-      if (result) {
-        commit('setData', result)
-        dispatch('index/submitLoad', null, { root: true })
-      }
-    } catch (error) {
-      dispatch('index/submitLoad', null, { root: true })
-      Swal.fire({
-        icon: 'error',
-        text: error,
-        showConfirmButton: false,
-        timer: 1500
-      })
-    }
-  },
-  async inputData({ commit, state, dispatch }, { event, input }) {
+  // async getJob({ commit, state, dispatch }) {
+  //   dispatch('index/submitLoad', null, { root: true })
+  //   const type = state.selectedGedung
+  //   try {
+  //     const result = await this.$apiOB.$get(`get-job?type=${type}`)
+  //     if (result) {
+  //       commit('setData', result)
+  //       dispatch('index/submitLoad', null, { root: true })
+  //     }
+  //   } catch (error) {
+  //     dispatch('index/submitLoad', null, { root: true })
+  //     Swal.fire({
+  //       icon: 'error',
+  //       text: error,
+  //       showConfirmButton: false,
+  //       timer: 1500
+  //     })
+  //   }
+  // },
+  async inputData({ commit, state, dispatch }, event) {
     commit('btn')
     const data = Object.fromEntries(new FormData(event.target))
-    const gedung = state.selectedGedung
-    data['Name'] = input.map(item => item.trim()).join(',')
-
-    // cek ruangan
-    const job = state.job
-    const inputRuangan = state.ruangan.find((x) => x.SK === data.SK)?.Name
-    const inputPK = data.PK
-    const cekRuangan = (job, inputRuangan, inputPK) => {
-      return job.some(item => item.Ruangan === inputRuangan && item.PK === inputPK)
-    }
     try {
       // Pengecekan dan peringatan
-      if (cekRuangan(job, inputRuangan, inputPK)) {
+      const result = await this.$apiOB.$post(`input-default?type=job`, data)
+      if (result) {
+        commit('inputData', result)
+        commit('btn')
         Swal.fire({
-          icon: 'warning',
-          text: 'Ruangan sudah terisi!',
+          position: "center",
+          icon: "success",
+          text: "Data berhasil diupdate!",
           showConfirmButton: false,
-          timer: 1500
-        })
-      } else {
-        const result = await this.$apiOB.$post(`input-job?type=${gedung}`, data)
-        if (result) {
-          commit('inputData', result)
-          commit('btn')
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            text: "Data berhasil diupdate!",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
+          timer: 1500,
+        });
       }
     } catch (error) {
       commit('btn')
@@ -128,7 +109,7 @@ export default {
 
     if (result.isConfirmed) {
       await this.$apiOB.$delete(
-        `delete-job?value=${state.job[i].PK}&sk=${sk}`
+        `delete-default?value=job&sk=${sk}`
       );
       commit('deleteItem', sk);
       Swal.fire({
