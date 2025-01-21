@@ -33,6 +33,15 @@
               <span class="text animate__animated animate__fadeInRight">Kaldik</span>
             </nuxt-link>
           </li>
+          <!-- Laporan -->
+          <li v-if="hasRoot">
+            <nuxt-link to="/" class="text-decoration-none d-flex align-items-center gap-2">
+              <i class="material-symbols-outlined animate__animated animate__fadeInRight">
+                lab_profile
+              </i>
+              <span class="text animate__animated animate__fadeInRight">Laporan</span>
+            </nuxt-link>
+          </li>
           <!-- Pengampu -->
           <li v-if="hasPermission('absensi pengampu')">
             <nuxt-link to="/pengampu" class="text-decoration-none d-flex align-items-center gap-2">
