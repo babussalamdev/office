@@ -35,12 +35,30 @@
           </li>
           <!-- Laporan -->
           <li v-if="hasRoot">
-            <nuxt-link to="/" class="text-decoration-none d-flex align-items-center gap-2">
-              <i class="material-symbols-outlined animate__animated animate__fadeInRight">
-                lab_profile
-              </i>
-              <span class="text animate__animated animate__fadeInRight">Laporan</span>
-            </nuxt-link>
+            <div @click="notClick('listLaporan')"
+              class="dropdown d-flex align-items-center justify-content-between gap-2">
+              <span class="d-flex align-items-center gap-2">
+                <i class="material-symbols-outlined animate__animated animate__fadeInRight">
+                  lab_profile
+                </i>
+                <span class="text animate__animated animate__fadeInRight">Laporan</span>
+              </span>
+              <i class="bx bx-chevron-down"></i>
+            </div>
+            <ul v-if="listLaporan" class="dropdown-list">
+              <!-- Scan -->
+              <li>
+                <nuxt-link to="/laporan/scan" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Scan</span>
+                </nuxt-link>
+              </li>
+              <!-- Report Laporan -->
+              <li>
+                <nuxt-link to="/laporan/report" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Report</span>
+                </nuxt-link>
+              </li>
+            </ul>
           </li>
           <!-- Pengampu -->
           <li v-if="hasPermission('absensi pengampu')">
@@ -736,7 +754,7 @@ export default {
   // },
   computed: {
     ...mapState("index", ["unit", "permissions", "pengajar", "pengampu", "personalia",]),
-    ...mapState("sidebar", ["activeMenu", "listAsrama", "listTahfidz", "listSettings", 'listEkskull', "listKelas", "listReport", 'listLaundry',
+    ...mapState("sidebar", ["activeMenu", "listAsrama", "listTahfidz", "listSettings", 'listEkskull', "listKelas", "listReport", 'listLaundry', 'listLaporan',
       "absensiSubList", "santriSubList", "pegawaiSubList", "databaseSubList", 'tahfidzSubList', 'tahfidz2SubList', 'kelasSubList', 'settingLaundrySubList', 'isSidebar', 'isSidebarOpen']),
     permissionsIzin() {
       return this.$store.state.asramaAbsensi.permissions

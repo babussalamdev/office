@@ -7,6 +7,7 @@ export default () => ({
     listReport: false,
     listLaundry: false,
     listEkskull: false,
+    listLaporan: false,
     absensiSubList: false,
     santriSubList: false,
     pegawaiSubList: false,
