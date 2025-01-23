@@ -53,7 +53,7 @@
                 </nuxt-link>
               </li>
               <!-- Report Laporan -->
-              <li>
+              <li v-if="['sarpras'].some(name => hasPermission(name))">
                 <nuxt-link to="/laporan/report" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Report</span>
                 </nuxt-link>
