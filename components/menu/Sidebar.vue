@@ -365,7 +365,7 @@
           </li>
           <!-- Report -->
           <li
-            v-if="hasRoot && ['report mapel', 'report ekskull', 'report absensi', 'report pelanggaran', 'report jurnal', 'report tahfidz'].some(name => hasPermission(name))">
+            v-if="hasRoot && ['report mapel', 'report ekskull', 'report absensi', 'report pelanggaran', 'report jurnal', 'report tahfidz', 'sarpras'].some(name => hasPermission(name))">
             <div @click="notClick('listReport')"
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
@@ -475,6 +475,11 @@
               <li v-if="hasPermission('report jurnal')">
                 <nuxt-link to="/report/jurnal" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Jurnal</span>
+                </nuxt-link>
+              </li>
+              <li v-if="hasPermission('sarpras')">
+                <nuxt-link to="/report/maintenance" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Maintenance</span>
                 </nuxt-link>
               </li>
             </ul>
