@@ -2,7 +2,7 @@
   <div>
     <div class="row mb-3">
       <div class="col-12 col-md-6 d-flex align-items-center mb-3 mb-md-0">
-        <h2 style="font-size: 14px;">Inventory Table</h2>
+        <h2 style="font-size: 14px;">Authority Table</h2>
       </div>
       <div class="col-12 col-md-6 d-flex justify-content-end">
         <div class="input-group">
@@ -24,7 +24,12 @@
             <td class="text-capitalize align-middle nowrap">{{ data.Nama }}</td>
             <td v-for="(value, i) in data.Authority" :key="i">
               <div class="form-switch">
-                <input :checked="value === 'on'" @change="
+                <input :checked="value === 'on'"
+                v-if="(i === 'laundry' && hasPersonaliaRM) ||
+                  (i === 'perpus' && hasPersonalia) ||
+                  (i === 'ob' && hasPersonaliaSR) ||
+                  i !== 'laundry' && i !== 'perpus' && i !== 'ob'"
+                @change="
                   statusAuthority(
                     data.SK,
                     i,
@@ -47,6 +52,7 @@ export default {
   mixins: [formatSet],
   computed: {
     ...mapState('authority', ['authority', 'th', 'datas']),
+    ...mapState("index", ["personalia", 'personaliaKerumahtanggaan', 'personaliaSarpras']),
     ...mapGetters('authority', ['getSearch', 'filteredDatas']),
     search: {
       get() {
@@ -55,6 +61,15 @@ export default {
       set(value) {
         this.$store.commit('authority/setState', { key: 'search', value })
       }
+    },
+    hasPersonalia() {
+      return this.personalia === 'on' ? true : false
+    },
+    hasPersonaliaRM() {
+      return this.personaliaKerumahtanggaan === 'on' ? true : false
+    },
+    hasPersonaliaSR() {
+      return this.personaliaSarpras === 'on' ? true : false
     },
   },
   methods: {

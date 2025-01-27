@@ -1,13 +1,13 @@
 import Swal from "sweetalert2"
 export default {
-  async changeUnit({ commit, dispatch }) {
+  async changeUnit({ commit, dispatch, state }) {
     dispatch('index/submitLoad', null, { root: true })
     try {
       const result = await this.$apiBase.$get(`get-authority`)
       if (result) {
         commit('setPage', result)
 
-        const newData = result[0].Authority || {};
+        const newData = state.authority || {};
         const newHeaders = { Nama: '' };
 
         for (const [key, value] of Object.entries(newData)) {

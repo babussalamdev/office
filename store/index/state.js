@@ -7,4 +7,6 @@ export default () => ({
     globalLoad: false,
     label: '',
     semester: '',
+    personaliaKerumahtanggaan: '',
+    personaliaSarpras: ''
 })

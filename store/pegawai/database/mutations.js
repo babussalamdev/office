@@ -37,6 +37,8 @@ export default {
     data.Nip = value.Nip;
     data.Program = value.Program;
     data.Personalia = value.Personalia
+    data.Personalia_Kerumahtanggaan = value.Personalia_Kerumahtanggaan
+    data.Personalia_Sarpras = value.Personalia_Sarpras
 
     state.value = [];
     state.updateData = ''

@@ -11,9 +11,12 @@
                 <input type="checkbox" />
               </th>
               <th scope="col">Nama</th>
-              <th scope="col">Lulusan</th>
-              <th scope="col">NIP</th>
+              <th scope="col">Username</th>
+              <!-- <th scope="col">Lulusan</th>
+              <th scope="col">NIP</th> -->
               <th scope="col">Personalia</th>
+              <!-- <th scope="col">Kerumahtanggaan</th> -->
+              <!-- <th scope="col">Sarpras</th> -->
               <th scope="col">Program</th>
               <th scope="col" class="text-end">Action</th>
             </tr>
@@ -24,16 +27,29 @@
                 <input type="checkbox" />
               </td>
               <td class="text-capitalize">{{ data.Nama }}</td>
-              <td>
+              <td class="text-capitalize">{{ data.Username }}</td>
+              <!-- <td>
                 {{ data.Lulusan }}
               </td>
-              <td class="text-capitalize">{{ data.Nip }}</td>
+              <td class="text-capitalize">{{ data.Nip }}</td> -->
               <td class="text-capitalize align-middle">
                 <span class="personalia" :class="data.Personalia === 'on' ? 'bg-primary' : 'bg-secondary'
                   ">
                   {{ data.Personalia }}
                 </span>
               </td>
+              <!-- <td class="text-capitalize align-middle">
+                <span class="personalia" :class="data.Personalia_Kerumahtanggaan === 'on' ? 'bg-primary' : 'bg-secondary'
+                  ">
+                  {{ data.Personalia_Kerumahtanggaan }}
+                </span>
+              </td>
+              <td class="text-capitalize align-middle">
+                <span class="personalia" :class="data.Personalia_Sarpras === 'on' ? 'bg-primary' : 'bg-secondary'
+                  ">
+                  {{ data.Personalia_Sarpras }}
+                </span>
+              </td> -->
               <td scope="row" class="text-uppercase container-permissions">
                 <div style="display: inline" v-for="(value, i) in data?.Program?.split(',')" :key="i">
                   <div class="btn-group btn-group-sm px-1 py-1 list-permissions">

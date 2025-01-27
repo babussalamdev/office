@@ -112,6 +112,26 @@
                   </select>
                 </div>
               </div>
+              <!-- <div class="mb-3">
+                <label for="nilai" class="form-label">Personalia Kerumahtanggaan</label>
+                <div class="mb-3">
+                  <select name="Personalia_Kerumahtanggaan" id="" class="form-select" :value="updateData?.Personalia_Kerumahtanggaan">
+                    <option selected disabled value="">-- select --</option>
+                    <option value="on">On</option>
+                    <option value="off">Off</option>
+                  </select>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="nilai" class="form-label">Personalia Sarpras</label>
+                <div class="mb-3">
+                  <select name="Personalia_Sarpras" id="" class="form-select" :value="updateData?.Personalia_Sarpras">
+                    <option selected disabled value="">-- select --</option>
+                    <option value="on">On</option>
+                    <option value="off">Off</option>
+                  </select>
+                </div>
+              </div> -->
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">

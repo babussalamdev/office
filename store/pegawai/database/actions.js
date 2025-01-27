@@ -47,10 +47,28 @@ export default {
     }
   },
   async updatePegawaiAdmin({ commit, state }, event) {
-    commit('btn')
+    // commit('btn')
     const data = Object.fromEntries(new FormData(event.target));
     const program = state.value.map((x) => x.name);
     data["Program"] = program.join();
+    const jabatan = state.updateData.Jabatan
+    // Cek kondisi dan log hasilnya
+    if ((program.includes("sarpras") && (data.Personalia === "on" || state.updateData.Personalia === "on"))) {
+      const updatedJabatan = {
+        ...jabatan,
+        sarpras: "personalia"
+      };
+
+      console.log(updatedJabatan);
+      data['Jabatan'] = updatedJabatan
+
+      // return updatedJabatan;
+    } else {
+      console.log(jabatan);
+      data['Jabatan'] = jabatan
+      // return { ...jabatan };
+    }
+    console.log(data)
     try {
       const username = state.updateData.Username;
       const sk = state.updateData.SK;
@@ -179,7 +197,7 @@ export default {
     }
   },
   async setStatusPengampu({ commit, dispatch }, value) {
-    dispatch('index/submitLoad', null , { root: true })
+    dispatch('index/submitLoad', null, { root: true })
     const user = value.user
     const key = value.key
     const data = {
@@ -194,7 +212,7 @@ export default {
       result['unit'] = value.unit
       result['index'] = value.key
       commit('setStatusPengampu', result)
-      dispatch('index/submitLoad', null , { root: true })
+      dispatch('index/submitLoad', null, { root: true })
     }
   },
   async setStatusPersonalia({ commit }, value) {
@@ -213,7 +231,7 @@ export default {
     result['index'] = value.key
     commit('setStatusPengampu', result)
   },
-  async resetPassword({ commit, state }, data ) {
+  async resetPassword({ commit, state }, data) {
     const i = state.pegawai.findIndex((x) => x.SK === data)
     const nama = state.pegawai[i].Nama
     try {
@@ -230,7 +248,7 @@ export default {
       if (result.isConfirmed) {
         const username = state.pegawai[i].Username
         const result = await this.$apiBase.$put(`change-password?username=${username}`)
-        if ( result ) {
+        if (result) {
           await Swal.fire({
             title: 'Reset Berhasil!',
             text: `Kata sandi baru adalah: ${result.password}`,

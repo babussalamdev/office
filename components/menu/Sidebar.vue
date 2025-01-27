@@ -690,7 +690,7 @@
                     </nuxt-link>
                   </li>
                   <!-- Authority -->
-                  <li v-if="hasPersonalia">
+                  <li v-if="hasPersonalia || hasPersonaliaSR">
                     <nuxt-link to="/settings/authority"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Authority</span>
@@ -758,7 +758,7 @@ export default {
   //   document.removeEventListener("click", event => this.hideOutside(event, 'sidebar'));
   // },
   computed: {
-    ...mapState("index", ["unit", "permissions", "pengajar", "pengampu", "personalia",]),
+    ...mapState("index", ["unit", "permissions", "pengajar", "pengampu", "personalia", 'personaliaKerumahtanggaan', 'personaliaSarpras']),
     ...mapState("sidebar", ["activeMenu", "listAsrama", "listTahfidz", "listSettings", 'listEkskull', "listKelas", "listReport", 'listLaundry', 'listLaporan',
       "absensiSubList", "santriSubList", "pegawaiSubList", "databaseSubList", 'tahfidzSubList', 'tahfidz2SubList', 'kelasSubList', 'settingLaundrySubList', 'isSidebar', 'isSidebarOpen']),
     permissionsIzin() {
@@ -766,6 +766,12 @@ export default {
     },
     hasPersonalia() {
       return this.personalia === 'on' ? true : false
+    },
+    hasPersonaliaRM() {
+      return this.personaliaKerumahtanggaan === 'on' ? true : false
+    },
+    hasPersonaliaSR() {
+      return this.personaliaSarpras === 'on' ? true : false
     },
     hasRoot() {
       return this.$auth.user.role !== 'root' ? true : false
