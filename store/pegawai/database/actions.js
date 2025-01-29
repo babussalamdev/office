@@ -47,28 +47,28 @@ export default {
     }
   },
   async updatePegawaiAdmin({ commit, state }, event) {
-    // commit('btn')
+    commit('btn')
     const data = Object.fromEntries(new FormData(event.target));
     const program = state.value.map((x) => x.name);
     data["Program"] = program.join();
     const jabatan = state.updateData.Jabatan
-    // Cek kondisi dan log hasilnya
-    if ((program.includes("sarpras") && (data.Personalia === "on" || state.updateData.Personalia === "on"))) {
+    if (program.includes("sarpras") && data.Personalia === "on") {
       const updatedJabatan = {
         ...jabatan,
         sarpras: "personalia"
       };
-
-      console.log(updatedJabatan);
-      data['Jabatan'] = updatedJabatan
-
-      // return updatedJabatan;
+      data['Jabatan'] = updatedJabatan;
     } else {
-      console.log(jabatan);
-      data['Jabatan'] = jabatan
-      // return { ...jabatan };
+      if (!program.includes("sarpras") && jabatan && jabatan.hasOwnProperty("sarpras")) {
+        const updatedJabatan = { ...jabatan };
+        delete updatedJabatan.sarpras;
+        data['Jabatan'] = updatedJabatan;
+      } else {
+        const updatedJabatan = { ...jabatan };
+        delete updatedJabatan.sarpras;
+        data['Jabatan'] = updatedJabatan;
+      }
     }
-    console.log(data)
     try {
       const username = state.updateData.Username;
       const sk = state.updateData.SK;

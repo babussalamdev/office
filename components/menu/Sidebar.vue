@@ -25,7 +25,7 @@
             </nuxt-link>
           </li>
           <!-- Kaldik -->
-          <li v-if="hasRoot">
+          <li v-if="hasRoot && hasSarpras">
             <nuxt-link to="/kaldik" class="text-decoration-none d-flex align-items-center gap-2">
               <i class="material-icons animate__animated animate__fadeInRight">
                 calendar_month
@@ -70,7 +70,7 @@
             </nuxt-link>
           </li>
           <!-- Kelas-->
-          <li v-if="hasRoot && $auth.user.Pengajar[unit] !== 'off'">
+          <li v-if="hasRoot && hasSarpras && $auth.user.Pengajar[unit] !== 'off'">
             <div @click="notClick('listKelas')"
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
@@ -122,7 +122,7 @@
             </ul>
           </li>
           <!-- Ekskull -->
-          <li v-if="hasRoot && hasPermission('page ekskull')">
+          <li v-if="hasRoot && hasSarpras && hasPermission('page ekskull')">
             <div @click="notClick('listEkskull')"
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
@@ -150,7 +150,7 @@
             </ul>
           </li>
           <!-- Asrama -->
-          <li v-if="hasRoot && hasPermission('page asrama')">
+          <li v-if="hasRoot && hasSarpras && hasPermission('page asrama')">
             <div @click="notClick('listAsrama')"
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
@@ -185,7 +185,7 @@
             </ul>
           </li>
           <!-- Tahfidz -->
-          <li v-if="hasRoot && $auth.user.Pengampu[unit] !== 'off'">
+          <li v-if="hasRoot && hasSarpras && $auth.user.Pengampu[unit] !== 'off'">
             <div @click="notClick('listTahfidz')"
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
@@ -265,7 +265,7 @@
             </ul>
           </li>
           <!-- Laundry -->
-          <li v-if="hasRoot && hasPermission('laundry')">
+          <li v-if="hasRoot && hasSarpras && hasPermission('laundry')">
             <div @click="notClick('listLaundry')"
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
@@ -355,7 +355,7 @@
             </ul>
           </li>
           <!-- Pelanggaran -->
-          <li v-if="hasRoot && hasPermission('page pelanggaran')">
+          <li v-if="hasRoot && hasSarpras && hasPermission('page pelanggaran')">
             <nuxt-link to="/pelanggaran" class="text-decoration-none d-flex align-items-center gap-2">
               <i class="material-icons animate__animated animate__fadeInRight">
                 privacy_tip
@@ -365,7 +365,7 @@
           </li>
           <!-- Report -->
           <li
-            v-if="hasRoot && ['report mapel', 'report ekskull', 'report absensi', 'report pelanggaran', 'report jurnal', 'report tahfidz', 'sarpras'].some(name => hasPermission(name))">
+            v-if="hasRoot && hasSarpras && ['report mapel', 'report ekskull', 'report absensi', 'report pelanggaran', 'report jurnal', 'report tahfidz', 'sarpras'].some(name => hasPermission(name))">
             <div @click="notClick('listReport')"
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
@@ -510,6 +510,12 @@
                   <span class="text animate__animated animate__fadeInRight">Pelanggaran</span>
                 </nuxt-link>
               </li>
+              <li v-if="hasPersonalia && this.$auth.user.Jabatan.sarpras === 'personalia'">
+                <nuxt-link to="/settings/sarpras"
+                  class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Sarpras</span>
+                </nuxt-link>
+              </li>
               <!-- Santri Menu -->
               <li
                 v-if="hasRoot && ['data santri', 'kelas', 'asrama', 'halaqah', 'ekskull'].some(name => hasPermission(name))">
@@ -572,7 +578,7 @@
               </li>
               <!-- Pegawai Menu -->
               <li
-                v-if="['pengampu', 'wali kelas', 'musyrif', 'pengajar'].some(name => hasPermission(name)) || $auth.user.role === 'root' || hasPersonalia">
+                v-if="['pengampu', 'wali kelas', 'musyrif', 'pengajar'].some(name => hasPermission(name)) || $auth.user.role === 'root' || ( hasPersonalia && hasSarpras )">
                 <div @click="notClickSub('pegawai')"
                   class="dropdown d-flex align-items-center justify-content-between gap-2">
                   <span class="d-flex align-items-center gap-2">
@@ -623,7 +629,7 @@
               </li>
               <!-- Database Menu -->
               <li
-                v-if="hasRoot && ['setup halaqah', 'setup asrama', 'setup kelas', 'setup mapel', 'sarpras'].some(name => hasPermission(name)) || hasPersonalia">
+                v-if="(hasRoot && ['setup halaqah', 'setup asrama', 'setup kelas', 'setup mapel'].some(name => hasPermission(name)) || hasPersonalia) || !hasSarpras">
                 <div @click="notClickSub('database')"
                   class="dropdown d-flex align-items-center justify-content-between gap-2">
                   <span class="d-flex align-items-center gap-2">
@@ -634,14 +640,14 @@
                 <!-- sub menu pegawai -->
                 <ul v-if="databaseSubList" class="dropdown-list">
                   <!-- Utama -->
-                  <li v-if="hasPersonalia">
+                  <li v-if="hasPersonalia && hasSarpras">
                     <nuxt-link to="/settings/periode"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Periode</span>
                     </nuxt-link>
                   </li>
                   <!-- Kaldik -->
-                  <li v-if="hasPersonalia">
+                  <li v-if="hasPersonalia && hasSarpras">
                     <nuxt-link to="/settings/kaldik"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Kaldik</span>
@@ -683,35 +689,35 @@
                     </nuxt-link>
                   </li>
                   <!-- Struktur -->
-                  <li v-if="hasPersonalia">
+                  <li v-if="hasPersonalia && hasSarpras">
                     <nuxt-link to="/settings/struktur"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Struktur</span>
                     </nuxt-link>
                   </li>
                   <!-- Authority -->
-                  <li v-if="hasPersonalia || hasPersonaliaSR">
+                  <li v-if="hasPersonalia && hasSarpras">
                     <nuxt-link to="/settings/authority"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Authority</span>
                     </nuxt-link>
                   </li>
                   <!-- Gedung -->
-                  <li v-if="hasPermission('sarpras')">
+                  <li v-if="!hasSarpras && this.$auth.user.Jabatan.sarpras === 'koordinator kebersihan'">
                     <nuxt-link to="/settings/gedung"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Gedung</span>
                     </nuxt-link>
                   </li>
                   <!-- Ruangan OB -->
-                  <li v-if="hasPermission('sarpras')">
+                  <li v-if="!hasSarpras && this.$auth.user.Jabatan.sarpras === 'koordinator kebersihan'">
                     <nuxt-link to="/settings/ruangan"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Ruangan</span>
                     </nuxt-link>
                   </li>
                   <!-- Job -->
-                  <li v-if="hasPermission('sarpras')">
+                  <li v-if="!hasSarpras && this.$auth.user.Jabatan.sarpras === 'koordinator kebersihan'">
                     <nuxt-link to="/settings/job"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Job</span>
@@ -758,7 +764,7 @@ export default {
   //   document.removeEventListener("click", event => this.hideOutside(event, 'sidebar'));
   // },
   computed: {
-    ...mapState("index", ["unit", "permissions", "pengajar", "pengampu", "personalia", 'personaliaKerumahtanggaan', 'personaliaSarpras']),
+    ...mapState("index", ["unit", "permissions", "pengajar", "pengampu", "personalia"]),
     ...mapState("sidebar", ["activeMenu", "listAsrama", "listTahfidz", "listSettings", 'listEkskull', "listKelas", "listReport", 'listLaundry', 'listLaporan',
       "absensiSubList", "santriSubList", "pegawaiSubList", "databaseSubList", 'tahfidzSubList', 'tahfidz2SubList', 'kelasSubList', 'settingLaundrySubList', 'isSidebar', 'isSidebarOpen']),
     permissionsIzin() {
@@ -767,15 +773,12 @@ export default {
     hasPersonalia() {
       return this.personalia === 'on' ? true : false
     },
-    hasPersonaliaRM() {
-      return this.personaliaKerumahtanggaan === 'on' ? true : false
-    },
-    hasPersonaliaSR() {
-      return this.personaliaSarpras === 'on' ? true : false
-    },
     hasRoot() {
       return this.$auth.user.role !== 'root' ? true : false
-    }
+    },
+    hasSarpras() {
+      return this.unit !== 'sarpras' ? true : false
+    },
   },
 
   methods: {

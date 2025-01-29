@@ -141,6 +141,7 @@ export default {
       '~/components/settings/ruangan',
       '~/components/settings/gedung',
       '~/components/settings/job',
+      '~/components/settings/sarpras',
     ]
   },
 
