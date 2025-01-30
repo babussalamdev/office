@@ -53,7 +53,7 @@
                 </nuxt-link>
               </li>
               <!-- Report Laporan -->
-              <li v-if="['sarpras'].some(name => hasPermission(name))">
+              <li v-if="hasPersonaliaSarpras && !hasSarpras">
                 <nuxt-link to="/laporan/report" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Report</span>
                 </nuxt-link>
@@ -365,7 +365,7 @@
           </li>
           <!-- Report -->
           <li
-            v-if="hasRoot && hasSarpras && ['report mapel', 'report ekskull', 'report absensi', 'report pelanggaran', 'report jurnal', 'report tahfidz', 'sarpras'].some(name => hasPermission(name))">
+            v-if="hasRoot && ['report mapel', 'report ekskull', 'report absensi', 'report pelanggaran', 'report jurnal', 'report tahfidz'].some(name => hasPermission(name)) || ( hasPersonaliaSarpras && !hasSarpras )">
             <div @click="notClick('listReport')"
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
@@ -477,9 +477,9 @@
                   <span class="text animate__animated animate__fadeInRight">Jurnal</span>
                 </nuxt-link>
               </li>
-              <li v-if="hasPermission('sarpras')">
+              <li v-if="hasPersonaliaSarpras && !hasSarpras">
                 <nuxt-link to="/report/maintenance" class="custom-link text-decoration-none d-flex align-items-center gap-2">
-                  <span class="text animate__animated animate__fadeInRight">Maintenance</span>
+                  <span class="text animate__animated animate__fadeInRight">Kebersihan</span>
                 </nuxt-link>
               </li>
             </ul>
@@ -578,7 +578,7 @@
               </li>
               <!-- Pegawai Menu -->
               <li
-                v-if="['pengampu', 'wali kelas', 'musyrif', 'pengajar'].some(name => hasPermission(name)) || $auth.user.role === 'root' || ( hasPersonalia && hasSarpras )">
+                v-if="['pengampu', 'wali kelas', 'musyrif', 'pengajar'].some(name => hasPermission(name)) || $auth.user.role === 'root' || ( hasPersonalia && !hasPersonaliaSarpras )">
                 <div @click="notClickSub('pegawai')"
                   class="dropdown d-flex align-items-center justify-content-between gap-2">
                   <span class="d-flex align-items-center gap-2">
@@ -640,14 +640,14 @@
                 <!-- sub menu pegawai -->
                 <ul v-if="databaseSubList" class="dropdown-list">
                   <!-- Utama -->
-                  <li v-if="hasPersonalia && hasSarpras">
+                  <li v-if="hasPersonalia && hasSarpras && !hasPersonaliaSarpras">
                     <nuxt-link to="/settings/periode"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Periode</span>
                     </nuxt-link>
                   </li>
                   <!-- Kaldik -->
-                  <li v-if="hasPersonalia && hasSarpras">
+                  <li v-if="hasPersonalia && hasSarpras && !hasPersonaliaSarpras">
                     <nuxt-link to="/settings/kaldik"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Kaldik</span>
@@ -689,14 +689,14 @@
                     </nuxt-link>
                   </li>
                   <!-- Struktur -->
-                  <li v-if="hasPersonalia && hasSarpras">
+                  <li v-if="hasPersonalia && hasSarpras && !hasPersonaliaSarpras">
                     <nuxt-link to="/settings/struktur"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Struktur</span>
                     </nuxt-link>
                   </li>
                   <!-- Authority -->
-                  <li v-if="hasPersonalia && hasSarpras">
+                  <li v-if="hasPersonalia && hasSarpras && !hasPersonaliaSarpras">
                     <nuxt-link to="/settings/authority"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Authority</span>
@@ -778,7 +778,11 @@ export default {
     },
     hasSarpras() {
       return this.unit !== 'sarpras' ? true : false
+      // return this.$auth.user.Jabatan.hasOwnProperty('sarpras');
     },
+    hasPersonaliaSarpras() {
+      return this.$auth.user.Jabatan.sarpras === 'personalia'
+    }
   },
 
   methods: {

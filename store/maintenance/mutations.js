@@ -12,5 +12,10 @@ export default {
   },
   btn(state) {
     state.btn = !state.btn
+  },
+  resetData(state) {
+    state.listLaporan = []
+    state.selectedGedung = ''
+    state.selectedRuang = ''
   }
 }

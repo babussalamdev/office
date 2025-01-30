@@ -41,6 +41,7 @@ export default {
         commit('setState', { key: 'listGedung', value: result})
         commit('setState', { key: 'start', value: formattedDate })
         commit('setState', { key: 'end', value: formattedDate })
+        commit('resetData')
         dispatch('index/submitLoad', null, { root: true })
       }
     } catch (error) {

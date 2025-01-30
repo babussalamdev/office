@@ -4,7 +4,7 @@
       <div class="row mb-3">
         <h2 class="mb-3">Report Maintenance</h2>
         <div class="col-12 col-md-6 d-flex align-items-center">
-          <select name="gedung" class="form-select" style="font-size: 12px;" v-model="selectedGedung">
+          <select name="gedung" class="form-select" style="font-size: 12px;" v-model="selectedGedung" @change="getReport()">
             <option value="" selected disabled>gedung</option>
             <option v-for="(data, index) in listGedung" :key="index" :value="data.SK">{{ data.SK }}</option>
           </select>
@@ -108,10 +108,10 @@ export default {
       }
     }
   },
+  methods: {
+    ...mapActions('maintenance', ['getReport'])
+  },
   watch: {
-    selectedGedung() {
-      this.$store.dispatch('maintenance/getReport')
-    },
     start() {
       if (this.selectedGedung) {
         this.$store.dispatch('maintenance/getReport')
