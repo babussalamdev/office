@@ -781,7 +781,7 @@ export default {
       // return this.$auth.user.Jabatan.hasOwnProperty('sarpras');
     },
     hasPersonaliaSarpras() {
-      return this.$auth.user.Jabatan.sarpras === 'personalia'
+      return this.$auth.user.Jabatan?.sarpras === 'personalia'
     }
   },
 
