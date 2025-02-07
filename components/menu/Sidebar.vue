@@ -53,7 +53,7 @@
                 </nuxt-link>
               </li>
               <!-- Report Laporan -->
-              <li v-if="hasPersonaliaSarpras && !hasSarpras">
+              <li v-if="!hasSarpras && hasPersonaliaSarpras || this.$auth.user.Jabatan?.sarpras === 'koordinator'">
                 <nuxt-link to="/laporan/report" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Report</span>
                 </nuxt-link>
@@ -365,7 +365,7 @@
           </li>
           <!-- Report -->
           <li
-            v-if="hasRoot && ['report mapel', 'report ekskull', 'report absensi', 'report pelanggaran', 'report jurnal', 'report tahfidz'].some(name => hasPermission(name)) || ( hasPersonaliaSarpras && !hasSarpras )">
+            v-if="hasRoot && ['report mapel', 'report ekskull', 'report absensi', 'report pelanggaran', 'report jurnal', 'report tahfidz'].some(name => hasPermission(name)) || ( !hasSarpras && hasPersonaliaSarpras || this.$auth.user.Jabatan?.sarpras === 'koordinator' )">
             <div @click="notClick('listReport')"
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
@@ -477,8 +477,8 @@
                   <span class="text animate__animated animate__fadeInRight">Jurnal</span>
                 </nuxt-link>
               </li>
-              <li v-if="hasPersonaliaSarpras && !hasSarpras">
-                <nuxt-link to="/report/maintenance" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+              <li v-if="!hasSarpras && hasPersonaliaSarpras || this.$auth.user.Jabatan?.sarpras === 'koordinator'">
+                <nuxt-link to="/report/kebersihan" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Kebersihan</span>
                 </nuxt-link>
               </li>
@@ -703,21 +703,21 @@
                     </nuxt-link>
                   </li>
                   <!-- Gedung -->
-                  <li v-if="!hasSarpras && this.$auth.user.Jabatan.sarpras === 'koordinator kebersihan'">
+                  <li v-if="!hasSarpras && hasPersonaliaSarpras">
                     <nuxt-link to="/settings/gedung"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Gedung</span>
                     </nuxt-link>
                   </li>
                   <!-- Ruangan OB -->
-                  <li v-if="!hasSarpras && this.$auth.user.Jabatan.sarpras === 'koordinator kebersihan'">
+                  <li v-if="!hasSarpras && hasPersonaliaSarpras">
                     <nuxt-link to="/settings/ruangan"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Ruangan</span>
                     </nuxt-link>
                   </li>
                   <!-- Job -->
-                  <li v-if="!hasSarpras && this.$auth.user.Jabatan.sarpras === 'koordinator kebersihan'">
+                  <li v-if="!hasSarpras && hasPersonaliaSarpras">
                     <nuxt-link to="/settings/job"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Job</span>

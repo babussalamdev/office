@@ -12,7 +12,7 @@ export default {
     const data = Object.fromEntries(new FormData(event.target))
     const qrcode = state.decodedText.replace(/#/g, '%23')
     try {
-      const result = await this.$apiOB.$get(`get-log?type=report-scan&qrcode=${qrcode}&note=${data.laporan}`)
+      const result = await this.$apiOB.$get(`get-log?type=report-scan&qrcode=${qrcode}&name=${data.laporan}`)
       if (result) {
         Swal.fire({
           text: 'Laporan berhasil terkirim!',

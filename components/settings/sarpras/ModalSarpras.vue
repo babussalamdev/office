@@ -13,8 +13,9 @@
                 <label for="jabatan" class="form-label">Jabatan</label>
                 <select name="Value" id="jabatan" class="form-select" :value="updateData?.Jabatan" required>
                   <option value="" selected disabled>Jabatan</option>
-                  <option value="koordinator kebersihan">Koordinator Kerbersihan</option>
-                  <option value="staff kebersihan">Staff Kebersihan</option>
+                  <option value="koordinator">Koordinator</option>
+                  <option value="kebersihan">Kebersihan</option>
+                  <option value="maintenance">Maintenance</option>
                 </select>
               </div>
             </div>

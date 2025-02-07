@@ -2,7 +2,7 @@
   <div>
     <div class="animate__animated animate__fadeInUp">
       <div class="row mb-3">
-        <h2 class="mb-3">Report Maintenance</h2>
+        <h2 class="mb-3">Report Kebersihan</h2>
         <div class="col-12 col-md-6 d-flex align-items-center">
           <select name="gedung" class="form-select" style="font-size: 12px;" v-model="selectedGedung" @change="getReport()">
             <option value="" selected disabled>gedung</option>
@@ -24,11 +24,12 @@
           <thead>
             <tr>
               <th scope="col" class="text-capitalize">Mulai</th>
-              <th scope="col" class="text-capitalize">Selesai</th>
+              <th scope="col" class="text-capitalize">Selesai/Terkendala</th>
               <th scope="col" class="text-capitalize">Ruangan</th>
-              <th scope="col" class="text-capitalize">PIU</th>
+              <th scope="col" class="text-capitalize">PIC</th>
               <th scope="col" class="text-capitalize">Job</th>
               <th scope="col" class="text-capitalize">Status</th>
+              <th scope="col" class="text-capitalize">Note</th>
             </tr>
           </thead>
           <tbody>
@@ -43,18 +44,19 @@
               </td>
               <td class="text-capitalize" scope="col">
                 <p class="mb-1">
-                  {{ data.Timestamp?.selesai?.split(' ')[0] }}
+                  {{ data.Timestamp?.selesai ? data.Timestamp?.selesai?.split(' ')[0] : (data.Timestamp?.terkendala ? data.Timestamp?.terkendala?.split(' ')[0] : '-') }}
                 </p>
                 <p>
-                  {{ data.Timestamp?.selesai?.split(' ')[1] }}
+                  {{ data.Timestamp?.selesai ? data.Timestamp?.selesai?.split(' ')[1] : (data.Timestamp?.terkendala ? data.Timestamp?.terkendala?.split(' ')[1] : '-') }}
                 </p>
               </td>
               <td class="text-capitalize align-middle" scope="col">{{ data.Name }}</td>
-              <td class="text-capitalize align-middle" scope="col">{{ data.PIU }}</td>
+              <td class="text-capitalize align-middle" scope="col">{{ data.PIC }}</td>
               <td class="text-capitalize align-middle" scope="col">{{ data.Job }}</td>
               <td class="text-capitalize align-middle" scope="col">
-                <span class="py-2 px-2 rounded-2" :class="data.Status === 'sedang dibersihkan' ? 'bg-primary text-white' : data.Status === 'selesai dibersihkan' ? 'bg-success text-white' : 'bg-warning text-dark'">{{ data.Status }}</span>
+                <span class="py-2 px-2 rounded-2" :class="data.Status === 'sedang dibersihkan' ? 'bg-primary text-white' : data.Status === 'selesai dibersihkan' ? 'bg-success text-white'  : data.Status === 'terkendala' ? 'bg-danger text-white' : 'bg-warning text-dark'">{{ data.Status }}</span>
               </td>
+              <td class="text-capitalize align-middle" scope="col">{{ data.Note }}</td>
             </tr>
           </tbody>
         </table>

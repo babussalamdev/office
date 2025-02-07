@@ -23,8 +23,13 @@
         <table class="table table-hover table-striped">
           <thead>
             <tr>
-              <th scope="col" class="text-capitalize">Waktu</th>
+              <th scope="col" class="text-capitalize">Mulai</th>
+              <th scope="col" class="text-capitalize">Proses</th>
+              <th scope="col" class="text-capitalize">Selesai/Terkendala</th>
+              <th scope="col" class="text-capitalize">Job</th>
               <th scope="col" class="text-capitalize">Ruangan</th>
+              <th scope="col" class="text-capitalize">PIU</th>
+              <th scope="col" class="text-capitalize">Status</th>
               <th scope="col" class="text-capitalize">Note</th>
             </tr>
           </thead>
@@ -32,13 +37,34 @@
             <tr v-for="(data, index) in filteredDatas" :key="index">
               <td class="text-capitalize" scope="col">
                 <p class="mb-1">
-                  {{ data.SK.split('#')[1].split(' ')[0] }}
+                  {{ data.SK.split(' ')[0] }}
                 </p>
                 <p>
-                  {{ data.SK.split('#')[1].split(' ')[1] }}
+                  {{ data.SK.split(' ')[1] }}
+                </p>
+              </td>
+              <td class="text-capitalize" scope="col">
+                <p class="mb-1">
+                  {{ data.Timestamp?.proses ? data.Timestamp?.proses?.split(' ')[0] : '-' }}
+                </p>
+                <p>
+                  {{ data.Timestamp?.proses ? data.Timestamp?.proses?.split(' ')[1] : '-' }}
+                </p>
+              </td>
+              <td class="text-capitalize" scope="col">
+                <p class="mb-1">
+                  {{ data.Timestamp?.selesai ? data.Timestamp?.selesai?.split(' ')[0] : (data.Timestamp?.terkendala ? data.Timestamp?.terkendala?.split(' ')[0] : '-') }}
+                </p>
+                <p>
+                  {{ data.Timestamp?.selesai ? data.Timestamp?.selesai?.split(' ')[1] : (data.Timestamp?.terkendala ? data.Timestamp?.terkendala?.split(' ')[1] : '-') }}
                 </p>
               </td>
               <td class="text-capitalize align-middle" scope="col">{{ data.Name }}</td>
+              <td class="text-capitalize align-middle" scope="col">{{ data.Location }}</td>
+              <td class="text-capitalize align-middle" scope="col">{{ data.PIU }}</td>
+              <td class="text-capitalize align-middle" scope="col">
+                <span class="py-2 px-2 rounded-2" :class="data.Status === 'proses' ? 'bg-success text-white' : data.Status === 'selesai' ? 'bg-primary text-white' : data.Status === 'terkendala' ? 'bg-danger text-white' : 'bg-warning text-dark'">{{ data.Status }}</span>
+              </td>
               <td class="text-capitalize align-middle" scope="col">{{ data.Note }}</td>
             </tr>
           </tbody>
@@ -88,7 +114,7 @@ export default {
     },
     listRuangan() {
       if (this.listLaporan) {
-        const unique = [...new Set(this.listLaporan.map(item => item.Name))];
+        const unique = [...new Set(this.listLaporan.map(item => item.Location))];
         return unique
       }
     }
