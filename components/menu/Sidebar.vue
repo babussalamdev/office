@@ -34,7 +34,7 @@
             </nuxt-link>
           </li>
           <!-- Laporan -->
-          <li v-if="hasRoot">
+          <li v-if="hasRoot && !hasSarpras && hasPersonaliaSarpras || this.$auth.user.Jabatan?.sarpras === 'koordinator'">
             <div @click="notClick('listLaporan')"
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
@@ -46,14 +46,8 @@
               <i class="bx bx-chevron-down"></i>
             </div>
             <ul v-if="listLaporan" class="dropdown-list">
-              <!-- Scan -->
-              <li>
-                <nuxt-link to="/laporan/scan" class="custom-link text-decoration-none d-flex align-items-center gap-2">
-                  <span class="text animate__animated animate__fadeInRight">Scan</span>
-                </nuxt-link>
-              </li>
               <!-- Report Laporan -->
-              <li v-if="!hasSarpras && hasPersonaliaSarpras || this.$auth.user.Jabatan?.sarpras === 'koordinator'">
+              <li>
                 <nuxt-link to="/laporan/report" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Report</span>
                 </nuxt-link>
@@ -726,6 +720,18 @@
                 </ul>
               </li>
             </ul>
+          </li>
+
+          <!-- scan  -->
+          <li>
+            <nuxt-link to="/laporan/scan" class="text-decoration-none d-flex align-items-center gap-2">
+              <i class="material-icons animate__animated animate__fadeInRight">
+                <span class="material-symbols-outlined">
+                  qr_code_scanner
+                </span>
+              </i>
+              <span class="text animate__animated animate__fadeInRight">Scan</span>
+            </nuxt-link>
           </li>
           <!-- Settings PSB -->
           <!-- <li v-if="!hasRoot">

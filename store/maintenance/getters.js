@@ -5,8 +5,14 @@ export default {
     });
     return dataJson
   },
+  getSelectedMode(state) {
+    return state.selectedMode
+  },
   getSelectedGedung(state) {
     return state.selectedGedung
+  },
+  getSelectedCrew(state) {
+    return state.selectedCrew
   },
   getSelectedRuang(state) {
     return state.selectedRuang

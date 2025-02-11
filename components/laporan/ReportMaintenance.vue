@@ -3,18 +3,23 @@
     <div class="animate__animated animate__fadeInUp">
       <div class="row mb-3">
         <h2 class="mb-3">Report Kebersihan</h2>
-        <div class="col-12 col-md-6 d-flex align-items-center">
-          <select name="gedung" class="form-select" style="font-size: 12px;" v-model="selectedGedung" @change="getReport()">
-            <option value="" selected disabled>gedung</option>
+        <div class="col-12 col-md-6 d-flex align-items-center mb-1 mb-md-0">
+          <select class="form-select" style="font-size: 12px;" v-model="selectedMode">
+            <option value="" selected disabled>Mode</option>
+            <option value="gedung">Gedung</option>
+            <option value="crew">Crew</option>
+          </select>
+          <select v-if="selectedMode === 'gedung'" class="form-select" style="font-size: 12px;" v-model="selectedGedung" @change="getReport()">
+            <option value="" selected disabled>Select</option>
             <option v-for="(data, index) in listGedung" :key="index" :value="data.SK">{{ data.SK }}</option>
           </select>
-          <select name="ruangan" class="form-select" style="font-size: 12px;" v-model="selectedRuang">
-            <option value="" selected>All</option>
-            <option v-for="(data, index) in listRuangan" :key="index" :value="data">{{ data }}</option>
+          <select v-if="selectedMode === 'crew'" class="form-select" style="font-size: 12px;" v-model="selectedCrew" @change="getReport()">
+            <option value="" selected disabled>Select</option>
+            <option v-for="(data, index) in listCrew" :key="index" :value="data">{{ data.Nama }}</option>
           </select>
         </div>
         <div class="col-12 col-md-6 d-flex justify-content-end">
-          <input type="date" style="font-size: 12px;" class="form-control" v-model="start">
+          <input type="date" style="font-size: 12px; max-width: fit-content;" class="form-control" v-model="start">
           <input type="date" style="font-size: 12px;" class="form-control" v-model="end">
           <button class="btn btn-sm btn-success" style="font-size: 12px;">Export</button>
         </div>
@@ -33,7 +38,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(data, index) in filteredDatas" :key="index">
+            <tr v-for="(data, index) in listLaporan" :key="index">
               <td class="text-capitalize" scope="col">
                 <p class="mb-1">
                   {{ data.SK.split('#')[1].split(' ')[0] }}
@@ -69,8 +74,8 @@
 import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
 export default {
   computed: {
-    ...mapState('maintenance', ['listGedung', 'listLaporan']),
-    ...mapGetters('maintenance', ['getSelectedGedung', 'getSelectedRuang', 'getStart', 'getEnd', 'filteredDatas']),
+    ...mapState('maintenance', ['listGedung', 'listLaporan', 'listCrew']),
+    ...mapGetters('maintenance', ['getSelectedGedung', 'getSelectedCrew', 'getSelectedMode', 'getStart', 'getEnd']),
     selectedGedung: {
       get() {
         return this.getSelectedGedung
@@ -79,12 +84,20 @@ export default {
         this.$store.commit('maintenance/setState', { key: 'selectedGedung', value })
       }
     },
-    selectedRuang: {
+    selectedCrew: {
       get() {
-        return this.getSelectedRuang
+        return this.getSelectedCrew
       },
       set(value) {
-        this.$store.commit('maintenance/setState', { key: 'selectedRuang', value })
+        this.$store.commit('maintenance/setState', { key: 'selectedCrew', value })
+      }
+    },
+    selectedMode: {
+      get() {
+        return this.getSelectedMode
+      },
+      set(value) {
+        this.$store.commit('maintenance/setState', { key: 'selectedMode', value })
       }
     },
     start: {
@@ -103,24 +116,18 @@ export default {
         this.$store.commit('maintenance/setState', { key: 'end', value })
       }
     },
-    listRuangan() {
-      if (this.listLaporan) {
-        const unique = [...new Set(this.listLaporan.map(item => item.Name))];
-        return unique
-      }
-    }
   },
   methods: {
     ...mapActions('maintenance', ['getReport'])
   },
   watch: {
     start() {
-      if (this.selectedGedung) {
+      if (this.selectedMode) {
         this.$store.dispatch('maintenance/getReport')
       }
     },
     end() {
-      if (this.selectedGedung) {
+      if (this.selectedMode) {
         this.$store.dispatch('maintenance/getReport')
       }
     }

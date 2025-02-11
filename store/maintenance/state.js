@@ -2,9 +2,11 @@ export default () => ({
   decodedText: '',
   btn: true,
   listGedung: [],
+  listCrew: [],
   listLaporan: [],
+  selectedMode: '',
   selectedGedung: '',
-  selectedRuang: '',
+  selectedCrew: '',
   start: '',
   end: '',
 })

@@ -36,9 +36,12 @@ export default {
   async changeUnitReport({ commit, dispatch, state }) {
     dispatch('index/submitLoad', null, { root: true })
     try {
-      const result = await this.$apiOB.$get(`get-default?type=gedung`)
-      if (result) {
-        commit('setState', { key: 'listGedung', value: result})
+      const reqGedung = this.$apiOB.$get(`get-default?type=gedung`)
+      const reqCrew = this.$apiBase.$get(`get-pegawai?type=crew&program=sarpras&Jabatan=kebersihan`)
+      const [ resGedung, resCrew ] = await Promise.all([ reqGedung, reqCrew ])
+      if (resGedung && reqCrew) {
+        commit('setState', { key: 'listGedung', value: resGedung})
+        commit('setState', { key: 'listCrew', value: resCrew})
         commit('setState', { key: 'start', value: formattedDate })
         commit('setState', { key: 'end', value: formattedDate })
         commit('resetData')
@@ -59,9 +62,15 @@ export default {
     const start = state.start
     const end = state.end
     const gedung = state.selectedGedung
+    const person = state.selectedCrew.SK
     commit('setState', { key: 'selectedRuang', value: '' })
     try {
-      const result = await this.$apiOB.$get(`get-log?mode=gedung&startdate=${start}&enddate=${end}&gedung=${gedung}`)
+      let result
+      if (state.selectedGedung) {
+        result = await this.$apiOB.$get(`get-log?mode=gedung&startdate=${start}&enddate=${end}&gedung=${gedung}`)
+      } else {
+        result = await this.$apiOB.$get(`get-log?mode=person&startdate=${start}&enddate=${end}&person=${person}`)
+      }
       if (result) {
         commit('setState', { key: 'listLaporan', value: result })
         dispatch('index/submitLoad', null, { root: true })

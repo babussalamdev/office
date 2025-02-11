@@ -3,15 +3,15 @@
     <div class="animate__animated animate__fadeInUp">
       <div class="row mb-3">
         <h2 class="mb-3">Report Laporan</h2>
-        <div class="col-12 col-md-6 d-flex align-items-center">
+        <div class="col-12 col-md-6 d-flex align-items-center mb-1 mb-md-0">
           <select name="gedung" class="form-select" style="font-size: 12px;" v-model="selectedGedung" @change="getReport()">
             <option value="" selected disabled>gedung</option>
             <option v-for="(data, index) in listGedung" :key="index" :value="data.SK">{{ data.SK }}</option>
           </select>
-          <select name="ruangan" class="form-select" style="font-size: 12px;" v-model="selectedRuang">
+          <!-- <select name="ruangan" class="form-select" style="font-size: 12px;" v-model="selectedRuang">
             <option value="" selected>All</option>
             <option v-for="(data, index) in listRuangan" :key="index" :value="data">{{ data }}</option>
-          </select>
+          </select> -->
         </div>
         <div class="col-12 col-md-6 d-flex justify-content-end">
           <input type="date" style="font-size: 12px;" class="form-control" v-model="start">

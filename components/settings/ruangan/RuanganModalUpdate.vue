@@ -15,7 +15,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="resetUpdateData()">Close</button>
               <span>
                 <button v-if="btn" type="submit" class="btn btn-primary">Simpan</button>
                 <button v-else class="btn btn-primary" type="button" disabled>
@@ -68,6 +68,7 @@ export default {
   },
   methods: {
     ...mapActions('ruangan', ['updateRuangan']),
+    ...mapMutations('ruangan', ['resetUpdateData']),
     addTag(newTag) {
       const tag = {
         name: newTag,

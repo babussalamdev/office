@@ -46,5 +46,11 @@ export default {
     state.value = []
     state.updateData = ''
     $('#ruanganModalUpdate').modal('hide')
+  },
+
+  // reset
+  resetUpdateData(state) {
+    state.value = []
+    state.updateData = ''
   }
 }
