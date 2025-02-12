@@ -2,7 +2,7 @@
   <section id="home">
     <!-- <button @click="showNotification">Show Notifications</button> -->
     <div v-if="unit" class="home animate__animated animate__fadeIn">
-      <div v-if="$auth.user.role !== 'root'">
+      <div v-if="$auth.user.role !== 'root' && unit !== 'sarpras'">
         <Chart />
         <div class="row">
           <div class="col-12 col-lg-6 mb-3 h-100">
@@ -36,6 +36,9 @@
             <span class="tooltip">reload</span>
           </button>
         </div>
+      </div>
+      <div v-if="unit === 'sarpras'">
+        <ChartSarpras />
       </div>
       <div v-if="$auth.user.role === 'root'">
         <ChartAdmin />

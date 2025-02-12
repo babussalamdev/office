@@ -7,6 +7,10 @@ export default {
       );
       commit('setChartAdmin', result);
       dispatch('index/submitLoad', null, { root: true })
+    } else if (data === 'sarpras') {
+      const result = await this.$apiOB.$get(`get-dashboard`)
+      commit('setChartSarpras', result)
+      dispatch('index/submitLoad', null, { root: true })
     } else {
       const result = await this.$apiSantri.$get(
         `get-dashboard-sisalam?program=${data}`

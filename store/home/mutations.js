@@ -57,6 +57,9 @@ export default {
       }
     });
   },
+  setChartSarpras(state, value) {
+    state.sarprasData = value
+  },
   setChart(state, value) {
     // chart class
     const izinData = [];
