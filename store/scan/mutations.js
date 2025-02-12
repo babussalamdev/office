@@ -17,5 +17,35 @@ export default {
     state.listLaporan = []
     state.selectedGedung = ''
     state.selectedRuang = ''
-  }
+  },
+
+  // Report
+  inputToReport(state, data) {
+    state.updateToReport = data
+    $('#modalInputReport').modal('show')
+  },
+  inputReport(state, data) {
+    const i = state.listLaporan.findIndex((x) => x.SK === data)
+    state.listLaporan.splice(i, 1)
+    $('#modalInputReport').modal('hide')
+    $('#formInputReport')[0].reset()
+  },
+  deleteReport(state, data) {
+    const i = state.listLaporan.findIndex((x) => x.SK === data)
+    state.listLaporan.splice(i, 1)
+  },
+
+  // activity
+  updateToActivity(state, data) {
+    const datas = state.activity.find((x) => x.SK === data)
+    state.updateToActivity = datas
+    $('#modalUpdateActivity').modal('show')
+  },
+  updateActivity(state, data) {
+    const i = state.activity.findIndex((x) => x.SK === data.SK)
+    state.activity[i].Timestamp.menunggu = data.Timestamp.menunggu
+    state.activity[i].PIC = data.PIC
+    $('#modalUpdateActivity').modal('hide')
+    $('#formUpdateActivity')[0].reset()
+  },
 }

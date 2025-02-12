@@ -2,9 +2,18 @@ export default () => ({
   decodedText: '',
   btn: true,
   listGedung: [],
-  listLaporan: [],
-  selectedGedung: '',
-  selectedRuang: '',
+  listPegawai: [],
   start: '',
   end: '',
+
+  // report
+  updateToReport: '',
+  listLaporan: [],
+
+  // performance
+  performance: [],
+
+  // activity
+  activity: [],
+  updateToActivity: ''
 })

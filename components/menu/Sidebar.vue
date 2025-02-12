@@ -34,7 +34,7 @@
             </nuxt-link>
           </li>
           <!-- Laporan -->
-          <li v-if="hasRoot && !hasSarpras && hasPersonaliaSarpras || this.$auth.user.Jabatan?.sarpras === 'koordinator'">
+          <li v-if="hasRoot">
             <div @click="notClick('listLaporan')"
               class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
@@ -47,9 +47,20 @@
             </div>
             <ul v-if="listLaporan" class="dropdown-list">
               <!-- Report Laporan -->
-              <li>
+              <li v-if="!hasSarpras && hasPersonaliaSarpras">
                 <nuxt-link to="/laporan/report" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Report</span>
+                </nuxt-link>
+              </li>
+              <li>
+                <nuxt-link to="/laporan/activity" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Activity</span>
+                </nuxt-link>
+              </li>
+              <!-- Performance Laporan -->
+              <li v-if="!hasSarpras && hasPersonaliaSarpras">
+                <nuxt-link to="/laporan/performance" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Performance</span>
                 </nuxt-link>
               </li>
             </ul>

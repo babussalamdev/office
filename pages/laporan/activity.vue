@@ -1,7 +1,7 @@
 <template>
   <section id="laporan">
     <div class="laporan">
-      <ReportLaporan />
+      <ActivityLaporan />
     </div>
   </section>
 </template>
@@ -9,7 +9,7 @@
 <script>
   export default {
     async asyncData({ store }) {
-      store.dispatch('scan/changeUnitReport')
+      store.dispatch('scan/changeUnitActivity')
     }
   }
 </script>
