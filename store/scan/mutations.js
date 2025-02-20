@@ -41,6 +41,13 @@ export default {
     state.updateToActivity = datas
     $('#modalUpdateActivity').modal('show')
   },
+  addActivity(state, data) {
+    state.activity.push(data)
+    $('#modalAddActivity').modal('hide')
+    $('#formAddActivity')[0].reset()
+    state.selectedGedung = ''
+    state.selectedRuang = ''
+  },
   updateActivity(state, data) {
     const i = state.activity.findIndex((x) => x.SK === data.SK)
     state.activity[i].Timestamp.menunggu = data.Timestamp.menunggu

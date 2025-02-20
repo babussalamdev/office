@@ -8,6 +8,7 @@ export default () => ({
     listLaundry: false,
     listEkskull: false,
     listLaporan: false,
+    listKebersihan: false,
     absensiSubList: false,
     santriSubList: false,
     pegawaiSubList: false,

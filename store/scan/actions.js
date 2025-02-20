@@ -117,10 +117,12 @@ export default {
     try {
       const reqActivity = this.$apiOB.$get(`get-log?method=activity`)
       const reqPegawai = this.$apiBase.$get(`get-pegawai?type=crew&program=sarpras&Jabatan=maintenance`)
-      const [resActivity, resPegawai] = await Promise.all([reqActivity, reqPegawai])
-      if (resActivity, resPegawai) {
+      const reqGedung = this.$apiOB.$get('get-default?type=gedung')
+      const [resActivity, resPegawai, resGedung] = await Promise.all([reqActivity, reqPegawai, reqGedung])
+      if (resActivity, resPegawai, reqGedung) {
         commit('setState', { key: 'activity', value: resActivity })
         commit('setState', { key: 'listPegawai', value: resPegawai })
+        commit('setState', { key: 'gedungActivity', value: resGedung })
         dispatch('index/submitLoad', null, { root: true })
       }
     } catch (error) {
@@ -154,6 +156,61 @@ export default {
         });
         result['SK'] = sk
         commit('updateActivity', result)
+        commit('btn')
+      }
+    } catch (error) {
+      commit('btn')
+      Swal.fire({
+        text: error,
+        icon: "error",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  },
+  async getRuanganActivity({ commit, dispatch, state }) {
+    dispatch('index/submitLoad', null, { root: true })
+    try {
+      const result = await this.$apiOB.$get(`get-default?value=${state.selectedGedung}`)
+      if (result) {
+        commit('setState', { key: 'ruanganActivity', value: result.ruang })
+        dispatch('index/submitLoad', null, { root: true })
+      }
+    } catch (error) {
+      dispatch('index/submitLoad', null, { root: true })
+      Swal.fire({
+        text: error,
+        icon: "error",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  },
+  async addActivity({ commit, state }, event) {
+    commit('btn')
+    const data = Object.fromEntries(new FormData(event.target))
+    console.log(data)
+    console.log(state.selectedRuang)
+    const request = {
+      Code: state.selectedRuang.SK,
+      Gedung: state.selectedGedung,
+      Name: data.Name,
+      Location: state.selectedRuang.Name,
+      PIC: data.PIC,
+      Timestamp: {
+        menunggu: `${data.date} ${data.time}`
+      }
+    }
+    try {
+      const result = await this.$apiOB.$put(`update-log?type=my-job-maintenance&step=report-create`, request)
+      if (result) {
+        Swal.fire({
+          text: 'Laporan berhasil ditambahkan!',
+          icon: "success",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        commit('addActivity', result)
         commit('btn')
       }
     } catch (error) {
