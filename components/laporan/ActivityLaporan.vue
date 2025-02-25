@@ -1,7 +1,14 @@
 <template>
   <div>
     <div class="animate__animated animate__fadeInUp">
-      <h2 class="mb-3">Activity Laporan</h2>
+      <div class="row mb-3">
+        <div class="col-12 col-md-6 d-flex align-items-center mb-1 mb-md-0">
+          <h2 class="">Activity Laporan</h2>
+        </div>
+        <div class="col-12 col-md-6 d-flex justify-content-end">
+          <button class="btn btn-sm btn-primary" style="font-size: 12px;" type="button" data-bs-toggle="modal" data-bs-target="#modalAddActivity">Add +</button>
+        </div>
+      </div>
       <div class="table-responsive">
         <table class="table table-hover table-striped">
           <thead>
@@ -11,9 +18,9 @@
               <!-- <th scope="col" class="text-capitalize">Selesai/Terkendala</th> -->
               <th scope="col" class="text-capitalize">Job</th>
               <th scope="col" class="text-capitalize">Ruangan</th>
-              <th scope="col" class="text-capitalize">PIU</th>
+              <th scope="col" class="text-capitalize">PIC</th>
               <th scope="col" class="text-capitalize">Status</th>
-              <th scope="col" class="text-capitalize text-end pe-4" v-if="unit === 'sarpras'">Action</th>
+              <th scope="col" class="text-capitalize text-end pe-4" v-if="unit === 'sarpras' && hasPersonaliaSarpras">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -52,7 +59,7 @@
                   :class="data.Status === 'proses' ? 'bg-success text-white' : data.Status === 'selesai' ? 'bg-primary text-white' : data.Status === 'terkendala' ? 'bg-danger text-white' : 'bg-warning text-dark'">{{
                     data.Status }}</span>
               </td>
-              <td class="text-end align-middle" v-if="unit === 'sarpras'">
+              <td class="text-end align-middle" v-if="unit === 'sarpras' && hasPersonaliaSarpras">
                 <a v-if="data.Status === 'menunggu'" href="javascript:;" @click="updateToActivity(data.SK)">
                   <button class="btn btn-sm btn-warning">
                     <i class="bx bx-pencil text-dark"></i>
@@ -77,6 +84,9 @@ export default {
   computed: {
     ...mapState('scan', ['activity']),
     ...mapState("index", ["unit"]),
+    hasPersonaliaSarpras() {
+      return this.$auth.user.Jabatan?.sarpras === 'personalia'
+    }
   },
   methods: {
     ...mapMutations('scan', ['updateToActivity'])

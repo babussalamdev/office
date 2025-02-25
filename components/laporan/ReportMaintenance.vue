@@ -59,7 +59,7 @@
               <td class="text-capitalize align-middle" scope="col">{{ data.PIC }}</td>
               <td class="text-capitalize align-middle" scope="col">{{ data.Job }}</td>
               <td class="text-capitalize align-middle" scope="col">
-                <span class="py-2 px-2 rounded-2" :class="data.Status === 'sedang dibersihkan' ? 'bg-primary text-white' : data.Status === 'selesai dibersihkan' ? 'bg-success text-white'  : data.Status === 'terkendala' ? 'bg-danger text-white' : 'bg-warning text-dark'">{{ data.Status }}</span>
+                <span class="py-2 px-2 rounded-2" :class="data.Status === 'sedang dibersihkan' ? 'bg-info text-dark' : data.Status === 'selesai dibersihkan' ? 'bg-primary text-white'  : data.Status === 'terkendala' ? 'bg-warning text-dark' : data.Status === 'tertunda' ? 'bg-secondary text-white' : data.Status === 'done' ? 'bg-success text-white' : 'bg-danger text-white'">{{ data.Status }}</span>
               </td>
               <td class="text-capitalize align-middle" scope="col">{{ data.Note }}</td>
             </tr>

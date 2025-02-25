@@ -15,5 +15,9 @@ export default () => ({
 
   // activity
   activity: [],
-  updateToActivity: ''
+  updateToActivity: '',
+  gedungActivity: [],
+  ruanganActivity: [],
+  selectedGedung: '',
+  selectedRuang: ''
 })

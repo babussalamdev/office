@@ -33,6 +33,27 @@
               <span class="text animate__animated animate__fadeInRight">Kaldik</span>
             </nuxt-link>
           </li>
+          <li v-if="hasRoot && !hasSarpras && this.$auth.user.Jabatan?.sarpras === 'koordinator'">
+            <div @click="notClick('listKebersihan')"
+              class="dropdown d-flex align-items-center justify-content-between gap-2">
+              <span class="d-flex align-items-center gap-2">
+                <i class="material-symbols-outlined animate__animated animate__fadeInRight">
+                  mop
+                </i>
+                <span class="text animate__animated animate__fadeInRight">Kebersihan</span>
+              </span>
+              <i class="bx bx-chevron-down"></i>
+            </div>
+            <ul v-if="listKebersihan" class="dropdown-list">
+              <!-- Report Laporan -->
+              <li>
+                <nuxt-link to="/kebersihan/rekap" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Progress</span>
+                </nuxt-link>
+              </li>
+            </ul>
+          </li>
+
           <!-- Laporan -->
           <li v-if="hasRoot">
             <div @click="notClick('listLaporan')"
@@ -715,14 +736,14 @@
                     </nuxt-link>
                   </li>
                   <!-- Ruangan OB -->
-                  <li v-if="!hasSarpras && hasPersonaliaSarpras">
+                  <li v-if="!hasSarpras && this.$auth.user.Jabatan?.sarpras === 'koordinator'">
                     <nuxt-link to="/settings/ruangan"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Ruangan</span>
                     </nuxt-link>
                   </li>
                   <!-- Job -->
-                  <li v-if="!hasSarpras && hasPersonaliaSarpras">
+                  <li v-if="!hasSarpras && this.$auth.user.Jabatan?.sarpras === 'koordinator'">
                     <nuxt-link to="/settings/job"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Job</span>
@@ -782,7 +803,7 @@ export default {
   // },
   computed: {
     ...mapState("index", ["unit", "permissions", "pengajar", "pengampu", "personalia"]),
-    ...mapState("sidebar", ["activeMenu", "listAsrama", "listTahfidz", "listSettings", 'listEkskull', "listKelas", "listReport", 'listLaundry', 'listLaporan',
+    ...mapState("sidebar", ["activeMenu", "listAsrama", "listTahfidz", "listSettings", 'listEkskull', "listKelas", "listReport", 'listLaundry', 'listLaporan', 'listKebersihan',
       "absensiSubList", "santriSubList", "pegawaiSubList", "databaseSubList", 'tahfidzSubList', 'tahfidz2SubList', 'kelasSubList', 'settingLaundrySubList', 'isSidebar', 'isSidebarOpen']),
     permissionsIzin() {
       return this.$store.state.asramaAbsensi.permissions

@@ -68,6 +68,7 @@ export default {
       '~/components/home',
       '~/components/menu',
       '~/components/laporan',
+      '~/components/kebersihan',
       '~/components/asrama',
       '~/components/ekskull',
       '~/components/ekskull/nilai',

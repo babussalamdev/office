@@ -8,7 +8,8 @@ export default {
       commit('setChartAdmin', result);
       dispatch('index/submitLoad', null, { root: true })
     } else if (data === 'sarpras') {
-      const result = await this.$apiOB.$get(`get-dashboard`)
+      const jabatan = this.$auth.user.Jabatan?.sarpras
+      const result = await this.$apiOB.$get(`get-dashboard?jabatan=${jabatan}`)
       commit('setChartSarpras', result)
       dispatch('index/submitLoad', null, { root: true })
     } else {
