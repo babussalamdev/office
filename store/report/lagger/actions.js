@@ -115,7 +115,8 @@ export default {
     const tahun = state.selectedLabel
     const semester = state.selectedSemester.Semester
     const kelas = this.$auth.user.Kelas[program] === 'off' ? state.selectedKelas : this.$auth.user.Kelas[program]
-    const type1 = state.selectedMapel
+    const type1 = state.selectedMapel.includes('+') ? encodeURIComponent(state.selectedMapel) : state.selectedMapel
+    console.log(type1)
     const type2 = state.selectedQuran
     if (state.selectedMapel && state.selectedQuran) {
       const result = await this.$apiSantri.$get(`get-leger-sisalam?program=${program}&tahun=${tahun}&semester=${semester}&kelas=${kelas}&methode=separate&type1=${type1}&type2=${type2}`)
