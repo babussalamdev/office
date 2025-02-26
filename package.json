@@ -1,6 +1,6 @@
 {
   "name": "sisalam",
-  "version": "2.2.12",
+  "version": "2.3.0",
   "private": true,
   "scripts": {
     "dev": "nuxt",

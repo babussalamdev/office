@@ -21,6 +21,7 @@ export default () => ({
     pagi: '',
     sore: '',
     updateData: '',
+    list: [],
     date: tanggalDalamFormat,
     btn: true,
     updateDataCatatan: '',

@@ -135,6 +135,7 @@ export default {
       '~/components/settings/absensi/asrama',
       '~/components/settings/absensi/tahfidz',
       '~/components/settings/absensi/tahfidz/monitoring',
+      '~/components/settings/absensi/tahfidz/absensi',
       '~/components/settings/absensi/kelas',
       '~/components/settings/setupabsensi',
       '~/components/settings/setuppelanggaran',

@@ -16,6 +16,10 @@ export default {
     }
 
   },
+  setAbsen(state, data) {
+    const activeSKs = data.filter(item => item.Status === 'active').map(item => item.SK);
+    state.list = activeSKs
+  },
   updateAbsen(state, value) {
     const i = state.santri.findIndex((x) => x.SK === value.SK)
     const data = state.santri[i]

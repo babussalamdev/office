@@ -3,7 +3,7 @@
     <div class="row mb-3">
       <div class="col-12 col-md-6 mb-2 mb-md-0">
         <div class="input-group d-flex align-items-center">
-          <span class="input-group-text bg-secondary text-white" id="basic-addon1">{{ pegawai.length }} Santri</span>
+          <span class="input-group-text bg-secondary text-white" id="basic-addon1">{{ pegawai.length }} Pegawai</span>
           <button class="btn btn-success border-0" @click="exportToExcel"
           :disabled="pegawai.length > 0 ? false : true">Export</button>
         </div>

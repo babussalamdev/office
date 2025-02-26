@@ -13,11 +13,11 @@ export default () => ({
     { name: "musyrif", code: 7 },
     { name: "pengajar", code: 8 },
     { name: "setup halaqah", code: 9 },
-    { name: "setup asrama", code: 10 },
-    { name: "setup kelas", code: 11 },
-    { name: "setup mapel", code: 12 },
-    { name: "setup pelanggaran", code: 13 },
-    { name: "setup absensi", code: 14 },
+    { name: "setup absensi halaqah", code: 10 },
+    { name: "setup asrama", code: 11 },
+    { name: "setup kelas", code: 12 },
+    { name: "setup mapel", code: 13 },
+    { name: "setup pelanggaran", code: 14 },
     { name: "setup nilai quran", code: 15 },
     { name: "report mapel", code: 16 },
     { name: "report tahfidz", code: 17 },
@@ -34,8 +34,8 @@ export default () => ({
     { name: "card", code: 28 },
     { name: "none", code: 29 },
     { name: "authority", code: 30 },
-    { name: "sarpras", code: 31 },
-  ],
+    { name: "sarpras", code: 31 }
+],
 
   // partikel
   updateData: "",

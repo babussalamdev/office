@@ -15,8 +15,8 @@
             <tr>
               <th scope="col">Nama / NIS</th>
               <th scope="col">Asrama</th>
-              <th scope="col" class="text-center">Pagi</th>
-              <th scope="col" class="text-center">Sore</th>
+              <th scope="col" class="text-center text-capitalize" v-for="waktu in list" :key="waktu">{{ waktu }}</th>
+              <!-- <th scope="col" class="text-center">Sore</th> -->
               <th scope="col" class="text-end">Note</th>
               <!-- <th scope="col" class="text-end">Action</th> -->
             </tr>
@@ -46,8 +46,40 @@
                   {{ data.Logs?.asrama.status }}
                 </span>
               </td>
+              <td v-for="waktu in list" :key="waktu" class="text-capitalize py-2">
+                <div class="select-input mx-auto">
+                  <div class="box-radio">
+                    <button
+                      @click="setAbsensi(data.SK, 'absen', waktu, data.Logs?.halaqah?.[waktu]?.status, data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0])"
+                      :class="(!data.Logs?.halaqah?.[waktu]?.status || (data.Logs?.halaqah?.[waktu]?.status === '' && data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.halaqah?.[waktu]?.status && data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.halaqah?.[waktu]?.status === 'absen' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="(data.Logs?.halaqah?.[waktu]?.status && data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0] === date && (data.Logs?.halaqah?.[waktu]?.status !== '' && data.Logs?.halaqah?.[waktu]?.status !== 'absen')) ? true : false"
+                    >Absen</button>
+                  </div>
+                  <div class="box-radio">
+                    <button
+                      @click="setAbsensi(data.SK, 'terlambat', waktu, data.Logs?.halaqah?.[waktu]?.status, data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0])"
+                      :class="(!data.Logs?.halaqah?.[waktu]?.status || (data.Logs?.halaqah?.[waktu]?.status === '' && data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.halaqah?.[waktu]?.status && data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.halaqah?.[waktu]?.status === 'terlambat' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="(data.Logs?.halaqah?.[waktu]?.status && data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0] === date && (data.Logs?.halaqah?.[waktu]?.status !== '' && data.Logs?.halaqah?.[waktu]?.status !== 'terlambat')) ? true : false"
+                    >Terlambat</button>
+                  </div>
+                  <div class="box-radio">
+                    <button
+                      @click="setAbsensi(data.SK, 'sakit', waktu, data.Logs?.halaqah?.[waktu]?.status, data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0])"
+                      :class="(!data.Logs?.halaqah?.[waktu]?.status || (data.Logs?.halaqah?.[waktu]?.status === '' && data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.halaqah?.[waktu]?.status && data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.halaqah?.[waktu]?.status === 'sakit' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="(data.Logs?.halaqah?.[waktu]?.status && data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0] === date && (data.Logs?.halaqah?.[waktu]?.status !== '' && data.Logs?.halaqah?.[waktu]?.status !== 'sakit')) ? true : false"
+                    >Sakit</button>
+                  </div>
+                  <div class="box-radio">
+                    <button
+                      @click="setAbsensi(data.SK, 'izin', waktu, data.Logs?.halaqah?.[waktu]?.status, data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0])"
+                      :class="(!data.Logs?.halaqah?.[waktu]?.status || (data.Logs?.halaqah?.[waktu]?.status === '' && data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0] === date)) ? 'bg-white' : (data.Logs?.halaqah?.[waktu]?.status && data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0] !== date) ? 'bg-white' : data.Logs?.halaqah?.[waktu]?.status === 'izin' ? 'bg-primary text-white border-0' : 'bg-secondary text-white border-0'"
+                      :disabled="(data.Logs?.halaqah?.[waktu]?.status && data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0] === date && (data.Logs?.halaqah?.[waktu]?.status !== '' && data.Logs?.halaqah?.[waktu]?.status !== 'izin')) ? true : false"
+                    >Izin</button>
+                  </div>
+                </div>
+              </td>
               <!-- pagi -->
-              <td class="text-capitalize py-2">
+              <!-- <td class="text-capitalize py-2">
                 <div class="select-input mx-auto">
                   <div class="box-radio">
                     <button
@@ -74,10 +106,10 @@
                       :disabled="(data.Logs?.halaqah?.pagi?.status && data.Logs?.halaqah?.pagi?.time?.split(' ')[0] === date && (data.Logs?.halaqah?.pagi?.status !== '' && data.Logs?.halaqah?.pagi?.status !== 'izin')) ? true : false">Izin</button>
                   </div>
                 </div>
-              </td>
+              </td> -->
 
               <!-- sore -->
-              <td class="text-capitalize py-2">
+              <!-- <td class="text-capitalize py-2">
                 <div class="select-input mx-auto">
                   <div class="box-radio">
                     <button
@@ -104,7 +136,7 @@
                       :disabled="(data.Logs?.halaqah?.sore?.status && data.Logs?.halaqah?.sore?.time?.split(', ')[0] === date && (data.Logs?.halaqah?.sore?.status !== '' && data.Logs?.halaqah?.sore?.status !== 'izin')) ? true : false">Izin</button>
                   </div>
                 </div>
-              </td>
+              </td> -->
 
               <!-- note -->
               <td class="align-middle text-end">
@@ -148,6 +180,7 @@ export default {
       select: state => state.select,
       date: state => state.date,
       updateData: state => state.updateData,
+      list: state => state.list
     }),
     ...mapState("index", {
       permissionsIndex: state => state.permissions, // Alias untuk permissions di modul index

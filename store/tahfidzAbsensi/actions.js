@@ -15,11 +15,14 @@ export default {
     } else {
       subject = 'kelas'
     }
-    const reqSantri = await this.$apiSantri.$get(
+    const reqAbsen = this.$apiBase.$get(`get-settings?type=session&sk=${program}`)
+    const reqSantri = this.$apiSantri.$get(
       `get-absensi-sisalam?type=every&subject=halaqah&program=${program}&value=${halaqah}`
     );
-    if (reqSantri) {
-      commit('setSantriTahfidz', reqSantri);
+    const [ resAbsen, resSantri ] = await Promise.all([ reqAbsen, reqSantri ])
+    if (resAbsen, resSantri) {
+      commit('setSantriTahfidz', resSantri);
+      commit('setAbsen', resAbsen);
       dispatch('index/submitLoad', null, { root: true })
     }
   },
@@ -118,8 +121,11 @@ export default {
   async getDataMonitoring({ commit, state, dispatch }) {
     dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
-    const result = await this.$apiBase.$get(`get-settings?sk=${program}&type=halaqah`)
-    commit('setMonitoring', result)
+    const reqSettings = this.$apiBase.$get(`get-settings?sk=${program}&type=halaqah`)
+    const reqAbsen = this.$apiBase.$get(`get-settings?type=session&sk=${program}`)
+    const [resSettings, resAbsen] = await Promise.all([reqSettings, reqAbsen])
+    commit('setMonitoring', resSettings)
+    commit('setAbsen', resAbsen)
     dispatch('index/submitLoad', null, { root: true })
   },
   async getUnitMonitoring({ commit, dispatch, state }, data) {
