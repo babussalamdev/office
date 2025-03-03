@@ -55,6 +55,7 @@ export default {
     logout() {
       this.$cookies.remove("AccessToken");
       localStorage.removeItem("program");
+      localStorage.removeItem("subject")
       this.$store.commit("index/removeAll");
       this.$store.commit("navbar/removeUnit")
       this.$auth.logout();
