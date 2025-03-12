@@ -1,13 +1,26 @@
 export default {
-  async changeUnit({ commit, dispatch }) {
+  async changeUnit({ commit, dispatch, state }) {
     dispatch('index/submitLoad', null, { root: true })
     const program = localStorage.getItem('program')
-    const result = await this.$apiBase.$get(
-      `get-settings?sk=${program}&type=opsimapel`
-    );
-    if (result) {
-      commit('setState', { key: 'listKelas', value: result.kelas });
-      dispatch('index/submitLoad', null, { root: true })
+    const walas = this.$auth.user.Kelas[program]
+    if (walas !== 'off') {
+      commit('setState', { key: 'selectedKelas', value: walas })
+      const kelas = state.selectedKelas
+      const result = await this.$apiBase.$get(
+        `get-settings?sk=${program}%23${kelas}&type=mapel`
+      )
+      if (result) {
+        commit('setState', { key: 'listMapel', value: result.mapel.map(item => item.Nama) })
+        dispatch('index/submitLoad', null, { root: true })
+      }
+    } else {
+      const result = await this.$apiBase.$get(
+        `get-settings?sk=${program}&type=opsimapel`
+      );
+      if (result) {
+        commit('setState', { key: 'listKelas', value: result.kelas });
+        dispatch('index/submitLoad', null, { root: true })
+      }
     }
   },
   async getMapel({ commit, state }, data) {

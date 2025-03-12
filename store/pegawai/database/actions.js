@@ -52,23 +52,29 @@ export default {
     const program = state.value.map((x) => x.name);
     data["Program"] = program.join();
     const jabatan = state.updateData.Jabatan
-    if (program.includes("sarpras") && data.Personalia === "on") {
-      const updatedJabatan = {
-        ...jabatan,
-        sarpras: "personalia"
-      };
-      data['Jabatan'] = updatedJabatan;
-    } else {
-      if (!program.includes("sarpras") && jabatan && jabatan.hasOwnProperty("sarpras")) {
-        const updatedJabatan = { ...jabatan };
-        delete updatedJabatan.sarpras;
+    const programs = ["sarpras", "perpus"];
+
+    // perpus and sarpras
+    programs.forEach((programType) => {
+      if (program.includes(programType) && data.Personalia === "on") {
+        const updatedJabatan = {
+          ...jabatan,
+          [programType]: "personalia"
+        };
         data['Jabatan'] = updatedJabatan;
       } else {
-        const updatedJabatan = { ...jabatan };
-        delete updatedJabatan.sarpras;
-        data['Jabatan'] = updatedJabatan;
+        if (!program.includes(programType) && jabatan && jabatan.hasOwnProperty(programType)) {
+          const updatedJabatan = { ...jabatan };
+          delete updatedJabatan[programType];
+          data['Jabatan'] = updatedJabatan;
+        } else {
+          const updatedJabatan = { ...jabatan };
+          delete updatedJabatan[programType];
+          data['Jabatan'] = updatedJabatan;
+        }
       }
-    }
+    });
+
     try {
       const username = state.updateData.Username;
       const sk = state.updateData.SK;

@@ -13,6 +13,9 @@ export default {
     state.selectedQuran = ''
     state.selectHalaqah = []
     state.selectedByHalaqah = ''
+    state.selectKelas = []
+    state.selectedByKelas = ''
+    state.selectedType = 'halaqah'
   },
   setState(state, data) {
     if (data.key === 'santri') {
@@ -38,8 +41,8 @@ export default {
       state[data.key] = data.value
     } else if (data.key === 'selectHalaqah') {
       state.santri = []
-      state.th = { Nama: '', Total: '' },
-        state.selectedByKelas = ''
+      state.th = { Nama: '', Total: '' }
+      state.selectedByKelas = ''
       state[data.key] = data.value
     } else {
       state[data.key] = data.value
@@ -48,6 +51,17 @@ export default {
   setUnit(state, data) {
     state.select = data
     state.santri = []
+  },
+  setType(state, data) {
+    if (data.type === 'halaqah') {
+      state.selectHalaqah = data.result
+      state.selectedByKelas = ''
+    } else {
+      state.selectKelas = data.result
+      state.selectedByHalaqah = ''
+    }
+    state.santri = []
+    state.th = { Nama: '', Total: '' }
   },
   setPenilaian(state, data) {
     if (data['type'] === 'set' && !state.nilai) {

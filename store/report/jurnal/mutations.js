@@ -10,6 +10,7 @@ export default {
       state.listMapel = []
       state.values = []
       state[data.key] = data.value
+      console.log(state.listKelas)
     } else {
       state[data.key] = data.value
     }

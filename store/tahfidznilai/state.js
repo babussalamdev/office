@@ -10,6 +10,10 @@ export default () => ({
   selectedQuran: '',
   selectHalaqah: [],
   selectedByHalaqah: '',
+  selectKelas: [],
+  selectedByKelas: '',
+
+  selectedType: 'halaqah',
   // kelas: [],
   // jurusan: [],
   // ekskull: [],

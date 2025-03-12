@@ -12,6 +12,7 @@ export default () => ({
     { name: "tahfidz", code: 5 },
     { name: "sarpras", code: 6 },
     { name: "kerumahtanggaan", code: 7 },
+    { name: "perpus", code: 8 },
   ],
   updateData: '',
   jabatanShow: '',

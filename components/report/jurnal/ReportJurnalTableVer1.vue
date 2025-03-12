@@ -5,7 +5,7 @@
         <h2 class="mb-2">Jurnal Page</h2>
         <div class="d-flex justify-content-between mb-3">
           <div class="d-flex">
-            <select class="form-select" v-model="selectedKelas" @change="getMapel">
+            <select v-if="!walas" class="form-select" v-model="selectedKelas" @change="getMapel">
               <option value="" selected disabled>Kelas</option>
               <option v-for="(data, index) in listKelas" :key="index" :value="data.Nama">{{ data.Nama }}</option>
             </select>
@@ -66,6 +66,10 @@ export default {
   computed: {
     ...mapState('report/jurnal', ['listKelas', 'listMapel', 'values']),
     ...mapGetters('report/jurnal', ['getSelectedKelas', 'getSelectedMapel']),
+    walas() {
+      const program = localStorage.getItem('program')
+      return this.$auth.user.Kelas[program] !== 'off'
+    },
     selectedKelas: {
       get() {
         return this.getSelectedKelas

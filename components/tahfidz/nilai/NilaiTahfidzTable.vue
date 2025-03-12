@@ -1,12 +1,24 @@
 <template>
   <div class="animate__animated animate__fadeInUp">
-    <div class="mb-3 d-flex align-items-center justify-content-between">
+    <div class="mb-3 d-flex flex-column gap-3 flex-md-row justify-content-md-between align-items-md-center gap-md-2">
       <h2>Penilaian Tahfidz{{ permissions.includes('absensi pengampu') ? ' - koordinator' : '' }}</h2>
-      <select v-if="permissions.includes('absensi pengampu')" class="form-select" v-model="selectedByHalaqah"
-        @change="getByHalaqah()">
-        <option value="">halaqah</option>
-        <option v-for="(data, index) in selectHalaqah" :value="data" :key="index">{{ data }}</option>
-      </select>
+      <div v-if="permissions.includes('absensi pengampu')" class="d-flex flex-column gap-2 flex-md-row">
+        <select class="form-select" v-model="selectedType" @change="getType()">
+          <option value="" selected disabled>type</option>
+          <option value="halaqah">Halaqah</option>
+          <option value="kelas">Kelas</option>
+        </select>
+        <select v-if="selectedType === 'halaqah'" class="form-select" v-model="selectedByHalaqah"
+          @change="getByHalaqah()">
+          <option value="">halaqah</option>
+          <option v-for="(data, index) in selectHalaqah" :value="data" :key="index">{{ data }}</option>
+        </select>
+        <select v-if="selectedType === 'kelas'" class="form-select" v-model="selectedByKelas"
+          @change="getByKelas()">
+          <option value="">kelas</option>
+          <option v-for="(data, index) in selectKelas" :value="data" :key="index">{{ data }}</option>
+        </select>
+      </div>
     </div>
     <div class="table-responsive" ref="input">
       <table class="table table-hover table-striped">
@@ -62,9 +74,9 @@ export default {
     document.removeEventListener("click", event => this.setData(event, 'input'));
   },
   computed: {
-    ...mapState("tahfidznilai", ['select', 'openEdit', 'example', 'th', 'nilai', 'selectHalaqah']),
+    ...mapState("tahfidznilai", ['select', 'openEdit', 'example', 'th', 'nilai', 'selectHalaqah', 'selectKelas']),
     ...mapState('index', ['permissions']),
-    ...mapGetters('tahfidznilai', ['getSelectedMapel', 'getDataSantri', 'getNilai', 'getSelectedHalaqah']),
+    ...mapGetters('tahfidznilai', ['getSelectedMapel', 'getDataSantri', 'getNilai', 'getSelectedHalaqah', 'getSelectedType', 'getSelectedKelas']),
     nilai: {
       get() {
         return this.getNilai
@@ -100,6 +112,22 @@ export default {
         this.$store.commit('tahfidznilai/setState', { key: 'selectedByHalaqah', value })
       }
     },
+    selectedByKelas: {
+      get() {
+        return this.getSelectedKelas
+      },
+      set(value) {
+        this.$store.commit('tahfidznilai/setState', { key: 'selectedByKelas', value })
+      }
+    },
+    selectedType: {
+      get() {
+        return this.getSelectedType
+      },
+      set(value) {
+        this.$store.commit('tahfidznilai/setState', { key: 'selectedType', value })
+      }
+    },
     uniqueClasses() {
       // Get unique classes from data
       const classes = this.select.map(item => item.Kelas);
@@ -120,7 +148,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions('tahfidznilai', ['getSantri', 'setPenilaian', 'getByHalaqah']),
+    ...mapActions('tahfidznilai', ['getSantri', 'setPenilaian', 'getByHalaqah', 'getType', 'getByKelas']),
     isNumber(val) {
       // Periksa apakah val adalah angka dan bukan false
       return typeof val === 'number' && !isNaN(val);

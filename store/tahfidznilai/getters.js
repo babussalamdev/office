@@ -10,5 +10,11 @@ export default {
   },
   getSelectedHalaqah(state) {
     return state.selectedByHalaqah
+  },
+  getSelectedKelas(state) {
+    return state.selectedByKelas
+  },
+  getSelectedType(state) {
+    return state.selectedType
   }
 }
