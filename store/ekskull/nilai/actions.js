@@ -68,8 +68,8 @@ export default {
         const skSantri = state.santri[state.openEdit.index].SKsantri.replace('#', '%23')
         const kelas = state.santri[state.openEdit.index].Kelas
         const skLogs = state.santri[state.openEdit.index].SKlogs.replace(/#/g, '%23')
-        const tahun = this.$auth.user.Label
-        const semester = this.$auth.user.Semester
+        const tahun = rootState.index.label
+        const semester = rootState.index.semester
         const nilai = { Nilai: +state.nilai }
         try {
           if (state.nilai > 100) {

@@ -16,7 +16,7 @@ export default {
     }
   },
   setPenilaian(state, data) {
-    if (data['type'] === 'set') {
+    if (data['type'] === 'set' && !state.nilai) {
       if (data['skSantri']) {
         state.santri[data.index].Nilai = state.santri[data.index].Nilai.toString()
         state.nilai = state.santri[data.index].Nilai
@@ -26,19 +26,13 @@ export default {
         }
       }
     } else if (data['type'] === 'close') {
-      if (state.santri[state.openEdit.index].Nilai > 100) {
-        Swal.fire({
-          title: 'Warning!',
-          text: 'Nilai tidak boleh lebih dari 100.',
-          icon: 'warning',
-          confirmButtonText: 'OK'
-        });
-      }
       state.santri[state.openEdit.index].Nilai = +state.nilai
       state.nilai = 0
+      state.openEdit = ''
     } else if (data['type'] === 'button') {
       state.santri[state.openEdit.index].Nilai = +state.nilai
       state.openEdit = ''
+      state.nilai = 0
     }
   },
 

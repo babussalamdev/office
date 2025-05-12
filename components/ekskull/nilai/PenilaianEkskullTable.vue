@@ -11,6 +11,9 @@
         </select>
       </div>
     </div>
+    {{ select }}
+    {{ openEdit }}
+    {{ nilai }}
     <div class="table-responsive" ref="input">
       <table class="table table-hover table-striped">
         <thead>
@@ -111,7 +114,15 @@ export default {
       // Memeriksa apakah elemen yang diklik berada di luar profile
       if (dataOutside && !dataOutside.contains(event.target)) {
         // this.falseData(data);
-        if (this.nilai && this.openEdit) {
+        if (!this.nilai && this.openEdit) {
+          Swal.fire({
+            title: 'Warning!',
+            text: 'Nilai tidak boleh kosong!',
+            icon: 'warning',
+            timer: 1500,
+            showConfirmButton: false
+          });
+        } else if (this.nilai && this.openEdit) {
           this.setPenilaian({ type: 'button' })
         }
       }
