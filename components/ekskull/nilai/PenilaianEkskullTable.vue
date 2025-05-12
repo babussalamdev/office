@@ -11,9 +11,6 @@
         </select>
       </div>
     </div>
-    {{ select }}
-    {{ openEdit }}
-    {{ nilai }}
     <div class="table-responsive" ref="input">
       <table class="table table-hover table-striped">
         <thead>
