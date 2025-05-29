@@ -1,3 +1,4 @@
+import * as XLSX from "xlsx";
 import Swal from "sweetalert2";
 export default {
   async changeUnit({ commit, dispatch }, data) {
@@ -111,6 +112,35 @@ export default {
       } else {
         commit('setPenilaian', data)
       }
+    }
+  },
+  async exportToExcel({ rootState, commit, dispatch, state }) {
+    commit('btn')
+    dispatch('index/submitLoad', null, { root: true })
+    const program = localStorage.getItem('program')
+    const tahun = rootState.index.label
+    const semester = rootState.index.semester
+    try {
+      const res = await this.$apiSantri.$get(`get-logs?thn=${tahun}&program=${program}&smstr=${semester}&methodexlsx=${state.selectedEkskull}`)
+      const base64WithPrefix = `data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${res.base64data}`
+      const byteString = atob(base64WithPrefix.split(',')[1]);
+      const ab = new ArrayBuffer(byteString.length);
+      const ia = new Uint8Array(ab);
+      for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+      const wb = XLSX.read(ab, { type: 'array' });
+      XLSX.writeFile(wb, `${res.fileName}`)
+    } catch (error) {
+      Swal.fire({
+        icon: "warning",
+        title: error,
+        showConfirmButton: false,
+        timer: 1500
+      });
+    } finally {
+      dispatch('index/submitLoad', null, { root: true })
+      commit('btn')
     }
   },
 }

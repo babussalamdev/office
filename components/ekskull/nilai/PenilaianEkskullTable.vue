@@ -2,13 +2,14 @@
   <div class="animate__animated animate__fadeInUp">
     <h2 class="mb-3 mb-md-3">Penilaian Ekskull</h2>
     <div class="head row mb-3">
-      <div class="col-12 col-md-7 d-flex flex-column flex-md-row gap-4 gap-md-0 mb-3 mb-md-0">
+      <div class="col-12 col-md-7 d-flex flex-column flex-md-row gap-2 gap-md-0 mb-3 mb-md-0">
         <select class="form-select" v-model="selectedEkskull" @change="getSantri">
           <option value="" disabled selected>Ekskull</option>
           <option v-for="(data, index) in select" :key="index" :value="data">
             {{ data }}
           </option>
         </select>
+        <button class="btn btn-sm btn-success" @click="exportToExcel()" :disabled="!btn || !santri.length > 0">Export</button>
       </div>
     </div>
     <div class="table-responsive" ref="input">
@@ -43,26 +44,8 @@
 import Swal from "sweetalert2";
 import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
 export default {
-  data() {
-    return {
-      btn: true,
-      btn2: true,
-      selectedKelas: "",
-      periode: "",
-      radio: "none",
-      hadir: "",
-      overlay: false,
-      editPenilaian: true,
-    };
-  },
-  mounted() {
-    document.addEventListener("click", event => this.setData(event, 'input'));
-  },
-  destroyed() {
-    document.removeEventListener("click", event => this.setData(event, 'input'));
-  },
   computed: {
-    ...mapState("ekskull/nilai", ['select', 'openEdit']),
+    ...mapState("ekskull/nilai", ['select', 'openEdit', 'btn']),
     ...mapGetters('ekskull/nilai', ['getSelectedEkskull', 'getDataSantri', 'getNilai']),
     nilai: {
       get() {
@@ -96,7 +79,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions('ekskull/nilai', ['getSantri', 'setPenilaian']),
+    ...mapActions('ekskull/nilai', ['getSantri', 'setPenilaian', 'exportToExcel']),
     isNumber(val) {
       // Periksa apakah val adalah angka dan bukan false
       return typeof val === 'number' && !isNaN(val);
