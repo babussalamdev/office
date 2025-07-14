@@ -129,6 +129,7 @@
                   <option value="" selected disabled>-- Pilih Alasan --</option>
                   <option value="keluar">Keluar</option>
                   <option value="pindah">Pindah</option>
+                  <option value="lulus">Lulus</option>
                 </select>
               </div>
               <div class="mb-3">
