@@ -34,9 +34,10 @@ export default () => ({
     { name: "card", code: 28 },
     { name: "none", code: 29 },
     { name: "authority", code: 30 },
-    { name: "sarpras", code: 31 }
-],
+    { name: "sarpras", code: 31 },
+    { name: "setup absensi", code: 32 },
+  ],
 
   // partikel
   updateData: "",
-})
+});
