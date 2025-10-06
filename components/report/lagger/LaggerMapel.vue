@@ -7,31 +7,51 @@
           <option value="" selected disabled>Label</option>
           <option v-for="(data, index) in label" :key="index" :value="index">{{ index }}</option>
         </select>
-        <select class="form-select" aria-label="Default select example" v-model="selectedSemester"
-          @change="changeUnitSemester">
+        <select class="form-select" aria-label="Default select example" v-model="selectedSemester" @change="changeUnitSemester">
           <option value="" selected disabled>Semester</option>
           <option v-for="(data, index) in semester" :key="index" :value="data">{{ data.Semester }}</option>
         </select>
       </div>
       <div class="col-12 col-md-6 mb-3 mb-md-0 d-flex flex-column flex-md-row justify-content-end gap-2">
         <div class="input-group d-flex justify-content-end">
-          <select v-if="kelas.length > 0" style="max-width: max-content !important;" name="" id="" class="form-select"
-            v-model="selectedKelas" @change="changeUnitClass">
+          <select
+            v-if="kelas.length > 0"
+            style="max-width: max-content !important"
+            name=""
+            id=""
+            class="form-select"
+            v-model="selectedKelas"
+            @change="changeUnitClass">
             <option value="" selected disabled>Kelas</option>
             <option v-for="(data, index) in kelas" :value="data.Nama" :key="index">{{ data.Nama }}</option>
           </select>
-          <select v-if="selectedSemester.Status === 'active'" style="max-width: max-content !important;" name="" id=""
-            class="form-select" v-model="selectedMapel">
+          <select
+            v-if="selectedSemester.Status === 'active'"
+            style="max-width: max-content !important"
+            name=""
+            id=""
+            class="form-select"
+            v-model="selectedMapel">
             <option class="fw-bold" value="" selected disabled>Mapel</option>
             <option v-for="(data, index) in mapelSelect[0]" :value="data" :key="index">{{ data }}</option>
           </select>
-          <select v-if="selectedSemester.Status === 'active'" style="max-width: max-content !important;" name="" id=""
-            class="form-select" v-model="selectedQuran">
+          <select
+            v-if="selectedSemester.Status === 'active'"
+            style="max-width: max-content !important"
+            name=""
+            id=""
+            class="form-select"
+            v-model="selectedQuran">
             <option class="fw-bold" value="" selected disabled>Quran</option>
             <option v-for="(data, index) in quranSelect[0]" :value="data" :key="index">{{ data }}</option>
           </select>
-          <button v-if="selectedSemester.Status === 'active'" class="btn btn-primary border-0" @click="getSantri"
-            :disabled="selectedMapel && selectedQuran ? false : true">Submit</button>
+          <button
+            v-if="selectedSemester.Status === 'active'"
+            class="btn btn-primary border-0"
+            @click="getSantri"
+            :disabled="selectedMapel && selectedQuran ? false : true">
+            Submit
+          </button>
         </div>
         <button class="btn btn-danger border-0" @click="changeUnitData">Reset</button>
         <button class="btn btn-sm btn-success" @click="exportToExcel()">Export</button>
@@ -50,7 +70,9 @@
             <td class="text-capitalize align-middle">
               <h1>{{ data.Nama }}</h1>
             </td>
-            <td class="text-center" v-for="key in dynamicKeys" :key="key">{{ data[key] }}</td>
+            <td class="text-center" v-for="key in dynamicKeys" :key="key" :class="{ 'text-danger fw-bold': isBelowKkm(data[key]) }">
+              {{ data[key].split("/")[0] }}
+            </td>
           </tr>
         </tbody>
       </table>
@@ -59,149 +81,164 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
-import * as XLSX from 'xlsx';
-export default {
-  computed: {
-    ...mapState('report/lagger', ['select', 'mapelSelect', 'quranSelect', 'kelas', 'semester', 'label']),
-    ...mapGetters('report/lagger', ['getSelectedMapel', 'getSelectedQuran', 'getSelectedKelas', 'getDataSantri', 'getNilai', 'getSelectedSemester', 'getSelectedLabel']),
-    selectedMapel: {
-      get() {
-        return this.getSelectedMapel
+  import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
+  import * as XLSX from "xlsx";
+  export default {
+    computed: {
+      ...mapState("report/lagger", ["select", "mapelSelect", "quranSelect", "kelas", "semester", "label"]),
+      ...mapGetters("report/lagger", [
+        "getSelectedMapel",
+        "getSelectedQuran",
+        "getSelectedKelas",
+        "getDataSantri",
+        "getNilai",
+        "getSelectedSemester",
+        "getSelectedLabel",
+      ]),
+      selectedMapel: {
+        get() {
+          return this.getSelectedMapel;
+        },
+        set(value) {
+          this.$store.commit("report/lagger/setState", { key: "selectedMapel", value });
+        },
       },
-      set(value) {
-        this.$store.commit('report/lagger/setState', { key: 'selectedMapel', value })
-      }
-    },
-    selectedQuran: {
-      get() {
-        return this.getSelectedQuran
+      selectedQuran: {
+        get() {
+          return this.getSelectedQuran;
+        },
+        set(value) {
+          this.$store.commit("report/lagger/setState", { key: "selectedQuran", value });
+        },
       },
-      set(value) {
-        this.$store.commit('report/lagger/setState', { key: 'selectedQuran', value })
-      }
-    },
-    selectedKelas: {
-      get() {
-        return this.getSelectedKelas
+      selectedKelas: {
+        get() {
+          return this.getSelectedKelas;
+        },
+        set(value) {
+          this.$store.commit("report/lagger/setState", { key: "selectedKelas", value });
+        },
       },
-      set(value) {
-        this.$store.commit('report/lagger/setState', { key: 'selectedKelas', value })
-      }
-    },
-    nilai: {
-      get() {
-        return this.getNilai
+      nilai: {
+        get() {
+          return this.getNilai;
+        },
+        set(value) {
+          const obj = { key: "nilai", value };
+          this.$store.commit("kelas/nilai/setState", obj);
+        },
       },
-      set(value) {
-        const obj = { key: 'nilai', value }
-        this.$store.commit('kelas/nilai/setState', obj)
-      }
-    },
-    santri: {
-      get() {
-        return this.getDataSantri
+      santri: {
+        get() {
+          return this.getDataSantri;
+        },
+        set(value) {
+          const obj = { key: "santri", value };
+          this.$store.commit("report/lagger/setState", obj);
+        },
       },
-      set(value) {
-        const obj = { key: 'santri', value }
-        this.$store.commit('report/lagger/setState', obj)
-      }
-    },
 
-    dynamicKeys() {
-      const excludeKeys = ["Nama", "SK"];
-      // Pastikan data santri tidak kosong
-      if (this.santri.length === 0) {
-        return [];
-      }
+      dynamicKeys() {
+        const excludeKeys = ["Nama", "SK"];
+        // Pastikan data santri tidak kosong
+        if (this.santri.length === 0) {
+          return [];
+        }
 
-      const firstObject = this.santri[0];
-      const allKeys = Object.keys(firstObject);
-      // Filter key untuk menghilangkan "Nama" dan "SK"
-      return allKeys.filter(key => !excludeKeys.includes(key));
-    },
-
-    // periode
-    selectedLabel: {
-      get() {
-        return this.getSelectedLabel
+        const firstObject = this.santri[0];
+        const allKeys = Object.keys(firstObject);
+        // Filter key untuk menghilangkan "Nama" dan "SK"
+        return allKeys.filter((key) => !excludeKeys.includes(key));
       },
-      set(value) {
-        this.$store.commit('report/lagger/setState', { key: 'selectedLabel', value })
-      }
-    },
-    selectedSemester: {
-      get() {
-        return this.getSelectedSemester
+
+      // periode
+      selectedLabel: {
+        get() {
+          return this.getSelectedLabel;
+        },
+        set(value) {
+          this.$store.commit("report/lagger/setState", { key: "selectedLabel", value });
+        },
       },
-      set(value) {
-        this.$store.commit('report/lagger/setState', { key: 'selectedSemester', value })
-      }
-    }
-  },
-  methods: {
-    ...mapActions('report/lagger', ['getSantri', 'setPenilaian', 'changeUnit', 'changeUnitClass', 'changeUnitSemester']),
-    ...mapMutations('report/lagger', ['resetUnWalas']),
-    exportToExcel() {
-      // Ambil tabel dari ref
-      const ws = XLSX.utils.table_to_sheet(this.$refs.dataTable);
-
-      // Buat workbook baru
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, 'Lagger Mapel');
-
-      // Generate file Excel
-      const program = localStorage.getItem('program')
-      const kelas = this.$auth.user.Kelas[program]
-      XLSX.writeFile(wb, `Lagger ${kelas}.xlsx`);
+      selectedSemester: {
+        get() {
+          return this.getSelectedSemester;
+        },
+        set(value) {
+          this.$store.commit("report/lagger/setState", { key: "selectedSemester", value });
+        },
+      },
     },
-    changeUnitData() {
-      const program = localStorage.getItem('program')
-      const kelas = this.$auth.user.Kelas[program]
-      if (kelas === 'off') {
-        this.resetUnWalas()
-      } else {
-        this.changeUnit()
-      }
-    }
-  },
-};
+    methods: {
+      ...mapActions("report/lagger", ["getSantri", "setPenilaian", "changeUnit", "changeUnitClass", "changeUnitSemester"]),
+      ...mapMutations("report/lagger", ["resetUnWalas"]),
+
+      isBelowKkm(value) {
+        if (!value || typeof value !== "string") return false;
+        const [nilai, kkm] = value.split("/").map(Number);
+        return nilai < kkm;
+      },
+
+      exportToExcel() {
+        // Ambil tabel dari ref
+        const ws = XLSX.utils.table_to_sheet(this.$refs.dataTable);
+
+        // Buat workbook baru
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Lagger Mapel");
+
+        // Generate file Excel
+        const program = localStorage.getItem("program");
+        const kelas = this.$auth.user.Kelas[program];
+        XLSX.writeFile(wb, `Lagger ${kelas}.xlsx`);
+      },
+      changeUnitData() {
+        const program = localStorage.getItem("program");
+        const kelas = this.$auth.user.Kelas[program];
+        if (kelas === "off") {
+          this.resetUnWalas();
+        } else {
+          this.changeUnit();
+        }
+      },
+    },
+  };
 </script>
 
 <style scoped>
-a {
-  font-size: 12px;
-}
-
-select {
-  font-size: 12px;
-  width: fit-content !important;
-}
-
-span {
-  font-size: 12px;
-}
-
-button {
-  font-size: 12px;
-}
-
-.form-check-label {
-  font-size: 12px;
-}
-
-.form-control {
-  font-size: 12px;
-  width: 60px;
-}
-
-input {
-  padding: 5px;
-}
-
-@media screen and (max-width: 576px) {
-  select {
-    width: 100% !important;
+  a {
+    font-size: 12px;
   }
-}
+
+  select {
+    font-size: 12px;
+    width: fit-content !important;
+  }
+
+  span {
+    font-size: 12px;
+  }
+
+  button {
+    font-size: 12px;
+  }
+
+  .form-check-label {
+    font-size: 12px;
+  }
+
+  .form-control {
+    font-size: 12px;
+    width: 60px;
+  }
+
+  input {
+    padding: 5px;
+  }
+
+  @media screen and (max-width: 576px) {
+    select {
+      width: 100% !important;
+    }
+  }
 </style>
