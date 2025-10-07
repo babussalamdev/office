@@ -19,7 +19,7 @@
                 <input name="Nama" type="text" class="form-control" id="nama" required />
               </div>
               <div class="mb-3">
-                <label for="Kkm" class="form-label">Kriteria Ketuntasan Minima (KKM)</label>
+                <label for="Kkm" class="form-label">Kriteria Ketuntasan Minimal (KKM)</label>
                 <input name="Kkm" type="number" class="form-control" id="Kkm" required min="0" max="100" />
               </div>
               <div class="mb-3">
