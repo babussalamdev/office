@@ -33,17 +33,19 @@
             </td>
             <td>{{ data.Kelas }}</td>
             <td>
-              <span class="badge" :class="{
-                'bg-danger': data?.Logs?.asrama.status === 'absen',
-                'bg-primary': data?.Logs?.asrama.status === 'izin',
-                'bg-warning': data?.Logs?.asrama.status === 'sakit',
-                'bg-secondary': data?.Logs?.asrama.status === 'rumah',
-              }">
+              <span
+                class="badge"
+                :class="{
+                  'bg-danger': data?.Logs?.asrama.status === 'absen',
+                  'bg-primary': data?.Logs?.asrama.status === 'izin',
+                  'bg-warning': data?.Logs?.asrama.status === 'sakit',
+                  'bg-secondary': data?.Logs?.asrama.status === 'rumah',
+                }">
                 <!-- <span class="bg-danger"> -->
                 {{ data?.Logs?.asrama.status }}
               </span>
             </td>
-            <td>{{ data?.Logs?.asrama.note === '' ? '-' : data?.Logs?.asrama.note }}</td>
+            <td>{{ data?.Logs?.asrama.note === "" ? "-" : data?.Logs?.asrama.note }}</td>
             <td>{{ data?.Logs?.asrama.time }}</td>
           </tr>
         </tbody>
@@ -53,75 +55,75 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
-export default {
-  data() {
-    return {
-      selectedKelas: 'all',
-      selectedAsrama: 'all',
-    }
-  },
-  mounted() {
-    this.closeAllModals();;
-  },
-  async asyncData({ store, route, redirect }) {
-    const detail = store.state.home.highlight;
-    if (detail === '') {
-      return redirect('/')
-    }
-    return { detail }
-  },
-  computed: {
-    ...mapState('home', ['highlight']),
-    uniqueClasses() {
-      // Get unique classes from data
-      const classes = this.detail.map(item => item.Kelas);
-      return [...new Set(classes)];
+  import { mapState, mapMutations } from "vuex";
+  export default {
+    data() {
+      return {
+        selectedKelas: "all",
+        selectedAsrama: "all",
+      };
     },
-    uniqueStatus() {
-      // Get unique classes from data
-      const status = this.detail.map(item => item.Logs.asrama.status);
-      return [...new Set(status)];
+    mounted() {
+      this.closeAllModals();
     },
-    filteredData() {
-      return this.detail.filter(item => {
-        const matchesClass = this.selectedKelas === 'all' || item.Kelas === this.selectedKelas;
-        const matchesAsrama = this.selectedAsrama === 'all' || item.Logs.asrama.status === this.selectedAsrama;
-        return matchesClass && matchesAsrama;
-      });
-    }
-  },
-  methods: {
-    closeAllModals() {
-      const backdrop = document.querySelector('.modal-backdrop');
-      if (backdrop) {
-        backdrop.remove();
+    async asyncData({ store, route, redirect }) {
+      const detail = store.state.home.highlight;
+      if (detail === "") {
+        return redirect("/");
       }
-      // Menghapus kelas dan style dari body
-      document.body.classList.remove('modal-open'); // Menghapus kelas
-      document.body.style.overflow = ''; // Menghapus gaya inline
-      document.body.style.paddingRight = ''; // Menghapus gaya inline
+      return { detail };
     },
-    backPage() {
-      this.$router.push('/')
+    computed: {
+      ...mapState("home", ["highlight"]),
+      uniqueClasses() {
+        // Get unique classes from data
+        const classes = this.detail.map((item) => item.Kelas);
+        return [...new Set(classes)];
+      },
+      uniqueStatus() {
+        // Get unique classes from data
+        const status = this.detail.map((item) => item.Logs.asrama.status);
+        return [...new Set(status)];
+      },
+      filteredData() {
+        return this.detail.filter((item) => {
+          const matchesClass = this.selectedKelas === "all" || item.Kelas === this.selectedKelas;
+          const matchesAsrama = this.selectedAsrama === "all" || item.Logs.asrama.status === this.selectedAsrama;
+          return matchesClass && matchesAsrama;
+        });
+      },
     },
-    applyFilter() {
-      // Recompute the filtered data
-      this.filteredData;
-    }
-  },
-}
+    methods: {
+      closeAllModals() {
+        const backdrop = document.querySelector(".modal-backdrop");
+        if (backdrop) {
+          backdrop.remove();
+        }
+        // Menghapus kelas dan style dari body
+        document.body.classList.remove("modal-open"); // Menghapus kelas
+        document.body.style.overflow = ""; // Menghapus gaya inline
+        document.body.style.paddingRight = ""; // Menghapus gaya inline
+      },
+      backPage() {
+        this.$router.push("/");
+      },
+      applyFilter() {
+        // Recompute the filtered data
+        this.filteredData;
+      },
+    },
+  };
 </script>
 
 <style scoped>
-@import url(~/assets/css/dashboard/violation.css);
+  @import url(~/assets/css/dashboard/violation.css);
 
-.bi-arrow-left {
-  cursor: pointer;
-}
+  .bi-arrow-left {
+    cursor: pointer;
+  }
 
-select {
-  font-size: 12px;
-  width: fit-content;
-}
+  select {
+    font-size: 12px;
+    width: fit-content;
+  }
 </style>

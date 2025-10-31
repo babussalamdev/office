@@ -5,7 +5,7 @@ export default {
       { status: "Pegawai Aktif", jumlah: value.active },
       { status: "Pegawai Inaktif", jumlah: value.inactive },
     ];
-    let sample
+    let sample;
     sample = pegawaiData.map((item, index) => {
       const percentage = value.total === 0 ? 0 : (item.jumlah / value.total) * 100;
       return {
@@ -42,23 +42,21 @@ export default {
               },
             },
           },
-          labels: [''],
+          labels: [""],
         },
       };
     });
-    state.pegawaiData = pegawaiData
+    state.pegawaiData = pegawaiData;
     state.chartOptions = sample;
     state.pegawaiData.forEach((item, index) => {
-      const jumlahElement = document.getElementById(
-        `jumlah-${index}`
-      );
+      const jumlahElement = document.getElementById(`jumlah-${index}`);
       if (jumlahElement) {
         jumlahElement.style.color = state.colors[index];
       }
     });
   },
   setChartSarpras(state, value) {
-    state.sarprasData = value
+    state.sarprasData = value;
   },
   setChart(state, value) {
     // chart class
@@ -67,68 +65,74 @@ export default {
     const absenData = [];
     const pulangData = [];
 
-    Object.keys(value.kelasCounts).forEach(kelas => {
+    Object.keys(value.kelasCounts).forEach((kelas) => {
       izinData.push(value.kelasCounts[kelas].asrama_izin);
       sakitData.push(value.kelasCounts[kelas].asrama_sakit);
       absenData.push(value.kelasCounts[kelas].asrama_absen);
-      pulangData.push(value.kelasCounts[kelas].asrama_rumah)
+      pulangData.push(value.kelasCounts[kelas].asrama_rumah);
     });
 
-    // Menyusun series sesuai dengan format yang diinginkan
+    // Menyusun series sesuai format chart
     state.series = [
-      {
-        name: 'Izin',
-        data: izinData
-      },
-      {
-        name: 'Sakit',
-        data: sakitData
-      },
-      {
-        name: 'Absen',
-        data: absenData
-      },
-      {
-        name: 'Pulang',
-        data: pulangData
-      }
+      { name: "Izin", data: izinData },
+      { name: "Sakit", data: sakitData },
+      { name: "Absen", data: absenData },
+      { name: "Pulang", data: pulangData },
     ];
 
-    const kelasNames = Object.keys(value.kelasCounts).map(kelas => {
-      return kelas.toUpperCase();
-    });
-    state.cate = kelasNames
+    const kelasNames = Object.keys(value.kelasCounts).map((kelas) => kelas.toUpperCase());
+    state.cate = kelasNames;
 
-    // sort data
-    // Mengubah format asramatime menjadi objek Date dan mengurutkan data
-    const sortedSantriData = value.SantriData.map(santri => {
-      if (santri.Logs.asrama.time) {
-        const dateTimeParts = santri.Logs.asrama.time.split(' ');
+    // ✅ FIXED: Parsing dan formatting waktu santri
+    const sortedSantriData = value.SantriData.map((santri) => {
+      const timeStr = santri.Logs?.asrama?.time;
 
-        if (dateTimeParts.length === 2) {
-          const dateParts = dateTimeParts[0].split('-'); // Pisahkan hari, bulan, tahun
-          const timeParts = dateTimeParts[1].split(':'); // Pisahkan jam, menit, detik
+      if (timeStr) {
+        try {
+          // Ubah jadi ISO-compliant agar bisa di-parse
+          const isoString = timeStr.replace(" ", "T");
+          const dateObj = new Date(isoString);
 
-          if (dateParts.length === 3 && timeParts.length === 3) {
-            const formattedDate = new Date(`${dateParts[1]}/${dateParts[0]}/${dateParts[2]} ${timeParts[0]}:${timeParts[1]}:${timeParts[2]}`);
-            santri.Logs.asrama.time = formattedDate; // Mengubah string menjadi objek Date
+          if (!isNaN(dateObj)) {
+            // Simpan objek Date untuk sorting
+            santri.Logs.asrama.timeObj = dateObj;
+
+            // Format untuk ditampilkan
+            const year = dateObj.getFullYear();
+            const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+            const day = String(dateObj.getDate()).padStart(2, "0");
+            const hours = String(dateObj.getHours()).padStart(2, "0");
+            const minutes = String(dateObj.getMinutes()).padStart(2, "0");
+            const seconds = String(dateObj.getSeconds()).padStart(2, "0");
+
+            santri.Logs.asrama.time = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
           } else {
-            console.error('Format waktu tidak valid');
+            santri.Logs.asrama.time = "Invalid Date";
+            santri.Logs.asrama.timeObj = null;
           }
-        } else {
-          console.error('Format tanggal dan waktu tidak sesuai');
+        } catch (e) {
+          santri.Logs.asrama.time = "Invalid Date";
+          santri.Logs.asrama.timeObj = null;
         }
       } else {
-        console.warn('santri.Logs.asrama.time tidak ada isinya untuk santri')
+        santri.Logs.asrama.time = "Invalid Date";
+        santri.Logs.asrama.timeObj = null;
       }
 
       return santri;
     });
 
+    // ✅ Now sort using the Date object
+    sortedSantriData.sort((a, b) => {
+      const dateA = a.Logs.asrama.timeObj ? a.Logs.asrama.timeObj.getTime() : 0;
+      const dateB = b.Logs.asrama.timeObj ? b.Logs.asrama.timeObj.getTime() : 0;
+      return dateB - dateA; // newest first
+    });
 
-    sortedSantriData.sort((a, b) => new Date(b.Logs.asramatime) - new Date(a.Logs.asramatime)); // Mengurutkan berdasarkan asramatime terbaru
-    state.highlight = sortedSantriData; // Menetapkan data yang sudah diurutkan ke dalam state
-    state.kelasCounts = value.kelasCounts
+    state.highlight = sortedSantriData;
+    state.kelasCounts = value.kelasCounts;
+
+    // Data pegawai (ringkasan status)
     const pegawaiData = [
       { status: "Mahad", jumlah: value.asrama_sekolah },
       { status: "Pulang", jumlah: value.asrama_rumah },
@@ -137,9 +141,8 @@ export default {
       { status: "Absen", jumlah: value.asrama_absen },
     ];
 
-    // chart
-    let sample
-    sample = pegawaiData.map((item, index) => {
+    // Chart radial bar
+    const sample = pegawaiData.map((item, index) => {
       const percentage = value.total_santri === 0 ? 0 : (item.jumlah / value.total_santri) * 100;
       return {
         series: [percentage.toFixed(0)],
@@ -157,7 +160,7 @@ export default {
               },
               dataLabels: {
                 style: {
-                  colors: ["#F44336", "#E91E63", "#9C27B0"],
+                  colors: ["#000"],
                 },
                 showOn: "always",
                 name: {
@@ -175,21 +178,20 @@ export default {
               },
             },
           },
-          labels: [''],
+          labels: [""],
         },
       };
     });
-    state.santriData = pegawaiData
+
+    state.santriData = pegawaiData;
     state.chartOptions = sample;
+
+    // Ganti warna teks sesuai chart
     state.santriData.forEach((item, index) => {
-      const jumlahElement = document.getElementById(
-        `jumlah-${index}`
-      );
+      const jumlahElement = document.getElementById(`jumlah-${index}`);
       if (jumlahElement) {
         jumlahElement.style.color = state.colors[index];
       }
     });
-  }
-}
-
-
+  },
+};

@@ -53,8 +53,16 @@ export default {
     const subject = state.updateData.santri.Asrama;
     const program = localStorage.getItem("program");
     const date = new Date(state.dateIzin);
-    const dateformatted = date.toISOString().slice(0, 16).replace("T", " ") + ":00";
-    console.log(dateformatted); // "2025-10-31 13:16:00"
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = "00";
+
+    const dateformatted = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    console.log(dateformatted);
 
     try {
       let result;
@@ -189,8 +197,19 @@ export default {
     commit("setLoad");
     const data = Object.fromEntries(new FormData(event.target));
     const skSantri = state.updateDataIzin.SK.replace(/#/g, "%23");
+    data["Date"] = new Date(state.dateIzin);
+    const program = localStorage.getItem("program");
+
+    const year = data.Date.getFullYear();
+    const month = String(data.Date.getMonth() + 1).padStart(2, "0");
+    const day = String(data.Date.getDate()).padStart(2, "0");
+    const hours = String(data.Date.getHours()).padStart(2, "0");
+    const minutes = String(data.Date.getMinutes()).padStart(2, "0");
+    const seconds = "00";
+
+    data["Date"] = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     try {
-      const result = await this.$apiSantri.$put(`update-logs?type=antrian&sk=${skSantri}`, data);
+      const result = await this.$apiSantri.$put(`update-logs?type=perizinan&sk=${skSantri}&program=${program}`, data);
       if (result) {
         commit("setLoad");
         Swal.fire({
