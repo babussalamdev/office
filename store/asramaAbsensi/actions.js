@@ -14,7 +14,8 @@ export default {
     } else if (kelas !== "off" && kelas !== "") {
       subject = "kelas";
     }
-    if (subject) {
+
+    if (subject && jabatan !== "kesantrian wali kelas") {
       let reqSantri = "";
       if (subject === "asrama") {
         reqSantri = this.$apiSantri.$get(`get-absensi-sisalam?type=every&subject=${subject}&program=${program}&value=${asrama}`);
