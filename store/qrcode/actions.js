@@ -8,7 +8,9 @@ export default {
     const [resKelas, resSantri] = await Promise.all([reqKelas, reqSantri]);
     if ((resKelas, resSantri)) {
       commit("setState", { key: "kelas", value: resKelas.kelas });
-      commit("setState", { key: "santri", value: resSantri });
+      commit("setState", { key: "santri", value: resSantri.filterdMergedData });
+      commit("setState", { key: "topuplimit", value: resSantri.datatopuplimit });
+
       dispatch("index/submitLoad", null, { root: true });
     }
   },
@@ -18,7 +20,8 @@ export default {
     const kelas = state.selectedKelas;
     try {
       const result = await this.$apiSantri.$get(`get-santri-sisalam?program=${program}&opsi=${kelas}&method=card&type=kelas`);
-      commit("setState", { key: "santri", value: result });
+      commit("setState", { key: "santri", value: result.filterdMergedData });
+      commit("setState", { key: "topuplimit", value: result.datatopuplimit });
       dispatch("index/submitLoad", null, { root: true });
     } catch (error) {
       dispatch("index/submitLoad", null, { root: true });
@@ -38,6 +41,26 @@ export default {
       const result = await this.$apiCard.$post(`create-card`, data);
       if (result) {
         commit("INPUT_CARD", result);
+        commit("BTN");
+      }
+    } catch (error) {
+      commit("BTN");
+      Swal.fire({
+        icon: "error",
+        text: error,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  },
+  async inputTopupLimit({ commit, state, dispatch }, event) {
+    commit("BTN");
+    try {
+      const data = Object.fromEntries(new FormData(event.target));
+      data["Program"] = localStorage.getItem("program");
+      const result = await this.$apiBase.$post(`input-settings?type=topuplimit`, data);
+      if (result) {
+        commit("INPUT_TOPUP_LIMIT", result);
         commit("BTN");
       }
     } catch (error) {
@@ -109,6 +132,7 @@ export default {
     }
   },
   async resetPIN({ commit, state, dispatch }, cnc) {
+    commit("BTN");
     const i = state.santri.findIndex((x) => x.CNC === cnc);
     const name = state.santri[i].CNC;
     const result = await Swal.fire({
@@ -136,6 +160,8 @@ export default {
           dispatch("index/submitLoad", null, { root: true });
         }
       } catch (error) {
+        commit("BTN");
+
         dispatch("index/submitLoad", null, { root: true });
         Swal.fire({
           position: "center",

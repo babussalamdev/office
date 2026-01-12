@@ -6,6 +6,14 @@
       </div>
       <div class="col-12 col-md-6 d-flex justify-content-end align-items-center gap-2">
         <span>
+          <button
+            v-if="!selectedKelas"
+            style="font-size: 12px"
+            class="btn btn-sm btn-info text-white"
+            data-bs-toggle="modal"
+            data-bs-target="#topupModal">
+            Balance Limit
+          </button>
           <button v-if="!selectedKelas" style="font-size: 12px" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#cardModal">
             Tambah Kartu
           </button>
@@ -25,6 +33,7 @@
       </div>
     </div>
     <!-- Modal -->
+    <TopupModal />
     <CardModal />
     <div class="table-responsive">
       <table class="table table-hover table-striped">

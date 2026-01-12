@@ -1,8 +1,9 @@
 export default () => ({
   santri: [],
   kelas: [],
-  selectedKelas: '',
+  topuplimit: [],
+  selectedKelas: "",
   btn: true,
   selectedCards: [],
-  load: false
-})
+  load: false,
+});
