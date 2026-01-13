@@ -25,7 +25,7 @@
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               <span>
-                <button v-if="btn" type="submit" class="btn btn-primary">Tambah</button>
+                <button v-if="btn" type="submit" class="btn btn-primary">Update</button>
                 <button v-else class="btn btn-primary" type="button" disabled>
                   <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
                   <span role="status">Loading...</span>
