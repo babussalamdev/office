@@ -2,14 +2,15 @@ export default () => ({
   mapel: [],
   kelas: [],
   jurusan: [],
-  selectKelas: '',
-  updateData: '',
-  updateDataPenilaian: '',
+  selectKelas: "",
+  selectSemester: "",
+  updateData: "",
+  updateDataPenilaian: "",
   Penilaian: [],
   btn: true,
   value: [],
   status: false,
-  label: 'close',
+  label: "close",
   options: [
     { name: "senin-1", code: 0 },
     { name: "senin-2", code: 1 },
@@ -48,4 +49,4 @@ export default () => ({
     { name: "sabtu-6c", code: 34 },
     { name: "sabtu-7c", code: 35 },
   ],
-})
+});
