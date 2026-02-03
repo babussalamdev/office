@@ -1,11 +1,11 @@
 export default {
   getSelectedMapel(state) {
-    return state.selectedMapel
+    return state.selectedMapel;
   },
   getDataSantri(state) {
-    return state.santri
+    return state.santri;
   },
   getNilai(state) {
-    return state.nilai
-  }
-}
+    return state.nilai;
+  },
+};

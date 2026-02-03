@@ -1,17 +1,13 @@
 export default () => ({
   select: [],
   selectedMapel: "",
+  // Add these two:
+  selectedKelas: "",
+  selectedSemester: "",
+
   santri: [],
-  openEdit: '',
+  openEdit: "",
   nilai: 0,
   globalLoad: false,
-  // kelas: [],
-  // jurusan: [],
-  // ekskull: [],
-  // selectKelas: [],
-  // selectedMapel: [],
-  // selectedPeriode: [],
-  // nilaiSantri: [],
-
-  btn: true
-})
+  btn: true,
+});

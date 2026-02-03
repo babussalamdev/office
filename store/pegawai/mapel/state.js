@@ -1,9 +1,11 @@
 export default () => ({
-    kelas: [],
-    jurusan: [],
-    mapel: [],
-    pengajar: [],
-    updateData: '',
-    pengajarShow: '',
-    btn: true
-})
+  kelas: [],
+  jurusan: [],
+  mapel: [],
+  selectKelas: "",
+  selectSemester: "",
+  pengajar: [],
+  updateData: "",
+  pengajarShow: "",
+  btn: true,
+});

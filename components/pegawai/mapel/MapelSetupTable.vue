@@ -6,11 +6,21 @@
           <h2 class="text-capitalize mb-3">setup mapel</h2>
         </div>
         <div class="col-12 col-md-6 d-flex justify-content-end">
-          <div class="input-group" style="font-size: 12px;" v-if="mapel.length > 0">
-            <span class="input-group-text material-icons" style="font-size: 12px;"> search </span>
-            <input type="text" class="form-control" v-model="search" style="font-size: 12px;" placeholder="search by pengajar">
+          <div class="input-group" style="font-size: 12px" v-if="mapel.length > 0">
+            <span class="input-group-text material-icons" style="font-size: 12px">search</span>
+            <input type="text" class="form-control" v-model="search" style="font-size: 12px" placeholder="search by pengajar" />
           </div>
-          <select name="Mapel" id="mapel" v-model="listKelas" @change="kelasLoad" class="form-select select" required>
+          <select
+            class="form-select select"
+            aria-label="Default select example"
+            v-model="selectedSemester"
+            @change="kelasLoadSemester()"
+            :disabled="!listKelas">
+            <option value="" selected disabled>Semester</option>
+            <option value="ganjil">Ganjil</option>
+            <option value="genap">Genap</option>
+          </select>
+          <select name="Mapel" id="mapel" v-model="listKelas" @change="kelasLoad()" class="form-select select" required>
             <option value="" selected disabled>Kelas</option>
             <option v-for="(data, index) in kelas" :key="index" :value="data">
               {{ data.Nama }}
@@ -57,74 +67,80 @@
         </table>
       </div>
       <div class="btn-group text-center float-end mt-3 mb-5" role="group">
-      <button @click="page = 1" :disabled="page === 1" type="button" class="btn btn-primary btn-sm">
-        &laquo;
-      </button>
-      <button @click="page--" :disabled="page === 1" type="button" class="btn btn-primary  btn-sm">
-        Prev
-      </button>
-      <button class="btn btn-dark  btn-sm disabled">{{ `${page}` }}</button>
-      <button @click="page++" :disabled="page >= Math.ceil(mapel.length / perPage)" class="btn btn-primary  btn-sm">
-        Next
-      </button>
-      <button @click="page = Math.ceil(mapel.length / perPage)"
-        :disabled="page >= Math.ceil(mapel.length / perPage)" type="button" class="btn btn-primary  btn-sm">
-        &raquo;
-      </button>
-    </div>
+        <button @click="page = 1" :disabled="page === 1" type="button" class="btn btn-primary btn-sm">&laquo;</button>
+        <button @click="page--" :disabled="page === 1" type="button" class="btn btn-primary btn-sm">Prev</button>
+        <button class="btn btn-dark btn-sm disabled">{{ `${page}` }}</button>
+        <button @click="page++" :disabled="page >= Math.ceil(mapel.length / perPage)" class="btn btn-primary btn-sm">Next</button>
+        <button
+          @click="page = Math.ceil(mapel.length / perPage)"
+          :disabled="page >= Math.ceil(mapel.length / perPage)"
+          type="button"
+          class="btn btn-primary btn-sm">
+          &raquo;
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
-export default {
-  data() {
-    return {
-      unit: "",
-      page: 1,
-      perPage: 10,
-      table: "",
-      search: '',
-      listKelas: "",
-    };
-  },
-  // mounted() {
-  //   this.unit = localStorage.getItem("program");
-  // },
-  computed: {
-    ...mapState("pegawai/mapel", ["mapel", 'kelas']),
-    filteredDatas() {
-      // Jika ada filter pencarian
-      if (this.search) {
-        this.table = this.mapel?.filter((data) => {
-          // Periksa apakah GSIPK1 ada dan cocok dengan pencarian
-          return data.GSIPK1 ? data.GSIPK1.toLowerCase().includes(this.search.toLowerCase()) : false;
-        });
-      } else {
-        // Jika tidak ada pencarian, tampilkan semua data
-        this.table = this.mapel;
-      }
-
-      // Pagination
-      let start = (this.page - 1) * this.perPage;
-      let end = start + this.perPage;
-
-      // Mengembalikan data yang dipotong sesuai pagination
-      return this.table.slice(start, end);
-    }
-
-  },
-  methods: {
-    ...mapMutations('pegawai/mapel', ['editItem']),
-    kelasLoad() {
-      const program = localStorage.getItem("program");
-      const data = {
-        program: program,
-        kelas: this.listKelas.Nama,
+  import { mapState, mapMutations } from "vuex";
+  export default {
+    data() {
+      return {
+        unit: "",
+        page: 1,
+        perPage: 10,
+        table: "",
+        search: "",
+        listKelas: "",
+        selectedSemester: "",
+        isMapelSemesterEmpty: true,
       };
-      this.$store.dispatch(`pegawai/mapel/getKelas`, data);
     },
-  },
-};
+    // mounted() {
+    //   this.unit = localStorage.getItem("program");
+    // },
+    computed: {
+      ...mapState("pegawai/mapel", ["mapel", "kelas"]),
+      filteredDatas() {
+        // Jika ada filter pencarian
+        if (this.search) {
+          this.table = this.mapel?.filter((data) => {
+            // Periksa apakah GSIPK1 ada dan cocok dengan pencarian
+            return data.GSIPK1 ? data.GSIPK1.toLowerCase().includes(this.search.toLowerCase()) : false;
+          });
+        } else {
+          // Jika tidak ada pencarian, tampilkan semua data
+          this.table = this.mapel;
+        }
+
+        // Pagination
+        let start = (this.page - 1) * this.perPage;
+        let end = start + this.perPage;
+
+        // Mengembalikan data yang dipotong sesuai pagination
+        return this.table.slice(start, end);
+      },
+    },
+    methods: {
+      ...mapMutations("pegawai/mapel", ["editItem"]),
+      kelasLoad() {
+        this.selectedSemester = "";
+        this.isMapelSemesterEmpty = true;
+        this.$store.commit(`pegawai/mapel/setSelectKelas`, this.listKelas.Nama);
+      },
+      kelasLoadSemester() {
+        const program = localStorage.getItem("program");
+        const data = {
+          program: program,
+          kelas: this.listKelas.Nama,
+          semester: this.selectedSemester,
+        };
+        this.isMapelSemesterEmpty = false;
+        this.$store.commit(`pegawai/mapel/setSelectSemester`, this.selectedSemester);
+        this.$store.dispatch(`pegawai/mapel/getKelas`, data);
+      },
+    },
+  };
 </script>

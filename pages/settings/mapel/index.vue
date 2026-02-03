@@ -45,10 +45,6 @@
 <script>
   import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
   export default {
-    // middleware: 'permission',
-    // meta: {
-    //   permissions: ['setup mapel']
-    // },
     data() {
       return {
         listKelas: "",
@@ -90,7 +86,6 @@
           kelas: this.listKelas.Nama,
           semester: this.selectedSemester,
         };
-        console.log(this.selectedSemester);
         this.isMapelSemesterEmpty = false;
         this.$store.commit(`mapel/setSelectSemester`, this.selectedSemester);
         this.$store.dispatch(`mapel/getKelas`, data);
