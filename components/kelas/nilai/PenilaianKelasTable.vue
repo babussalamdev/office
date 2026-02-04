@@ -15,8 +15,9 @@
 
               <select class="form-select select" v-model="localSemester" @change="resetOnSemesterChange" :disabled="!localKelas">
                 <option value="" selected disabled>Semester</option>
-                <option value="ganjil">Ganjil</option>
-                <option value="genap">Genap</option>
+                <option v-for="(data, index) in semesterOptions" :key="index" :value="data.Semester">
+                  {{ data.Semester }}
+                </option>
               </select>
 
               <select class="form-select" v-model="localMapel" @change="addNewData" :disabled="!localSemester">
@@ -119,13 +120,25 @@
       };
     },
     mounted() {
+      if (!this.$store.state.index.label) {
+        this.$router.push("/");
+        return; // Stop execution here
+      }
+      // 1. Existing listener
       document.addEventListener("click", (event) => this.setData(event, "input"));
+
+      // 2. ADD THIS: Trigger the action to fetch settings & mapel on load
+      // We check if semesterOptions is empty to avoid double-fetching if not needed
+      if (this.semesterOptions.length === 0) {
+        this.changeUnit();
+      }
     },
     destroyed() {
       document.removeEventListener("click", (event) => this.setData(event, "input"));
     },
     computed: {
-      ...mapState("kelas/nilai", ["select", "openEdit", "selectedKelas", "selectedSemester", "selectedMapel"]),
+      ...mapState("index", ["semester"]), // Global semester (optional use)
+      ...mapState("kelas/nilai", ["select", "openEdit", "selectedKelas", "selectedSemester", "selectedMapel", "semesterOptions"]),
       ...mapGetters("kelas/nilai", ["getDataSantri", "getNilai"]), // Removed getSelectedMapel as we mapState directly
 
       // 1. Computed for Kelas (Syncs with Vuex)
@@ -184,12 +197,13 @@
       },
 
       uniqueLesson() {
-        // 1. Return empty if Kelas OR Semester is not selected yet
+        // Filter using the SELECTED semester from dropdown (localSemester)
         if (!this.localKelas || !this.localSemester) return [];
 
         return this.select.filter((item) => {
-          // 2. Filter by Kelas
           const matchesClass = item.Kelas === this.localKelas;
+
+          // Match SK with the selected semester string (e.g., "ganjil")
           const matchesSemester = item.SK && item.SK.toLowerCase().includes(this.localSemester.toLowerCase());
 
           return matchesClass && matchesSemester;
@@ -197,7 +211,7 @@
       },
     },
     methods: {
-      ...mapActions("kelas/nilai", ["getSantri", "setPenilaian"]),
+      ...mapActions("kelas/nilai", ["getSantri", "setPenilaian", "changeUnit"]),
       isNumber(val) {
         // Periksa apakah val adalah angka dan bukan false
         return typeof val === "number" && !isNaN(val);
@@ -239,7 +253,6 @@
       },
 
       resetOnSemesterChange() {
-        // If Semester changes, reset Mapel and Data (Keep Kelas)
         this.localMapel = "";
         this.santri = [];
         this.th = { Nama: "", Total: "" };

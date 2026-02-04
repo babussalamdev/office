@@ -1,9 +1,32 @@
 import Swal from "sweetalert2";
 export default {
-  async changeUnit({ commit, dispatch }, data) {
+  async changeUnit({ commit, dispatch, rootState }, data) {
     dispatch("index/submitLoad", null, { root: true });
+
     const program = localStorage.getItem("program");
+
+    // 1. FETCH PERIODE SETTINGS
+    try {
+      const resPeriode = await this.$apiBase.$get(`get-settings?sk=${program}&type=periode`);
+      let currentLabel = rootState.index.label;
+
+      if (!currentLabel) {
+        currentLabel = localStorage.getItem("label"); // Only if you save it here
+      }
+
+      if (resPeriode && currentLabel) {
+        const availableSemesters = resPeriode.filter((item) => item.Label === currentLabel);
+        commit("setState", { key: "semesterOptions", value: availableSemesters });
+      } else {
+        console.warn("Label Tahun Ajaran missing, cannot filter semesters");
+      }
+    } catch (error) {
+      console.error("Failed to fetch periode:", error);
+    }
+
+    // 3. FETCH MAPEL (Your existing logic)
     const result = await this.$apiBase.$get(`get-mapel?subject=pengajar&program=${program}`);
+
     if (result.length > 0) {
       commit("setUnit", result);
       dispatch("index/submitLoad", null, { root: true });

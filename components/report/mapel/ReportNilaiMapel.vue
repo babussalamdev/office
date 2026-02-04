@@ -7,13 +7,11 @@
           <option value="" selected disabled>Label</option>
           <option v-for="(data, index) in label" :key="index" :value="index">{{ index }}</option>
         </select>
-        <select class="form-select" aria-label="Default select example" v-model="selectedSemester"
-          @change="changeGetMapelSemester">
+        <select class="form-select" aria-label="Default select example" v-model="selectedSemester" @change="changeGetMapelSemester">
           <option value="" selected disabled>Semester</option>
           <option v-for="(data, index) in semester" :key="index" :value="data">{{ data.Semester }}</option>
         </select>
-        <select v-if="kelas.length > 0" class="form-select" aria-label="Default select example" v-model="selectedKelas"
-          @change="changeGetMapel">
+        <select v-if="kelas.length > 0" class="form-select" aria-label="Default select example" v-model="selectedKelas" @change="changeGetMapel">
           <option value="" selected disabled>Kelas</option>
           <option v-for="(data, index) in kelas" :key="index" :value="data">{{ data }}</option>
         </select>
@@ -52,136 +50,143 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
-export default {
-  data() {
-    return {
-      btn: true,
-    };
-  },
-  mounted() {
-    document.addEventListener("click", event => this.setData(event, 'input'));
-  },
-  destroyed() {
-    document.removeEventListener("click", event => this.setData(event, 'input'));
-  },
-  computed: {
-    ...mapState("report/nilaimapel", ['mapel', 'kelas', 'label', 'semester', 'th']),
-    ...mapGetters('report/nilaimapel', ['getSelectedMapel', 'getDataSantri', 'getNilai', 'getSelectedKelas', 'getSelectedLabel', 'getSelectedSemester']),
-    santri: {
-      get() {
-        return this.getDataSantri
+  import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
+  export default {
+    data() {
+      return {
+        btn: true,
+      };
+    },
+    mounted() {
+      document.addEventListener("click", (event) => this.setData(event, "input"));
+    },
+    destroyed() {
+      document.removeEventListener("click", (event) => this.setData(event, "input"));
+    },
+    computed: {
+      ...mapState("report/nilaimapel", ["mapel", "kelas", "label", "semester", "th"]),
+      ...mapGetters("report/nilaimapel", [
+        "getSelectedMapel",
+        "getDataSantri",
+        "getNilai",
+        "getSelectedKelas",
+        "getSelectedLabel",
+        "getSelectedSemester",
+      ]),
+      santri: {
+        get() {
+          return this.getDataSantri;
+        },
+        set(value) {
+          const obj = { key: "santri", value };
+          this.$store.commit("report/nilaimapel/setState", obj);
+        },
       },
-      set(value) {
-        const obj = { key: 'santri', value }
-        this.$store.commit('report/nilaimapel/setState', obj)
-      }
-    },
-    selectedMapel: {
-      get() {
-        return this.getSelectedMapel
+      selectedMapel: {
+        get() {
+          return this.getSelectedMapel;
+        },
+        set(value) {
+          const obj = { key: "selectedMapel", value };
+          this.$store.commit("report/nilaimapel/setState", obj);
+        },
       },
-      set(value) {
-        const obj = { key: 'selectedMapel', value }
-        this.$store.commit('report/nilaimapel/setState', obj)
-      }
-    },
-    selectedKelas: {
-      get() {
-        return this.getSelectedKelas
+      selectedKelas: {
+        get() {
+          return this.getSelectedKelas;
+        },
+        set(value) {
+          this.$store.commit("report/nilaimapel/setState", { key: "selectedKelas", value });
+        },
       },
-      set(value) {
-        this.$store.commit('report/nilaimapel/setState', { key: 'selectedKelas', value })
-      }
-    },
-    selectedLabel: {
-      get() {
-        return this.getSelectedLabel
+      selectedLabel: {
+        get() {
+          return this.getSelectedLabel;
+        },
+        set(value) {
+          this.$store.commit("report/nilaimapel/setState", { key: "selectedLabel", value });
+        },
       },
-      set(value) {
-        this.$store.commit('report/nilaimapel/setState', { key: 'selectedLabel', value })
-      }
-    },
-    selectedSemester: {
-      get() {
-        return this.getSelectedSemester
+      selectedSemester: {
+        get() {
+          return this.getSelectedSemester;
+        },
+        set(value) {
+          this.$store.commit("report/nilaimapel/setState", { key: "selectedSemester", value });
+        },
       },
-      set(value) {
-        this.$store.commit('report/nilaimapel/setState', { key: 'selectedSemester', value })
-      }
-    }
-  },
-  methods: {
-    ...mapActions('report/nilaimapel', ['getSantri', 'getMapel', 'changeGetMapelSemester', 'changeUnit']),
-    changeGetMapel() {
-      this.getMapel()
     },
-    isNumber(val) {
-      // Periksa apakah val adalah angka dan bukan false
-      return typeof val === 'number' && !isNaN(val);
-    },
-    calculateTotalFromPenilaian(penilaian) {
-      // Hitung jumlah semua nilai dalam objek Penilaian
-      return Object.values(penilaian).reduce((sum, value) => sum + value, 0);
-    },
-    applyFilter() {
-      this.filteredData
-    },
-    setData(event, data) {
-      const dataOutside = this.$refs[data];
+    methods: {
+      ...mapActions("report/nilaimapel", ["getSantri", "getMapel", "changeGetMapelSemester", "changeUnit"]),
+      changeGetMapel() {
+        this.getMapel();
+      },
+      isNumber(val) {
+        // Periksa apakah val adalah angka dan bukan false
+        return typeof val === "number" && !isNaN(val);
+      },
+      calculateTotalFromPenilaian(penilaian) {
+        // Hitung jumlah semua nilai dalam objek Penilaian
+        return Object.values(penilaian).reduce((sum, value) => sum + value, 0);
+      },
+      applyFilter() {
+        this.filteredData;
+      },
+      setData(event, data) {
+        const dataOutside = this.$refs[data];
 
-      // Memeriksa apakah elemen yang diklik berada di luar profile
-      if (dataOutside && !dataOutside.contains(event.target)) {
-        // this.falseData(data);
-        if (this.nilai && this.openEdit) {
-          this.setPenilaian({ type: 'button' })
+        // Memeriksa apakah elemen yang diklik berada di luar profile
+        if (dataOutside && !dataOutside.contains(event.target)) {
+          // this.falseData(data);
+          if (this.nilai && this.openEdit) {
+            this.setPenilaian({ type: "button" });
+          }
         }
-      }
+      },
+      addNewData() {
+        this.getSantri();
+      },
+      setEdit(index, i, key) {
+        const obj = { index, i, key };
+        this.setPenilaian(obj);
+      },
+      async input(index) {
+        $("#inputModal").modal("show");
+        const updateData = this.santri[index];
+        this.$store.commit("pelanggaran/updateData", updateData);
+      },
     },
-    addNewData() {
-      this.getSantri()
-    },
-    setEdit(index, i, key) {
-      const obj = { index, i, key }
-      this.setPenilaian(obj)
-    },
-    async input(index) {
-      $("#inputModal").modal("show");
-      const updateData = this.santri[index];
-      this.$store.commit("pelanggaran/updateData", updateData);
-    },
-  },
-};
+  };
 </script>
 
 <style scoped>
-a {
-  font-size: 12px;
-}
+  a {
+    font-size: 12px;
+  }
 
-.form-select {
-  font-size: 12px;
-  width: max-content !important;
-}
+  .form-select {
+    font-size: 12px;
+    width: max-content !important;
+  }
 
-span {
-  font-size: 12px;
-}
+  span {
+    font-size: 12px;
+  }
 
-button {
-  font-size: 12px;
-}
+  button {
+    font-size: 12px;
+  }
 
-.form-check-label {
-  font-size: 12px;
-}
+  .form-check-label {
+    font-size: 12px;
+  }
 
-.form-control {
-  font-size: 12px;
-  width: 60px;
-}
+  .form-control {
+    font-size: 12px;
+    width: 60px;
+  }
 
-input {
-  padding: 5px;
-}
+  input {
+    padding: 5px;
+  }
 </style>

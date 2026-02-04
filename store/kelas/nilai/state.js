@@ -4,7 +4,7 @@ export default () => ({
   // Add these two:
   selectedKelas: "",
   selectedSemester: "",
-
+  semesterOptions: [], // Add this to store the filtered semesters (Ganjil/Genap)
   santri: [],
   openEdit: "",
   nilai: 0,

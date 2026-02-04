@@ -4,6 +4,31 @@ export default {
   globalLoad(state) {
     state.globalLoad = state.globalLoad ? false : true;
   },
+  setPeriode(state, data) {
+    // Menggunakan reduce untuk mengelompokkan data berdasarkan Label
+    const groupedData = data.resPeriode.reduce((acc, item) => {
+      // Jika key untuk Label belum ada, buat array untuk menyimpan objek
+      if (!acc[item.Label]) {
+        acc[item.Label] = [];
+      }
+      // Push objek baru berisi Semester dan Status
+      acc[item.Label].push({
+        Semester: item.Semester,
+        Status: item.Status,
+      });
+      return acc;
+    }, {});
+
+    // console.log(groupedData);
+    state.periode = data.resPeriode;
+    state.label = groupedData;
+    state.selectedLabel = data.label;
+    if (groupedData[data.label]) {
+      const datas = groupedData[data.label];
+      state.selectedSemester = datas.find((item) => item.Semester === data.semester);
+      state.semester = groupedData[data.label];
+    }
+  },
   setState(state, data) {
     // Handle Santri Data Parsing
     if (data.key === "santri") {
