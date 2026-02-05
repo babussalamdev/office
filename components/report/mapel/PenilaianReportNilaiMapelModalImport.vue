@@ -52,7 +52,7 @@
       };
     },
     computed: {
-      ...mapState("kelas/nilai", ["selectedMapel", "selectedSemester", "selectedKelas"]),
+      ...mapState("report/nilaimapel", ["selectedMapel", "selectedSemester", "selectedKelas"]),
       ...mapState("index", ["label", "semester"]),
     },
     methods: {
@@ -82,7 +82,7 @@
 
         // Validasi nama file
         const expectedFileName = `${this.selectedMapel.Nama}_${this.selectedKelas}_${this.$store.state.index.label.replace("/", "-")}_${
-          this.selectedSemester
+          this.selectedSemester.Semester
         }`;
         const fileName = file.name.split(".").slice(0, -1).join("."); // Mengambil nama file tanpa ekstensi
         if (fileName !== expectedFileName) {
@@ -100,14 +100,14 @@
             const base64String = reader.result.split(",")[1];
             const program = localStorage.getItem("program");
             const tahun = this.label;
-            const semester = this.selectedSemester;
-            const kelas = this.selectedMapel.Kelas;
+            const semester = this.selectedSemester.Semester;
+            const kelas = this.selectedKelas;
             const Subject = this.selectedMapel.Nama;
             const Penilaian = this.selectedMapel.Penilaian;
             const base64Data = base64String;
             const datas = { base64Data, Subject, Penilaian };
             const data = await this.$apiSantri.$post(
-              `input-nilai-sisalam?type=bulknilaimapel&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`,
+              `input-nilai-sisalam?type=bulkreportnilaimapel&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`,
               datas,
             );
             Swal.fire({
@@ -117,7 +117,7 @@
               showConfirmButton: false,
               timer: 1500,
             });
-            this.$store.commit("kelas/nilai/setState", { key: "updateSantri", value: data });
+            this.$store.commit("report/nilaimapel/setState", { key: "updateSantri", value: data });
             this.$refs.fileInput.value = "";
             this.btn2 = true;
           } catch (error) {

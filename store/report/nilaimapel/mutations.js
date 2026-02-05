@@ -31,6 +31,7 @@ export default {
         if (state.th.hasOwnProperty("Total")) {
           newHeaders["Total"] = state.th["Total"];
         }
+        console.log(newHeaders);
         // Update th dengan header baru
         state.th = newHeaders;
       } else {
@@ -50,6 +51,55 @@ export default {
         state.th = newHeaders;
       }
       state[data.key] = data.value;
+    } else if (data.key === "updateSantri") {
+      const newData = data.value.map((item) => {
+        const penilaian = item.feedback;
+
+        const remappedPenilaian = Object.keys(penilaian).reduce((acc, key) => {
+          const [value, weight] = penilaian[key].split("/").map(Number);
+
+          // Calculate the weighted score
+          const rawWeighted = (weight / 100) * value;
+
+          // Round to 2 decimal places to prevent 20.000000001
+          acc[key] = Number(rawWeighted.toFixed(2));
+
+          return acc;
+        }, {});
+
+        // --- FIX: YOU MUST RETURN THE ITEM HERE ---
+        return {
+          ...item,
+          Penilaian: remappedPenilaian,
+        };
+      });
+
+      const updatedData = state.santri.map((oldItem) => {
+        // Now newData is valid, so .find() will work
+        const newItem = newData.find((n) => n && n.SK === oldItem.SK);
+
+        if (newItem) {
+          const updatedItem = {
+            ...oldItem,
+            ...newItem,
+            // Calculate Total Score and round it to fix the 60.000000005 issue
+            TotalScore: Number(
+              Object.values(newItem.Penilaian)
+                .reduce((a, b) => a + b, 0)
+                .toFixed(2),
+            ),
+          };
+
+          delete updatedItem.Total;
+          delete updatedItem.feedback;
+
+          return updatedItem;
+        }
+        return oldItem;
+      });
+
+      state.santri = updatedData;
+      $("#modalImport").modal("hide");
     } else {
       state[data.key] = data.value;
     }
@@ -89,6 +139,44 @@ export default {
       const datas = groupedData[data.label];
       state.selectedSemester = datas.find((item) => item.Semester === data.semester);
       state.semester = groupedData[data.label];
+    }
+  },
+  setNilai(state, data) {
+    // Handle Update Santri (Import)
+    if (data.key === "updateSantri") {
+      // ... (Keep your existing updateSantri logic here) ...
+      // I omitted the long logic for brevity, paste your existing logic here
+      const newData = data.value.map((item) => {
+        const penilaian = item.feedback;
+        delete item.feedback;
+        const remappedPenilaian = Object.keys(penilaian).reduce((acc, key) => {
+          const [value] = penilaian[key].split("/");
+          acc[key] = Number(value);
+          return acc;
+        }, {});
+        return {
+          ...item,
+          Penilaian: remappedPenilaian,
+        };
+      });
+      const updatedData = state.santri.map((oldItem) => {
+        const newItem = newData.find((newItem) => newItem.SK === oldItem.SK);
+        if (newItem) {
+          const updatedItem = {
+            ...oldItem,
+            ...newItem,
+            TotalScore: newItem.Total,
+          };
+          delete updatedItem.Total;
+          return updatedItem;
+        }
+      });
+      state.santri = updatedData;
+      $("#modalImport").modal("hide");
+    }
+    // Handle General State Updates (Kelas, Semester, Mapel)
+    else {
+      state[data.key] = data.value;
     }
   },
 

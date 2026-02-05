@@ -17,7 +17,7 @@ export default {
         return;
       }
 
-      const result = await this.$apiBase.$get(`get-settings?sk=${program}%23${kelas}&type=mapel`);
+      const result = await this.$apiBase.$get(`get-settings?sk=${program}%23${kelas}%23${semester}&type=mapel`);
       commit("setMapel", result);
       dispatch("index/submitLoad", null, { root: true });
     } catch (error) {
@@ -33,10 +33,11 @@ export default {
 
   // const program = localStorage.getItem('program')
 
-  async getMapel({ commit, state, dispatch }) {
+  async getMapel({ commit, state, dispatch, rootState }) {
     dispatch("index/submitLoad", null, { root: true });
     const program = localStorage.getItem("program");
     const kelas = state.selectedKelas;
+    const semester = rootState.index.semester;
 
     const status = state.selectedSemester.Status;
 
@@ -60,7 +61,7 @@ export default {
         });
       }
     } else {
-      const result = await this.$apiBase.$get(`get-settings?sk=${program}%23${kelas}&type=mapel`);
+      const result = await this.$apiBase.$get(`get-settings?sk=${program}%23${kelas}%23${semester}&type=mapel`);
       commit("setMapel", result);
     }
 
@@ -111,6 +112,8 @@ export default {
         datas["Kelas"] = state.selectedMapel.Kelas;
         datas["Penilaian"] = state.selectedMapel.Penilaian;
         const result = await this.$apiSantri.$put(`get-nilai-sisalam?program=${program}`, datas);
+        console.log(datas);
+        console.log(result);
         if (result) {
           const obj = { key: "santri", value: result.data, status };
           commit("setState", obj);
@@ -119,7 +122,9 @@ export default {
       } else {
         datas["Filter"] = `report-non-jurusan`;
         datas["Kelas"] = !state.selectedKelas ? this.$auth.user.Kelas[program] : state.selectedKelas;
+        datas["Penilaian"] = state.selectedMapel.Penilaian;
         const result = await this.$apiSantri.$put(`get-nilai-sisalam?program=${program}`, datas);
+        console.log(datas);
         console.log(result);
         if (result) {
           const obj = { key: "santri", value: result.data, status };

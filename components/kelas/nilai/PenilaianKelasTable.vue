@@ -34,7 +34,8 @@
           </div>
         </div>
 
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-6 text-end">
+          <h2 v-if="santri.length > 0" class="mb-3 mb-md-3">Input Nilai Bulk</h2>
           <h2 v-if="localMapel && localMapel.Status === 'close'" class="mb-3 mb-md-3">Input Program Tahun ajaran</h2>
           <div class="d-flex align-items-center justify-content-end gap-3">
             <div v-if="localMapel && localMapel.Status === 'close'" class="input-group input-excel">
@@ -55,6 +56,7 @@
                 </button>
               </span>
             </div>
+
             <div v-else-if="santri.length > 0">
               <button class="btn btn-sm btn-warning" @click="handleExport(santri)">
                 <i class="bi bi-upload me-2"></i>
@@ -103,9 +105,9 @@
 
 <script>
   import Swal from "sweetalert2";
-  import * as XLSX from "xlsx";
   import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
   import ExcelJS from "exceljs";
+  import { Tooltip } from "bootstrap"; // Make sure you have bootstrap installed
 
   export default {
     data() {
@@ -384,7 +386,9 @@
         }));
 
         const workbook = new ExcelJS.Workbook();
-        const worksheet = workbook.addWorksheet(`${this.selectedMapel.Nama} - ${this.selectedMapel.Kelas}.xlsx`);
+        const worksheet = workbook.addWorksheet(
+          `${this.selectedMapel.Nama}_${this.selectedKelas}_${this.$store.state.index.label.replace("/", "-")}_${this.selectedSemester}.xlsx`,
+        );
 
         // Menambahkan header
         worksheet.addRow(columns);
@@ -419,7 +423,9 @@
             const blob = new Blob([buffer], { type: "application/octet-stream" });
             const link = document.createElement("a");
             link.href = window.URL.createObjectURL(blob);
-            link.download = `${this.selectedMapel.Nama} - ${this.selectedMapel.Kelas}.xlsx`;
+            link.download = `${this.selectedMapel.Nama}_${this.selectedKelas}_${this.$store.state.index.label.replace("/", "-")}_${
+              this.selectedSemester
+            }.xlsx`;
             document.body.appendChild(link);
             link.click(); // Simulasikan klik untuk mendownload
             document.body.removeChild(link); // Hapus link setelah digunakan
