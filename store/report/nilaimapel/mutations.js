@@ -4,7 +4,7 @@ export default {
       state[data.key] = data.value;
       state.santri = [];
       state.selectedMapel = "";
-      state.selectedKelas = "";
+      state.selectedKelas = ""; // Important to reset selected class when list changes
       state.mapel = "";
       state.th = { Nama: "", Total: "" };
     } else if (data.key === "selectedLabel") {
@@ -107,7 +107,7 @@ export default {
   setMapel(state, data) {
     state.selectedMapel = "";
     state.santri = [];
-    state.mapel = data.mapel;
+    state.mapel = data.mapel || []; // Handle undefined
     state.th = { Nama: "", Total: "" };
   },
   setMapelSemester(state, data) {
@@ -179,8 +179,16 @@ export default {
       state[data.key] = data.value;
     }
   },
+  resetForNewSemester(state) {
+    state.kelas = []; // Clear class list (will be refetched if inactive)
+    state.selectedKelas = "";
+    state.mapel = [];
+    state.selectedMapel = "";
+    state.santri = [];
+    state.th = { Nama: "", Total: "" };
+  },
 
-  resetWithClass(state, data) {
+  resetWithClass(state) {
     state.santri = [];
     state.selectedMapel = "";
     state.selectedKelas = "";
