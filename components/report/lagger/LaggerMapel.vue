@@ -65,14 +65,19 @@
             <th class="text-uppercase text-center" v-for="(value, key) in dynamicKeys" :key="key">{{ value }}</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody v-if="santri && santri.length > 0">
           <tr v-for="(data, index) in santri" :key="index">
             <td class="text-capitalize align-middle">
               <h1>{{ data.Nama }}</h1>
             </td>
             <td class="text-center" v-for="key in dynamicKeys" :key="key" :class="{ 'text-danger fw-bold': isBelowKkm(data[key]) }">
-              {{ data[key].split("/")[0] }}
+              {{ data[key] ? data[key].split("/")[0] : "-" }}
             </td>
+          </tr>
+        </tbody>
+        <tbody v-else>
+          <tr>
+            <td colspan="100%" class="text-center p-4">Data tidak ditemukan / Silahkan pilih Kelas</td>
           </tr>
         </tbody>
       </table>

@@ -1,4 +1,6 @@
 export default () => ({
-    walas: [],
-    kelas: []
-})
+  walas: [],
+  kelas: [],
+  label: "",
+  semester: "",
+});
