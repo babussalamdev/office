@@ -11,17 +11,17 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(data, i) in halaqah" :key="i">
+          <tr v-for="(data, i) in halaqahIdhofi" :key="i">
             <td scope="row">{{ data.Sort }}</td>
             <td scope="row" class="text-capitalize">{{ data.Nama }}</td>
             <td scope="row" class="text-capitalize">{{ data.Kelas ? data.Kelas : "-" }}</td>
             <td class="text-end">
-              <a href="javascript:;" @click="editHalaqah(data.SK)">
+              <a href="javascript:;" @click="editHalaqahIdhofi(data.SK)">
                 <button class="btn btn-sm btn-warning">
                   <i class="bx bx-pencil text-white"></i>
                 </button>
               </a>
-              <a href="javascript:;" @click="deleteHalaqah(data.SK)">
+              <a href="javascript:;" @click="deleteHalaqahIdhofi(data.SK)">
                 <button class="btn btn-sm btn-danger">
                   <i class="bx bx-trash text-white"></i>
                 </button>
@@ -40,11 +40,11 @@
 
   export default {
     computed: {
-      ...mapState("kelompok", ["halaqah"]),
+      ...mapState("kelompok", ["halaqahIdhofi"]),
     },
     methods: {
-      ...mapActions("kelompok", ["deleteHalaqah"]),
-      ...mapMutations("kelompok", ["editHalaqah"]),
+      ...mapActions("kelompok", ["deleteHalaqahIdhofi"]),
+      ...mapMutations("kelompok", ["editHalaqahIdhofi"]),
     },
   };
 </script>

@@ -1,7 +1,8 @@
 export default () => ({
-    halaqah: [],
-    asrama: [],
-    selectKelas: [],
-    btn: true,
-    updateData: ''
-})
+  halaqah: [],
+  halaqahIdhofi: [],
+  asrama: [],
+  selectKelas: [],
+  btn: true,
+  updateData: "",
+});
