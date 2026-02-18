@@ -529,6 +529,12 @@
                       <span class="text animate__animated animate__fadeInRight">Halaqah</span>
                     </nuxt-link>
                   </li>
+                  <!-- halaqah idhofi -->
+                  <li v-if="hasPermission('halaqah')">
+                    <nuxt-link to="/santri/halaqohIdhofi" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Halaqah Idhofi</span>
+                    </nuxt-link>
+                  </li>
                   <!-- ekskull -->
                   <li v-if="hasPermission('ekskull')">
                     <nuxt-link to="/santri/ekskull" class="text-decoration-none sub-menu d-flex align-items-center gap-2">

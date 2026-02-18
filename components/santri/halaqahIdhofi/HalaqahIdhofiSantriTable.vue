@@ -3,7 +3,7 @@
     <div>
       <div class="row mb-3">
         <div class="col-12 col-md-9 d-flex align-items-center">
-          <h2 class="text-capitalize mb-3 mb-md-0">data {{ $route.name.replace("-", " ") }}</h2>
+          <h2 class="text-capitalize mb-3 mb-md-0">data data Halaqah Idhofi</h2>
         </div>
         <div class="col-12 col-md-3 d-flex justify-content-end">
           <div class="input-group">
@@ -19,7 +19,7 @@
       </div>
       <div class="table-responsive">
         <!-- Modal -->
-        <HalaqahSantriModal />
+        <HalaqahIdhofiSantriModal />
         <table class="table table-hover table-striped">
           <thead>
             <tr>
@@ -30,6 +30,7 @@
               <th scope="col">Kelas</th>
               <th scope="col">Asrama</th>
               <th scope="col">Halaqah</th>
+              <th scope="col">Halaqah Idhofi</th>
               <th scope="col">Ekskull</th>
               <!-- <th scope="col" class="text-end">Action</th> -->
             </tr>
@@ -49,8 +50,11 @@
               <td class="text-capitalize align-middle">
                 {{ data.Asrama ? data.Asrama : "-" }}
               </td>
-              <td class="text-capitalize align-middle text-white" style="background: #176b87">
+              <td class="text-capitalize align-middle">
                 {{ data.Halaqah ? data.Halaqah : "-" }}
+              </td>
+              <td class="text-capitalize align-middle text-white" style="background: #176b87">
+                {{ data.HalaqahIdhofi ? data.HalaqahIdhofi : "-" }}
               </td>
               <td class="text-capitalize align-middle">
                 {{ data.Ekskull ? data.Ekskull : "-" }}
@@ -77,14 +81,14 @@
       };
     },
     computed: {
-      ...mapState("santri/halaqah", ["santri", "select", "selectHalaqah"]),
-      ...mapGetters("santri/halaqah", ["getKelas"]),
+      ...mapState("santri/halaqahIdhofi", ["santri", "select", "selectHalaqah"]),
+      ...mapGetters("santri/halaqahIdhofi", ["getKelas"]),
       kelas: {
         get() {
           return this.getKelas;
         },
         set(value) {
-          this.$store.commit("santri/halaqah/setKelas", value);
+          this.$store.commit("santri/halaqahIdhofi/setKelas", value);
         },
       },
     },
@@ -92,8 +96,8 @@
       santri: "resetSelect",
     },
     methods: {
-      ...mapActions("santri/halaqah", ["loadHalaqah"]),
-      ...mapMutations("santri/halaqah", ["editBulk"]),
+      ...mapActions("santri/halaqahIdhofi", ["loadHalaqah"]),
+      ...mapMutations("santri/halaqahIdhofi", ["editBulk"]),
       selectAllCheckbox() {
         for (const item of this.santri) {
           this.$set(this.selectedItems, item.SK, this.selectAll);

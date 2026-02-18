@@ -1,26 +1,20 @@
 export default () => ({
-  select: [],
-  selectedMapel: "",
+  // Data Lists
+  listKelas: [], // This will hold the Halaqah list
+  label: [], // Years
+  semester: [], // Semesters for selected Year
+
+  // Selections
+  selectedLabel: "",
+  selectedSemester: "",
+  selectedKelas: "", // This holds the selected Halaqah object
+
+  // Data
   santri: [],
-  openEdit: '',
-  nilai: 0,
+  selectedQuran: "", // Stores settings/columns
+  th: { Nama: "", Halaqah: "", Total: "" }, // Table Headers
+
+  // UI
   globalLoad: false,
-  example: '',
-  th: { Nama: '', Total: '' },
-  selectedQuran: '',
-  selectHalaqah: [],
-  selectedByHalaqah: '',
-  selectKelas: [],
-  selectedByKelas: '',
-
-  selectedType: 'halaqah',
-  // kelas: [],
-  // jurusan: [],
-  // ekskull: [],
-  // selectKelas: [],
-  // selectedMapel: [],
-  // selectedPeriode: [],
-  // nilaiSantri: [],
-
-  btn: true
-})
+  btn: true,
+});
