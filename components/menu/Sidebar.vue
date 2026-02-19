@@ -570,6 +570,12 @@
                       <span class="text animate__animated animate__fadeInRight">Halaqah</span>
                     </nuxt-link>
                   </li>
+                  <!-- halaqah Idhofi -->
+                  <li v-if="hasRoot && hasPermission('pengampu')">
+                    <nuxt-link to="/pegawai/halaqohIdhofi" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Halaqah Idhofi</span>
+                    </nuxt-link>
+                  </li>
                   <!-- wali kelas -->
                   <li v-if="hasRoot && hasPermission('wali kelas')">
                     <nuxt-link to="/pegawai/walas" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
