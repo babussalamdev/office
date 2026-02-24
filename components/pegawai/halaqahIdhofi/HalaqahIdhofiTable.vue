@@ -3,7 +3,7 @@
     <div>
       <div class="row mb-3">
         <div class="col-12 col-md-9 d-flex align-items-center">
-          <h4 class="text-capitalize mb-3 mb-md-0" style="font-size: 14px">data Halaqah Idhofi</h4>
+          <h4 class="text-capitalize mb-3 mb-md-0" style="font-size: 14px">data Idhofi</h4>
         </div>
         <div class="col-12 col-md-3 d-flex justify-content-end"></div>
       </div>

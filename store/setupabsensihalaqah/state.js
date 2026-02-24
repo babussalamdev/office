@@ -1,3 +1,4 @@
 export default () => ({
-  list: []
-})
+  list: [],
+  selectedType: "session", // Added to track the active selection
+});

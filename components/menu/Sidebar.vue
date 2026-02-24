@@ -532,7 +532,7 @@
                   <!-- halaqah idhofi -->
                   <li v-if="hasPermission('halaqah')">
                     <nuxt-link to="/santri/halaqohIdhofi" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
-                      <span class="text animate__animated animate__fadeInRight">Halaqah Idhofi</span>
+                      <span class="text animate__animated animate__fadeInRight">Idhofi</span>
                     </nuxt-link>
                   </li>
                   <!-- ekskull -->
@@ -573,7 +573,7 @@
                   <!-- halaqah Idhofi -->
                   <li v-if="hasRoot && hasPermission('pengampu')">
                     <nuxt-link to="/pegawai/halaqohIdhofi" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
-                      <span class="text animate__animated animate__fadeInRight">Halaqah Idhofi</span>
+                      <span class="text animate__animated animate__fadeInRight">Idhofi</span>
                     </nuxt-link>
                   </li>
                   <!-- wali kelas -->
@@ -631,7 +631,7 @@
                   </li>
                   <li v-if="hasPermission('setup halaqah')">
                     <nuxt-link to="/settings/halaqahidhofi" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
-                      <span class="text animate__animated animate__fadeInRight">Halaqah Idhofi</span>
+                      <span class="text animate__animated animate__fadeInRight">Idhofi</span>
                     </nuxt-link>
                   </li>
                   <!-- Waktu Halaqah -->

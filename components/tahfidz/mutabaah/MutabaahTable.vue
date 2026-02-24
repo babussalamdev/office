@@ -2,11 +2,15 @@
   <div>
     <div class="d-flex justify-content-between flex-column flex-md-row mb-3 gap-2">
       <h2>Mutabaah Tahfidz</h2>
-      <select v-if="listHalaqah.length > 0" class="form-select" style="font-size: 12px; max-width: max-content;" @change="getHalaqahKoordinator()" v-model="selectedHalaqah">
+      <select
+        v-if="listHalaqah.length > 0"
+        class="form-select"
+        style="font-size: 12px; max-width: max-content"
+        @change="getHalaqahKoordinator()"
+        v-model="selectedHalaqah">
         <option value="" selected disabled>halaqah</option>
         <option v-for="(data, index) in listHalaqah" :value="data" :key="index">{{ data }}</option>
       </select>
-
     </div>
     <!-- <div class="row mb-3">
       <div class="col-12 col-md-6 d-flex align-items-center">
@@ -59,38 +63,38 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
-export default {
-  data() {
-    return {
-      dummy: [
-        {
-          Nama: "Fauzan Gunawan",
-          Nis: "3423321",
+  import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
+  export default {
+    data() {
+      return {
+        dummy: [
+          {
+            Nama: "Fauzan Gunawan",
+            Nis: "3423321",
+          },
+        ],
+      };
+    },
+    computed: {
+      ...mapState("mutabaah", ["santri", "listHalaqah"]),
+      ...mapGetters("mutabaah", ["getSelectedHalaqah"]),
+      selectedHalaqah: {
+        get() {
+          return this.getSelectedHalaqah;
         },
-      ],
-    };
-  },
-  computed: {
-    ...mapState('mutabaah', ['santri', 'listHalaqah']),
-    ...mapGetters('mutabaah', ['getSelectedHalaqah']),
-    selectedHalaqah: {
-      get() {
-        return this.getSelectedHalaqah
+        set(value) {
+          this.$store.commit("mutabaah/setState", { key: "selectedHalaqah", value });
+        },
       },
-      set(value) {
-        this.$store.commit('mutabaah/setState', { key: 'selectedHalaqah', value })
-      }
-    }
-  },
-  methods: {
-    ...mapActions('mutabaah', ['getHalaqahKoordinator']),
-    // ...mapMutations('mutabaah', ['showDetail'])
-    showDetail(sk, subject) {
-      this.$store.commit('mutabaah/showDetail', { sk, subject })
-    }
-  },
-};
+    },
+    methods: {
+      ...mapActions("mutabaah", ["getHalaqahKoordinator"]),
+      // ...mapMutations('mutabaah', ['showDetail'])
+      showDetail(sk, subject) {
+        this.$store.commit("mutabaah/showDetail", { sk, subject });
+      },
+    },
+  };
 </script>
 
 <style lang="scss" scoped></style>
