@@ -1,28 +1,29 @@
 <template>
   <div>
     <!-- Modal -->
-    <div class="modal fade" id="modalAbsen" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div
+      class="modal fade"
+      id="modalAbsen"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <form @submit.prevent="santriAbsen" ref="santriAbsen">
             <div class="modal-header">
-              <h1 class="modal-title fs-5 text-capitalize" id="staticBackdropLabel">
-                {{ updateData?.type }} - {{ updateData?.santri?.Nama }}
-              </h1>
+              <h1 class="modal-title fs-5 text-capitalize" id="staticBackdropLabel">{{ updateData?.type }} - {{ updateData?.santri?.Nama }}</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <div class="form-floating">
-                <textarea name="Note" class="form-control" style="height: 100px"
-                  placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                <textarea name="Note" class="form-control" style="height: 100px" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
                 <label for="floatingTextarea">Catatan</label>
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                Close
-              </button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               <span>
                 <button v-if="btn" type="submit" class="btn btn-primary">
                   {{ updateData?.type }}
@@ -41,64 +42,67 @@
 </template>
 
 <script>
-import Swal from "sweetalert2";
-import { mapState, mapActions, mapMutations } from 'vuex'
-export default {
-  data() {
-    return {
-      btn: true,
-    };
-  },
-  computed: {
-    ...mapState('tahfidzAbsensi', ['updateData']),
-    ...mapState('index', ['label', 'semester']),
-  },
-  methods: {
-    async santriAbsen() {
-      this.btn = false;
-      const data = Object.fromEntries(new FormData(event.target));
-      data["Status"] = this.updateData.type;
-      const skSantri = this.updateData.santri.SK.replace('#', '%23')
-      const tahun = this.label
-      const semester = this.semester
-      const time = this.updateData.time
-      const namahalaqah = this.updateData.santri.Halaqah
-      const program = localStorage.getItem("program");
-      const kelas = this.updateData.santri.Kelas
-      try {
-        const result = await this.$apiSantri.$put(
-          `update-absensi-sisalam?sksantri=${skSantri}&type=halaqah${time}&thn=${tahun}&smstr=${semester}&program=${program}&subject=${namahalaqah}&kls=${kelas}`,
-          data
-        );
-        if (result) {
-          this.btn = true;
+  import Swal from "sweetalert2";
+  import { mapState, mapActions, mapMutations } from "vuex";
+  export default {
+    data() {
+      return {
+        btn: true,
+      };
+    },
+    computed: {
+      ...mapState("tahfidzAbsensi", ["updateData", "selectedType"]),
+      ...mapState("index", ["label", "semester"]),
+    },
+    methods: {
+      async santriAbsen() {
+        this.btn = false;
+
+        const data = Object.fromEntries(new FormData(event.target));
+        data["Status"] = this.updateData.type;
+        const skSantri = this.updateData.santri.SK.replace("#", "%23");
+        const tahun = this.label;
+        const semester = this.semester;
+        const time = this.updateData.time;
+        const type = this.selectedType.toLowerCase(); // 'halaqah' or 'idhofi'
+        // Determine if we are pulling the Halaqah name or the Idhofi name
+        const namahalaqah = type === "halaqah" ? this.updateData.santri.Halaqah : this.updateData.santri.Idhofi; // Adjust '.Idhofi' based on your payload
+        const program = localStorage.getItem("program");
+        const kelas = this.updateData.santri.Kelas;
+        try {
+          const result = await this.$apiSantri.$put(
+            `update-absensi-sisalam?sksantri=${skSantri}&type=${type}${time}&thn=${tahun}&smstr=${semester}&program=${program}&subject=${namahalaqah}&kls=${kelas}`,
+            data,
+          );
+          if (result) {
+            this.btn = true;
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              text: "Data berhasil diupdate",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            this.$refs.santriAbsen.reset();
+            $("#modalAbsen").modal("hide");
+            result["time"] = time;
+            result["SK"] = this.updateData.santri.SK;
+            this.$store.commit("tahfidzAbsensi/updateAbsen", result);
+          }
+        } catch (error) {
+          console.log(error);
           Swal.fire({
             position: "center",
-            icon: "success",
-            text: "Data berhasil diupdate",
+            icon: "error",
+            text: error,
             showConfirmButton: false,
             timer: 1500,
           });
-          this.$refs.santriAbsen.reset();
-          $("#modalAbsen").modal("hide");
-          result['time'] = time
-          result["SK"] = this.updateData.santri.SK;
-          this.$store.commit('tahfidzAbsensi/updateAbsen', result);
+          this.btn = true;
         }
-      } catch (error) {
-        console.log(error);
-        Swal.fire({
-          position: "center",
-          icon: "error",
-          text: error,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        this.btn = true;
-      }
+      },
     },
-  },
-};
+  };
 </script>
 
 <style lang="scss" scoped></style>

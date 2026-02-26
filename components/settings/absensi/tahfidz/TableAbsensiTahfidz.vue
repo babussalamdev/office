@@ -2,7 +2,18 @@
   <div>
     <div>
       <div class="head d-flex align-items-center mb-3 justify-content-between">
-        <h2 class="mb-0">Absensi Tahfidz</h2>
+        <div class="d-flex align-items-center gap-1">
+          <h2 class="mb-0">Absensi Tahfidz</h2>
+
+          <select v-if="hasHalaqah && hasIdhofi" class="form-select w-auto" v-model="localSelectedType" @change="fetchData">
+            <option value="halaqah">Halaqah</option>
+            <option value="HalaqahIdhofi">Idhofi</option>
+          </select>
+
+          <h2 v-else-if="hasHalaqah">Halaqah</h2>
+          <h2 v-else-if="hasIdhofi">Idhofi</h2>
+        </div>
+
         <nuxt-link
           v-if="permissionsIndex.includes('absensi pengampu')"
           to="/tahfidz/absensi/monitoring"
@@ -12,7 +23,6 @@
           Monitoring
         </nuxt-link>
       </div>
-      <!-- Modal -->
       <ModalAbsensiTahfidz />
       <div class="table-responsive">
         <table class="table table-hover table-striped">
@@ -66,23 +76,31 @@
                   <div class="box-radio">
                     <button
                       @click="
-                        setAbsensi(data.SK, 'absen', waktu, data.Logs?.halaqah?.[waktu]?.status, data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0])
+                        setAbsensi(
+                          data.SK,
+                          'absen',
+                          waktu,
+                          data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status,
+                          data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.time?.split(' ')[0],
+                        )
                       "
                       :class="
-                        !data.Logs?.halaqah?.[waktu]?.status ||
-                        (data.Logs?.halaqah?.[waktu]?.status === '' && data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0] === date)
+                        !data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status ||
+                        (data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status === '' &&
+                          data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.time?.split(' ')[0] === date)
                           ? 'bg-white'
-                          : data.Logs?.halaqah?.[waktu]?.status && data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0] !== date
+                          : data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status &&
+                            data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.time?.split(' ')[0] !== date
                           ? 'bg-white'
-                          : data.Logs?.halaqah?.[waktu]?.status === 'absen'
+                          : data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status === 'absen'
                           ? 'bg-primary text-white border-0'
                           : 'bg-secondary text-white border-0'
                       "
                       :disabled="
-                        data.Logs?.halaqah?.[waktu]?.status &&
-                        data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0] === date &&
-                        data.Logs?.halaqah?.[waktu]?.status !== '' &&
-                        data.Logs?.halaqah?.[waktu]?.status !== 'absen'
+                        data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status &&
+                        data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.time?.split(' ')[0] === date &&
+                        data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status !== '' &&
+                        data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status !== 'absen'
                           ? true
                           : false
                       ">
@@ -92,23 +110,31 @@
                   <div class="box-radio">
                     <button
                       @click="
-                        setAbsensi(data.SK, 'terlambat', waktu, data.Logs?.halaqah?.[waktu]?.status, data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0])
+                        setAbsensi(
+                          data.SK,
+                          'terlambat',
+                          waktu,
+                          data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status,
+                          data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.time?.split(' ')[0],
+                        )
                       "
                       :class="
-                        !data.Logs?.halaqah?.[waktu]?.status ||
-                        (data.Logs?.halaqah?.[waktu]?.status === '' && data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0] === date)
+                        !data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status ||
+                        (data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status === '' &&
+                          data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.time?.split(' ')[0] === date)
                           ? 'bg-white'
-                          : data.Logs?.halaqah?.[waktu]?.status && data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0] !== date
+                          : data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status &&
+                            data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.time?.split(' ')[0] !== date
                           ? 'bg-white'
-                          : data.Logs?.halaqah?.[waktu]?.status === 'terlambat'
+                          : data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status === 'terlambat'
                           ? 'bg-primary text-white border-0'
                           : 'bg-secondary text-white border-0'
                       "
                       :disabled="
-                        data.Logs?.halaqah?.[waktu]?.status &&
-                        data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0] === date &&
-                        data.Logs?.halaqah?.[waktu]?.status !== '' &&
-                        data.Logs?.halaqah?.[waktu]?.status !== 'terlambat'
+                        data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status &&
+                        data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.time?.split(' ')[0] === date &&
+                        data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status !== '' &&
+                        data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status !== 'terlambat'
                           ? true
                           : false
                       ">
@@ -118,23 +144,31 @@
                   <div class="box-radio">
                     <button
                       @click="
-                        setAbsensi(data.SK, 'sakit', waktu, data.Logs?.halaqah?.[waktu]?.status, data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0])
+                        setAbsensi(
+                          data.SK,
+                          'sakit',
+                          waktu,
+                          data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status,
+                          data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.time?.split(' ')[0],
+                        )
                       "
                       :class="
-                        !data.Logs?.halaqah?.[waktu]?.status ||
-                        (data.Logs?.halaqah?.[waktu]?.status === '' && data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0] === date)
+                        !data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status ||
+                        (data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status === '' &&
+                          data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.time?.split(' ')[0] === date)
                           ? 'bg-white'
-                          : data.Logs?.halaqah?.[waktu]?.status && data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0] !== date
+                          : data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status &&
+                            data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.time?.split(' ')[0] !== date
                           ? 'bg-white'
-                          : data.Logs?.halaqah?.[waktu]?.status === 'sakit'
+                          : data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status === 'sakit'
                           ? 'bg-primary text-white border-0'
                           : 'bg-secondary text-white border-0'
                       "
                       :disabled="
-                        data.Logs?.halaqah?.[waktu]?.status &&
-                        data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0] === date &&
-                        data.Logs?.halaqah?.[waktu]?.status !== '' &&
-                        data.Logs?.halaqah?.[waktu]?.status !== 'sakit'
+                        data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status &&
+                        data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.time?.split(' ')[0] === date &&
+                        data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status !== '' &&
+                        data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status !== 'sakit'
                           ? true
                           : false
                       ">
@@ -144,23 +178,31 @@
                   <div class="box-radio">
                     <button
                       @click="
-                        setAbsensi(data.SK, 'izin', waktu, data.Logs?.halaqah?.[waktu]?.status, data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0])
+                        setAbsensi(
+                          data.SK,
+                          'izin',
+                          waktu,
+                          data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status,
+                          data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.time?.split(' ')[0],
+                        )
                       "
                       :class="
-                        !data.Logs?.halaqah?.[waktu]?.status ||
-                        (data.Logs?.halaqah?.[waktu]?.status === '' && data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0] === date)
+                        !data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status ||
+                        (data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status === '' &&
+                          data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.time?.split(' ')[0] === date)
                           ? 'bg-white'
-                          : data.Logs?.halaqah?.[waktu]?.status && data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0] !== date
+                          : data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status &&
+                            data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.time?.split(' ')[0] !== date
                           ? 'bg-white'
-                          : data.Logs?.halaqah?.[waktu]?.status === 'izin'
+                          : data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status === 'izin'
                           ? 'bg-primary text-white border-0'
                           : 'bg-secondary text-white border-0'
                       "
                       :disabled="
-                        data.Logs?.halaqah?.[waktu]?.status &&
-                        data.Logs?.halaqah?.[waktu]?.time?.split(' ')[0] === date &&
-                        data.Logs?.halaqah?.[waktu]?.status !== '' &&
-                        data.Logs?.halaqah?.[waktu]?.status !== 'izin'
+                        data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status &&
+                        data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.time?.split(' ')[0] === date &&
+                        data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status !== '' &&
+                        data.Logs?.[selectedType.toLowerCase()]?.[waktu]?.status !== 'izin'
                           ? true
                           : false
                       ">
@@ -170,7 +212,6 @@
                 </div>
               </td>
 
-              <!-- note -->
               <td class="align-middle text-end">
                 <a style="padding: 0" href="javascript:;" @click="openModal(data.SK, 'modalcatatanpagi')">
                   <button class="btn btn-sm btn-primary">
@@ -209,12 +250,35 @@
         date: (state) => state.date,
         updateData: (state) => state.updateData,
         list: (state) => state.list,
+        selectedType: (state) => state.selectedType, // MAP NEW STATE
       }),
       ...mapState("index", {
         permissionsIndex: (state) => state.permissions, // Alias untuk permissions di modul index
       }),
-    },
+      localSelectedType: {
+        get() {
+          return this.selectedType;
+        },
+        set(val) {
+          this.$store.commit("tahfidzAbsensi/setState", { key: "selectedType", value: val });
+        },
+      },
+      // Check if Halaqah exists for current program
+      hasHalaqah() {
+        const program = process.client ? localStorage.getItem("program") : null;
+        if (!program) return false;
+        const data = this.$auth.user.Halaqah?.[program];
+        return data && data !== "off";
+      },
 
+      // Check if Idhofi exists for current program
+      hasIdhofi() {
+        const program = process.client ? localStorage.getItem("program") : null;
+        if (!program) return false;
+        const data = this.$auth.user.HalaqahIdhofi?.[program];
+        return data && data !== "off";
+      },
+    },
     methods: {
       ...mapActions("tahfidzAbsensi", ["setStatus", "deleteStatus"]),
       ...mapMutations("tahfidzAbsensi", { changeStep: "setAbsensi", changeModal: "openModal" }),
@@ -238,6 +302,9 @@
       openModal(sk, modal) {
         const obj = { sk, modal };
         this.changeModal(obj);
+      },
+      fetchData() {
+        this.$store.dispatch("tahfidzAbsensi/changeUnit");
       },
     },
   };
@@ -264,9 +331,4 @@
     justify-content: center;
     align-items: center;
   }
-
-  /* .box-radio input:checked+label {
-  background: grey;
-  color: #fff;
-} */
 </style>

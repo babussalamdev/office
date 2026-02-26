@@ -21,4 +21,5 @@ export default () => ({
   updateDataCatatan: "",
   listHalaqah: [],
   monitoring: "",
+  selectedType: "halaqah", // Added to track active selection
 });

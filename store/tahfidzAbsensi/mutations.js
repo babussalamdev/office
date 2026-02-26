@@ -17,52 +17,42 @@ export default {
   },
   updateAbsen(state, value) {
     const i = state.santri.findIndex((x) => x.SK === value.SK);
-    const data = state.santri[i];
-    // Membuat salinan data dan memperbarui salinan tersebut
+    const type = state.selectedType.toLowerCase(); // Use dynamic type
+
     const updatedSantri = state.santri.map((item, index) => {
       if (index === i) {
-        // Salinan data yang diperbarui
         const updatedItem = { ...item };
-
-        // Pastikan Logs dan halaqah ada
         updatedItem.Logs = updatedItem.Logs || {};
-        updatedItem.Logs["halaqah"] = updatedItem.Logs["halaqah"] || {};
+        updatedItem.Logs[type] = updatedItem.Logs[type] || {}; // Dynamic
 
-        // Memperbarui Logs dengan data baru
-        updatedItem.Logs["halaqah"][value.time] = {
-          ...item.Logs["halaqah"][value.time],
-          ...value.Logs.halaqah[value.time],
+        updatedItem.Logs[type][value.time] = {
+          ...item.Logs[type][value.time],
+          ...value.Logs[type][value.time],
         };
-
         return updatedItem;
       }
       return item;
     });
-
-    // Mengganti data santri lama dengan data yang telah diperbarui
     state.santri = updatedSantri;
   },
+
   deleteAbsen(state, value) {
     const i = state.santri.findIndex((x) => x.SK === value.SK);
-    const data = state.santri[i];
-    // Membuat salinan data dan memperbarui salinan tersebut
+    const type = state.selectedType.toLowerCase(); // Use dynamic type
+
     const updatedSantri = state.santri.map((item, index) => {
       if (index === i) {
-        // Salinan data yang diperbarui
         const updatedItem = { ...item };
 
-        // Memperbarui Logs dengan data baru
-        updatedItem.Logs.halaqah[value.time] = {
-          ...item.Logs.halaqah[value.time],
-          ...value.Logs.halaqah[value.time],
+        updatedItem.Logs[type][value.time] = {
+          // Dynamic
+          ...item.Logs[type][value.time],
+          ...value.Logs[type][value.time],
         };
-
         return updatedItem;
       }
       return item;
     });
-
-    // Mengganti data santri lama dengan data yang telah diperbarui
     state.santri = updatedSantri;
   },
   // setStatus(state, value) {
