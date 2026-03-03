@@ -134,6 +134,7 @@ export default {
       "~/components/settings/absensi/tahfidz/absensi",
       "~/components/settings/absensi/kelas",
       "~/components/settings/setupabsensi",
+      "~/components/settings/mutabaah",
       "~/components/settings/setuppelanggaran",
       "~/components/settings/authority",
       "~/components/settings/ruangan",

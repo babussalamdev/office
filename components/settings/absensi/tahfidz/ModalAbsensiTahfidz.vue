@@ -66,7 +66,7 @@
         const time = this.updateData.time;
         const type = this.selectedType.toLowerCase(); // 'halaqah' or 'idhofi'
         // Determine if we are pulling the Halaqah name or the Idhofi name
-        const namahalaqah = type === "halaqah" ? this.updateData.santri.Halaqah : this.updateData.santri.Idhofi; // Adjust '.Idhofi' based on your payload
+        const namahalaqah = type === "halaqah" ? this.updateData.santri.Halaqah : this.updateData.santri.HalaqahIdhofi; // Adjust '.Idhofi' based on your payload
         const program = localStorage.getItem("program");
         const kelas = this.updateData.santri.Kelas;
         try {

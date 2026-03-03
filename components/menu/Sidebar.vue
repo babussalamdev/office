@@ -640,6 +640,12 @@
                       <span class="text animate__animated animate__fadeInRight">Absensi Halaqah</span>
                     </nuxt-link>
                   </li>
+                  <!-- Mutabaah -->
+                  <li v-if="hasPermission('setup absensi halaqah')">
+                    <nuxt-link to="/settings/mutabaah" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Mutabaah</span>
+                    </nuxt-link>
+                  </li>
                   <!-- Asrama -->
                   <li v-if="hasPermission('setup asrama')">
                     <nuxt-link to="/settings/asrama" class="text-decoration-none sub-menu d-flex align-items-center gap-2">

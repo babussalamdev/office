@@ -151,20 +151,44 @@ export default {
   async getDataMonitoring({ commit, state, dispatch }) {
     dispatch("index/submitLoad", null, { root: true });
     const program = localStorage.getItem("program");
-    const reqSettings = this.$apiBase.$get(`get-settings?sk=${program}&type=halaqah`);
-    const reqAbsen = this.$apiBase.$get(`get-settings?type=session&sk=${program}`);
-    const [resSettings, resAbsen] = await Promise.all([reqSettings, reqAbsen]);
-    commit("setMonitoring", resSettings);
-    commit("setAbsen", resAbsen);
-    dispatch("index/submitLoad", null, { root: true });
+    const type = state.selectedType || "halaqah"; // Default to halaqah if not set
+
+    // Switch API parameters based on selection
+    const sessionType = type === "halaqah" ? "session" : "sessionidhofi";
+
+    // Check your backend: assuming the setting type for idhofi list is 'halaqahidhofi'
+    const settingsType = type === "halaqah" ? "halaqah" : "halaqahidhofi";
+
+    const reqSettings = this.$apiBase.$get(`get-settings?sk=${program}&type=${settingsType}`);
+    const reqAbsen = this.$apiBase.$get(`get-settings?type=${sessionType}&sk=${program}`);
+
+    try {
+      const [resSettings, resAbsen] = await Promise.all([reqSettings, reqAbsen]);
+      commit("setMonitoring", resSettings);
+      commit("setAbsen", resAbsen);
+    } catch (error) {
+      console.error("Error fetching monitoring data:", error);
+    } finally {
+      dispatch("index/submitLoad", null, { root: true });
+    }
   },
-  async getUnitMonitoring({ commit, dispatch, state }, data) {
+
+  async getUnitMonitoring({ commit, dispatch, state }) {
     dispatch("index/submitLoad", null, { root: true });
     const program = localStorage.getItem("program");
+    const type = state.selectedType;
 
-    const reqSantri = await this.$apiSantri.$get(`get-absensi-sisalam?type=every&subject=halaqah&program=${program}&value=${state.monitoring}`);
-    if (reqSantri) {
-      commit("setSantriTahfidz", reqSantri);
+    try {
+      const reqSantri = await this.$apiSantri.$get(
+        // Inject the dynamic 'type' into the API endpoint
+        `get-absensi-sisalam?type=every&subject=${type}&program=${program}&value=${state.monitoring}`,
+      );
+      if (reqSantri) {
+        commit("setSantriTahfidz", reqSantri);
+      }
+    } catch (error) {
+      console.error("Error fetching unit monitoring:", error);
+    } finally {
       dispatch("index/submitLoad", null, { root: true });
     }
   },
