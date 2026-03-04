@@ -87,17 +87,7 @@ export default {
     $("#inputDataMapelPenilaian").modal("hide");
     $("#inputMapelPenilaian")[0].reset();
   },
-  // deleteScore(state, value) {
-  //   const i = state.mapel.findIndex((x) => x.SK === value.sk)
-  //   const { Penilaian, ...rest } = value.data;
-  //   if (Penilaian && Object.keys(Penilaian).length > 0) {
-  //     const penilaianArray = Object.entries(Penilaian).map(([nama, bobot]) => ({
-  //       nama,
-  //       bobot
-  //     }));
-  //     state.mapel[i].Penilaian = penilaianArray
-  //   }
-  // }
+
   setState(state, value) {
     state[value.key] = value.value;
   },

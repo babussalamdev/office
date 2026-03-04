@@ -1,4 +1,6 @@
 export default () => ({
   list: [],
-  selectedType: "session", // Added to track the active selection
+  updateDataPencatatan: "",
+  btn: true,
+  Pencatatan: [],
 });

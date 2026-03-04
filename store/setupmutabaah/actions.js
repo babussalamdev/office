@@ -19,30 +19,30 @@ export default {
       });
     }
   },
-  async updateList({ commit, state, dispatch }, sk) {
-    const i = state.list.findIndex((x) => x.SK === sk);
-    const pk = state.list[i].PK.replace("#", "%23");
-    const status = state.list[i].Status === "active" ? "inactive" : "active";
-    const data = {
-      Status: status,
-    };
-    const result = await Swal.fire({
-      title: sk,
-      text: `Data akan di${status}kan!`,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: `Yes, ${status} it!`,
-    });
+  async updatePencatatan({ commit, state }, event) {
+    commit("btn");
+    const data = Object.fromEntries(new FormData(event.target));
+    const sk = state.updateDataPencatatan.SK.replace(/#/g, "%23");
+    const i = state.list.findIndex((x) => x.SK === state.updateDataPencatatan.SK);
 
-    if (result.isConfirmed) {
-      await this.$apiBase.$put(`update-settings?type=${pk}&sk=${sk}`, data);
-      commit("updateList", { sk, status });
+    const array = state.list[i];
+    const pencatatan = {
+      ...array?.Pencatatan,
+      [data.category]: data.name,
+    };
+    data["Pencatatan"] = pencatatan;
+    delete data.name;
+    delete data.category;
+    try {
+      const result = await this.$apiBase.$put(`update-settings?type=mutabaah&sk=${sk}`, data);
+      commit("updatePencatatan", { pencatatan, i });
+      commit("updatePencatatanModal");
+      commit("btn");
+    } catch (error) {
+      commit("btn");
       Swal.fire({
-        position: "center",
-        icon: "success",
-        text: `Data berhasil di${status}!`,
+        icon: "warning",
+        text: error,
         showConfirmButton: false,
         timer: 1500,
       });
