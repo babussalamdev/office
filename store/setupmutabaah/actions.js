@@ -48,4 +48,41 @@ export default {
       });
     }
   },
+  async delPencatatan({ commit, state }, { category, sk }) {
+    const i = state.list.findIndex((x) => x.SK === sk);
+    if (i === -1) return;
+    const item = state.list[i];
+    const updatedPencatatan = { ...item.Pencatatan };
+    delete updatedPencatatan[category];
+    const payload = {
+      ...item,
+      Pencatatan: updatedPencatatan,
+    };
+
+    try {
+      const encodedSk = sk.replace(/#/g, "%23");
+      delete payload.PK;
+      delete payload.SK;
+
+      // 5. Send the update to the server
+      await this.$apiBase.$put(`update-settings?type=mutabaah&sk=${encodedSk}`, payload);
+
+      // 6. Reuse the update mutation to reactively update the table UI
+      commit("updatePencatatan", { i, pencatatan: updatedPencatatan });
+
+      Swal.fire({
+        icon: "success",
+        title: "Deleted!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        text: error,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  },
 };

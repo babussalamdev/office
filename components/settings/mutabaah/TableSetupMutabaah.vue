@@ -27,7 +27,7 @@
 
                   <button
                     class="btn btn-outline-danger d-flex align-items-center px-1 border-secondary"
-                    @click="delPencatatan(category, data.SK)"
+                    @click="handleDelete(category, data.SK)"
                     title="Remove this category">
                     <i class="bx bx-x"></i>
                   </button>
@@ -51,6 +51,7 @@
 </template>
 
 <script>
+  import Swal from "sweetalert2";
   import { mapState, mapActions, mapMutations } from "vuex";
 
   export default {
@@ -59,6 +60,25 @@
     },
     methods: {
       ...mapMutations("setupmutabaah", ["updateMutabaah"]),
+      ...mapActions("setupmutabaah", ["delPencatatan"]), // Map the action here
+
+      // Wrapper method to handle the click from the template
+      handleDelete(category, sk) {
+        Swal.fire({
+          title: "Are you sure?",
+          text: `Do you want to delete the category "${category}"?`,
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#d33",
+          cancelButtonColor: "#3085d6",
+          confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Bundle the arguments into a single object payload for Vuex
+            this.delPencatatan({ category, sk });
+          }
+        });
+      },
     },
   };
 </script>

@@ -5,20 +5,14 @@ export default {
     dispatch("index/submitLoad", null, { root: true });
     const program = localStorage.getItem("program");
 
-    // --- 1. CHECK PERMISSIONS ---
-    // Check if the user has access to Halaqah and/or HalaqahIdhofi for the current program
     const userHalaqah = this.$auth.user.Halaqah?.[program];
     const userHalaqahIdhofi = this.$auth.user.HalaqahIdhofi?.[program];
 
     const hasHalaqah = userHalaqah && userHalaqah !== "off";
     const hasIdhofi = userHalaqahIdhofi && userHalaqahIdhofi !== "off";
 
-    // --- 2. AUTO-CORRECT SELECTED TYPE ---
-    // If their current selection is invalid, switch it to one they have access to
     let type = state.selectedType;
 
-    // NOTE: Based on your new template, the state value for idhofi is 'HalaqahIdhofi'
-    // instead of 'idhofi'. I am using 'HalaqahIdhofi' to match your template option value.
     if (type === "halaqah" && !hasHalaqah && hasIdhofi) {
       type = "HalaqahIdhofi";
       commit("setState", { key: "selectedType", value: "HalaqahIdhofi" });
@@ -27,11 +21,9 @@ export default {
       commit("setState", { key: "selectedType", value: "halaqah" });
     }
 
-    // --- 3. DYNAMIC PARAMETERS ---
     const sessionType = type === "halaqah" ? "session" : "sessionidhofi";
     const namaSubject = type === "halaqah" ? this.$auth.user.Halaqah[program] : this.$auth.user.HalaqahIdhofi[program];
 
-    // --- 4. FETCH DATA ---
     try {
       const reqAbsen = this.$apiBase.$get(`get-settings?type=${sessionType}&sk=${program}`);
       const reqSantri = this.$apiSantri.$get(`get-absensi-sisalam?type=every&subject=${type}&program=${program}&value=${namaSubject}`);

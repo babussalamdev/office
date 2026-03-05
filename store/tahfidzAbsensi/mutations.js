@@ -55,9 +55,7 @@ export default {
     });
     state.santri = updatedSantri;
   },
-  // setStatus(state, value) {
-  //   state[value.name] = value.value
-  // },
+
   setAbsensi(state, value) {
     const i = state.santri.findIndex((x) => x.SK === value.sk);
     const obj = {

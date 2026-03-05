@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- update modal -->
     <div class="modal fade" id="updateDataMutabaahPenilaian" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -11,17 +10,18 @@
             </div>
             <div class="modal-body">
               <div class="mb-3">
-                <label for="nama" class="form-label">Category</label>
-                <select name="category" class="form-select">
-                  <option value="">-- select category pencatatan --</option>
-                  <option value="hafalan baru">Hafalan Baru</option>
-                  <option value="murojaah">Murojaah</option>
-                  <option value="tilawah">Tilawah</option>
-                  <option value="tahsin">Tahsin</option>
+                <label for="category" class="form-label">Category</label>
+                <select name="category" class="form-select" required>
+                  <option value="" disabled selected>-- select category pencatatan --</option>
+
+                  <option v-for="cat in availableCategories" :key="cat.value" :value="cat.value">
+                    {{ cat.label }}
+                  </option>
                 </select>
               </div>
+
               <div class="mb-3">
-                <label for="nama" class="form-label">Nama</label>
+                <label for="name" class="form-label">Nama</label>
                 <input name="name" type="text" class="form-control" id="sort" required maxlength="32" />
               </div>
             </div>
@@ -43,10 +43,30 @@
 </template>
 
 <script>
-  import { mapState, mapActions, mapMutations } from "vuex";
+  import { mapState, mapActions } from "vuex";
+
   export default {
+    data() {
+      return {
+        // Define all possible options here for a cleaner template
+        allCategories: [
+          { value: "hafalan baru", label: "Hafalan Baru" },
+          { value: "murojaah", label: "Murojaah" },
+          { value: "tilawah", label: "Tilawah" },
+          { value: "tahsin", label: "Tahsin" },
+        ],
+      };
+    },
     computed: {
-      ...mapState("setupmutabaah", ["btn"]),
+      // Bring in updateDataPencatatan to check what the current item already has
+      ...mapState("setupmutabaah", ["list", "btn", "updateDataPencatatan"]),
+
+      availableCategories() {
+        const usedKeys = this.updateDataPencatatan?.Pencatatan ? Object.keys(this.updateDataPencatatan.Pencatatan) : [];
+
+        // 2. Filter the allCategories array to only include ones NOT in the usedKeys array
+        return this.allCategories.filter((cat) => !usedKeys.includes(cat.value));
+      },
     },
     methods: {
       ...mapActions("setupmutabaah", ["updatePencatatan"]),
