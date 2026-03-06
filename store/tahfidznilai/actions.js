@@ -1,40 +1,250 @@
 import Swal from "sweetalert2";
 
 export default {
-  // Initialize Page and fetch Periods
   async changeUnit({ commit, state, dispatch, rootState }) {
     dispatch("index/submitLoad", null, { root: true });
+    commit("resetBeforeRender");
     const program = localStorage.getItem("program");
 
+    // 1. Fetch Periods (Used by the Report Page)
     try {
-      // 1. Fetch Periode Settings
       const resPeriode = await this.$apiBase.$get(`get-settings?sk=${program}&type=periode`);
-      const label = rootState.index.label;
-      const semester = rootState.index.semester;
-
-      // 2. Commit Periode to setup Dropdowns
-      commit("setPeriode", { label, semester, resPeriode });
-
-      // 3. Initial Load (Optional: could load active data immediately if needed)
-      // For now, we wait for user interaction or default to active logic below
-      const halaqah = this.$auth.user.Halaqah[program];
-
-      if (halaqah !== "off") {
-        // If user is a teacher with a fixed Halaqah, you might want to auto-load active data here
-        // But based on your component, it seems driven by dropdowns.
-      }
-
-      dispatch("index/submitLoad", null, { root: true });
+      commit("setPeriode", { label: rootState.index.label, semester: rootState.index.semester, resPeriode });
     } catch (error) {
+      console.log("Failed to fetch periods");
+    }
+
+    // 2. Fetch Active Settings (Used by the Input Page)
+    const halaqah = this.$auth.user.Halaqah[program];
+    const semester = rootState.index.semester;
+
+    if (!semester) {
       dispatch("index/submitLoad", null, { root: true });
-      console.error(error);
+      return;
+    }
+
+    try {
+      const data = await this.$apiBase.$get(`get-settings?program=${program}&type=nilaiquran&hlq=${halaqah}&smstr=${semester}`);
+      commit("setState", { key: "selectedQuran", value: data.quran });
+
+      if (data.quran) {
+        const userPermissions = rootState.index.permissions;
+        if (!userPermissions) {
+          dispatch("index/submitLoad", null, { root: true });
+          return;
+        }
+
+        const datas = {
+          Filter: "penilaian-quran",
+          Halaqah: halaqah,
+          Subject: "quran",
+          Tahun: rootState.index.label,
+          Semester: rootState.index.semester,
+          Penilaian: state.selectedQuran.Penilaian,
+        };
+
+        if (userPermissions.includes("absensi pengampu")) {
+          // Koordinator mode
+          const Halaqah = await this.$apiBase.$get(`get-settings?type=options&sk=${program}&category=halaqah`);
+          commit("setState", { key: "selectHalaqah", value: Halaqah });
+
+          const result = await this.$apiSantri.$put(`get-nilai-sisalam?program=${program}&type=pengampu`, datas);
+          if (result) {
+            commit("setState", { key: "santri", value: result.data });
+            commit("setState", { key: "selectedByHalaqah", value: halaqah });
+
+            const newData = state.selectedQuran.Penilaian || {};
+            const newHeaders = { Nama: "" };
+            for (const [key, value] of Object.entries(newData)) newHeaders[key] = value;
+            if (state.th.hasOwnProperty("Total")) newHeaders["Total"] = state.th["Total"];
+
+            commit("setState", { key: "th", value: newHeaders });
+          }
+        } else {
+          // Pengampu Biasa mode
+          const result = await this.$apiSantri.$put(`get-nilai-sisalam?program=${program}&type=pengampu`, datas);
+          if (result) {
+            commit("setState", { key: "santri", value: result.data });
+
+            const newData = state.selectedQuran.Penilaian || {};
+            const newHeaders = { Nama: "" };
+            for (const [key, value] of Object.entries(newData)) newHeaders[key] = value;
+            if (state.th.hasOwnProperty("Total")) newHeaders["Total"] = state.th["Total"];
+
+            commit("setState", { key: "th", value: newHeaders });
+          }
+        }
+      } else {
+        Swal.fire({ position: "center", icon: "warning", text: "Penilaian untuk Quran belum di setup" });
+      }
+    } catch (error) {
+      Swal.fire({ title: "Warning!", text: "Penilaian Tahfidz belum di setup", icon: "warning" });
+    }
+    dispatch("index/submitLoad", null, { root: true });
+  },
+
+  // --- RESTORED COORDINATOR ACTIONS ---
+  async getType({ commit, state, dispatch }) {
+    try {
+      const type = state.selectedType;
+      const program = localStorage.getItem("program");
+      const result = await this.$apiBase.$get(`get-settings?type=options&sk=${program}&category=${type}`);
+      if (result) {
+        commit("setType", { result, type });
+      }
+    } catch (error) {
+      Swal.fire({ text: error, icon: "error", showConfirmButton: false, timer: 3000 });
     }
   },
 
-  // Triggered when Semester Dropdown changes
+  async getByHalaqah({ commit, state, dispatch, rootState }) {
+    dispatch("index/submitLoad", null, { root: true });
+    const program = localStorage.getItem("program");
+    const halaqah = state.selectedByHalaqah;
+    const semester = rootState.index.semester;
+    try {
+      const data = await this.$apiBase.$get(`get-settings?program=${program}&type=nilaiquran&hlq=${halaqah}&smstr=${semester}`);
+      commit("setState", { key: "selectedQuran", value: data.quran });
+      if (data.quran) {
+        const datas = {
+          Filter: "penilaian-quran",
+          Halaqah: halaqah,
+          Subject: "quran",
+          Tahun: rootState.index.label,
+          Semester: rootState.index.semester,
+          Penilaian: state.selectedQuran.Penilaian,
+        };
+        const result = await this.$apiSantri.$put(`get-nilai-sisalam?program=${program}&type=pengampu`, datas);
+        if (result) {
+          commit("setState", { key: "santri", value: result.data });
+          const newData = state.selectedQuran.Penilaian || {};
+          const newHeaders = { Nama: "" };
+          for (const [key, value] of Object.entries(newData)) newHeaders[key] = value;
+          if (state.th.hasOwnProperty("Total")) newHeaders["Total"] = state.th["Total"];
+          commit("setState", { key: "th", value: newHeaders });
+        }
+      } else {
+        Swal.fire({ position: "center", icon: "warning", text: "Penilaian untuk Quran belum di setup" });
+      }
+    } catch (error) {
+      Swal.fire({ title: "Warning!", text: "Penilaian Tahfidz belum di setup", icon: "warning" });
+    }
+    dispatch("index/submitLoad", null, { root: true });
+  },
+
+  async getByKelas({ commit, state, dispatch, rootState }) {
+    dispatch("index/submitLoad", null, { root: true });
+    const program = localStorage.getItem("program");
+    const kelas = state.selectedByKelas;
+    const semester = rootState.index.semester;
+    try {
+      const data = await this.$apiBase.$get(`get-settings?program=${program}&type=nilaiquran&kls=${kelas}&smstr=${semester}`);
+      commit("setState", { key: "selectedQuran", value: data });
+      if (data) {
+        const datas = {
+          Filter: "penilaian-quran",
+          Kelas: kelas,
+          Subject: "quran",
+          Tahun: rootState.index.label,
+          Semester: rootState.index.semester,
+          Penilaian: state.selectedQuran.Penilaian,
+        };
+        const result = await this.$apiSantri.$put(`get-nilai-sisalam?program=${program}&type=pengampu`, datas);
+        if (result) {
+          commit("setState", { key: "santri", value: result.data });
+          const newData = state.selectedQuran.Penilaian || {};
+          const newHeaders = { Nama: "" };
+          for (const [key, value] of Object.entries(newData)) newHeaders[key] = value;
+          if (state.th.hasOwnProperty("Total")) newHeaders["Total"] = state.th["Total"];
+          commit("setState", { key: "th", value: newHeaders });
+        }
+      } else {
+        Swal.fire({ position: "center", icon: "warning", text: "Penilaian untuk Quran belum di setup" });
+      }
+    } catch (error) {
+      Swal.fire({ title: "Warning!", text: "Penilaian Tahfidz belum di setup", icon: "warning" });
+    }
+    dispatch("index/submitLoad", null, { root: true });
+  },
+
+  async setPenilaian({ commit, state, dispatch, rootState }, data) {
+    const program = localStorage.getItem("program");
+    if (data.type === "button") {
+      dispatch("index/submitLoad", null, { root: true });
+      const skSantri = state.santri[state.openEdit.index].SK.replace("#", "%23");
+      const kelas = state.santri[state.openEdit.index].Kelas;
+      const tahun = rootState.index.label;
+      const semester = rootState.index.semester;
+      try {
+        const Key = "Quran";
+        const datas = {
+          Subject: Key,
+          SubAttribute: state.openEdit.key,
+          [Key]: `${state.nilai}/${state.selectedQuran.Penilaian[state.openEdit.key]}`,
+        };
+        if (state.nilai > 100) {
+          Swal.fire({ title: "Warning!", text: "Nilai tidak boleh lebih dari 100.", icon: "warning", showConfirmButton: false, timer: 1500 });
+        } else {
+          const result = await this.$apiSantri.$post(
+            `input-nilai-sisalam?type=nilaiquran&sksantri=${skSantri}&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`,
+            datas,
+          );
+          if (result) {
+            data["result"] = result;
+            commit("setPenilaian", data);
+          }
+        }
+      } catch (error) {
+        Swal.fire({ icon: "warning", title: "Perubahan tidak tersimpan", showConfirmButton: false, timer: 1500 });
+      }
+      dispatch("index/submitLoad", null, { root: true });
+    } else {
+      if (state.openEdit && state.nilai) {
+        dispatch("index/submitLoad", null, { root: true });
+        data["type"] = "close";
+        const skSantri = state.santri[state.openEdit.index].SK.replace("#", "%23");
+        const kelas = state.santri[state.openEdit.index].Kelas;
+        const tahun = rootState.index.label;
+        const semester = rootState.index.semester;
+        try {
+          const Key = "Quran";
+          const datas = {
+            Subject: Key,
+            SubAttribute: state.openEdit.key,
+            [Key]: `${state.nilai}/${state.selectedQuran.Penilaian[state.openEdit.key]}`,
+          };
+          if (state.nilai > 100) {
+            Swal.fire({ title: "Warning!", text: "Nilai tidak boleh lebih dari 100.", icon: "warning", timer: 1500, showConfirmButton: false });
+          } else {
+            const result = await this.$apiSantri.$post(
+              `input-nilai-sisalam?type=nilaiquran&sksantri=${skSantri}&tahun=${tahun}&semester=${semester}&Kelas=${kelas}`,
+              datas,
+            );
+            if (result) {
+              data["result"] = result;
+              commit("setPenilaian", data);
+            }
+          }
+        } catch (error) {
+          Swal.fire({ icon: "warning", title: "Perubahan tidak tersimpan", showConfirmButton: false, timer: 1500 });
+        }
+        dispatch("index/submitLoad", null, { root: true });
+      }
+      if (data) {
+        data["type"] = "set";
+        if (!state.nilai && state.openEdit) {
+          Swal.fire({ title: "Warning!", text: "Nilai tidak boleh kosong!", icon: "warning", timer: 1500, showConfirmButton: false });
+        } else {
+          commit("setPenilaian", data);
+        }
+      }
+    }
+  },
+
+  // --- REPORT SPECIFIC ACTIONS ---
   async changeUnitBySemester({ commit, state, dispatch }) {
     dispatch("index/submitLoad", null, { root: true });
-    commit("resetForNewSemester"); // Clear previous data
+    commit("resetForNewSemester");
 
     const program = localStorage.getItem("program");
     const status = state.selectedSemester.Status;
@@ -43,66 +253,43 @@ export default {
 
     try {
       if (status === "inactive") {
-        // --- INACTIVE LOGIC ---
-        // Fetch historical Halaqah/Group list for that specific year/semester
-        // Assuming 'report-halaqah' type exists, otherwise use 'report-kelas' if structure is same
         const result = await this.$apiBase.$get(`get-settings?sk=${tahun}%23${semester}%23&type=report-halaqah&program=${program}`);
-
-        // Map result to listKelas for the dropdown
         commit("setState", { key: "listKelas", value: result });
       } else {
-        // --- ACTIVE LOGIC ---
         const userHalaqah = this.$auth.user.Halaqah[program];
-
         if (userHalaqah === "off") {
-          // Admin: Fetch all active Halaqahs
           const result = await this.$apiBase.$get(`get-settings?type=options&sk=${program}&category=halaqah`);
           commit("setState", { key: "listKelas", value: result });
         } else {
-          // Teacher: Lock to their Halaqah (Single Option)
-          // We mimic the object structure { SK: '...', Nama: '...' }
           const singleOption = [{ SK: `${program}#${userHalaqah}`, Nama: userHalaqah }];
           commit("setState", { key: "listKelas", value: singleOption });
-
-          // Optional: Auto-select if there's only one
-          commit("setState", { key: "selectedKelas", value: singleOption[0] });
-          // Auto-fetch data if desired:
-          dispatch("getSantri");
         }
       }
     } catch (error) {
-      console.error(error);
       Swal.fire({ icon: "error", title: "Gagal memuat data halaqah" });
     }
     dispatch("index/submitLoad", null, { root: true });
   },
 
-  // Triggered when Class/Halaqah is selected
-  async getSantri({ commit, state, dispatch, rootState }) {
+  async getSantri({ commit, state, dispatch }) {
     dispatch("index/submitLoad", null, { root: true });
 
     const program = localStorage.getItem("program");
-    // Ensure we have a selected "Kelas" (Halaqah)
     if (!state.selectedKelas) {
       dispatch("index/submitLoad", null, { root: true });
       return;
     }
 
-    // Parse the SK to get the clean Halaqah name if needed (e.g. "Tahfidz#Halaqah A" -> "Halaqah A")
-    // Depending on your API, you might send the full SK or just the name.
-    // Based on your component: {{ data.SK.split('#')[1] }}, let's extract it.
     const rawHalaqah = state.selectedKelas.SK ? state.selectedKelas.SK.split("#")[1] : state.selectedKelas;
-
-    const datas = {};
-    datas["Filter"] = "penilaian-quran";
-    datas["Halaqah"] = rawHalaqah;
-    datas["Subject"] = "quran";
-    datas["Tahun"] = state.selectedLabel;
-    datas["Semester"] = state.selectedSemester.Semester;
+    const datas = {
+      Filter: "penilaian-quran",
+      Halaqah: rawHalaqah,
+      Subject: "quran",
+      Tahun: state.selectedLabel,
+      Semester: state.selectedSemester.Semester,
+    };
 
     try {
-      // 1. Get Settings (Quran columns/headers) for that specific context
-      // Note: Using the historical params
       const settingData = await this.$apiBase.$get(`get-settings?program=${program}&type=nilaiquran&hlq=${rawHalaqah}&smstr=${datas["Semester"]}`);
 
       if (!settingData.quran) {
@@ -114,25 +301,18 @@ export default {
       commit("setState", { key: "selectedQuran", value: settingData.quran });
       datas["Penilaian"] = settingData.quran.Penilaian;
 
-      // 2. Fetch Student Scores
       const result = await this.$apiSantri.$put(`get-nilai-sisalam?program=${program}&type=pengampu`, datas);
 
       if (result && result.data) {
         commit("setState", { key: "santri", value: result.data });
 
-        // 3. Setup Table Headers
         const newData = settingData.quran.Penilaian || {};
-        const newHeaders = { Nama: "", Halaqah: "" }; // Added Halaqah to header
-        for (const [key, value] of Object.entries(newData)) {
-          newHeaders[key] = value;
-        }
-        if (state.th.hasOwnProperty("Total")) {
-          newHeaders["Total"] = state.th["Total"];
-        }
+        const newHeaders = { Nama: "", Halaqah: "" };
+        for (const [key, value] of Object.entries(newData)) newHeaders[key] = value;
+        if (state.th.hasOwnProperty("Total")) newHeaders["Total"] = state.th["Total"];
         commit("setState", { key: "th", value: newHeaders });
       }
     } catch (error) {
-      console.error(error);
       Swal.fire({ icon: "error", text: "Gagal mengambil data nilai." });
     }
 

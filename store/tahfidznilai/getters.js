@@ -1,20 +1,28 @@
 export default {
   getSelectedMapel(state) {
-    return state.selectedMapel
+    return state.selectedMapel;
   },
   getDataSantri(state) {
-    return state.santri
+    return state.santri;
   },
   getNilai(state) {
-    return state.nilai
+    return state.nilai;
   },
   getSelectedHalaqah(state) {
-    return state.selectedByHalaqah
+    return state.selectedByHalaqah;
   },
   getSelectedKelas(state) {
-    return state.selectedByKelas
+    return state.selectedByKelas;
   },
   getSelectedType(state) {
-    return state.selectedType
-  }
-}
+    return state.selectedType;
+  },
+
+  // Report Getters
+  getSelectedLabel(state) {
+    return state.selectedLabel;
+  },
+  getSelectedSemester(state) {
+    return state.selectedSemester;
+  },
+};
