@@ -10,6 +10,7 @@ export default {
       const resPeriode = await this.$apiBase.$get(`get-settings?sk=${program}&type=periode`);
       const tahun = rootState.index.label;
       const semester = rootState.index.semester;
+
       commit("setPeriode", { tahun, semester, resPeriode });
 
       const kelas = this.$auth.user.Kelas[program];
@@ -25,7 +26,9 @@ export default {
 
       // If User has fixed class (Walas/Student), load their data immediately
       const reqPenilaian = this.$apiBase.$get(`get-settings?program=${program}&type=penilaian`);
-      const reqLeger = this.$apiSantri.$get(`get-leger-sisalam?program=${program}&tahun=${tahun}&semester=${semester}&kelas=${kelas}&methode=all`);
+      const reqLeger = this.$apiSantri.$get(
+        `get-leger-sisalam?program=${program}&tahun=${tahun}&semester=${semester}&status=active&kelas=${kelas}&methode=all`,
+      );
 
       const [resPenilaian, resLeger] = await Promise.all([reqPenilaian, reqLeger]);
 
@@ -53,7 +56,6 @@ export default {
     commit("resetForNewSemester");
 
     const userKelas = this.$auth.user.Kelas[program];
-
     try {
       // --- LOGIC FOR INACTIVE (Historical) ---
       if (status === "inactive") {
@@ -69,8 +71,9 @@ export default {
           // If user is Walas/Student, they can only see their own class history
           // Trigger data fetch immediately for their specific class
           const reqLeger = await this.$apiSantri.$get(
-            `get-leger-sisalam?program=${program}&tahun=${tahun}&semester=${semester}&kelas=${userKelas}&methode=all`,
+            `get-leger-sisalam?program=${program}&tahun=${tahun}&semester=${semester}&kelas=${userKelas}&status=${status}&methode=all`,
           );
+          console.log(reqLeger);
           commit("setState", { key: "santri", value: reqLeger });
         }
       }
@@ -85,8 +88,10 @@ export default {
           // We reuse the logic from changeUnit or simply fetch leger here
           const reqPenilaian = this.$apiBase.$get(`get-settings?program=${program}&type=penilaian`);
           const reqLeger = this.$apiSantri.$get(
-            `get-leger-sisalam?program=${program}&tahun=${tahun}&semester=${semester}&kelas=${userKelas}&methode=all`,
+            `get-leger-sisalam?program=${program}&tahun=${tahun}&semester=${semester}&kelas=${userKelas}&status=${status}&methode=all`,
           );
+          console.log(reqLeger);
+
           const [resPenilaian, resLeger] = await Promise.all([reqPenilaian, reqLeger]);
 
           commit("setState", { key: "mapelSelect", value: resPenilaian.mapel });

@@ -77,7 +77,7 @@
         </tbody>
         <tbody v-else>
           <tr>
-            <td colspan="100%" class="text-center p-4">Data tidak ditemukan / Silahkan pilih Kelas</td>
+            <td colspan="100%" class="text-center p-4">Data tidak ditemukan</td>
           </tr>
         </tbody>
       </table>
