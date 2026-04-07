@@ -108,7 +108,7 @@
       },
       getIconName(key) {
         const icons = {
-          "hafalan baru": "library_add",
+          ziyadah: "library_add",
           murojaah: "restart_alt",
           tilawah: "auto_stories",
           tahsin: "mic",
@@ -119,7 +119,7 @@
 
       getIconColor(key) {
         const colors = {
-          "hafalan baru": "bg-primary",
+          ziyadah: "bg-primary",
           murojaah: "bg-warning",
           tilawah: "bg-success",
           tahsin: "bg-danger",

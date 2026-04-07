@@ -50,7 +50,7 @@
       return {
         // Define all possible options here for a cleaner template
         allCategories: [
-          { value: "hafalan baru", label: "Hafalan Baru" },
+          { value: "ziyadah", label: "Ziyadah" },
           { value: "murojaah", label: "Murojaah" },
           { value: "tilawah", label: "Tilawah" },
           { value: "tahsin", label: "Tahsin" },

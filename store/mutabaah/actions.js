@@ -121,13 +121,15 @@ export default {
 
     // Jika semua data valid, lanjutkan dengan proses
     try {
+      console.log(state.selectedType);
       const program = localStorage.getItem("program");
       const sk = state.detail.SK.replace("#", "%23");
       const kelas = state.detail.Kelas;
       const subject = localStorage.getItem("subject");
       const tahun = rootState.index.label;
       const semester = rootState.index.semester;
-      const halaqah = this.$auth.user.Halaqah[program];
+      // const halaqah = type === "halaqah" ? state.santri.Halaqah : state.santri.HalaqahIdhofi;
+      const halaqah = state.detail.Halaqah;
       const result = await this.$apiSantri.$post(`input-logs?kls=${kelas}&subject=${subject}&sksantri=${sk}&halaqah=${halaqah}&thn=${tahun}`, data);
       if (result) {
         Swal.fire({
