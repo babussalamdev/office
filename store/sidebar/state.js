@@ -15,7 +15,6 @@ export default () => ({
   databaseSubList: false,
   tahfidzSubList: false,
   tahfidz2SubList: false,
-  tahfidz3SubList: false,
   kelasSubList: false,
   settingLaundrySubList: false,
 

@@ -213,29 +213,12 @@
                 </nuxt-link>
               </li>
               <!-- ujian -->
-              <li v-if="hasRoot">
-                <div @click="notClickSub('tahfidz3')" class="dropdown d-flex align-items-center justify-content-between gap-2">
-                  <span class="d-flex align-items-center gap-2">
-                    <span class="text animate__animated animate__fadeInRight">Ujian</span>
-                  </span>
-                  <i class="bx bx-chevron-down"></i>
-                </div>
-                <!-- sub menu santri -->
-                <ul v-if="tahfidz3SubList" class="dropdown-list">
-                  <!-- Absensi -->
-                  <li>
-                    <nuxt-link to="/tahfidz/ujian/pendaftaranujian" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
-                      <span class="text animate__animated animate__fadeInRight">Pendaftaran Ujian</span>
-                    </nuxt-link>
-                  </li>
-                  <!-- Absensi -->
-                  <li>
-                    <nuxt-link to="/tahfidz/ujian/formujian" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
-                      <span class="text animate__animated animate__fadeInRight">Form Ujian</span>
-                    </nuxt-link>
-                  </li>
-                </ul>
+              <li>
+                <nuxt-link to="/tahfidz/ujian/pendaftarantahfidzujian" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Ujian</span>
+                </nuxt-link>
               </li>
+
               <!-- rekap -->
               <li v-if="hasRoot">
                 <div @click="notClickSub('tahfidz')" class="dropdown d-flex align-items-center justify-content-between gap-2">
@@ -787,7 +770,6 @@
         "databaseSubList",
         "tahfidzSubList",
         "tahfidz2SubList",
-        "tahfidz3SubList",
         "kelasSubList",
         "settingLaundrySubList",
         "isSidebar",

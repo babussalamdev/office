@@ -92,8 +92,6 @@ export default {
       "~/components/tahfidz/mutabaah",
       "~/components/tahfidz/modalmutabaah",
       "~/components/tahfidz/ujian",
-      "~/components/tahfidz/ujian/pendaftaranujian",
-      "~/components/tahfidz/ujian/formujian",
       "~/components/tahfidz/rekap",
       "~/components/tahfidz/rekap/absensitahfidz",
       "~/components/tahfidz/rekap/nilaitahfidz",
