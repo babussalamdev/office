@@ -56,16 +56,6 @@
 <script>
   import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
   export default {
-    data() {
-      return {
-        dummy: [
-          {
-            Nama: "Fauzan Gunawan",
-            Nis: "3423321",
-          },
-        ],
-      };
-    },
     computed: {
       ...mapState("mutabaah", ["santri", "listHalaqah", "selectedType", "list"]),
       ...mapGetters("mutabaah", ["getSelectedHalaqah"]),

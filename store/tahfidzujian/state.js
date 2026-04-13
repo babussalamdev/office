@@ -1,1 +1,5 @@
-export default () => ({ halaqahsantri: [] });
+export default () => ({
+  btn: true,
+  halaqahsantri: [],
+  detail: "",
+});

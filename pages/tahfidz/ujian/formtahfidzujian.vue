@@ -10,7 +10,28 @@
           Form Ujian
         </label>
       </div>
-      <formtahfidzujian />
+    </div>
+    <div class="table-responsive animate__animated animate__fadeInUp">
+      <table class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th scope="col" class="text-start">Nama</th>
+            <th scope="col" class="text-start">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(data, index) in halaqahsantri" :key="index">
+            <td class="text-capitalize align-middle">
+              <h1>{{ data.Nama }}</h1>
+            </td>
+            <td class="text-center align-middle">
+              <a href="javascript:;" @click="showDetail(data.SK)">
+                <i class="bi bi-pencil-square"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </section>
 </template>
@@ -19,13 +40,19 @@
   import { mapState, mapMutations } from "vuex";
   export default {
     async asyncData({ store }) {
-      store.dispatch("tahfidzujian/changeUnit");
+      store.dispatch("tahfidzujian/changeUnitPendaftaran");
+    },
+    computed: {
+      ...mapState("tahfidzujian", ["halaqahsantri"]),
     },
     mounted() {
       this.closeAllModals();
     },
     methods: {
-      ...mapMutations("tahfidzujian", ["move"]),
+      ...mapMutations("tahfidzujian", ["move", "showDetail"]),
+      showDetail(sk, subject) {
+        this.$store.commit("tahfidzujian/showDetail", { sk, subject });
+      },
       closeAllModals() {
         const backdrop = document.querySelector(".modal-backdrop");
         if (backdrop) {
@@ -41,5 +68,5 @@
 </script>
 
 <style>
-  @import url(~/assets/css/kelas/kelas.css);
+  @import url(~/assets/css/santri/santri.css);
 </style>

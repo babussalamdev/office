@@ -18,6 +18,8 @@ export default {
   // mutabaah details
   showDetail(state, value) {
     localStorage.setItem("subject", value.subject);
+    console.log(value.subject);
+
     const i = state.santri.findIndex((x) => x.SK === value.sk);
     state.detail = state.santri[i];
     this.$router.push(`/tahfidz/mutabaah/${value.sk.replace("#", "%23")}`);
