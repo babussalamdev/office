@@ -49,6 +49,7 @@
               <input
                 type="date"
                 v-model="form.waktuUjian"
+                :min="minDate"
                 class="form-control form-control-lg bg-light border-0 shadow-none text-dark w-100"
                 required />
             </div>
@@ -91,6 +92,24 @@
     },
     computed: {
       ...mapState("tahfidzujian", ["halaqahsantri"]),
+
+      // Calculate the minimum date allowed (Day after tomorrow)
+      minDate() {
+        const today = new Date();
+        const targetDate = new Date(today);
+
+        // Add 2 days to the current date
+        targetDate.setDate(targetDate.getDate() + 2);
+
+        // Extract year, month, and day in local time to avoid timezone offset issues
+        const year = targetDate.getFullYear();
+        // Month is 0-indexed, so we add 1. padStart ensures it's 2 digits (e.g., '04')
+        const month = String(targetDate.getMonth() + 1).padStart(2, "0");
+        const day = String(targetDate.getDate()).padStart(2, "0");
+
+        // Format strictly required by <input type="date">
+        return `${year}-${month}-${day}`;
+      },
     },
     methods: {
       ...mapActions("tahfidzujian", ["submitPendaftaran"]),

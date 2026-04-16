@@ -2,6 +2,9 @@ export default {
   setHalaqahSantri(state, value) {
     state.halaqahsantri = value;
   },
+  setPendaftarUjian(state, value) {
+    state.pendaftarujian = value;
+  },
   move(state, data) {
     this.$router.push({ path: `/tahfidz/ujian/${data}` });
   },

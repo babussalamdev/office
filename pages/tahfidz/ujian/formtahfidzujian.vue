@@ -1,6 +1,6 @@
 <template>
-  <section id="pendaftarantahfidzujian">
-    <div class="pendaftarantahfidzujian">
+  <section id="rekaptahfidz">
+    <div class="rekaptahfidz">
       <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
         <input type="radio" class="btn-check" name="btnradio" id="pendaftarantahfidzujian" autocomplete="off" />
         <label @click="move('pendaftarantahfidzujian')" class="btn btn-outline-dark" for="pendaftarantahfidzujian">Pendaftaran</label>
@@ -10,28 +10,35 @@
           Form Ujian
         </label>
       </div>
-    </div>
-    <div class="table-responsive animate__animated animate__fadeInUp">
-      <table class="table table-hover table-striped">
-        <thead>
-          <tr>
-            <th scope="col" class="text-start">Nama</th>
-            <th scope="col" class="text-start">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(data, index) in halaqahsantri" :key="index">
-            <td class="text-capitalize align-middle">
-              <h1>{{ data.Nama }}</h1>
-            </td>
-            <td class="text-center align-middle">
-              <a href="javascript:;" @click="showDetail(data.SK)">
-                <i class="bi bi-pencil-square"></i>
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+
+      <div class="py-3">
+        <div class="table-responsive animate__animated animate__fadeInUp">
+          <table class="table table-hover table-striped">
+            <thead>
+              <tr>
+                <th scope="col" class="text-start">Nama</th>
+                <th scope="col" class="text-start">Tanggal Ujian</th>
+                <th scope="col" class="text-start">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(data, index) in pendaftarujian" :key="index">
+                <td class="text-capitalize align-middle">
+                  <h1>{{ data.Nama }}</h1>
+                </td>
+                <td class="text-capitalize align-middle">
+                  <h1>{{ data.Date }}</h1>
+                </td>
+                <td class="text-center align-middle">
+                  <a href="javascript:;" @click="showDetail(data.SK)">
+                    <i class="bi bi-pencil-square h5"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </section>
 </template>
@@ -40,10 +47,10 @@
   import { mapState, mapMutations } from "vuex";
   export default {
     async asyncData({ store }) {
-      store.dispatch("tahfidzujian/changeUnitPendaftaran");
+      store.dispatch("tahfidzujian/changeUnitPendaftarUjian");
     },
     computed: {
-      ...mapState("tahfidzujian", ["halaqahsantri"]),
+      ...mapState("tahfidzujian", ["pendaftarujian"]),
     },
     mounted() {
       this.closeAllModals();

@@ -13,11 +13,27 @@ export default {
     }
   },
 
-  async submitPendaftaran({ dispatch }, formData) {
+  async changeUnitPendaftarUjian({ commit, state, dispatch }) {
+    dispatch("index/submitLoad", null, { root: true });
+    const program = localStorage.getItem("program");
+
+    const res = await this.$apiSantri.$get(`get-ujiantahfidz-sisalam?type=pendaftar&program=${program}`);
+    if (res) {
+      commit("setPendaftarUjian", res);
+      dispatch("index/submitLoad", null, { root: true });
+    }
+  },
+
+  async submitPendaftaran({ dispatch, state, rootState }, formData) {
     // 1. Turn on loading state
     dispatch("index/submitLoad", null, { root: true });
 
     try {
+      const program = localStorage.getItem("program");
+      const tahun = rootState.index.label;
+      const i = state.halaqahsantri.findIndex((x) => x.SK === formData.santri);
+      const detail = state.halaqahsantri[i];
+
       // 2. Format the Date
       let formattedDate = "";
       if (formData.waktuUjian) {
@@ -32,18 +48,23 @@ export default {
       const payload = {
         SK: formData.santri,
         Juz: formData.juz,
-        WaktuUjian: formattedDate,
+        Date: formattedDate,
+        Thn: tahun,
+        Halaqah: detail.Halaqah,
+        Kls: detail.Kelas,
       };
-      console.log(payload);
-      // 4. Send the API request
-      // const res = await this.$apiSantri.$post(`pendaftaran-ujian`, payload);
+
+      const res = await this.$apiSantri.$post(`input-ujiantahfidz-sisalam?subject=ujiantahfidz&program=${program}`, payload);
 
       // 5. SUCCESS ALERT
       Swal.fire({
         title: "Berhasil!",
-        text: "Pendaftaran ujian tahfidz berhasil disimpan.",
+        html: `Pendaftaran ujian tahfidz berhasil disimpan.<br><br>
+         Ujian akan diselenggarakan pada tanggal <b>${res.Date}</b>
+         dan diuji oleh <b> ustadz ${res.Examiner_Name}</b>.`,
         icon: "success",
         confirmButtonColor: "#0d6efd", // Bootstrap Primary blue
+        confirmButtonText: "Baik, Mengerti", // Better than the default "OK"
       });
 
       return res;
