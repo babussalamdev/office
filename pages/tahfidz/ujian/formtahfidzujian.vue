@@ -16,21 +16,50 @@
           <table class="table table-hover table-striped">
             <thead>
               <tr>
-                <th scope="col" class="text-start">Nama</th>
                 <th scope="col" class="text-start">Tanggal Ujian</th>
+                <th scope="col" class="text-start">Nama</th>
+                <th scope="col" class="text-start">Juz</th>
+                <th scope="col" class="text-start">Halaqah</th>
+                <th scope="col" class="text-start">Kelas</th>
+                <th scope="col" class="text-start">Status</th>
                 <th scope="col" class="text-start">Actions</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(data, index) in pendaftarujian" :key="index">
                 <td class="text-capitalize align-middle">
+                  <h1>{{ data.Date }}</h1>
+                </td>
+                <td class="text-capitalize align-middle">
                   <h1>{{ data.Nama }}</h1>
                 </td>
                 <td class="text-capitalize align-middle">
-                  <h1>{{ data.Date }}</h1>
+                  <h1>{{ data.Juz }}</h1>
                 </td>
-                <td class="text-center align-middle">
-                  <a href="javascript:;" @click="showDetail(data.SK)">
+                <td class="text-capitalize align-middle">
+                  <h1>{{ data.Halaqah }}</h1>
+                </td>
+                <td class="text-capitalize align-middle">
+                  <h1>{{ data.Kelas }}</h1>
+                </td>
+                <td class="text-capitalize align-middle">
+                  <span
+                    class="badge rounded-pill"
+                    :class="{
+                      'bg-success': data?.Status === 'lulus',
+                      'bg-danger': data?.Status === 'mengulang',
+                      'bg-secondary': !data?.Status,
+                    }"
+                    style="font-size: 0.85rem; padding: 0.4em 0.8em; font-weight: 500">
+                    {{ data?.Status || "-" }}
+                  </span>
+                </td>
+                <td class="text-capitalize">
+                  <a
+                    href="javascript:;"
+                    @click="isToday(data.Date) && !data.Status ? showDetail(data.SK) : null"
+                    :class="{ 'text-muted opacity-50': !isToday(data.Date) || data.Status }"
+                    :style="!isToday(data.Date) || data.Status ? 'cursor: not-allowed; pointer-events: none;' : ''">
                     <i class="bi bi-pencil-square h5"></i>
                   </a>
                 </td>
@@ -57,8 +86,17 @@
     },
     methods: {
       ...mapMutations("tahfidzujian", ["move", "showDetail"]),
-      showDetail(sk, subject) {
-        this.$store.commit("tahfidzujian/showDetail", { sk, subject });
+      isToday(dateString) {
+        if (!dateString) return false;
+
+        const today = new Date().toISOString().split("T")[0]; // Returns "YYYY-MM-DD"
+
+        // If your data.Date is in a different format,
+        // ensure this comparison matches that format.
+        return dateString === today;
+      },
+      showDetail(sk) {
+        this.$store.commit("tahfidzujian/showDetail", { sk });
       },
       closeAllModals() {
         const backdrop = document.querySelector(".modal-backdrop");

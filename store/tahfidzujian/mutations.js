@@ -9,9 +9,8 @@ export default {
     this.$router.push({ path: `/tahfidz/ujian/${data}` });
   },
   showDetail(state, value) {
-    localStorage.setItem("subject", value.subject);
-    const i = state.halaqahsantri.findIndex((x) => x.SK === value.sk);
-    state.detail = state.halaqahsantri[i];
+    const i = state.pendaftarujian.findIndex((x) => x.SK === value.sk);
+    state.detail = state.pendaftarujian[i];
     this.$router.push(`/tahfidz/ujian/${value.sk.replace("#", "%23")}`);
   },
 };

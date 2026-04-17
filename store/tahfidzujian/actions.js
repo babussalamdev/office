@@ -84,32 +84,19 @@ export default {
     }
   },
 
-  async submitNilaiUjian({ dispatch }, formData) {
+  async submitNilaiUjian({ state, dispatch, redirect }, formData) {
     dispatch("index/submitLoad", null, { root: true });
 
     try {
-      // 1. Format the Date
-      let formattedDate = "";
-      if (formData.tanggalUjian) {
-        const d = new Date(formData.tanggalUjian);
-        const year = d.getFullYear();
-        const month = String(d.getMonth() + 1).padStart(2, "0");
-        const day = String(d.getDate()).padStart(2, "0");
-        formattedDate = `${year}-${month}-${day}`;
-      }
-
-      // 2. Prepare the payload (adjust keys to match your backend API)
       const payload = {
-        tanggalUjian: formattedDate,
-        juz: formData.juz,
-        kesalahanKelancaran: formData.kelancaran,
-        kesalahanTajwid: formData.tajwid,
-        keterangan: formData.keterangan,
-        // nisSantri: "0010920018", // You will likely need to pass the currently selected Santri's NIS here!
+        PK: `${state.detail.SK}#ujiantahfidz`,
+        SK: `${state.detail.SKLOG}`,
+        error_tajwid: formData.kelancaran,
+        error_kelancaran: formData.tajwid,
+        Note: formData.keterangan,
       };
       console.log(payload);
-      // 3. Send the API request
-      // const res = await this.$apiSantri.$post(`input-nilai-ujian`, payload);
+      const res = await this.$apiSantri.$put(`update-ujiantahfidz-sisalam?type=penilaian`, payload);
 
       // 4. Success Alert
       Swal.fire({
@@ -118,6 +105,7 @@ export default {
         icon: "success",
         confirmButtonColor: "#176b87",
       });
+      this.$router.push("/tahfidz/ujian/formtahfidzujian");
 
       return res;
     } catch (error) {
