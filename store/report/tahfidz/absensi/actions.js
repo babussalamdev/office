@@ -1,65 +1,77 @@
 const sekarang = new Date();
 
 // Mendapatkan tanggal, bulan, dan tahun
-const tanggal = sekarang.getDate().toString().padStart(2, '0');
-const bulan = (sekarang.getMonth() + 1).toString().padStart(2, '0');
+const tanggal = sekarang.getDate().toString().padStart(2, "0");
+const bulan = (sekarang.getMonth() + 1).toString().padStart(2, "0");
 const tahun = sekarang.getFullYear();
 
 // Membuat string untuk tanggal dengan format "DD/MM/YYYY"
 const date = `${tahun}-${bulan}-${tanggal}`;
 export default {
   async changeUnit({ commit, state, dispatch }) {
-    dispatch('index/submitLoad', null, { root: true })
-    const program = localStorage.getItem('program')
-    const result = await this.$apiBase.$get(`get-settings?sk=${program}&type=kelas`)
+    dispatch("index/submitLoad", null, { root: true });
+    const program = localStorage.getItem("program");
+    const result = await this.$apiBase.$get(`get-settings?sk=${program}&type=kelas`);
     if (result) {
-      const kelas = this.$auth.user.Kelas[program]
-      if (kelas !== 'off') {
-        const changedKelas = [{ Nama: kelas }]
-        commit('setState', { key: 'kelas', value: changedKelas })
+      const kelas = this.$auth.user.Kelas[program];
+      const jabatan = this.$auth.user.Jabatan[program];
+      if (jabatan.includes("koordinator tahfizh")) {
+        commit("setState", { key: "kelas", value: result.kelas });
       } else {
-        commit('setState', { key: 'kelas', value: result.kelas })
+        if (kelas !== "off") {
+          const changedKelas = [{ Nama: kelas }];
+          commit("setState", { key: "kelas", value: changedKelas });
+        } else {
+          commit("setState", { key: "kelas", value: result.kelas });
+        }
       }
-      commit('resetPage')
-      dispatch('index/submitLoad', null, { root: true })
+
+      commit("resetPage");
+      dispatch("index/submitLoad", null, { root: true });
     }
   },
   async getSantri({ commit, state, dispatch, rootState }, data) {
-    dispatch('index/submitLoad', null, { root: true })
-    const program = localStorage.getItem('program')
-    const value = state.selectedKelas.Nama
-    const tahun = rootState.index.label
-    const result = await this.$apiSantri.$get(`get-recapabsensi-sisalam?value=${value}&program=${program}&method=halaqah&thn=${tahun}&startdate=${state.start}&enddate=${state.end}&searchterm=Kelas`)
+    dispatch("index/submitLoad", null, { root: true });
+    const program = localStorage.getItem("program");
+    const value = state.selectedKelas.Nama;
+    const tahun = rootState.index.label;
+    const result = await this.$apiSantri.$get(
+      `get-recapabsensi-sisalam?value=${value}&program=${program}&method=halaqah&thn=${tahun}&startdate=${state.start}&enddate=${state.end}&searchterm=Kelas`,
+    );
     if (result) {
-      const obj = { key: 'santri', value: result }
-      commit('setState', obj)
-      dispatch('index/submitLoad', null, { root: true })
+      const obj = { key: "santri", value: result };
+      commit("setState", obj);
+      dispatch("index/submitLoad", null, { root: true });
     }
   },
   async getPageDetails({ commit, state, dispatch }, data) {
-    dispatch('index/submitLoad', null, { root: true })
-    const program = localStorage.getItem('program')
-    commit('setState', { key: 'startdetail', value: date })
-    commit('setState', { key: 'enddetail', value: date })
-    const start = state.startdetail
-    const end = state.enddetail
-    const sk = data.replace('#', '%23')
-    const result = await this.$apiSantri.$get(`get-recapabsensi-sisalam?program=${program}&details=halaqah&startdate=${start}&enddate=${end}&sksantri=${sk}`)
+    dispatch("index/submitLoad", null, { root: true });
+    const program = localStorage.getItem("program");
+    commit("setState", { key: "startdetail", value: date });
+    commit("setState", { key: "enddetail", value: date });
+    const start = state.startdetail;
+    const end = state.enddetail;
+    const sk = data.replace("#", "%23");
+    const result = await this.$apiSantri.$get(
+      `get-recapabsensi-sisalam?program=${program}&details=halaqah&startdate=${start}&enddate=${end}&sksantri=${sk}`,
+    );
     if (result) {
-      dispatch('index/submitLoad', null, { root: true })
-      commit('setState', { key: 'details', value: result })
+      dispatch("index/submitLoad", null, { root: true });
+      commit("setState", { key: "details", value: result });
     }
   },
   async getDetails({ commit, state, dispatch }, data) {
-    dispatch('index/submitLoad', null, { root: true })
-    const program = localStorage.getItem('program')
-    const start = state.startdetail
-    const end = state.enddetail
-    const sk = data.replace('#', '%23')
-    const result = await this.$apiSantri.$get(`get-recapabsensi-sisalam?program=${program}&details=halaqah&startdate=${start}&enddate=${end}&sksantri=${sk}`)
+    dispatch("index/submitLoad", null, { root: true });
+    const program = localStorage.getItem("program");
+    const start = state.startdetail;
+    const end = state.enddetail;
+    const sk = data.replace("#", "%23");
+    const result = await this.$apiSantri.$get(
+      `get-recapabsensi-sisalam?program=${program}&details=halaqah&startdate=${start}&enddate=${end}&sksantri=${sk}`,
+    );
     if (result) {
-      dispatch('index/submitLoad', null, { root: true })
-      commit('setState', { key: 'details', value: result })
+      dispatch("index/submitLoad", null, { root: true });
+      commit("setState", { key: "details", value: result });
     }
-  }
-}
+  },
+};

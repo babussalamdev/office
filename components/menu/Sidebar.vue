@@ -212,12 +212,12 @@
                   <span class="text animate__animated animate__fadeInRight">Nilai</span>
                 </nuxt-link>
               </li>
-              <!-- ujian -->
-              <li>
+              <!-- ujian tahfizh -->
+              <!-- <li>
                 <nuxt-link to="/tahfidz/ujian/pendaftarantahfidzujian" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Ujian</span>
                 </nuxt-link>
-              </li>
+              </li> -->
 
               <!-- rekap -->
               <li v-if="hasRoot">

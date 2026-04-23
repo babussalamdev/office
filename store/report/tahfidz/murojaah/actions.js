@@ -1,36 +1,44 @@
 export default {
   async changeUnit({ commit, state, dispatch }) {
-    dispatch('index/submitLoad', null, { root: true })
-    const program = localStorage.getItem('program')
-    const result = await this.$apiBase.$get(`get-settings?sk=${program}&type=kelas`)
+    dispatch("index/submitLoad", null, { root: true });
+    const program = localStorage.getItem("program");
+    const result = await this.$apiBase.$get(`get-settings?sk=${program}&type=kelas`);
     if (result) {
-      const kelas = this.$auth.user.Kelas[program]
-      if (kelas !== 'off') {
-        const changedKelas = [{ Nama: kelas }]
-        commit('setState', { key: 'listKelas', value: changedKelas })
+      const jabatan = this.$auth.user.Jabatan[program];
+      const kelas = this.$auth.user.Kelas[program];
+      if (jabatan.includes("koordinator tahfizh")) {
+        commit("setState", { key: "listKelas", value: result.kelas });
       } else {
-        commit('setState', { key: 'listKelas', value: result.kelas })
+        if (kelas !== "off") {
+          const changedKelas = [{ Nama: kelas }];
+          commit("setState", { key: "listKelas", value: changedKelas });
+        } else {
+          commit("setState", { key: "listKelas", value: result.kelas });
+        }
       }
-      commit('resetPage')
-      dispatch('index/submitLoad', null, { root: true })
+
+      commit("resetPage");
+      dispatch("index/submitLoad", null, { root: true });
     }
   },
   async getSantri({ commit, state, dispatch, rootState }) {
-    const start = state.start
-    const end = state.end
+    const start = state.start;
+    const end = state.end;
     if (start && end) {
-      dispatch('index/submitLoad', null, { root: true })
-      const kelas = state.selectedKelas.Nama
-      const program = localStorage.getItem('program')
-      const tahun = rootState.index.label
-      const semester = rootState.index.semester
-      const result = await this.$apiSantri.$get(`get-tahfidz-sisalam?type=report&kls=${kelas}&program=${program}&thn=${tahun}&smstr=${semester}&startdate=${start}&enddate=${end}&searchterm=murojaah`)
+      dispatch("index/submitLoad", null, { root: true });
+      const kelas = state.selectedKelas.Nama;
+      const program = localStorage.getItem("program");
+      const tahun = rootState.index.label;
+      const semester = rootState.index.semester;
+      const result = await this.$apiSantri.$get(
+        `get-tahfidz-sisalam?type=report&kls=${kelas}&program=${program}&thn=${tahun}&smstr=${semester}&startdate=${start}&enddate=${end}&searchterm=murojaah`,
+      );
       if (result) {
-        dispatch('index/submitLoad', null, { root: true })
-        commit('setState', { key: 'santri', value: result })
+        dispatch("index/submitLoad", null, { root: true });
+        commit("setState", { key: "santri", value: result });
       } else {
-        console.log('error')
+        console.log("error");
       }
     }
-  }
-}
+  },
+};
