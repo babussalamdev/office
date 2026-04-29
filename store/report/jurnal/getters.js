@@ -1,11 +1,14 @@
 export default {
-  getDate(state) {
-    return state.date
+  getSelectedMapel(state) {
+    return state.selectedMapel;
   },
   getSelectedKelas(state) {
-    return state.selectedKelas
+    return state.selectedKelas;
   },
-  getSelectedMapel(state) {
-    return state.selectedMapel
-  }
-}
+  getSelectedLabel(state) {
+    return state.selectedLabel;
+  },
+  getSelectedSemester(state) {
+    return state.selectedSemester;
+  },
+};

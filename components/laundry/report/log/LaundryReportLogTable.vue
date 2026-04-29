@@ -6,10 +6,10 @@
       </div>
       <div class="col-12 col-md-6 d-flex justify-content-end">
         <div class="input-group">
-          <span style="font-size: 12px;" class="input-group-text">Start</span>
-          <input style="font-size: 12px;" type="date" class="form-control" v-model="start" :max="end">
-          <span style="font-size: 12px;" class="input-group-text">End</span>
-          <input style="font-size: 12px;" type="date" class="form-control" v-model="end" :min="start">
+          <span style="font-size: 12px" class="input-group-text">Start</span>
+          <input style="font-size: 12px" type="date" class="form-control" v-model="start" :max="end" />
+          <span style="font-size: 12px" class="input-group-text">End</span>
+          <input style="font-size: 12px" type="date" class="form-control" v-model="end" :min="start" />
         </div>
       </div>
     </div>
@@ -27,16 +27,26 @@
         </thead>
         <tbody>
           <tr v-for="(data, index) in datas" :key="index">
-            <td class="text-capitalize align-middle nowrap">{{ data.Name }}</td>
+            <td class="text-capitalize align-middle nowrap">{{ data.Nama }}</td>
             <td class="text-capitalize align-middle nowrap">{{ data.Asrama }}</td>
-            <td class="text-capitalize align-middle nowrap text-center">{{ data.QTY }}</td>
-            <td class="text-capitalize align-middle nowrap text-center">{{ data.Pinalty }}</td>
+            <td class="text-capitalize align-middle nowrap text-center">{{ data.jumlah_laundry }}</td>
+            <td class="text-capitalize align-middle nowrap text-center">{{ data.jumlah_kelebihan }}</td>
             <td class="text-capitalize align-middle">
-              <span class="px-2 py-1 rounded-1" :class="data.Status === 'none' ? 'text-bg-secondary' : data.Status === 'free' ? 'text-bg-success' : data.Status === 'cash' ? 'text-bg-primary' : 'text-bg-warning'">
-                {{ data.Status }}
+              <span
+                class="px-2 py-1 rounded-1"
+                :class="
+                  data.Status === 'none'
+                    ? 'text-bg-secondary'
+                    : data.status === 'paid'
+                    ? 'text-bg-success'
+                    : data.status === 'unpaid'
+                    ? 'text-bg-danger'
+                    : 'text-bg-warning'
+                ">
+                {{ data.status }}
               </span>
             </td>
-            <td class="text-capitalize align-middle nowrap">{{ rupiah(data.Amount) }}</td>
+            <td class="text-capitalize align-middle nowrap">{{ rupiah(data.total_denda) }}</td>
           </tr>
         </tbody>
       </table>
@@ -45,42 +55,42 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
-import formatSet from '~/mixins/formatSet';
-export default {
-  mixins: [formatSet],
-  computed: {
-    ...mapState('laundry/report/log', ['datas']),
-    ...mapGetters('laundry/report/log', ['getStart', 'getEnd']),
-    start: {
-      get() {
-        return this.getStart
+  import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
+  import formatSet from "~/mixins/formatSet";
+  export default {
+    mixins: [formatSet],
+    computed: {
+      ...mapState("laundry/report/log", ["datas"]),
+      ...mapGetters("laundry/report/log", ["getStart", "getEnd"]),
+      start: {
+        get() {
+          return this.getStart;
+        },
+        set(value) {
+          this.$store.commit("laundry/report/log/setState", { key: "start", value });
+        },
       },
-      set(value) {
-        this.$store.commit('laundry/report/log/setState', { key: 'start', value })
-      }
-    },
-    end: {
-      get() {
-        return this.getEnd
+      end: {
+        get() {
+          return this.getEnd;
+        },
+        set(value) {
+          this.$store.commit("laundry/report/log/setState", { key: "end", value });
+        },
       },
-      set(value) {
-        this.$store.commit('laundry/report/log/setState', { key: 'end', value })
-      }
-    }
-  },
-  methods: {
-    ...mapActions('laundry/report/log', ['getDataByDate'])
-  },
-  watch: {
-    start() {
-      this.getDataByDate()
     },
-    end() {
-      this.getDateByDate()
-    }
-  },
-};
+    methods: {
+      ...mapActions("laundry/report/log", ["getDataByDate"]),
+    },
+    watch: {
+      start() {
+        this.getDataByDate();
+      },
+      end() {
+        this.getDataByDate();
+      },
+    },
+  };
 </script>
 
 <style scoped></style>

@@ -265,65 +265,15 @@
               <i class="bx bx-chevron-down"></i>
             </div>
             <ul v-if="listLaundry" class="dropdown-list">
-              <!-- input data
-              <li>
-                <nuxt-link to="/laundry/inputdata"
-                  class="custom-link text-decoration-none d-flex align-items-center gap-2">
-                  <span class="text animate__animated animate__fadeInRight">Input Data</span>
-                </nuxt-link>
-              </li> -->
-              <!-- input data -->
-              <li>
-                <nuxt-link to="/laundry/inventory" class="custom-link text-decoration-none d-flex align-items-center gap-2">
-                  <span class="text animate__animated animate__fadeInRight">Inventory</span>
-                </nuxt-link>
-              </li>
-              <!-- nota -->
-              <li>
-                <nuxt-link to="/laundry/nota" class="custom-link text-decoration-none d-flex align-items-center gap-2">
-                  <span class="text animate__animated animate__fadeInRight">Nota</span>
-                </nuxt-link>
-              </li>
               <li>
                 <nuxt-link to="/laundry/datasantri" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Data Santri</span>
                 </nuxt-link>
               </li>
-              <!-- nilai -->
+              <!-- finance -->
               <li>
                 <nuxt-link to="/laundry/finance" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Finance</span>
-                </nuxt-link>
-              </li>
-              <!-- rekap -->
-              <!-- <li>
-                <nuxt-link to="/laundry/lembur"
-                  class="custom-link text-decoration-none d-flex align-items-center gap-2">
-                  <span class="text animate__animated animate__fadeInRight">Lembur</span>
-                </nuxt-link>
-              </li> -->
-              <!-- rekap -->
-              <li>
-                <nuxt-link to="/laundry/tagregister" class="custom-link text-decoration-none d-flex align-items-center gap-2">
-                  <span class="text animate__animated animate__fadeInRight">Tag Register</span>
-                </nuxt-link>
-              </li>
-              <!-- rekap -->
-              <li>
-                <nuxt-link to="/laundry/channel" class="custom-link text-decoration-none d-flex align-items-center gap-2">
-                  <span class="text animate__animated animate__fadeInRight">Channel</span>
-                </nuxt-link>
-              </li>
-              <!-- absensi laundry -->
-              <li>
-                <nuxt-link to="/laundry/absensi" class="custom-link text-decoration-none d-flex align-items-center gap-2">
-                  <span class="text animate__animated animate__fadeInRight">Absensi</span>
-                </nuxt-link>
-              </li>
-              <!-- rekap absensi laundry -->
-              <li>
-                <nuxt-link to="/laundry/absensi/rekap" class="custom-link text-decoration-none d-flex align-items-center gap-2">
-                  <span class="text animate__animated animate__fadeInRight">Rekap Absensi</span>
                 </nuxt-link>
               </li>
               <!-- report log -->

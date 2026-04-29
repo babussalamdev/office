@@ -167,7 +167,6 @@ export default {
     santri: process.env.API_SANTRI,
     card: process.env.API_CARD,
     websocket: process.env.API_WEBSOCKET,
-    laundry: process.env.API_LAUNDRY,
     ob: process.env.API_OB,
   },
 
