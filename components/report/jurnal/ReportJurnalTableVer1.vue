@@ -104,22 +104,6 @@
           this.$store.commit("report/jurnal/setState", { key: "selectedSemester", value });
         },
       },
-      // selectedKelas: {
-      //   get() {
-      //     return this.getSelectedKelas;
-      //   },
-      //   set(value) {
-      //     this.$store.commit("report/jurnal/setState", { key: "selectedKelas", value });
-      //   },
-      // },
-      // selectedMapel: {
-      //   get() {
-      //     return this.getSelectedMapel;
-      //   },
-      //   set(value) {
-      //     this.$store.commit("report/jurnal/setState", { key: "selectedMapel", value });
-      //   },
-      // },
     },
     methods: {
       ...mapActions("report/jurnal", ["getMapel", "changeGetMapelSemester", "changeUnit", "getData"]),
