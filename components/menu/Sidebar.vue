@@ -171,6 +171,11 @@
                   <span class="text animate__animated animate__fadeInRight">Absensi</span>
                 </nuxt-link>
               </li>
+              <!-- <li>
+                <nuxt-link to="/asrama/recapabsensiasrama" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Recap Absensi Asrama</span>
+                </nuxt-link>
+              </li> -->
               <li v-if="permissionsIzin.includes('izin')">
                 <nuxt-link to="/asrama/antrian" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Antrian Izin</span>

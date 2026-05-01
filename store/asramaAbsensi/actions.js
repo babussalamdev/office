@@ -52,6 +52,7 @@ export default {
     const tahun = rootState.index.label;
     const semester = rootState.index.semester;
     const subject = state.updateData.santri.Asrama;
+    const kls = state.updateData.santri.Kelas;
     const program = localStorage.getItem("program");
     const date = new Date(state.dateIzin);
 
@@ -69,8 +70,8 @@ export default {
       let result;
       if (state.updateData.type === "izin") {
         result = await this.$apiSantri.$put(
-          `update-absensi-sisalam?sksantri=${skSantri}&type=asrama&thn=${tahun}&smstr=${semester}&program=${program}&date=${dateformatted}&subject=${subject}`,
-          data
+          `update-absensi-sisalam?sksantri=${skSantri}&type=asrama&thn=${tahun}&smstr=${semester}&program=${program}&date=${dateformatted}&subject=${subject}&kls${kls}`,
+          data,
         );
         const today = new Date();
         const formattedDate = today.toISOString().split("T")[0];
@@ -105,8 +106,8 @@ export default {
         const today = new Date();
         const formattedDate = today.toISOString().split("T")[0];
         result = await this.$apiSantri.$put(
-          `update-absensi-sisalam?sksantri=${skSantri}&type=asrama&thn=${tahun}&smstr=${semester}&program=${program}&subject=${subject}&date=${formattedDate}`,
-          data
+          `update-absensi-sisalam?sksantri=${skSantri}&type=asrama&thn=${tahun}&smstr=${semester}&program=${program}&subject=${subject}&date=${formattedDate}&kls=${kls}`,
+          data,
         );
         if (result) {
           commit("setLoad");
