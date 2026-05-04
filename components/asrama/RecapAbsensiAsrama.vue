@@ -2,40 +2,26 @@
   <div>
     <div class="row mb-3">
       <div class="col-12 col-md-6 mb-2 mb-md-0">
-        <div class="input-group d-flex align-items-center">
+        <!-- <div class="input-group d-flex align-items-center">
           <span class="input-group-text bg-secondary text-white" id="basic-addon1">{{ santri.length }} Santri</span>
           <button class="btn btn-success border-0" @click="exportToExcel" :disabled="santri.length > 0 ? false : true">Export</button>
-        </div>
+        </div> -->
       </div>
       <div class="col-12 col-md-6 d-flex justify-content-end">
-        <div class="input-group"></div>
         <div class="input-group">
-          <select class="form-select" v-model="selectedKelas" @change="applyFilter">
-            <option value="" selected disabled>Kelas</option>
-            <option v-for="(data, index) in uniqueClasses" :key="index" :value="data">{{ data }}</option>
+          <select class="form-select" aria-label="Default select example" v-model="selectedLabel">
+            <option value="" selected disabled>Label</option>
+            <option v-for="(data, index) in label" :key="index" :value="index">{{ index }}</option>
           </select>
-          <select class="form-select" v-model="selectedMapel" @change="getDataSantri">
-            <option value="" selected disabled>Mapel</option>
-            <option v-for="(data, index) in uniqueLesson" :key="index" :value="data">{{ data.Nama }}</option>
+          <select class="form-select" aria-label="Default select example" v-model="selectedSemester" @change="changeGetAsramaSemester">
+            <option value="" selected disabled>Semester</option>
+            <option v-for="(data, index) in semester" :key="index" :value="data">{{ data.Semester }}</option>
           </select>
-          <span class="input-group-text" id="basic-addon1">From</span>
-          <input
-            type="date"
-            class="form-control"
-            aria-label="Username"
-            aria-describedby="basic-addon1"
-            v-model="start"
-            :max="end"
-            :disabled="!selectedKelas || !selectedMapel" />
-          <span class="input-group-text" id="basic-addon1">To</span>
-          <input
-            type="date"
-            class="form-control"
-            aria-label="Username"
-            aria-describedby="basic-addon1"
-            v-model="end"
-            :min="start"
-            :disabled="!selectedKelas || !selectedMapel" />
+          <select class="form-select" aria-label="Default select example" v-model="selectedAsrama" @change="addNewData">
+            <!-- Add this line below to show "Asrama" when nothing is selected -->
+            <option value="" selected disabled>Asrama</option>
+            <option v-for="(data, index) in asrama" :key="index" :value="data">{{ data }}</option>
+          </select>
         </div>
       </div>
     </div>
@@ -47,7 +33,6 @@
             <th scope="col" colspan="5">Ketidakhadiran</th>
           </tr>
           <tr>
-            <th scope="col" class="text-center bg-primary">T</th>
             <th scope="col" class="text-center bg-warning">S</th>
             <th scope="col" class="text-center bg-secondary">I</th>
             <th scope="col" class="text-center bg-danger">A</th>
@@ -55,13 +40,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(data, index) in santri" :key="index">
+          <tr v-for="(data, index) in values" :key="index">
             <td class="text-capitalize align-middle">{{ data.Nama }}</td>
-            <td class="text-capitalize align-middle text-center">{{ data.terlambat }}</td>
             <td class="text-capitalize align-middle text-center">{{ data.sakit }}</td>
             <td class="text-capitalize align-middle text-center">{{ data.izin }}</td>
             <td class="text-capitalize align-middle text-center">{{ data.absen }}</td>
-            <td class="text-capitalize align-middle text-center">{{ data.terlambat + data.izin + data.sakit + data.absen }}</td>
+            <td class="text-capitalize align-middle text-center">{{ data.izin + data.sakit + data.absen }}</td>
           </tr>
         </tbody>
       </table>
@@ -75,85 +59,42 @@
 
   export default {
     computed: {
-      ...mapState("kelasAbsensi/rekap", ["select"]),
-      ...mapGetters("kelasAbsensi/rekap", ["getStart", "getEnd", "getSelectedKelas", "getSelectedMapel", "getSantri"]),
-      santri: {
+      ...mapState("asramaAbsensi/rekap", ["asrama", "label", "semester", "values"]),
+      ...mapGetters("asramaAbsensi/rekap", ["getSelectedLabel", "getSelectedAsrama", "getSelectedSemester"]),
+      selectedAsrama: {
         get() {
-          return this.getSantri;
+          // If the store returns null or undefined, force it to return ""
+          // This perfectly matches your <option value=""> placeholder!
+          const value = this.getSelectedAsrama;
+          return value === null || value === undefined ? "" : value;
         },
         set(value) {
-          this.$store.commit("kelasAbsensi/rekap/setState", { key: "santri", value });
+          this.$store.commit("asramaAbsensi/rekap/setState", { key: "selectedAsrama", value });
         },
       },
-      start: {
+      selectedLabel: {
         get() {
-          return this.getStart;
+          return this.getSelectedLabel;
         },
         set(value) {
-          const obj = { key: "start", value };
-          this.$store.commit("kelasAbsensi/rekap/setState", obj);
+          this.$store.commit("asramaAbsensi/rekap/setState", { key: "selectedLabel", value });
         },
       },
-      end: {
+      selectedSemester: {
         get() {
-          return this.getEnd;
+          return this.getSelectedSemester;
         },
         set(value) {
-          const obj = { key: "end", value };
-          this.$store.commit("kelasAbsensi/rekap/setState", obj);
+          this.$store.commit("asramaAbsensi/rekap/setState", { key: "selectedSemester", value });
         },
-      },
-      selectedKelas: {
-        get() {
-          return this.getSelectedKelas;
-        },
-        set(value) {
-          this.$store.commit("kelasAbsensi/rekap/setState", { key: "selectedKelas", value });
-        },
-      },
-      selectedMapel: {
-        get() {
-          return this.getSelectedMapel;
-        },
-        set(value) {
-          this.$store.commit("kelasAbsensi/rekap/setState", { key: "selectedMapel", value });
-        },
-      },
-      uniqueClasses() {
-        const classes = this.select.map((item) => item.Kelas);
-        return [...new Set(classes)];
-      },
-      filteredData() {
-        return this.select.filter((item) => {
-          const matchesClass = item.Kelas === this.selectedKelas;
-          (this.selectedMapel = ""), (this.selectedJam = "");
-          this.santri = [];
-          return matchesClass;
-        });
-      },
-      uniqueLesson() {
-        return this.filteredData.map((item) => {
-          return {
-            Nama: item.Nama,
-            SK: item.SK,
-            Hari: item.Hari,
-          };
-        });
-      },
-    },
-    watch: {
-      start() {
-        this.getDataSantriByDate();
-      },
-      end() {
-        this.getDataSantriByDate();
       },
     },
     methods: {
-      ...mapActions("kelasAbsensi/rekap", ["changeUnit", "getDataSantri", "getDataSantriByDate"]),
-      applyFilter() {
-        this.uniqueLesson;
+      ...mapActions("asramaAbsensi/rekap", ["changeUnit", "getAsrama", "changeGetAsramaSemester", "getData"]),
+      addNewData() {
+        this.getData();
       },
+
       exportToExcel() {
         const table = this.$refs.dataTable;
         const program = localStorage.getItem("program");

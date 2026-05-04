@@ -2,7 +2,7 @@
   <section id="rekap">
     <div class="rekap">
       <h1 class="mb-3">Rekap Absensi Asrama</h1>
-      <RekapAbsensiKelas />
+      <RecapAbsensiAsrama />
     </div>
   </section>
 </template>
@@ -10,7 +10,7 @@
 <script>
   export default {
     async asyncData({ store }) {
-      store.dispatch("kelasAbsensi/rekap/changeUnit");
+      store.dispatch("asramaAbsensi/rekap/changeUnit");
     },
   };
 </script>
