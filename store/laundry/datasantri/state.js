@@ -1,4 +1,6 @@
 export default () => ({
-  date: '',
-  datas: []
-})
+  date: "",
+  datas: [],
+  asrama: [],
+  selectedAsrama: "",
+});

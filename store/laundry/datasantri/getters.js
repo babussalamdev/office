@@ -1,5 +1,5 @@
 export default {
-  getDate(state) {
-    return state.date
-  }
-}
+  getSelectedAsrama(state) {
+    return state.SelectedAsrama;
+  },
+};

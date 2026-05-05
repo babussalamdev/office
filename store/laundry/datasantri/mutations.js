@@ -1,12 +1,23 @@
-export default ({
+export default {
   setState(state, data) {
-    state[data.key] = data.value
+    if (data.key === "asrama") {
+      state[data.key] = data.value;
+      state.values = [];
+      state.selectedAsrama = ""; // Important to reset selected class when list changes
+    } else if (data.key === "selectedAsrama") {
+      state[data.key] = data.value;
+      state.values = [];
+    } else {
+      state[data.key] = data.value;
+    }
   },
   setPage(state, data) {
-    state.datas = data
+    state.datas = data;
   },
   editItem(state, data) {
-    const i = state.datas.findIndex((x) => x.SK === data.SK)
-    state.datas[i].Status = data.Status
-  }
-})
+    console.log(data);
+    const i = state.datas.findIndex((x) => x.SK === data.SK);
+    console.log(i);
+    state.datas[i].DendaLaundry = data.DendaLaundry;
+  },
+};
