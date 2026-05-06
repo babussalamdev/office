@@ -8,17 +8,17 @@
 </template>
 
 <script>
-export default {
-  // middleware: 'permission',
-  // meta: {
-  //   permissions: ['laundry']
-  // },
-  async asyncData({ store }) {
-    store.dispatch('laundry/datasantri/changeUnit')
-  }
-};
+  export default {
+    // middleware: 'permission',
+    // meta: {
+    //   permissions: ['laundry']
+    // },
+    async asyncData({ store }) {
+      store.dispatch("laundry/datasantri/changeUnit");
+    },
+  };
 </script>
 
 <style>
-@import url(~/assets/css/laundry/laundry.css);
+  @import url(~/assets/css/laundry/laundry.css);
 </style>

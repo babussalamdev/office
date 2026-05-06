@@ -3,14 +3,20 @@ import * as XLSX from "xlsx";
 export default {
   async changeUnit({ commit, state, dispatch }) {
     dispatch("index/submitLoad", null, { root: true });
-    commit("setBeforeRender");
+    commit("setBeforeRender"); // This still runs in case your state needs start/end dates elsewhere
+
+    // Format the month to strictly be 2 digits (e.g., 5 becomes "05", 11 stays "11")
+    const formattedMonth = String(state.selectedMonth).padStart(2, "0");
+
     try {
-      const result = await this.$apiSantri.$get(`get-santri-laundry?type=finance`);
+      // Updated API call to pass year and the newly formatted 2-digit month
+      const result = await this.$apiSantri.$get(`get-santri-laundry?type=finance&year=${state.selectedYear}&month=${formattedMonth}`);
+
       if (result) {
-        const tahunMulai = 2023;
+        const tahunMulai = 2026;
         const tahunSekarang = new Date().getFullYear();
         const years = Array.from({ length: tahunSekarang - tahunMulai + 2 }, (_, index) => tahunMulai + index);
-        console.log(result);
+
         commit("setPage", { result, years: years });
         dispatch("index/submitLoad", null, { root: true });
       }
@@ -27,8 +33,10 @@ export default {
   async getData({ commit, state, dispatch }) {
     dispatch("index/submitLoad", null, { root: true });
     commit("changeFormat");
+    const formattedMonth = String(state.selectedMonth).padStart(2, "0");
+
     try {
-      const result = await this.$apiLaundry.$get(`get-finance?subject=finance&startdate=${state.start}&enddate=${state.end}`);
+      const result = await this.$apiSantri.$get(`get-santri-laundry?type=finance&year=${state.selectedYear}&month=${formattedMonth}`);
       if (result) {
         commit("setGetPage", result);
         dispatch("index/submitLoad", null, { root: true });
@@ -44,69 +52,50 @@ export default {
     }
   },
   async addFinance({ commit, state }, event) {
+    // Toggle loading state on
     commit("btn");
+
+    // Extract data from the submitted form
     const data = Object.fromEntries(new FormData(event.target));
+
+    // CRITICAL: Disabled inputs are not captured by FormData.
+    // We must manually inject the amount from the state.
+    data["Amount"] = Number(state.datas?.total_denda) || 0;
+
     try {
-      if (data.Transaction === "credit") {
-        data["Name"] = state.selectedInventory.Name;
-        data["InventorySK"] = state.selectedInventory.SK;
-        data["Price"] = -Math.abs(+data.Price);
-        data["QTY"] = Number(data.QTY);
-        console.log(data);
-        const result = await this.$apiLaundry.$post(`input-finance?type=${data.Type}`, data);
-        if (result) {
-          commit("setAdd", result);
-          commit("btn");
-        }
-      } else {
-        data["Amount"] = Number(data.Amount);
-        const result = await this.$apiLaundry.$post(`input-finance?type=${data.Type}`, data);
-        if (result) {
-          commit("setAdd", result);
-          commit("btn");
-        }
+      // Send the payload to the API.
+      // We are passing type=kwitansi to trigger the backend logic we just wrote.
+      const result = await this.$apiSantri.$post(`input-santri-laundry?type=kwitansi`, data);
+
+      if (result) {
+        // Update state with the new data
+        commit("setAdd", result);
+
+        // Show success message
+        Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: "Laundry claim has been processed.",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error adding finance claim:", error);
+
+      // Show error message
+      Swal.fire({
+        icon: "error", // Switched from warning to error for actual failures
+        text: error.response?.data?.message || error.message || "An error occurred",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    } finally {
+      // Ensure the loading button always resets, whether success or fail
       commit("btn");
-      Swal.fire({
-        icon: "warning",
-        text: error,
-        showConfirmButton: false,
-        timer: 1500,
-      });
     }
   },
-  async deleteItem({ commit, state }) {
-    const data = state.updateData;
-    const result = await Swal.fire({
-      title: "Warning",
-      text: "Data akan dihapus secara permanen!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    });
-    if (result.isConfirmed) {
-      let result;
-      if (data.Type === "inventory") {
-        result = await this.$apiLaundry.$delete(
-          `delete-finance?transaction=${data.PK}&sk=${data.SK}&type=${data.Type}&inventorySK=${data.InventorySK}`,
-        );
-      } else {
-        result = await this.$apiLaundry.$delete(`delete-finance?transaction=${data.PK}&sk=${data.SK}&type=${data.Type}`);
-      }
-      commit("deleteItem", result);
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        text: "Data berhasil dihapus!",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
-  },
+
   async downloadFinance({ commit, state, dispatch }, data) {
     dispatch("index/submitLoad", null, { root: true });
     try {

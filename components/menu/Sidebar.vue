@@ -270,7 +270,7 @@
               <i class="bx bx-chevron-down"></i>
             </div>
             <ul v-if="listLaundry" class="dropdown-list">
-              <li>
+              <li v-if="!hasBendahara">
                 <nuxt-link to="/laundry/datasantri" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Data Santri</span>
                 </nuxt-link>
@@ -282,7 +282,7 @@
                 </nuxt-link>
               </li>
               <!-- report log -->
-              <li>
+              <li v-if="!hasBendahara">
                 <nuxt-link to="/laundry/report/log" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Report Log</span>
                 </nuxt-link>
@@ -745,6 +745,10 @@
       },
       hasPersonaliaSarpras() {
         return this.$auth.user.Jabatan?.sarpras === "personalia";
+      },
+      hasBendahara() {
+        const program = localStorage.getItem("program");
+        return this.$auth.user.Jabatan[program] === "bendahara";
       },
     },
 

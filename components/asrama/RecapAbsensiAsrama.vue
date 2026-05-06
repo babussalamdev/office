@@ -82,7 +82,8 @@
       },
       selectedSemester: {
         get() {
-          return this.getSelectedSemester;
+          const value = this.getSelectedSemester;
+          return value === null || value === undefined ? "" : value;
         },
         set(value) {
           this.$store.commit("asramaAbsensi/rekap/setState", { key: "selectedSemester", value });
