@@ -3,15 +3,30 @@ import Swal from "sweetalert2";
 export default {
   async changeUnit({ commit, state, dispatch, rootState }) {
     dispatch("index/submitLoad", null, { root: true });
-    commit("resetBeforeRender");
     const program = localStorage.getItem("program");
 
-    // 1. Fetch Periods (Used by the Report Page)
     try {
       const resPeriode = await this.$apiBase.$get(`get-settings?sk=${program}&type=periode`);
-      commit("setPeriode", { label: rootState.index.label, semester: rootState.index.semester, resPeriode });
+      let currentLabel = rootState.index.label;
+
+      if (!currentLabel) {
+        currentLabel = localStorage.getItem("label"); // Only if you save it here
+      }
+
+      if (resPeriode && currentLabel) {
+        const availableSemesters = resPeriode.filter((item) => item.Label === currentLabel);
+        console.log(availableSemesters);
+        commit("setState", { key: "semesterOptions", value: availableSemesters });
+
+        // FIX: Set the initial selected semester to the active one if it's currently empty
+        if (!state.selectedSemester && rootState.index.semester) {
+          commit("setState", { key: "selectedSemester", value: rootState.index.semester });
+        }
+      } else {
+        console.warn("Label Tahun Ajaran missing, cannot filter semesters");
+      }
     } catch (error) {
-      console.log("Failed to fetch periods");
+      console.error("Failed to fetch periode:", error);
     }
 
     // 2. Fetch Active Settings (Used by the Input Page)
@@ -24,7 +39,9 @@ export default {
     }
 
     try {
-      const data = await this.$apiBase.$get(`get-settings?program=${program}&type=nilaiquran&hlq=${halaqah}&smstr=${semester}`);
+      // We use state.selectedSemester here so it respects user changes later,
+      // but defaults to the active one on first load
+      const data = await this.$apiBase.$get(`get-settings?program=${program}&type=nilaiquran&hlq=${halaqah}&smstr=${state.selectedSemester}`);
       commit("setState", { key: "selectedQuran", value: data.quran });
 
       if (data.quran) {
@@ -39,7 +56,7 @@ export default {
           Halaqah: halaqah,
           Subject: "quran",
           Tahun: rootState.index.label,
-          Semester: rootState.index.semester,
+          Semester: state.selectedSemester,
           Penilaian: state.selectedQuran.Penilaian,
         };
 
@@ -97,21 +114,25 @@ export default {
     }
   },
 
-  async getByHalaqah({ commit, state, dispatch, rootState }) {
+  async getByKelas({ commit, state, dispatch, rootState }) {
     dispatch("index/submitLoad", null, { root: true });
     const program = localStorage.getItem("program");
-    const halaqah = state.selectedByHalaqah;
-    const semester = rootState.index.semester;
+    const kelas = state.selectedByKelas;
+
+    // FIX: Use the user-selected semester from state, not the root default
+    const semester = state.selectedSemester;
+
     try {
-      const data = await this.$apiBase.$get(`get-settings?program=${program}&type=nilaiquran&hlq=${halaqah}&smstr=${semester}`);
-      commit("setState", { key: "selectedQuran", value: data.quran });
-      if (data.quran) {
+      const data = await this.$apiBase.$get(`get-settings?program=${program}&type=nilaiquran&kls=${kelas}&smstr=${semester}`);
+      commit("setState", { key: "selectedQuran", value: data });
+
+      if (data) {
         const datas = {
           Filter: "penilaian-quran",
-          Halaqah: halaqah,
+          Kelas: kelas,
           Subject: "quran",
           Tahun: rootState.index.label,
-          Semester: rootState.index.semester,
+          Semester: semester, // FIX: Use the selected semester here too
           Penilaian: state.selectedQuran.Penilaian,
         };
         const result = await this.$apiSantri.$put(`get-nilai-sisalam?program=${program}&type=pengampu`, datas);
@@ -132,21 +153,25 @@ export default {
     dispatch("index/submitLoad", null, { root: true });
   },
 
-  async getByKelas({ commit, state, dispatch, rootState }) {
+  async getByHalaqah({ commit, state, dispatch, rootState }) {
     dispatch("index/submitLoad", null, { root: true });
     const program = localStorage.getItem("program");
-    const kelas = state.selectedByKelas;
-    const semester = rootState.index.semester;
+    const halaqah = state.selectedByHalaqah;
+
+    // FIX: Use the user-selected semester from state
+    const semester = state.selectedSemester;
+
     try {
-      const data = await this.$apiBase.$get(`get-settings?program=${program}&type=nilaiquran&kls=${kelas}&smstr=${semester}`);
-      commit("setState", { key: "selectedQuran", value: data });
-      if (data) {
+      const data = await this.$apiBase.$get(`get-settings?program=${program}&type=nilaiquran&hlq=${halaqah}&smstr=${semester}`);
+      commit("setState", { key: "selectedQuran", value: data.quran });
+
+      if (data.quran) {
         const datas = {
           Filter: "penilaian-quran",
-          Kelas: kelas,
+          Halaqah: halaqah,
           Subject: "quran",
           Tahun: rootState.index.label,
-          Semester: rootState.index.semester,
+          Semester: semester, // FIX: Use the selected semester here too
           Penilaian: state.selectedQuran.Penilaian,
         };
         const result = await this.$apiSantri.$put(`get-nilai-sisalam?program=${program}&type=pengampu`, datas);
@@ -174,7 +199,7 @@ export default {
       const skSantri = state.santri[state.openEdit.index].SK.replace("#", "%23");
       const kelas = state.santri[state.openEdit.index].Kelas;
       const tahun = rootState.index.label;
-      const semester = rootState.index.semester;
+      const semester = state.selectedSemester;
       try {
         const Key = "Quran";
         const datas = {
@@ -205,7 +230,7 @@ export default {
         const skSantri = state.santri[state.openEdit.index].SK.replace("#", "%23");
         const kelas = state.santri[state.openEdit.index].Kelas;
         const tahun = rootState.index.label;
-        const semester = rootState.index.semester;
+        const semester = state.selectedSemester;
         try {
           const Key = "Quran";
           const datas = {

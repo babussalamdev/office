@@ -2,6 +2,7 @@ export default () => ({
   // Shared & Input Page
   select: [],
   selectedMapel: "",
+  semesterOptions: [], // Add this to store the filtered semesters (Ganjil/Genap)
   santri: [],
   openEdit: "",
   nilai: 0,
