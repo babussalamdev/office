@@ -147,7 +147,7 @@ export default {
       const result = await this.$apiBase.$put(`update-settings?sk=${sk}&type=halaqahidhofi`, data);
       if (result) {
         result["sk"] = state.updateData.SK;
-        commit("setKelasHalaqah", result);
+        commit("setKelasHalaqahIdhofi", result);
         commit("btn");
         Swal.fire({
           icon: "success",

@@ -12,8 +12,7 @@
             <div class="col-12 col-md-6">
               <!-- Button trigger modal -->
               <div class="button-santri float-end">
-                <button type="button" class="btn btn-sm btn-primary button-santri" data-bs-toggle="modal"
-                  data-bs-target="#InputDataHalaqoh">
+                <button type="button" class="btn btn-sm btn-primary button-santri" data-bs-toggle="modal" data-bs-target="#InputDataHalaqoh">
                   Tambah Halaqoh
                 </button>
               </div>
@@ -33,33 +32,33 @@
 </template>
 
 <script>
-export default {
-  middleware: 'permission',
-  meta: {
-    permissions: ['setup halaqah']
-  },
-  async asyncData({ store }) {
-    const program = localStorage.getItem("program");
-    store.dispatch(`kelompok/changeUnitHalaqah`, program);
-  },
-  mounted() {
-    this.closeAllModals();;
-  },
-  methods: {
-    closeAllModals() {
-      const backdrop = document.querySelector('.modal-backdrop');
-      if (backdrop) {
-        backdrop.remove();
-      }
-      // Menghapus kelas dan style dari body
-      document.body.classList.remove('modal-open'); // Menghapus kelas
-      document.body.style.overflow = ''; // Menghapus gaya inline
-      document.body.style.paddingRight = ''; // Menghapus gaya inline
-    }
-  },
-};
+  export default {
+    middleware: "permission",
+    meta: {
+      permissions: ["setup halaqah"],
+    },
+    async asyncData({ store }) {
+      const program = localStorage.getItem("program");
+      store.dispatch(`kelompok/changeUnitHalaqah`, program);
+    },
+    mounted() {
+      this.closeAllModals();
+    },
+    methods: {
+      closeAllModals() {
+        const backdrop = document.querySelector(".modal-backdrop");
+        if (backdrop) {
+          backdrop.remove();
+        }
+        // Menghapus kelas dan style dari body
+        document.body.classList.remove("modal-open"); // Menghapus kelas
+        document.body.style.overflow = ""; // Menghapus gaya inline
+        document.body.style.paddingRight = ""; // Menghapus gaya inline
+      },
+    },
+  };
 </script>
 
 <style>
-@import url(~/assets/css/setting/setting.css);
+  @import url(~/assets/css/setting/setting.css);
 </style>

@@ -22,6 +22,13 @@
           <option v-for="(data, index) in selectKelas" :value="data" :key="index">{{ data }}</option>
         </select>
       </div>
+      <div v-else class="d-flex flex-column gap-2 flex-md-row">
+        <select class="form-select select" v-model="localSemester" :disabled="!selectedType">
+          <option v-for="(data, index) in semesterOptions" :key="index" :value="data.Semester">
+            {{ data.Semester }}
+          </option>
+        </select>
+      </div>
     </div>
     <div class="table-responsive" ref="input">
       <table class="table table-hover table-striped">

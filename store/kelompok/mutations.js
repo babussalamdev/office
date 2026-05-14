@@ -81,7 +81,7 @@ export default {
     state.updateData = state.halaqahIdhofi[i];
     $("#updateHalaqahIdhofiModal").modal("show");
   },
-  setKelasHalaqah(state, value) {
+  setKelasHalaqahIdhofi(state, value) {
     const i = state.halaqahIdhofi.findIndex((x) => x.SK === value.sk);
     const updatedHalaqahIdhofi = state.halaqahIdhofi.map((item, index) => {
       if (index === i) {
@@ -91,7 +91,7 @@ export default {
       return item;
     });
     state.halaqahIdhofi = updatedHalaqahIdhofi;
-    $("#updateHalaqahModal").modal("hide");
+    $("#updateHalaqahIdhofiModal").modal("hide");
     $("#formUpdate")[0].reset();
   },
 };
