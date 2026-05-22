@@ -13,13 +13,45 @@ export default {
     }
   },
 
-  async changeUnitPendaftarUjian({ commit, state, dispatch }) {
+  async changeUnitPendaftarUjian({ commit, state, dispatch, rootState }) {
     dispatch("index/submitLoad", null, { root: true });
-    const program = localStorage.getItem("program");
 
-    const res = await this.$apiSantri.$get(`get-ujiantahfidz-sisalam?type=pendaftar&program=${program}`);
-    if (res) {
-      commit("setPendaftarUjian", res);
+    const program = localStorage.getItem("program");
+    const type = state.selectedType;
+    const tahun = rootState.index.label;
+    const semester = rootState.index.semester;
+
+    // 1. Check if the state is missing (happens on refresh)
+    if (!tahun || !semester || !program) {
+      console.warn("State lost due to refresh. Redirecting to start...");
+
+      // Stop the loading spinner so it doesn't get stuck
+      dispatch("index/submitLoad", null, { root: true });
+
+      this.$router.push({ path: `/tahfidz/ujian/pendaftarantahfidzujian` });
+
+      // Halt the action here so the API call doesn't run
+      return;
+    }
+
+    const halaqah = this.$auth.user.Halaqah?.[program];
+
+    let params;
+    if (type === "pendaftar") {
+      params = `type=${type}&program=${program}&thn=${tahun}&smstr=${semester}`;
+    } else if (type === "halaqah") {
+      params = `type=${type}&program=${program}&thn=${tahun}&smstr=${semester}&halaqah=${halaqah}`;
+    }
+
+    try {
+      const res = await this.$apiSantri.$get(`get-ujiantahfidz-sisalam?${params}`);
+      if (res) {
+        commit("setPendaftarUjian", res);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      // Always stop the loader at the end
       dispatch("index/submitLoad", null, { root: true });
     }
   },
@@ -31,6 +63,7 @@ export default {
     try {
       const program = localStorage.getItem("program");
       const tahun = rootState.index.label;
+      const semester = rootState.index.semester;
       const i = state.halaqahsantri.findIndex((x) => x.SK === formData.santri);
       const detail = state.halaqahsantri[i];
 
@@ -50,6 +83,7 @@ export default {
         Juz: formData.juz,
         Date: formattedDate,
         Thn: tahun,
+        Smstr: semester,
         Halaqah: detail.Halaqah,
         Kls: detail.Kelas,
       };
@@ -91,11 +125,10 @@ export default {
       const payload = {
         PK: `${state.detail.SK}#ujiantahfidz`,
         SK: `${state.detail.SKLOG}`,
-        error_tajwid: formData.kelancaran,
-        error_kelancaran: formData.tajwid,
+        Error_Tajwid: formData.tajwid,
+        Error_Kelancaran: formData.kelancaran,
         Note: formData.keterangan,
       };
-      console.log(payload);
       const res = await this.$apiSantri.$put(`update-ujiantahfidz-sisalam?type=penilaian`, payload);
 
       // 4. Success Alert

@@ -12,6 +12,14 @@
       </div>
 
       <div class="py-3">
+        <!-- Dropdown Selection Added Here -->
+        <div class="mb-3" style="max-width: 250px">
+          <select class="form-select" v-model="dropdownType" @change="fetchData">
+            <option value="pendaftar">Penguji</option>
+            <option value="halaqah">Halaqah Saya</option>
+          </select>
+        </div>
+
         <div class="table-responsive animate__animated animate__fadeInUp">
           <table class="table table-hover table-striped">
             <thead>
@@ -57,9 +65,9 @@
                 <td class="text-capitalize">
                   <a
                     href="javascript:;"
-                    @click="isToday(data.Date) && !data.Status ? showDetail(data.SK) : null"
-                    :class="{ 'text-muted opacity-50': !isToday(data.Date) || data.Status }"
-                    :style="!isToday(data.Date) || data.Status ? 'cursor: not-allowed; pointer-events: none;' : ''">
+                    @click="isTodayOrPast(data.Date) ? showDetail(data.SK) : null"
+                    :class="{ 'text-muted opacity-50': !isTodayOrPast(data.Date) }"
+                    :style="!isTodayOrPast(data.Date) ? 'cursor: not-allowed; pointer-events: none;' : ''">
                     <i class="bi bi-pencil-square h5"></i>
                   </a>
                 </td>
@@ -74,26 +82,49 @@
 
 <script>
   import { mapState, mapMutations } from "vuex";
+
   export default {
     async asyncData({ store }) {
       store.dispatch("tahfidzujian/changeUnitPendaftarUjian");
     },
     computed: {
       ...mapState("tahfidzujian", ["pendaftarujian"]),
-    },
+
+      // MOVE THIS INSIDE THE COMPUTED OBJECT
+      dropdownType: {
+        get() {
+          return this.$store.state.tahfidzujian.selectedType;
+        },
+        set(value) {
+          this.$store.commit("tahfidzujian/setSelectedType", value);
+        },
+      },
+    }, // <-- End of computed object
+
     mounted() {
       this.closeAllModals();
     },
     methods: {
       ...mapMutations("tahfidzujian", ["move", "showDetail"]),
-      isToday(dateString) {
+
+      fetchData() {
+        // This will now correctly trigger after the setter updates the state
+        this.$store.dispatch("tahfidzujian/changeUnitPendaftarUjian");
+      },
+
+      isTodayOrPast(dateString) {
         if (!dateString) return false;
 
-        const today = new Date().toISOString().split("T")[0]; // Returns "YYYY-MM-DD"
+        // Get today's date and strip the time
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
 
-        // If your data.Date is in a different format,
-        // ensure this comparison matches that format.
-        return dateString === today;
+        // Get the target date and strip the time
+        const targetDate = new Date(dateString);
+        targetDate.setHours(0, 0, 0, 0);
+
+        // Return true if the target date is today or earlier
+        return targetDate <= today;
       },
       showDetail(sk) {
         this.$store.commit("tahfidzujian/showDetail", { sk });
@@ -103,10 +134,9 @@
         if (backdrop) {
           backdrop.remove();
         }
-        // Menghapus kelas dan style dari body
-        document.body.classList.remove("modal-open"); // Menghapus kelas
-        document.body.style.overflow = ""; // Menghapus gaya inline
-        document.body.style.paddingRight = ""; // Menghapus gaya inline
+        document.body.classList.remove("modal-open");
+        document.body.style.overflow = "";
+        document.body.style.paddingRight = "";
       },
     },
   };

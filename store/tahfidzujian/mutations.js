@@ -13,4 +13,7 @@ export default {
     state.detail = state.pendaftarujian[i];
     this.$router.push(`/tahfidz/ujian/${value.sk.replace("#", "%23")}`);
   },
+  setSelectedType(state, value) {
+    state.selectedType = value;
+  },
 };

@@ -11,7 +11,7 @@
         </div>
         <div>
           <h4 class="mb-1 fw-bold text-dark text-uppercase letter-spacing">{{ this.detail.Nama }}</h4>
-          <p class="mb-0 text-secondary fw-medium d-flex align-items-center small">Penguji: Ustatdz {{ this.detail.Examiner_Name }}</p>
+          <p class="mb-0 text-secondary fw-medium d-flex align-items-center small">Penguji: Ustadz {{ this.detail.Examiner_Name }}</p>
         </div>
       </div>
 
@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="input-group input-group-lg w-75 mx-auto shadow-sm">
-                  <button class="btn btn-white border px-4 custom-hover" type="button" @click="decrement('kelancaran')">
+                  <button class="btn btn-white border px-4 custom-hover" type="button" @click="decrement('kelancaran')" :disabled="!detail.Edit">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                       <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
                     </svg>
@@ -57,7 +57,7 @@
                     class="form-control text-center bg-white fw-bold fs-5 border-start-0 border-end-0"
                     :value="form.kelancaran"
                     readonly />
-                  <button class="btn btn-white border px-4 custom-hover" type="button" @click="increment('kelancaran')">
+                  <button class="btn btn-white border px-4 custom-hover" type="button" @click="increment('kelancaran')" :disabled="!detail.Edit">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                       <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
                     </svg>
@@ -73,7 +73,7 @@
                 </div>
 
                 <div class="input-group input-group-lg w-75 mx-auto shadow-sm">
-                  <button class="btn btn-white border px-4 custom-hover" type="button" @click="decrement('tajwid')">
+                  <button class="btn btn-white border px-4 custom-hover" type="button" @click="decrement('tajwid')" :disabled="!detail.Edit">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                       <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
                     </svg>
@@ -83,7 +83,7 @@
                     class="form-control text-center bg-white fw-bold fs-5 border-start-0 border-end-0"
                     :value="form.tajwid"
                     readonly />
-                  <button class="btn btn-white border px-4 custom-hover" type="button" @click="increment('tajwid')">
+                  <button class="btn btn-white border px-4 custom-hover" type="button" @click="increment('tajwid')" :disabled="!detail.Edit">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                       <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
                     </svg>
@@ -102,14 +102,27 @@
               v-model="form.keterangan"
               class="form-control bg-light border-0 shadow-none p-3"
               rows="3"
-              placeholder="Tuliskan catatan khusus terkait evaluasi santri disini..."></textarea>
+              placeholder="Tuliskan catatan khusus terkait evaluasi santri disini..."
+              :disabled="!detail.Edit"></textarea>
           </div>
 
+          <!-- Active Submit Button -->
           <button
+            v-if="detail.Edit"
             type="submit"
             class="btn text-white w-100 py-3 fw-bold shadow-sm d-flex justify-content-center align-items-center fs-5 custom-submit-btn"
             style="background-color: #176b87; border-radius: 12px">
             Simpan Nilai Ujian
+          </button>
+
+          <!-- Disabled Submit Button -->
+          <button
+            v-else
+            type="button"
+            class="btn btn-secondary w-100 py-3 fw-bold shadow-sm d-flex justify-content-center align-items-center fs-5"
+            style="border-radius: 12px; cursor: not-allowed"
+            disabled>
+            Data Tidak Dapat Diubah
           </button>
         </form>
       </div>
@@ -156,6 +169,11 @@
             // Assign values from state, keeping fallbacks just in case
             this.form.juz = newDetail.Juz || "";
             this.form.tanggalUjian = newDetail.Date || new Date().toISOString().substr(0, 10);
+
+            // Map the API data to the form fields
+            this.form.kelancaran = newDetail.Error_Kelancaran || 0;
+            this.form.tajwid = newDetail.Error_Tajwid || 0;
+            this.form.keterangan = newDetail.Note || "";
           }
         },
       },
@@ -164,25 +182,30 @@
       ...mapActions("tahfidzujian", ["submitNilaiUjian"]),
 
       increment(type) {
+        if (!this.detail.Edit) return; // Prevent increment if Edit is false
+
         if (type === "kelancaran") this.form.kelancaran++;
         if (type === "tajwid") this.form.tajwid++;
       },
       decrement(type) {
+        if (!this.detail.Edit) return; // Prevent decrement if Edit is false
+
         if (type === "kelancaran" && this.form.kelancaran > 0) this.form.kelancaran--;
         if (type === "tajwid" && this.form.tajwid > 0) this.form.tajwid--;
       },
 
       async handleSubmitNilai() {
+        if (!this.detail.Edit) return; // Prevent submit if Edit is false
+
         if (this.form.juz < 1 || this.form.juz > 30) {
           return;
         }
 
         try {
-          // You might also want to attach the student's ID/SK to the form here
-          // before submitting so the backend knows who is being graded:
-          // const payload = { ...this.form, SK: this.detail.SK };
+          // Attach the student's ID/SK to the form before submitting
+          const payload = { ...this.form, SK: this.detail.SK };
 
-          await this.submitNilaiUjian(this.form);
+          await this.submitNilaiUjian(payload);
           this.clearForm();
         } catch (error) {
           console.error("Gagal submit nilai:", error);
@@ -191,12 +214,12 @@
 
       clearForm() {
         this.form = {
-          // Reset back to detail state values instead of empty/today's date
+          // Reset back to detail state values
           tanggalUjian: this.detail?.Date || new Date().toISOString().substr(0, 10),
           juz: this.detail?.Juz || "",
-          kelancaran: 0,
-          tajwid: 0,
-          keterangan: "",
+          kelancaran: this.detail?.Error_Kelancaran || 0,
+          tajwid: this.detail?.Error_Tajwid || 0,
+          keterangan: this.detail?.Note || "",
         };
       },
     },
@@ -217,10 +240,15 @@
     color: #176b87;
   }
 
-  .custom-hover:hover {
+  .custom-hover:hover:not(:disabled) {
     background-color: #176b87;
     color: #ffffff;
     border-color: #176b87 !important;
+  }
+
+  .custom-hover:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
   }
 
   .custom-submit-btn {
@@ -228,7 +256,7 @@
   }
 
   .custom-submit-btn:hover {
-    background-color: #115369 !important; /* Slightly darker shade on hover */
+    background-color: #115369 !important;
   }
 
   .custom-submit-btn:active {

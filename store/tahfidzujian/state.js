@@ -3,4 +3,5 @@ export default () => ({
   halaqahsantri: [],
   pendaftarujian: [],
   detail: [],
+  selectedType: "pendaftar",
 });
