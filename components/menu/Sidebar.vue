@@ -626,6 +626,12 @@
                       <span class="text animate__animated animate__fadeInRight">Nilai Quran</span>
                     </nuxt-link>
                   </li>
+                  <!-- Penilaian Tahfidz -->
+                  <li v-if="hasProgramTahfidz && hasPermission('setup nilai quran')">
+                    <nuxt-link to="/settings/penilaiantahfidz" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Penilaian Tahfidz</span>
+                    </nuxt-link>
+                  </li>
                   <!-- Struktur -->
                   <li v-if="hasPersonalia && hasSarpras && !hasPersonaliaSarpras">
                     <nuxt-link to="/settings/struktur" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
@@ -750,11 +756,14 @@
         const program = localStorage.getItem("program");
         return this.$auth.user.Jabatan[program] === "bendahara";
       },
+      hasProgramTahfidz() {
+        const program = localStorage.getItem("program");
+        return program === "tahfidz";
+      },
     },
 
     methods: {
       ...mapMutations("sidebar", ["notClick", "notClickSub", "toggleSidebar"]),
-      // Method untuk menampilkan/menyembunyikan sub-menu saat menu utama diklik
       isRouteActive(route) {
         const currentPath = this.$route.path;
         return currentPath === route;
@@ -762,18 +771,6 @@
       hasPermission(permission) {
         return this.permissions?.includes(permission);
       },
-      // hideOutside(event, data) {
-      //   // Mengambil referensi elemen profile
-      //   const dataOutside = this.$refs[data];
-
-      //   // Memeriksa apakah elemen yang diklik berada di luar profile
-      //   if (dataOutside && !dataOutside.contains(event.target)) {
-      //     this.toggleSidebar()
-      //   }
-      // },
-      // hideOutside(event) {
-      //   this.$store.dispatch('handleClickOutside', { event, data: this.$refs.profile });
-      // }
     },
   };
 </script>

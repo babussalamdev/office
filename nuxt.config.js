@@ -115,6 +115,7 @@ export default {
       "~/components/settings/periode",
       "~/components/settings/struktur",
       "~/components/settings/nilaiquran",
+      "~/components/settings/penilaiantahfidz",
       "~/components/settings/absensi",
       "~/components/settings/absensi/asrama",
       "~/components/settings/absensi/tahfidz",
