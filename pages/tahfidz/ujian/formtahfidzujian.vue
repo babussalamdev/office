@@ -27,8 +27,9 @@
                 <th scope="col" class="text-start">Tanggal Ujian</th>
                 <th scope="col" class="text-start">Nama</th>
                 <th scope="col" class="text-start">Juz</th>
-                <th scope="col" class="text-start">Halaqah</th>
+                <th v-if="dropdownType !== 'halaqah'" scope="col" class="text-start">Halaqah</th>
                 <th scope="col" class="text-start">Kelas</th>
+                <th scope="col" class="text-start">Score</th>
                 <th scope="col" class="text-start">Status</th>
                 <th scope="col" class="text-start">Actions</th>
               </tr>
@@ -44,11 +45,14 @@
                 <td class="text-capitalize align-middle">
                   <h1>{{ data.Juz }}</h1>
                 </td>
-                <td class="text-capitalize align-middle">
+                <td v-if="dropdownType !== 'halaqah'" class="text-capitalize align-middle">
                   <h1>{{ data.Halaqah }}</h1>
                 </td>
                 <td class="text-capitalize align-middle">
                   <h1>{{ data.Kelas }}</h1>
+                </td>
+                <td class="text-capitalize align-middle">
+                  <h1>{{ data.Score }}</h1>
                 </td>
                 <td class="text-capitalize align-middle">
                   <span
@@ -62,7 +66,16 @@
                     {{ data?.Status || "-" }}
                   </span>
                 </td>
-                <td class="text-capitalize">
+                <td class="text-capitalize align-middle">
+                  <a
+                    href="javascript:;"
+                    @click="isTodayOrPast(data.Date) && !data.Status ? openModal(data) : null"
+                    :class="{ 'text-muted opacity-50': !isTodayOrPast(data.Date) || data.Status }"
+                    :style="!isTodayOrPast(data.Date) || data.Status ? 'cursor: not-allowed; pointer-events: none;' : ''">
+                    <i class="bi bi-pencil-square h5"></i>
+                  </a>
+                </td>
+                <!-- <td class="text-capitalize">
                   <a
                     href="javascript:;"
                     @click="isTodayOrPast(data.Date) ? showDetail(data.SK) : null"
@@ -70,13 +83,15 @@
                     :style="!isTodayOrPast(data.Date) ? 'cursor: not-allowed; pointer-events: none;' : ''">
                     <i class="bi bi-pencil-square h5"></i>
                   </a>
-                </td>
+                </td> -->
               </tr>
             </tbody>
           </table>
         </div>
       </div>
     </div>
+
+    <NilaiModal :show="isModalOpen" :studentData="selectedStudent" @close="isModalOpen = false" @refresh="fetchData" />
   </section>
 </template>
 
@@ -86,6 +101,12 @@
   export default {
     async asyncData({ store }) {
       store.dispatch("tahfidzujian/changeUnitPendaftarUjian");
+    },
+    data() {
+      return {
+        isModalOpen: false,
+        selectedStudent: null,
+      };
     },
     computed: {
       ...mapState("tahfidzujian", ["pendaftarujian"]),
@@ -111,7 +132,10 @@
         // This will now correctly trigger after the setter updates the state
         this.$store.dispatch("tahfidzujian/changeUnitPendaftarUjian");
       },
-
+      openModal(data) {
+        this.selectedStudent = data;
+        this.isModalOpen = true;
+      },
       isTodayOrPast(dateString) {
         if (!dateString) return false;
 

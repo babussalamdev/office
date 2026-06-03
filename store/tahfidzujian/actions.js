@@ -118,7 +118,7 @@ export default {
     }
   },
 
-  async submitNilaiUjian({ state, dispatch, redirect }, formData) {
+  async submitNilaiUjianform({ state, dispatch, redirect }, formData) {
     dispatch("index/submitLoad", null, { root: true });
 
     try {
@@ -143,6 +143,80 @@ export default {
       return res;
     } catch (error) {
       // 5. Error Alert
+      Swal.fire({
+        title: "Gagal!",
+        text: error.response?.data?.message || "Terjadi kesalahan saat menyimpan nilai.",
+        icon: "error",
+        confirmButtonColor: "#dc3545",
+      });
+
+      throw error;
+    } finally {
+      dispatch("index/submitLoad", null, { root: true });
+    }
+  },
+  // In your Vuex actions
+  // In your Vuex actions
+  async submitNilaiUjianmodal({ dispatch, rootState }, payloadData) {
+    const { formData, student } = payloadData;
+    dispatch("index/submitLoad", null, { root: true });
+
+    try {
+      // 1. Payload untuk Penilaian
+      const payloadPenilaian = {
+        PK: `${student.SK}#ujiantahfidz`,
+        SK: `${student.SKLOG}`,
+        Score: formData.Score,
+        Status: formData.Status,
+        Note: formData.keterangan,
+      };
+
+      // Submit Penilaian
+      const res = await this.$apiSantri.$put(`update-ujiantahfidz-sisalam?type=penilaian-modal`, payloadPenilaian);
+
+      // 2. Jika status mengulang, otomatis daftarkan untuk besok
+      if (formData.Status === "mengulang") {
+        const program = localStorage.getItem("program");
+        const tahun = rootState.index.label;
+        const semester = rootState.index.semester;
+
+        // Dapatkan tanggal besok dengan format YYYY-MM-DD
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const year = tomorrow.getFullYear();
+        const month = String(tomorrow.getMonth() + 1).padStart(2, "0");
+        const day = String(tomorrow.getDate()).padStart(2, "0");
+        const formattedDateTomorrow = `${year}-${month}-${day}`;
+
+        // Payload untuk Pendaftaran Ulang
+        // Memanfaatkan data 'student' yang dikirim dari baris tabel modal
+        const payloadDaftarUlang = {
+          SK: student.SK,
+          Juz: student.Juz,
+          Date: formattedDateTomorrow,
+          Thn: tahun,
+          Smstr: semester,
+          Halaqah: student.Halaqah,
+          Kls: student.Kelas,
+        };
+
+        // Submit Pendaftaran Ulang
+        await this.$apiSantri.$post(`input-ujiantahfidz-sisalam?subject=ujiantahfidz&program=${program}`, payloadDaftarUlang);
+      }
+
+      // 3. Tampilkan Alert Dinamis
+      Swal.fire({
+        title: "Berhasil!",
+        text:
+          formData.Status === "mengulang"
+            ? "Nilai disimpan dan jadwal mengulang ujian untuk besok berhasil dibuat."
+            : "Nilai ujian berhasil disimpan.",
+        icon: "success",
+        confirmButtonColor: "#176b87",
+      });
+
+      return res;
+    } catch (error) {
       Swal.fire({
         title: "Gagal!",
         text: error.response?.data?.message || "Terjadi kesalahan saat menyimpan nilai.",

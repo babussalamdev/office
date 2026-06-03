@@ -8,11 +8,14 @@
           class="btn btn-outline-dark text-white"
           style="background-color: #176b87"
           for="pendaftarantahfidzujian">
-          Pendaftaran
+          Pendaftaran Ujian Juz
         </label>
 
         <input type="radio" class="btn-check" name="btnradio" id="formtahfidzujian" autocomplete="off" />
-        <label @click="move('formtahfidzujian')" class="btn btn-outline-dark" for="formtahfidzujian">Form Ujian</label>
+        <label @click="move('formtahfidzujian')" class="btn btn-outline-dark" for="formtahfidzujian">Ujian Juz</label>
+
+        <input type="radio" class="btn-check" name="btnradio" id="formtahfidzujian" autocomplete="off" />
+        <label @click="move('formtahfidzujian')" class="btn btn-outline-dark" for="formtahfidzujian">Ujian Akhir Semester</label>
       </div>
       <div class="py-3">
         <pendaftarantahfidzujian />
