@@ -57,12 +57,22 @@
         },
       };
     },
+    // Inside components/NilaiModal.vue
+
     watch: {
-      // Reset form when modal opens/changes student
       studentData: {
         immediate: true,
-        handler() {
-          this.formData = { Score: "", Status: "", keterangan: "" };
+        handler(newVal) {
+          // If there is data for the selected student, map it to the form
+          if (newVal) {
+            this.formData = {
+              Score: newVal.Score || "",
+              Status: newVal.Status || "",
+              keterangan: newVal.Note || "",
+            };
+          } else {
+            this.formData = { Score: "", Status: "", keterangan: "" };
+          }
         },
       },
     },

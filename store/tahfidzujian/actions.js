@@ -159,6 +159,7 @@ export default {
   // In your Vuex actions
   async submitNilaiUjianmodal({ dispatch, rootState }, payloadData) {
     const { formData, student } = payloadData;
+    const program = localStorage.getItem("program");
     dispatch("index/submitLoad", null, { root: true });
 
     try {
@@ -176,7 +177,6 @@ export default {
 
       // 2. Jika status mengulang, otomatis daftarkan untuk besok
       if (formData.Status === "mengulang") {
-        const program = localStorage.getItem("program");
         const tahun = rootState.index.label;
         const semester = rootState.index.semester;
 
@@ -198,10 +198,12 @@ export default {
           Smstr: semester,
           Halaqah: student.Halaqah,
           Kls: student.Kelas,
+          Examiner_Name: student.Examiner_Name,
+          Series: student.Examiner_SK,
         };
 
         // Submit Pendaftaran Ulang
-        await this.$apiSantri.$post(`input-ujiantahfidz-sisalam?subject=ujiantahfidz&program=${program}`, payloadDaftarUlang);
+        await this.$apiSantri.$post(`input-ujiantahfidz-sisalam?subject=ujiantahfidzmengulang&program=${program}`, payloadDaftarUlang);
       }
 
       // 3. Tampilkan Alert Dinamis

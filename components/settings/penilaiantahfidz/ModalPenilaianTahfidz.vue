@@ -10,13 +10,22 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+              <!-- Updated Nama Field to Select Option -->
               <div class="mb-3">
-                <label for="sort" class="form-label">Nama</label>
-                <input name="nama" type="text" class="form-control" id="sort" required maxlength="10" />
+                <label for="nama" class="form-label">Nama</label>
+                <select name="nama" class="form-select" id="nama" required>
+                  <option value="" disabled selected>-- Pilih Penilaian --</option>
+                  <option value="Ujian Juz">Ujian Juz</option>
+                  <option value="Pencapaian">Pencapaian</option>
+                  <option value="UAS">UAS</option>
+                  <option value="Adab Akhla">Adab Akhla</option>
+                </select>
               </div>
+
+              <!-- Fixed label 'for' and input 'id' to match -->
               <div class="mb-3">
-                <label for="nama" class="form-label">Bobot</label>
-                <input name="bobot" type="number" class="form-control" id="nama" required max="100" />
+                <label for="bobot" class="form-label">Bobot</label>
+                <input name="bobot" type="number" class="form-control" id="bobot" required max="100" />
               </div>
             </div>
             <div class="modal-footer">

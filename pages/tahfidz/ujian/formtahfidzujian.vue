@@ -69,10 +69,10 @@
                 <td class="text-capitalize align-middle">
                   <a
                     href="javascript:;"
-                    @click="isTodayOrPast(data.Date) && !data.Status ? openModal(data) : null"
-                    :class="{ 'text-muted opacity-50': !isTodayOrPast(data.Date) || data.Status }"
-                    :style="!isTodayOrPast(data.Date) || data.Status ? 'cursor: not-allowed; pointer-events: none;' : ''">
-                    <i class="bi bi-pencil-square h5"></i>
+                    @click="isTodayOrPast(data.Date) ? openModal(data) : null"
+                    :class="{ 'text-muted opacity-50': !isTodayOrPast(data.Date) }"
+                    :style="!isTodayOrPast(data.Date) ? 'cursor: not-allowed; pointer-events: none;' : ''">
+                    <i class="bi bi-journal-check h5"></i>
                   </a>
                 </td>
                 <!-- <td class="text-capitalize">
