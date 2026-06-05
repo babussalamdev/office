@@ -1,15 +1,16 @@
 export default {
   btn(state) {
-    state.btn = !state.btn
+    state.btn = !state.btn;
   },
   setState(state, data) {
-    state[data.key] = data.value
+    state[data.key] = data.value;
   },
   setKelas(state, data) {
-    state.kelas = data.kelas
-    state.quran = data.quran
+    state.kelas = data.kelas;
+    state.quran = data.quran;
+    state.periode = data.periode;
 
-    const separatedPenilaian = data.quran.map(item => {
+    const separatedPenilaian = data.quran.map((item) => {
       if (item.Penilaian) {
         // Mengambil nilai dari Penilaian dan mengubahnya menjadi array berisi string-format nama-bobot
         const penilaianArray = Object.entries(item.Penilaian).map(([nama, bobot]) => `${nama}-${bobot}`);
@@ -19,12 +20,12 @@ export default {
         return []; // atau return null; atau lakukan tindakan lainnya
       }
     });
-    state.penilaian = separatedPenilaian
+    state.penilaian = separatedPenilaian;
   },
   inputQuran(state, value) {
-    const i = state.quran.findIndex((x) => x.SK === value.SK)
+    const i = state.quran.findIndex((x) => x.SK === value.SK);
     if (!state.penilaian[i]) {
-      state.penilaian.push([])
+      state.penilaian.push([]);
     }
     state.quran.push(value);
     state.quran.sort((a, b) => {
@@ -32,29 +33,29 @@ export default {
     });
 
     $("#inputnilaiquran").modal("hide");
-    $("#inputQuran")[0].reset()
+    $("#inputQuran")[0].reset();
   },
   deleteQuran(state, value) {
     const i = state.quran.findIndex((x) => x.SK === value);
     state.quran.splice(i, 1);
-    state.penilaian.splice(i, 1)
+    state.penilaian.splice(i, 1);
   },
 
   // penilaian
   inputScore(state, value) {
-    const i = state.quran.findIndex((x) => x.SK === value)
+    const i = state.quran.findIndex((x) => x.SK === value);
 
     $("#inputDataQuranPenilaian").modal("show");
     state.updateDataPenilaian = state.quran[i];
   },
   updatePenilaian(state, value) {
-    state['penilaian'][value.i].push(value.dataPenilaian.trim())
+    state["penilaian"][value.i].push(value.dataPenilaian.trim());
   },
   updateScore(state, value) {
-    $("#inputDataQuranPenilaian").modal("hide")
-    $("#inputQuranPenilaian")[0].reset()
+    $("#inputDataQuranPenilaian").modal("hide");
+    $("#inputQuranPenilaian")[0].reset();
   },
   deletePenilaian(state, value) {
-    state['penilaian'][value.indexMapel].splice(value.indexPenilaian, 1)
+    state["penilaian"][value.indexMapel].splice(value.indexPenilaian, 1);
   },
-}
+};

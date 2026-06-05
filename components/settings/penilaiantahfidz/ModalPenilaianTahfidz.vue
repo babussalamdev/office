@@ -10,15 +10,14 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <!-- Updated Nama Field to Select Option -->
+              <!-- Updated Select Option to be dynamic -->
               <div class="mb-3">
                 <label for="nama" class="form-label">Nama</label>
-                <select name="nama" class="form-select" id="nama" required>
-                  <option value="" disabled selected>-- Pilih Penilaian --</option>
-                  <option value="Ujian Juz">Ujian Juz</option>
-                  <option value="Pencapaian">Pencapaian</option>
-                  <option value="UAS">UAS</option>
-                  <option value="Adab Akhla">Adab Akhla</option>
+                <select name="nama" class="form-select" id="nama" v-model="selectedPenilaian" required>
+                  <option value="" disabled>-- Pilih Penilaian --</option>
+                  <option v-for="item in availablePenilaian" :key="item" :value="item">
+                    {{ item }}
+                  </option>
                 </select>
               </div>
 
@@ -46,17 +45,43 @@
 </template>
 
 <script>
-  import { mapState, mapActions, mapMutations } from "vuex";
+  import { mapState, mapActions } from "vuex";
+
   export default {
+    data() {
+      return {
+        selectedPenilaian: "",
+        // List of all possible Penilaian types
+        allPenilaian: ["Ujian Juz", "Pencapaian", "UAS", "Adab Akhla"],
+      };
+    },
     computed: {
       ...mapState("setuppenilaiantahfidz", ["updateDataPenilaian", "btn"]),
+
+      // Dynamically filter options
+      availablePenilaian() {
+        // If there's no data loaded yet, return all options
+        if (!this.updateDataPenilaian || !this.updateDataPenilaian.Penilaian) {
+          return this.allPenilaian;
+        }
+
+        // Get the keys (names) of the penilaian that already exist for this row
+        // Example: If Penilaian is {"UAS": 35, "Pencapaian": 30}, usedNames will be ["UAS", "Pencapaian"]
+        const usedNames = Object.keys(this.updateDataPenilaian.Penilaian);
+
+        // Filter the allPenilaian array to only show items NOT in usedNames
+        return this.allPenilaian.filter((item) => !usedNames.includes(item));
+      },
+    },
+    watch: {
+      // Whenever a new row is selected (which updates updateDataPenilaian),
+      // reset the select dropdown to empty so it doesn't hold the previous value
+      updateDataPenilaian() {
+        this.selectedPenilaian = "";
+      },
     },
     methods: {
       ...mapActions("setuppenilaiantahfidz", ["inputDataPenilaian"]),
-      // inputDataPenilaian(event) {
-      //   const data = Object.fromEntries(new FormData(event.target))
-      //   console.log(data)
-      // },
     },
   };
 </script>

@@ -7,14 +7,6 @@
         <div class="col-12 col-md-6 d-flex align-items-center">
           <h3>Setting Penilaian Tahfidz</h3>
         </div>
-        <div class="col-12 col-md-6">
-          <!-- Button trigger modal -->
-          <div class="button-santri float-end">
-            <button type="button" class="btn btn-sm btn-primary button-santri" data-bs-toggle="modal" data-bs-target="#inputnilaiquran">
-              tambah data
-            </button>
-          </div>
-        </div>
 
         <!-- table -->
       </div>

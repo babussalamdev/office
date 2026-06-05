@@ -1,24 +1,49 @@
 import Swal from "sweetalert2";
 export default {
-  async changeUnit({ commit, state, dispatch }) {
+  async changeUnit({ commit, dispatch }, payload = null) {
     dispatch("index/submitLoad", null, { root: true });
     const program = localStorage.getItem("program");
-    const data = await this.$apiBase.$get(`get-settings?type=penilaiantahfidz&program=${program}`);
-    if (data) {
+
+    // Base URL
+    let url = `get-settings?type=penilaiantahfidz&program=${program}`;
+
+    // Append query parameters if the user has selected them
+    if (payload && payload.tahun) {
+      url += `&tahun=${payload.tahun}`;
+    }
+    if (payload && payload.semester) {
+      url += `&semester=${payload.semester}`;
+    }
+
+    try {
+      const data = await this.$apiBase.$get(url);
+      if (data) {
+        commit("setKelas", data);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
       dispatch("index/submitLoad", null, { root: true });
-      commit("setKelas", data);
     }
   },
-  async submit({ commit, state }, event) {
+  async submit({ commit, state }, payload) {
     commit("btn");
+
+    // Destructure event, tahun, and semester from the payload
+    const { event, tahun, semester } = payload;
+    console.log({ event, tahun, semester });
     const data = Object.fromEntries(new FormData(event.target));
     data["Program"] = localStorage.getItem("program");
+
     const kelas = data.Kelas;
-    const semester = data.Semester;
+
     delete data.Kelas;
     delete data.Semester;
+
     try {
-      const result = await this.$apiBase.$post(`input-settings?type=penilaiantahfidz&kls=${kelas}&smstr=${semester}`, data);
+      // Append kls, smstr (from payload), and tahun (from payload) to the URL
+      const result = await this.$apiBase.$post(`input-settings?type=penilaiantahfidz&kls=${kelas}&smstr=${semester}&thn=${tahun}`, data);
+
       if (result) {
         Swal.fire({
           position: "center",
@@ -30,7 +55,10 @@ export default {
         commit("btn");
         commit("inputQuran", result);
       }
-    } catch (error) {}
+    } catch (error) {
+      commit("btn"); // Ensure button state resets even if there's an error
+      console.error(error);
+    }
   },
   async deleteItem({ commit, state }, key) {
     const i = state.quran.findIndex((x) => x.SK === key);
@@ -47,7 +75,7 @@ export default {
     if (result.isConfirmed) {
       const sk = key.replace(/#/g, "%23");
       const program = localStorage.getItem("program");
-      const result = await this.$axios.$delete(`delete-settings?sk=${sk}&type=penilaiantahfidz`);
+      const result = await this.$axios.$delete(`delete-settings?sk=${sk}&type=quran`);
       commit("deleteQuran", key);
       if (result) {
         Swal.fire({
@@ -105,7 +133,7 @@ export default {
     delete data.nama;
 
     try {
-      const result = await this.$apiBase.$put(`update-settings?sk=${sk}&type=penilaiantahfidz`, data);
+      const result = await this.$apiBase.$put(`update-settings?sk=${sk}&type=quran`, data);
       commit("updateScore");
       commit("btn");
     } catch (error) {

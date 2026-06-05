@@ -14,8 +14,8 @@
         <input type="radio" class="btn-check" name="btnradio" id="formtahfidzujian" autocomplete="off" />
         <label @click="move('formtahfidzujian')" class="btn btn-outline-dark" for="formtahfidzujian">Ujian Juz</label>
 
-        <input type="radio" class="btn-check" name="btnradio" id="formtahfidzujian" autocomplete="off" />
-        <label @click="move('formtahfidzujian')" class="btn btn-outline-dark" for="formtahfidzujian">Ujian Akhir Semester</label>
+        <input type="radio" class="btn-check" name="btnradio" id="formtahfidzujiansemester" autocomplete="off" />
+        <label @click="move('formtahfidzujiansemester')" class="btn btn-outline-dark" for="formtahfidzujiansemester">Ujian Akhir Semester</label>
       </div>
       <div class="py-3">
         <pendaftarantahfidzujian />
