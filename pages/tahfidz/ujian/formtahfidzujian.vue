@@ -32,6 +32,7 @@
                 <th scope="col" class="text-start">Juz</th>
                 <th v-if="dropdownType !== 'halaqah'" scope="col" class="text-start">Halaqah</th>
                 <th scope="col" class="text-start">Kelas</th>
+                <th v-if="dropdownType === 'halaqah'" scope="col" class="text-start">Penguji</th>
                 <th scope="col" class="text-start">Score</th>
                 <th scope="col" class="text-start">Status</th>
                 <th scope="col" class="text-start">Actions</th>
@@ -54,8 +55,11 @@
                 <td class="text-capitalize align-middle">
                   <h1>{{ data.Kelas }}</h1>
                 </td>
+                <td v-if="dropdownType === 'halaqah'" class="text-capitalize align-middle">
+                  <h1>{{ data.Examiner_Name }}</h1>
+                </td>
                 <td class="text-capitalize align-middle">
-                  <h1>{{ data.Score }}</h1>
+                  <h1>{{ data?.Score || "-" }}</h1>
                 </td>
                 <td class="text-capitalize align-middle">
                   <span

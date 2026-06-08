@@ -497,6 +497,12 @@
                       <span class="text animate__animated animate__fadeInRight">Ekskull</span>
                     </nuxt-link>
                   </li>
+                  <!-- Ujian Tahfidz -->
+                  <li v-if="hasProgramTahfidz && hasPermission('setup nilai quran')">
+                    <nuxt-link to="/santri/ujiantahfidz/pengujiujianjuz" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Ujian Tahfidz</span>
+                    </nuxt-link>
+                  </li>
                 </ul>
               </li>
               <!-- Pegawai Menu -->

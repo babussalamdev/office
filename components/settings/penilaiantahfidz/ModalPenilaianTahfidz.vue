@@ -51,22 +51,16 @@
     data() {
       return {
         selectedPenilaian: "",
-        // List of all possible Penilaian types
         allPenilaian: ["Ujian Juz", "Pencapaian", "UAS", "Adab Akhla"],
       };
     },
     computed: {
       ...mapState("setuppenilaiantahfidz", ["updateDataPenilaian", "btn"]),
 
-      // Dynamically filter options
       availablePenilaian() {
-        // If there's no data loaded yet, return all options
         if (!this.updateDataPenilaian || !this.updateDataPenilaian.Penilaian) {
           return this.allPenilaian;
         }
-
-        // Get the keys (names) of the penilaian that already exist for this row
-        // Example: If Penilaian is {"UAS": 35, "Pencapaian": 30}, usedNames will be ["UAS", "Pencapaian"]
         const usedNames = Object.keys(this.updateDataPenilaian.Penilaian);
 
         // Filter the allPenilaian array to only show items NOT in usedNames
@@ -74,10 +68,13 @@
       },
     },
     watch: {
-      // Whenever a new row is selected (which updates updateDataPenilaian),
-      // reset the select dropdown to empty so it doesn't hold the previous value
-      updateDataPenilaian() {
-        this.selectedPenilaian = "";
+      // Watch the specific nested object and use 'deep: true'
+      "updateDataPenilaian.Penilaian": {
+        deep: true,
+        handler() {
+          // Reset the selection whenever an item is added or deleted
+          this.selectedPenilaian = "";
+        },
       },
     },
     methods: {

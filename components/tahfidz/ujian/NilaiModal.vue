@@ -30,10 +30,11 @@
           </div>
 
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="closeModal">Batal</button>
-            <button type="submit" class="btn text-white" style="background-color: #176b87" :disabled="isLoading">
+            <button v-if="studentData.Edit" type="button" class="btn btn-secondary" @click="closeModal">Batal</button>
+            <button v-if="studentData.Edit" type="submit" class="btn text-white" style="background-color: #176b87" :disabled="isLoading">
               {{ isLoading ? "Menyimpan..." : "Simpan Nilai" }}
             </button>
+            <button v-else type="submit" class="btn text-white" style="background-color: #176b87" disabled>Data Tidak Dapat Diubah</button>
           </div>
         </form>
       </div>
