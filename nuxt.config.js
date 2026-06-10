@@ -91,6 +91,7 @@ export default {
       "~/components/santri/kelas",
       "~/components/santri/asrama",
       "~/components/santri/qrcode",
+      "~/components/santri/ujiantahfidzsettings",
       "~/components/pegawai",
       "~/components/pegawai/database",
       "~/components/pegawai/halaqah",

@@ -86,6 +86,8 @@
         </div>
       </div>
     </div>
+
+    <SettingsPengujiModal :show="isModalOpen" :studentData="selectedStudent" @close="isModalOpen = false" @refresh="fetchData" />
   </section>
 </template>
 

@@ -17,4 +17,7 @@ export default {
   setSelectedValue(state, value) {
     state.selectedValue = value;
   },
+  setListPenguji(state, data) {
+    state.listPenguji = data.pegawai;
+  },
 };
