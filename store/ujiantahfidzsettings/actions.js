@@ -44,8 +44,31 @@ export default {
       dispatch("index/submitLoad", null, { root: true });
     }
   },
+  async fetchTableDataPuas({ commit, state, dispatch, rootState }) {
+    // Prevent fetching if nothing is selected yet
+    if (!state.selectedValue) return;
 
-  // 1. New Action to fetch list Penguji
+    dispatch("index/submitLoad", null, { root: true });
+    const program = localStorage.getItem("program");
+    const tahun = rootState.index.label;
+    const semester = rootState.index.semester;
+
+    try {
+      // NOTE: Replace this URL with your actual endpoint to get the table data
+      const res = await this.$apiSantri.$get(
+        `get-ujiantahfidz-sisalam?selected=${state.selectedType}&type=penguji-uas&filter=${state.selectedValue}&thn=${tahun}&smstr=${semester}&program=${program}`,
+      );
+
+      if (res) {
+        commit("setPendaftarUjian", res);
+      }
+    } catch (error) {
+      console.error("Error fetching table data:", error);
+    } finally {
+      dispatch("index/submitLoad", null, { root: true });
+    }
+  },
+
   async fetchListPenguji({ commit }) {
     try {
       const res = await this.$apiBase.$get(`get-pegawai?program=tahfidz&opsi=halaqah&position=Pengampu`);
@@ -57,8 +80,7 @@ export default {
     }
   },
 
-  // 2. Modified Action to Update Penguji
-  async updatePengujiModal({ dispatch }, payloadData) {
+  async updatePengujiModal({ commit, dispatch }, payloadData) {
     const { penguji, student } = payloadData;
     dispatch("index/submitLoad", null, { root: true });
 
@@ -69,11 +91,11 @@ export default {
         PK: `${student.SK}#ujiantahfidz`,
         SK: `${student.SKLOG}`,
         Examiner_Name: penguji.Nama,
-        Examiner_SK: penguji.SK, // Assuming 'SK' is the unique ID for the Pegawai from your API
+        Series: penguji.SK, // Assuming 'SK' is the unique ID for the Pegawai from your API
       };
-
       // Ensure the ?type= update parameter matches what your backend expects for updating penguji
       const res = await this.$apiSantri.$put(`update-ujiantahfidz-sisalam?type=update-penguji`, payloadUpdate);
+      commit("updatePengujiPendaftar", res);
 
       Swal.fire({
         title: "Berhasil!",
@@ -94,6 +116,49 @@ export default {
       throw error;
     } finally {
       dispatch("index/submitLoad", null, { root: true });
+    }
+  },
+  async bulkUpdatePenguji({ commit, dispatch }, payloadData) {
+    const { penguji, students } = payloadData;
+    dispatch("index/submitLoad", null, { root: true }); // Show loading overlay
+
+    try {
+      // Create an array of Promises for all selected students
+      const updatePromises = students.map((student) => {
+        const payloadUpdate = {
+          PK: `${student.SK}#ujiantahfidz`,
+          SK: `${student.SKLOG}`,
+          Examiner_Name: penguji.Nama,
+          Series: penguji.SK, // Assuming 'SK' is unique ID
+        };
+
+        return this.$apiSantri.$put(`update-ujiantahfidz-sisalam?type=update-penguji`, payloadUpdate).then((res) => {
+          // Update UI state iteratively as they succeed
+          commit("updatePengujiPendaftar", res);
+          return res;
+        });
+      });
+
+      // Execute all API calls concurrently
+      await Promise.all(updatePromises);
+
+      // Trigger Success Alert
+      Swal.fire({
+        title: "Berhasil!",
+        text: `${students.length} Data santri berhasil diperbarui.`,
+        icon: "success",
+        confirmButtonColor: "#176b87",
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "Gagal!",
+        text: error.response?.data?.message || "Terjadi kesalahan saat memperbarui penguji secara massal.",
+        icon: "error",
+        confirmButtonColor: "#dc3545",
+      });
+      throw error;
+    } finally {
+      dispatch("index/submitLoad", null, { root: true }); // Hide loading overlay
     }
   },
 };

@@ -41,10 +41,9 @@
                 <th scope="col" class="text-start">Tanggal Ujian</th>
                 <th scope="col" class="text-start">Nama</th>
                 <th scope="col" class="text-start">Juz</th>
-                <th v-if="dropdownType === 'halaqah'" scope="col" class="text-start">Kelas</th>
-                <th v-if="dropdownType === 'onlykelas'" scope="col" class="text-start">Halaqah</th>
+                <th scope="col" class="text-start">Kelas</th>
+                <th scope="col" class="text-start">Halaqah</th>
                 <th scope="col" class="text-start">Penguji</th>
-                <th scope="col" class="text-start">Score</th>
                 <th scope="col" class="text-start">Actions</th>
               </tr>
             </thead>
@@ -63,17 +62,14 @@
                 <td class="text-capitalize align-middle">
                   <h1>{{ data.Juz }}</h1>
                 </td>
-                <td v-if="dropdownType === 'onlykelas'" class="text-capitalize align-middle">
+                <td class="text-capitalize align-middle">
                   <h1>{{ data.Halaqah }}</h1>
                 </td>
-                <td v-if="dropdownType === 'halaqah'" class="text-capitalize align-middle">
+                <td class="text-capitalize align-middle">
                   <h1>{{ data.Kelas }}</h1>
                 </td>
                 <td class="text-capitalize align-middle">
                   <h1>{{ data.Examiner_Name }}</h1>
-                </td>
-                <td class="text-capitalize align-middle">
-                  <h1>{{ data?.Score || "-" }}</h1>
                 </td>
                 <td class="text-capitalize align-middle">
                   <a href="javascript:;" @click="openModal(data)">
@@ -140,6 +136,13 @@
       // Step 2: Called when a specific Halaqah/Kelas is selected from the 2nd dropdown
       onValueChange() {
         this.$store.dispatch("ujiantahfidzsettings/fetchTableDataPuj");
+      },
+
+      fetchData() {
+        // Re-fetch the table data if a dropdown value is already selected
+        if (this.dropdownValue) {
+          this.$store.dispatch("ujiantahfidzsettings/fetchTableDataPuj");
+        }
       },
 
       openModal(data) {
