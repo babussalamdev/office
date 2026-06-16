@@ -82,18 +82,19 @@
       </div>
     </div>
 
-    <!-- <BulkPengujiModal v-if="isBulkModalOpen" :show="isBulkModalOpen" :students="selectedStudents" @close="closeBulkModal" @refresh="fetchData" /> -->
+    <SettingsPengujiUasModal
+      v-if="isBulkModalOpen"
+      :show="isBulkModalOpen"
+      :students="selectedStudents"
+      @close="closeBulkModal"
+      @refresh="fetchData" />
   </section>
 </template>
 
 <script>
   import { mapState, mapMutations } from "vuex";
-  // import BulkPengujiModal from "~/components/BulkPengujiModal.vue"; // Adjust path if needed
 
   export default {
-    // components: {
-    //   BulkPengujiModal,
-    // },
     async asyncData({ store }) {
       await store.dispatch("ujiantahfidzsettings/fetchListOptionsPuj");
     },
@@ -170,3 +171,7 @@
     },
   };
 </script>
+
+<style>
+  @import url(~/assets/css/setting/setting.css);
+</style>

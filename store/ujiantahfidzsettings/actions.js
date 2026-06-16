@@ -126,13 +126,14 @@ export default {
       // Create an array of Promises for all selected students
       const updatePromises = students.map((student) => {
         const payloadUpdate = {
-          PK: `${student.SK}#ujiantahfidz`,
-          SK: `${student.SKLOG}`,
+          PK: `${student.SK}#ujiantahfidzuas`,
+          SK: `${student.SKLOGUAS}`,
           Examiner_Name: penguji.Nama,
           Series: penguji.SK, // Assuming 'SK' is unique ID
         };
+        console.log(payloadUpdate);
 
-        return this.$apiSantri.$put(`update-ujiantahfidz-sisalam?type=update-penguji`, payloadUpdate).then((res) => {
+        return this.$apiSantri.$put(`update-ujiantahfidz-sisalam?type=update-penguji-uas`, payloadUpdate).then((res) => {
           // Update UI state iteratively as they succeed
           commit("updatePengujiPendaftar", res);
           return res;
