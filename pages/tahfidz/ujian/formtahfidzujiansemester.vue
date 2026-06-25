@@ -107,7 +107,7 @@
 
   export default {
     async asyncData({ store }) {
-      store.dispatch("tahfidzujian/changeUnitPendaftarUjian");
+      store.dispatch("tahfidzujian/changeUnitUjianTahfidzUAS");
     },
     data() {
       return {
@@ -137,7 +137,7 @@
 
       fetchData() {
         // This will now correctly trigger after the setter updates the state
-        this.$store.dispatch("tahfidzujian/changeUnitPendaftarUjian");
+        this.$store.dispatch("tahfidzujian/changeUnitUjianTahfidzUAS");
       },
       openModal(data) {
         this.selectedStudent = data;

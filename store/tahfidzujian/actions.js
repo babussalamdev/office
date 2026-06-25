@@ -56,6 +56,43 @@ export default {
     }
   },
 
+  async changeUnitUjianTahfidzUAS({ commit, state, dispatch, rootState }) {
+    dispatch("index/submitLoad", null, { root: true });
+    const program = localStorage.getItem("program");
+    const tahun = rootState.index.label;
+    const semester = rootState.index.semester;
+    const type = state.selectedType;
+
+    // 1. Check if the state is missing (happens on refresh)
+    if (!tahun || !semester || !program || !type) {
+      console.warn("State lost due to refresh. Redirecting to start...");
+
+      // Stop the loading spinner so it doesn't get stuck
+      dispatch("index/submitLoad", null, { root: true });
+
+      this.$router.push({ path: `/tahfidz/ujian/pendaftarantahfidzujian` });
+
+      // Halt the action here so the API call doesn't run
+      return;
+    }
+    const halaqah = this.$auth.user.Halaqah?.[program];
+
+    try {
+      // NOTE: Replace this URL with your actual endpoint to get the table data
+      const res = await this.$apiSantri.$get(
+        `get-ujiantahfidz-sisalam?selected=${type}&type=ujian-uas&filter=${halaqah}&thn=${tahun}&smstr=${semester}&program=${program}`,
+      );
+
+      if (res) {
+        commit("setPendaftarUjian", res);
+      }
+    } catch (error) {
+      console.error("Error fetching table data:", error);
+    } finally {
+      dispatch("index/submitLoad", null, { root: true });
+    }
+  },
+
   async submitPendaftaran({ dispatch, state, rootState }, formData) {
     // 1. Turn on loading state
     dispatch("index/submitLoad", null, { root: true });
@@ -155,7 +192,6 @@ export default {
       dispatch("index/submitLoad", null, { root: true });
     }
   },
-  // In your Vuex actions
   // In your Vuex actions
   async submitNilaiUjianmodal({ dispatch, rootState }, payloadData) {
     const { formData, student } = payloadData;

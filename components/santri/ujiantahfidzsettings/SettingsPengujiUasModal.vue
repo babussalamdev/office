@@ -14,8 +14,10 @@
 
           <div class="mb-3">
             <label class="form-label">Pilih Penguji Baru</label>
-            <select class="form-select" v-model="selectedPenguji" :disabled="isLoading">
-              <option value="" disabled>-- Pilih Penguji --</option>
+            <select class="form-select" v-model="selectedPenguji" :disabled="isLoading || isFetchingPenguji">
+              <option value="" disabled v-if="isFetchingPenguji">Memuat nama penguji...</option>
+              <option value="" disabled v-else>-- Pilih Penguji --</option>
+
               <option v-for="(penguji, index) in listPenguji" :key="index" :value="penguji">
                 {{ penguji.Nama }}
               </option>
@@ -29,7 +31,7 @@
             class="btn text-white"
             style="background-color: #176b87"
             @click="submitUpdate"
-            :disabled="!selectedPenguji || isLoading">
+            :disabled="!selectedPenguji || isLoading || isFetchingPenguji">
             <span v-if="isLoading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
             Simpan Perubahan
           </button>
@@ -57,15 +59,23 @@
       return {
         selectedPenguji: "",
         isLoading: false,
+        isFetchingPenguji: false, // <-- New state to track fetching
       };
     },
     computed: {
       ...mapState("ujiantahfidzsettings", ["listPenguji"]),
     },
-    mounted() {
+    async mounted() {
       // Fetch the penguji list automatically when modal opens
       if (!this.listPenguji || this.listPenguji.length === 0) {
-        this.$store.dispatch("ujiantahfidzsettings/fetchListPenguji");
+        this.isFetchingPenguji = true; // Start loading indicator
+        try {
+          await this.$store.dispatch("ujiantahfidzsettings/fetchListPenguji");
+        } catch (error) {
+          console.error("Gagal memuat list penguji:", error);
+        } finally {
+          this.isFetchingPenguji = false; // Stop loading indicator regardless of success or failure
+        }
       }
     },
     methods: {

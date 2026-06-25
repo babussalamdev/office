@@ -1,4 +1,8 @@
 import Swal from "sweetalert2";
+import moment from "moment-timezone";
+
+const tanggal_sekarang = moment().tz("Asia/Jakarta");
+const currentTime = tanggal_sekarang.format("YYYY-MM-DD HH:mm:ss");
 
 export default {
   async fetchListOptionsPuj({ commit, state, dispatch }) {
@@ -118,18 +122,22 @@ export default {
       dispatch("index/submitLoad", null, { root: true });
     }
   },
-  async bulkUpdatePenguji({ commit, dispatch }, payloadData) {
+  async bulkUpdatePenguji({ commit, dispatch, rootState }, payloadData) {
     const { penguji, students } = payloadData;
     dispatch("index/submitLoad", null, { root: true }); // Show loading overlay
+    const tahun = rootState.index.label;
+    const semester = rootState.index.semester;
 
     try {
       // Create an array of Promises for all selected students
       const updatePromises = students.map((student) => {
         const payloadUpdate = {
           PK: `${student.SK}#ujiantahfidzuas`,
-          SK: `${student.SKLOGUAS}`,
+          SK: `${currentTime}`,
           Examiner_Name: penguji.Nama,
           Series: penguji.SK, // Assuming 'SK' is unique ID
+          Kelas: `ujiantahfidzuas#${student.Kelas}#${tahun}#${semester}`,
+          Subject: `ujiantahfidzuas#${student.Halaqah}#${tahun}#${semester}`,
         };
         console.log(payloadUpdate);
 
