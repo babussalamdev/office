@@ -138,6 +138,7 @@ export default {
           Series: penguji.SK, // Assuming 'SK' is unique ID
           Kelas: `ujiantahfidzuas#${student.Kelas}#${tahun}#${semester}`,
           Subject: `ujiantahfidzuas#${student.Halaqah}#${tahun}#${semester}`,
+          Collection: `ujiantahfidzuas#${tahun}#${semester}`,
         };
         console.log(payloadUpdate);
 

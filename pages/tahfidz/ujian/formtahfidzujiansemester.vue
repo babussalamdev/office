@@ -31,21 +31,17 @@
           <table class="table table-hover table-striped">
             <thead>
               <tr>
-                <th scope="col" class="text-start">Tanggal Ujian</th>
                 <th scope="col" class="text-start">Nama</th>
                 <th scope="col" class="text-start">Juz</th>
                 <th v-if="dropdownType !== 'halaqah'" scope="col" class="text-start">Halaqah</th>
                 <th scope="col" class="text-start">Kelas</th>
+                <th scope="col" class="text-start">Penguji</th>
                 <th scope="col" class="text-start">Score</th>
-                <th scope="col" class="text-start">Status</th>
                 <th scope="col" class="text-start">Actions</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(data, index) in pendaftarujian" :key="index">
-                <td class="text-capitalize align-middle">
-                  <h1>{{ data.Date }}</h1>
-                </td>
                 <td class="text-capitalize align-middle">
                   <h1>{{ data.Nama }}</h1>
                 </td>
@@ -59,38 +55,16 @@
                   <h1>{{ data.Kelas }}</h1>
                 </td>
                 <td class="text-capitalize align-middle">
+                  <h1>{{ data.Examiner_Name }}</h1>
+                </td>
+                <td class="text-capitalize align-middle">
                   <h1>{{ data.Score }}</h1>
                 </td>
                 <td class="text-capitalize align-middle">
-                  <span
-                    class="badge rounded-pill"
-                    :class="{
-                      'bg-success': data?.Status === 'lulus',
-                      'bg-danger': data?.Status === 'mengulang',
-                      'bg-secondary': !data?.Status,
-                    }"
-                    style="font-size: 0.85rem; padding: 0.4em 0.8em; font-weight: 500">
-                    {{ data?.Status || "-" }}
-                  </span>
-                </td>
-                <td class="text-capitalize align-middle">
-                  <a
-                    href="javascript:;"
-                    @click="isTodayOrPast(data.Date) ? openModal(data) : null"
-                    :class="{ 'text-muted opacity-50': !isTodayOrPast(data.Date) }"
-                    :style="!isTodayOrPast(data.Date) ? 'cursor: not-allowed; pointer-events: none;' : ''">
+                  <a href="javascript:;" @click="openModal(data)">
                     <i class="bi bi-journal-check h5"></i>
                   </a>
                 </td>
-                <!-- <td class="text-capitalize">
-                  <a
-                    href="javascript:;"
-                    @click="isTodayOrPast(data.Date) ? showDetail(data.SK) : null"
-                    :class="{ 'text-muted opacity-50': !isTodayOrPast(data.Date) }"
-                    :style="!isTodayOrPast(data.Date) ? 'cursor: not-allowed; pointer-events: none;' : ''">
-                    <i class="bi bi-pencil-square h5"></i>
-                  </a>
-                </td> -->
               </tr>
             </tbody>
           </table>
@@ -98,7 +72,7 @@
       </div>
     </div>
 
-    <NilaiModal :show="isModalOpen" :studentData="selectedStudent" @close="isModalOpen = false" @refresh="fetchData" />
+    <NilaiModalUAS :show="isModalOpen" :studentData="selectedStudent" @close="isModalOpen = false" @refresh="fetchData" />
   </section>
 </template>
 
@@ -142,20 +116,6 @@
       openModal(data) {
         this.selectedStudent = data;
         this.isModalOpen = true;
-      },
-      isTodayOrPast(dateString) {
-        if (!dateString) return false;
-
-        // Get today's date and strip the time
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        // Get the target date and strip the time
-        const targetDate = new Date(dateString);
-        targetDate.setHours(0, 0, 0, 0);
-
-        // Return true if the target date is today or earlier
-        return targetDate <= today;
       },
       showDetail(sk) {
         this.$store.commit("tahfidzujian/showDetail", { sk });
