@@ -13,6 +13,51 @@ export default {
     }
   },
 
+  async fetchKoordinatorOptions({ commit, state, dispatch }) {
+    const program = localStorage.getItem("program");
+    if (!program || !state.koordinatorFilterBy) return;
+
+    dispatch("index/submitLoad", null, { root: true });
+
+    try {
+      const res = await this.$apiBase.$get(`get-settings?type=${state.koordinatorFilterBy}&sk=${program}`);
+      if (res) {
+        // 1. Normalize the data into an array
+        let dataArray = [];
+        if (Array.isArray(res)) {
+          // Handles the 'halaqah' format where the response is directly an array
+          dataArray = res;
+        } else if (res && typeof res === "object" && res[state.koordinatorFilterBy]) {
+          // Handles the 'kelas' format where the array is nested inside an object key
+          dataArray = res[state.koordinatorFilterBy];
+        }
+
+        // 2. Sort the array using the 'Sort' attribute
+        dataArray.sort((a, b) => {
+          // Parse to integer to ensure numerical sorting (e.g., 2 comes before 10)
+          const sortA = parseInt(a.Sort) || 0;
+          const sortB = parseInt(b.Sort) || 0;
+          return sortA - sortB;
+        });
+
+        // 3. Map to options format using 'Nama'
+        const options = dataArray.map((item) => ({
+          label: item.Nama,
+          value: item.Nama, // Used 'Nama' as value, adjust to item.SK or item.PK if your API expects an ID instead
+        }));
+
+        commit("setFilterOptions", options);
+      } else {
+        commit("setFilterOptions", []);
+      }
+    } catch (error) {
+      console.error("Failed to fetch options:", error);
+      commit("setFilterOptions", []);
+    } finally {
+      dispatch("index/submitLoad", null, { root: true });
+    }
+  },
+  // Updated main action to pull directly from state
   async changeUnitPendaftarUjian({ commit, state, dispatch, rootState }) {
     dispatch("index/submitLoad", null, { root: true });
 
@@ -21,43 +66,52 @@ export default {
     const tahun = rootState.index.label;
     const semester = rootState.index.semester;
 
-    // 1. Check if the state is missing (happens on refresh)
     if (!tahun || !semester || !program) {
       console.warn("State lost due to refresh. Redirecting to start...");
-
-      // Stop the loading spinner so it doesn't get stuck
       dispatch("index/submitLoad", null, { root: true });
-
       this.$router.push({ path: `/tahfidz/ujian/pendaftarantahfidzujian` });
-
-      // Halt the action here so the API call doesn't run
       return;
     }
 
     const halaqah = this.$auth.user.Halaqah?.[program];
-
     let params;
+
     if (type === "pendaftar") {
       params = `type=${type}&program=${program}&thn=${tahun}&smstr=${semester}`;
     } else if (type === "halaqah") {
       params = `type=${type}&program=${program}&thn=${tahun}&smstr=${semester}&halaqah=${halaqah}`;
+    } else if (type === "koordinator") {
+      params = `type=${type}-uj&program=${program}&thn=${tahun}&smstr=${semester}`;
+
+      // Check if they have selected both filters before fetching
+      if (state.koordinatorFilterBy && state.koordinatorFilterValue) {
+        params += `&${state.koordinatorFilterBy}=${state.koordinatorFilterValue}`;
+      } else {
+        // If filters aren't fully selected yet, return early to prevent a bad API call
+        commit("setPendaftarUjian", []);
+        dispatch("index/submitLoad", null, { root: true });
+        return;
+      }
     }
 
     try {
       const res = await this.$apiSantri.$get(`get-ujiantahfidz-sisalam?${params}`);
       if (res) {
         commit("setPendaftarUjian", res);
+      } else {
+        commit("setPendaftarUjian", []);
       }
     } catch (error) {
       console.error(error);
+      commit("setPendaftarUjian", []);
     } finally {
-      // Always stop the loader at the end
       dispatch("index/submitLoad", null, { root: true });
     }
   },
 
   async changeUnitUjianTahfidzUAS({ commit, state, dispatch, rootState }) {
     dispatch("index/submitLoad", null, { root: true });
+
     const program = localStorage.getItem("program");
     const tahun = rootState.index.label;
     const semester = rootState.index.semester;
@@ -66,28 +120,44 @@ export default {
     // 1. Check if the state is missing (happens on refresh)
     if (!tahun || !semester || !program || !type) {
       console.warn("State lost due to refresh. Redirecting to start...");
-
-      // Stop the loading spinner so it doesn't get stuck
       dispatch("index/submitLoad", null, { root: true });
-
       this.$router.push({ path: `/tahfidz/ujian/pendaftarantahfidzujian` });
-
-      // Halt the action here so the API call doesn't run
       return;
     }
+
     const halaqah = this.$auth.user.Halaqah?.[program];
 
+    // 2. Build the parameter string dynamically
+    let params = `selected=${type}&thn=${tahun}&smstr=${semester}&program=${program}`;
+
+    if (type === "pendaftar" || type === "halaqah") {
+      // Retain the original filter behavior for standard users
+      if (halaqah) {
+        params += `&filter=${halaqah}&type=ujian-uas`;
+      }
+    } else if (type === "koordinator") {
+      // If Koordinator mode, inject the custom dropdown filters instead
+      if (state.koordinatorFilterBy && state.koordinatorFilterValue) {
+        params += `&${state.koordinatorFilterBy}=${state.koordinatorFilterValue}&type=koordinator-uas`;
+      } else {
+        // Halt API call if they haven't finished selecting from both dropdowns
+        commit("setPendaftarUjian", []);
+        dispatch("index/submitLoad", null, { root: true });
+        return;
+      }
+    }
+
     try {
-      // NOTE: Replace this URL with your actual endpoint to get the table data
-      const res = await this.$apiSantri.$get(
-        `get-ujiantahfidz-sisalam?selected=${type}&type=ujian-uas&filter=${halaqah}&thn=${tahun}&smstr=${semester}&program=${program}`,
-      );
+      const res = await this.$apiSantri.$get(`get-ujiantahfidz-sisalam?${params}`);
 
       if (res) {
         commit("setPendaftarUjian", res);
+      } else {
+        commit("setPendaftarUjian", []);
       }
     } catch (error) {
       console.error("Error fetching table data:", error);
+      commit("setPendaftarUjian", []);
     } finally {
       dispatch("index/submitLoad", null, { root: true });
     }
@@ -154,7 +224,6 @@ export default {
       dispatch("index/submitLoad", null, { root: true });
     }
   },
-
   async submitNilaiUjianform({ state, dispatch, redirect }, formData) {
     dispatch("index/submitLoad", null, { root: true });
 

@@ -4,4 +4,7 @@ export default () => ({
   pendaftarujian: [],
   detail: [],
   selectedType: "pendaftar",
+  koordinatorFilterBy: "",
+  koordinatorFilterValue: "",
+  filterOptions: [],
 });

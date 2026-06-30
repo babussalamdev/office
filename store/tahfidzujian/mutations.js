@@ -16,4 +16,13 @@ export default {
   setSelectedType(state, value) {
     state.selectedType = value;
   },
+  setKoordinatorFilterBy(state, value) {
+    state.koordinatorFilterBy = value;
+  },
+  setKoordinatorFilterValue(state, value) {
+    state.koordinatorFilterValue = value;
+  },
+  setFilterOptions(state, value) {
+    state.filterOptions = value;
+  },
 };

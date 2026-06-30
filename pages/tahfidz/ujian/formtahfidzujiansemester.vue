@@ -19,12 +19,35 @@
       </div>
 
       <div class="py-3">
-        <!-- Dropdown Selection Added Here -->
-        <div class="mb-3" style="max-width: 250px">
-          <select class="form-select" v-model="dropdownType" @change="fetchData">
-            <option value="pendaftar">Penguji</option>
-            <option value="halaqah">Halaqah Saya</option>
-          </select>
+        <!-- Dropdown Selection Container -->
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          <!-- Dropdown 1: Main Type -->
+          <div style="min-width: 200px">
+            <select class="form-select" v-model="dropdownType" @change="handleTypeChange">
+              <option value="pendaftar">Penguji</option>
+              <option value="halaqah">Halaqah Saya</option>
+              <option v-if="hasPermission('setup nilai quran')" value="koordinator">Koordinator</option>
+            </select>
+          </div>
+
+          <!-- Dropdown 2: Select Filter (Only for Koordinator) -->
+          <div v-if="dropdownType === 'koordinator'" style="min-width: 200px">
+            <select class="form-select" v-model="koordinatorFilterBy" @change="fetchOptions">
+              <option value="" disabled selected>Pilih Kategori...</option>
+              <option value="kelas">Kelas</option>
+              <option value="halaqah">Halaqah</option>
+            </select>
+          </div>
+
+          <!-- Dropdown 3: List Options (Only for Koordinator after selecting category) -->
+          <div v-if="dropdownType === 'koordinator' && koordinatorFilterBy" style="min-width: 200px">
+            <select class="form-select" v-model="koordinatorFilterValue" @change="fetchData">
+              <option value="" disabled selected>Pilih {{ koordinatorFilterBy }}...</option>
+              <option v-for="(opt, index) in filterOptions" :key="index" :value="opt.value">
+                {{ opt.label }}
+              </option>
+            </select>
+          </div>
         </div>
 
         <div class="table-responsive animate__animated animate__fadeInUp">
@@ -61,7 +84,11 @@
                   <h1>{{ data.Score }}</h1>
                 </td>
                 <td class="text-capitalize align-middle">
-                  <a href="javascript:;" @click="openModal(data)">
+                  <a
+                    href="javascript:;"
+                    :class="{ 'text-muted opacity-50': data.Examiner_Name === 'Penugji Belum Ditetapkan' }"
+                    :style="data.Examiner_Name === 'Penugji Belum Ditetapkan' ? 'cursor: not-allowed; pointer-events: none;' : ''"
+                    @click="data.Examiner_Name !== 'Penugji Belum Ditetapkan' && openModal(data)">
                     <i class="bi bi-journal-check h5"></i>
                   </a>
                 </td>
@@ -90,9 +117,10 @@
       };
     },
     computed: {
-      ...mapState("tahfidzujian", ["pendaftarujian"]),
+      ...mapState("index", ["permissions"]),
+      ...mapState("tahfidzujian", ["pendaftarujian", "filterOptions"]),
 
-      // MOVE THIS INSIDE THE COMPUTED OBJECT
+      // Map Vuex state to computed properties with getters & setters
       dropdownType: {
         get() {
           return this.$store.state.tahfidzujian.selectedType;
@@ -101,18 +129,59 @@
           this.$store.commit("tahfidzujian/setSelectedType", value);
         },
       },
-    }, // <-- End of computed object
+      koordinatorFilterBy: {
+        get() {
+          return this.$store.state.tahfidzujian.koordinatorFilterBy;
+        },
+        set(value) {
+          this.$store.commit("tahfidzujian/setKoordinatorFilterBy", value);
+        },
+      },
+      koordinatorFilterValue: {
+        get() {
+          return this.$store.state.tahfidzujian.koordinatorFilterValue;
+        },
+        set(value) {
+          this.$store.commit("tahfidzujian/setKoordinatorFilterValue", value);
+        },
+      },
+    },
 
     mounted() {
       this.closeAllModals();
     },
     methods: {
       ...mapMutations("tahfidzujian", ["move", "showDetail"]),
+      hasPermission(permission) {
+        return this.permissions?.includes(permission);
+      },
+      handleTypeChange() {
+        if (this.dropdownType === "koordinator") {
+          // Reset koordinator selections and clear table
+          this.koordinatorFilterBy = "";
+          this.koordinatorFilterValue = "";
+          this.$store.commit("tahfidzujian/setFilterOptions", []);
+          this.$store.commit("tahfidzujian/setPendaftarUjian", []);
+        } else {
+          // Normal fetch for Penguji or Halaqah
+          this.fetchData();
+        }
+      },
+
+      async fetchOptions() {
+        // Reset sub-selection and clear table when main category changes
+        this.koordinatorFilterValue = "";
+        this.$store.commit("tahfidzujian/setPendaftarUjian", []);
+
+        // Dispatch the action to fetch list of classes/halaqahs
+        await this.$store.dispatch("tahfidzujian/fetchKoordinatorOptions");
+      },
 
       fetchData() {
-        // This will now correctly trigger after the setter updates the state
+        // changeUnitUjianTahfidzUAS pulls parameters directly from state
         this.$store.dispatch("tahfidzujian/changeUnitUjianTahfidzUAS");
       },
+
       openModal(data) {
         this.selectedStudent = data;
         this.isModalOpen = true;

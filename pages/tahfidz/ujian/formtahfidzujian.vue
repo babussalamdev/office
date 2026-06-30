@@ -15,12 +15,35 @@
       </div>
 
       <div class="py-3">
-        <!-- Dropdown Selection Added Here -->
-        <div class="mb-3" style="max-width: 250px">
-          <select class="form-select" v-model="dropdownType" @change="fetchData">
-            <option value="pendaftar">Penguji</option>
-            <option value="halaqah">Halaqah Saya</option>
-          </select>
+        <!-- Dropdown Selection Container -->
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          <!-- Dropdown 1: Main Type -->
+          <div style="min-width: 200px">
+            <select class="form-select" v-model="dropdownType" @change="handleTypeChange">
+              <option value="pendaftar">Penguji</option>
+              <option value="halaqah">Halaqah Saya</option>
+              <option v-if="hasPermission('setup nilai quran')" value="koordinator">Koordinator</option>
+            </select>
+          </div>
+
+          <!-- Dropdown 2: Select Filter (Only for Koordinator) -->
+          <div v-if="dropdownType === 'koordinator'" style="min-width: 200px">
+            <select class="form-select" v-model="koordinatorFilterBy" @change="fetchOptions">
+              <option value="" disabled selected>Pilih Kategori...</option>
+              <option value="kelas">Kelas</option>
+              <option value="halaqah">Halaqah</option>
+            </select>
+          </div>
+
+          <!-- Dropdown 3: List Options (Only for Koordinator after selecting category) -->
+          <div v-if="dropdownType === 'koordinator' && koordinatorFilterBy" style="min-width: 200px">
+            <select class="form-select" v-model="koordinatorFilterValue" @change="fetchData">
+              <option value="" disabled selected>Pilih {{ koordinatorFilterBy }}...</option>
+              <option v-for="(opt, index) in filterOptions" :key="index" :value="opt.value">
+                {{ opt.label }}
+              </option>
+            </select>
+          </div>
         </div>
 
         <div class="table-responsive animate__animated animate__fadeInUp">
@@ -82,15 +105,6 @@
                     <i class="bi bi-journal-check h5"></i>
                   </a>
                 </td>
-                <!-- <td class="text-capitalize">
-                  <a
-                    href="javascript:;"
-                    @click="isTodayOrPast(data.Date) ? showDetail(data.SK) : null"
-                    :class="{ 'text-muted opacity-50': !isTodayOrPast(data.Date) }"
-                    :style="!isTodayOrPast(data.Date) ? 'cursor: not-allowed; pointer-events: none;' : ''">
-                    <i class="bi bi-pencil-square h5"></i>
-                  </a>
-                </td> -->
               </tr>
             </tbody>
           </table>
@@ -116,9 +130,9 @@
       };
     },
     computed: {
-      ...mapState("tahfidzujian", ["pendaftarujian"]),
+      ...mapState("index", ["permissions"]),
+      ...mapState("tahfidzujian", ["pendaftarujian", "filterOptions"]),
 
-      // MOVE THIS INSIDE THE COMPUTED OBJECT
       dropdownType: {
         get() {
           return this.$store.state.tahfidzujian.selectedType;
@@ -127,7 +141,23 @@
           this.$store.commit("tahfidzujian/setSelectedType", value);
         },
       },
-    }, // <-- End of computed object
+      koordinatorFilterBy: {
+        get() {
+          return this.$store.state.tahfidzujian.koordinatorFilterBy;
+        },
+        set(value) {
+          this.$store.commit("tahfidzujian/setKoordinatorFilterBy", value);
+        },
+      },
+      koordinatorFilterValue: {
+        get() {
+          return this.$store.state.tahfidzujian.koordinatorFilterValue;
+        },
+        set(value) {
+          this.$store.commit("tahfidzujian/setKoordinatorFilterValue", value);
+        },
+      },
+    },
 
     mounted() {
       this.closeAllModals();
@@ -135,30 +165,47 @@
     methods: {
       ...mapMutations("tahfidzujian", ["move", "showDetail"]),
 
+      handleTypeChange() {
+        if (this.dropdownType === "koordinator") {
+          // Reset koordinator selections and clear table so they don't see old data
+          this.koordinatorFilterBy = "";
+          this.koordinatorFilterValue = "";
+          this.$store.commit("tahfidzujian/setFilterOptions", []);
+          this.$store.commit("tahfidzujian/setPendaftarUjian", []);
+        } else {
+          // Normal fetch for Penguji or Halaqah
+          this.fetchData();
+        }
+      },
+
+      async fetchOptions() {
+        // Reset sub-selection and clear table when main category changes
+        this.koordinatorFilterValue = "";
+        this.$store.commit("tahfidzujian/setPendaftarUjian", []);
+
+        // Dispatch the new action to fetch classes/halaqahs
+        await this.$store.dispatch("tahfidzujian/fetchKoordinatorOptions");
+      },
+
       fetchData() {
-        // This will now correctly trigger after the setter updates the state
+        // changeUnitPendaftarUjian will now pull parameters directly from state
         this.$store.dispatch("tahfidzujian/changeUnitPendaftarUjian");
       },
+
       openModal(data) {
         this.selectedStudent = data;
         this.isModalOpen = true;
       },
+      hasPermission(permission) {
+        return this.permissions?.includes(permission);
+      },
       isTodayOrPast(dateString) {
         if (!dateString) return false;
-
-        // Get today's date and strip the time
         const today = new Date();
         today.setHours(0, 0, 0, 0);
-
-        // Get the target date and strip the time
         const targetDate = new Date(dateString);
         targetDate.setHours(0, 0, 0, 0);
-
-        // Return true if the target date is today or earlier
         return targetDate <= today;
-      },
-      showDetail(sk) {
-        this.$store.commit("tahfidzujian/showDetail", { sk });
       },
       closeAllModals() {
         const backdrop = document.querySelector(".modal-backdrop");
