@@ -213,8 +213,17 @@
               </li>
               <!-- nilai -->
               <li>
-                <nuxt-link to="/tahfidz/nilai" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                <nuxt-link v-if="!hasProgramTahfidz" to="/tahfidz/nilai" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Nilai</span>
+                </nuxt-link>
+              </li>
+              <!-- nilai program tahfidz -->
+              <li>
+                <nuxt-link
+                  v-if="hasProgramTahfidz"
+                  to="/tahfidz/nilaitahfidz"
+                  class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Nilai Tahfidz</span>
                 </nuxt-link>
               </li>
               <!-- ujian tahfizh -->
@@ -627,7 +636,7 @@
                     </nuxt-link>
                   </li>
                   <!-- Nilai Quran -->
-                  <li v-if="hasPermission('setup nilai quran')">
+                  <li v-if="!hasProgramTahfidz && hasPermission('setup nilai quran')">
                     <nuxt-link to="/settings/nilaiquran" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Nilai Quran</span>
                     </nuxt-link>
