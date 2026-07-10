@@ -4,6 +4,7 @@ export default () => ({
   selectedMapel: "",
   semesterOptions: [], // Add this to store the filtered semesters (Ganjil/Genap)
   santri: [],
+  cleanSantri: [],
   openEdit: "",
   nilai: 0,
   globalLoad: false,

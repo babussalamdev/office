@@ -32,6 +32,7 @@ export default {
         return { ...item, Penilaian: remappedPenilaian };
       });
       state[data.key] = remappedData;
+      state.cleanSantri = data.value;
     } else if (data.key === "selectedLabel") {
       state[data.key] = data.value;
       state.semester = state.label[data.value] || [];

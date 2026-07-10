@@ -14,11 +14,11 @@
           </option>
         </select>
         <select v-if="selectedType === 'halaqah'" class="form-select" v-model="selectedByHalaqah" @change="getByHalaqah()">
-          <option value="">halaqah</option>
+          <option value="" selected disabled>halaqah</option>
           <option v-for="(data, index) in selectHalaqah" :value="data" :key="index">{{ data }}</option>
         </select>
         <select v-if="selectedType === 'kelas'" class="form-select" v-model="selectedByKelas" @change="getByKelas()">
-          <option value="">kelas</option>
+          <option value="" selected disabled>kelas</option>
           <option v-for="(data, index) in selectKelas" :value="data" :key="index">{{ data }}</option>
         </select>
       </div>

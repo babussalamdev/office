@@ -60,6 +60,7 @@ export default {
           Tahun: rootState.index.label,
           Semester: state.selectedSemester,
           Penilaian: state.selectedQuran.Penilaian,
+          Pencapaian: state.selectedQuran.Pencapaian,
         };
 
         if (userPermissions.includes("absensi pengampu")) {
@@ -131,12 +132,13 @@ export default {
 
       if (data) {
         const datas = {
-          Filter: "penilaian-quran",
+          Filter: "penilaian-quran-tahfidz",
           Kelas: kelas,
           Subject: "quran",
           Tahun: rootState.index.label,
           Semester: semester, // FIX: Use the selected semester here too
           Penilaian: state.selectedQuran.Penilaian,
+          Pencapaian: state.selectedQuran.Pencapaian,
         };
         const result = await this.$apiSantri.$put(`get-nilai-sisalam?program=${program}&type=pengampu`, datas);
         if (result) {
@@ -171,12 +173,13 @@ export default {
 
       if (data.quran) {
         const datas = {
-          Filter: "penilaian-quran",
+          Filter: "penilaian-quran-tahfidz",
           Halaqah: halaqah,
           Subject: "quran",
           Tahun: rootState.index.label,
           Semester: semester, // FIX: Use the selected semester here too
           Penilaian: state.selectedQuran.Penilaian,
+          Pencapaian: state.selectedQuran.Pencapaian,
         };
         const result = await this.$apiSantri.$put(`get-nilai-sisalam?program=${program}&type=pengampu`, datas);
         if (result) {
@@ -219,7 +222,40 @@ export default {
             datas,
           );
           if (result) {
-            data["result"] = result;
+            const penilaian = state.cleanSantri[state.openEdit.index].Penilaian;
+
+            // 1. Target the updates properly.
+            // If your new updates are inside result.feedback, we extract them from there.
+            const newUpdates = typeof result.feedback === "object" ? result.feedback : result;
+
+            // 2. Merge the old subjects with the new updates
+            const mergedFeedback = {
+              ...penilaian,
+              ...newUpdates,
+            };
+
+            // Remove 'Total' and 'feedback' just in case they accidentally got mixed in
+            delete mergedFeedback.Total;
+            delete mergedFeedback.feedback;
+
+            // 3. Automatically calculate the new Total
+            let newTotal = 0;
+            Object.values(mergedFeedback).forEach((val) => {
+              // Make sure it's a string with a '/' before calculating
+              if (typeof val === "string" && val.includes("/")) {
+                const [score, weight] = val.split("/");
+                newTotal += (parseFloat(score) * parseFloat(weight)) / 100;
+              }
+            });
+
+            // 4. Construct the final object in your exact desired format
+            const finalResult = {
+              feedback: mergedFeedback,
+              Total: Number(newTotal.toFixed(2)),
+            };
+
+            console.log(finalResult);
+            data["result"] = finalResult;
             commit("setPenilaian", data);
           }
         }
