@@ -380,8 +380,19 @@
                   </li>
                   <!-- Nilai -->
                   <li>
-                    <nuxt-link to="/report/tahfidz/nilai" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                    <nuxt-link
+                      v-if="!hasProgramTahfidz"
+                      to="/report/tahfidz/nilai"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Nilai</span>
+                    </nuxt-link>
+                  </li>
+                  <li>
+                    <nuxt-link
+                      v-if="hasProgramTahfidz"
+                      to="/report/tahfidz/nilaitahfidz"
+                      class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Nilai Tahfidz</span>
                     </nuxt-link>
                   </li>
                 </ul>
