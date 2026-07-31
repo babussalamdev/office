@@ -36,6 +36,7 @@ export default () => ({
     { name: "authority", code: 30 },
     { name: "sarpras", code: 31 },
     { name: "setup absensi", code: 32 },
+    { name: "setup matan", code: 33 },
   ],
 
   // partikel

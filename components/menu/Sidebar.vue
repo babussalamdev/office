@@ -111,6 +111,12 @@
                   <span class="text animate__animated animate__fadeInRight">Penilaian</span>
                 </nuxt-link>
               </li>
+              <!-- matan -->
+              <li v-if="hasWaliKelas">
+                <nuxt-link to="/kelas/matan" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">matan</span>
+                </nuxt-link>
+              </li>
               <li v-if="hasRoot">
                 <div @click="notClickSub('kelas')" class="dropdown d-flex align-items-center justify-content-between gap-2">
                   <span class="d-flex align-items-center gap-2">
@@ -649,6 +655,12 @@
                       <span class="text animate__animated animate__fadeInRight">Mapel</span>
                     </nuxt-link>
                   </li>
+                  <!-- matan -->
+                  <li v-if="hasPermission('setup matan')">
+                    <nuxt-link to="/settings/matan" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">matan</span>
+                    </nuxt-link>
+                  </li>
                   <!-- Nilai Quran -->
                   <li v-if="!hasProgramTahfidz && hasPermission('setup nilai quran')">
                     <nuxt-link to="/settings/nilaiquran" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
@@ -788,6 +800,10 @@
       hasProgramTahfidz() {
         const program = localStorage.getItem("program");
         return program === "tahfidz";
+      },
+      hasWaliKelas() {
+        const program = localStorage.getItem("program");
+        return this.$auth.user.Jabatan[program] === "wali kelas";
       },
     },
 

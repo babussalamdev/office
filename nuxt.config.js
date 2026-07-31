@@ -113,6 +113,7 @@ export default {
       "~/components/settings/kelas",
       "~/components/settings/kelompok",
       "~/components/settings/mapel",
+      "~/components/settings/matan",
       "~/components/settings/periode",
       "~/components/settings/struktur",
       "~/components/settings/nilaiquran",
