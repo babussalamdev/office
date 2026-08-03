@@ -124,6 +124,7 @@ export default {
       "~/components/settings/absensi/tahfidz/monitoring",
       "~/components/settings/absensi/tahfidz/absensi",
       "~/components/settings/absensi/kelas",
+      "~/components/settings/absensi/matan",
       "~/components/settings/setupabsensi",
       "~/components/settings/mutabaah",
       "~/components/settings/setuppelanggaran",
