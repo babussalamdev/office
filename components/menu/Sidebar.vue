@@ -99,12 +99,7 @@
                   <span class="text animate__animated animate__fadeInRight">Absensi</span>
                 </nuxt-link>
               </li>
-              <!-- matan -->
-              <li v-if="hasWaliKelas">
-                <nuxt-link to="/kelas/matan" class="custom-link text-decoration-none d-flex align-items-center gap-2">
-                  <span class="text animate__animated animate__fadeInRight">Absensi Matan</span>
-                </nuxt-link>
-              </li>
+
               <!-- jurnal -->
               <li>
                 <nuxt-link to="/kelas/jurnal" class="custom-link text-decoration-none d-flex align-items-center gap-2">
@@ -132,6 +127,43 @@
                       <span class="text animate__animated animate__fadeInRight">Absensi</span>
                     </nuxt-link>
                   </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <!-- matan-->
+          <!-- <li v-if="hasWaliKelas">
+            <div @click="notClick('listMatan')" class="dropdown d-flex align-items-center justify-content-between gap-2">
+              <span class="d-flex align-items-center gap-2">
+                <i class="material-icons animate__animated animate__fadeInRight"><span class="material-symbols-outlined">local_library</span></i>
+                <span class="text animate__animated animate__fadeInRight">Matan</span>
+              </span>
+              <i class="bx bx-chevron-down"></i>
+            </div>
+            <ul v-if="listMatan" class="dropdown-list">
+              <li v-if="hasWaliKelas">
+                <nuxt-link to="/kelas/matan" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Absensi Matan</span>
+                </nuxt-link>
+              </li>
+              <li>
+                <nuxt-link to="/kelas/jurnal" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Jurnal</span>
+                </nuxt-link>
+              </li>
+              <li>
+                <nuxt-link to="/kelas/mutabaahmatan" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">mutabaah matan</span>
+                </nuxt-link>
+              </li>
+              <li v-if="hasRoot">
+                <div @click="notClickSub('kelas')" class="dropdown d-flex align-items-center justify-content-between gap-2">
+                  <span class="d-flex align-items-center gap-2">
+                    <span class="text animate__animated animate__fadeInRight">Rekap</span>
+                  </span>
+                  <i class="bx bx-chevron-down"></i>
+                </div>
+                <ul v-if="kelasSubList" class="dropdown-list">
                   <li v-if="hasWaliKelas">
                     <nuxt-link to="/kelas/rekap/matan" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Absensi Matan</span>
@@ -140,7 +172,7 @@
                 </ul>
               </li>
             </ul>
-          </li>
+          </li> -->
           <!-- Ekskull -->
           <li v-if="hasRoot && hasSarpras && hasPermission('page ekskull')">
             <div @click="notClick('listEkskull')" class="dropdown d-flex align-items-center justify-content-between gap-2">
@@ -767,6 +799,7 @@
         "listSettings",
         "listEkskull",
         "listKelas",
+        "listMatan",
         "listReport",
         "listLaundry",
         "listLaporan",

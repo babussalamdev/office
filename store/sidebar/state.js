@@ -4,6 +4,7 @@ export default () => ({
   listTahfidz: false,
   listSettings: false,
   listKelas: false,
+  listMatan: false,
   listReport: false,
   listLaundry: false,
   listEkskull: false,

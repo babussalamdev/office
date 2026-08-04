@@ -73,6 +73,7 @@ export default {
       "~/components/kelas/nilai",
       "~/components/kelas/jurnal",
       "~/components/kelas/rekap",
+      "~/components/kelas/matanmutabaah",
       "~/components/pelanggaran",
       "~/components/pelanggaran/record",
       "~/components/tahfidz",
