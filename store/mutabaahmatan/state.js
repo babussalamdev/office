@@ -1,9 +1,7 @@
 export default () => ({
   santri: [],
   detail: "",
-  surah: [],
-  detailMutabaah: "",
-  updateData: "",
+  detailMutabaah: [], // <-- Change this from "" to []  updateData: "",
   mt: 0,
 
   // Matan setup
@@ -12,21 +10,18 @@ export default () => ({
   selectedMatanName: "",
   btn: true,
   list: {
-    ziyadah: "Ziyadah", // Only 1 type for Mutabaah Matan
+    ziyadahmatan: "Ziyadah Matan",
   },
 
-  // modalinsert
-  surahfrom: { name: "", ayat: [] },
-  surahto: { name: "", ayat: [] },
-  ayatfrom: { number: "", page: "", juz: "" },
-  ayatto: { name: "", page: "", juz: "" },
-  page: 0,
+  // Modal Insert Variables
+  fromPage: "",
+  toPage: "",
+  page: 0, // Total Halaman
 
-  // modalupdate
-  surahfromupdate: { name: "", ayat: [] },
-  surahtoupdate: { name: "", ayat: [] },
-  ayatfromupdate: { number: "", page: "", juz: "" },
-  ayattoupdate: { name: "", page: "", juz: "" },
-  pageupdate: 0,
+  // Modal Update Variables
+  fromPageUpdate: "",
+  toPageUpdate: "",
+  pageupdate: 0, // Total Halaman Update
+  scoreUpdate: 0, // <-- ADD THIS
   noteupdate: "",
 });

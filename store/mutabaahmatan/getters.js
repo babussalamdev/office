@@ -2,49 +2,37 @@ export default {
   getKelas(state) {
     return state.kelas;
   },
-  getAsramaShow(state) {
-    return state.asramaShow;
-  },
   getUpdateData(state) {
     return state.updateData;
   },
 
-  // insert
-  getSurah(state) {
-    return state.surah;
+  // Insert Getters
+  GET_FROM_PAGE(state) {
+    return state.fromPage;
   },
-  GET_SURAH_FROM(state) {
-    return state.surahfrom;
-  },
-  GET_AYAT_FROM(state) {
-    return state.ayatfrom;
-  },
-  GET_SURAH_TO(state) {
-    return state.surahto;
-  },
-  GET_AYAT_TO(state) {
-    return state.ayatto;
+  GET_TO_PAGE(state) {
+    return state.toPage;
   },
 
-  // update
-  getSurahFrom(state) {
-    return state.surahfromupdate;
+  // Update Getters
+  getFromPageUpdate(state) {
+    return state.fromPageUpdate;
   },
-  getSurahTo(state) {
-    return state.surahtoupdate;
-  },
-  getAyatFrom(state) {
-    return state.ayatfromupdate;
-  },
-  getAyatTo(state) {
-    return state.ayattoupdate;
+  getToPageUpdate(state) {
+    return state.toPageUpdate;
   },
 
-  // Custom Matan Getters
   getSelectedMatan(state) {
     return state.selectedMatan;
   },
   getSelectedMatanName(state) {
-    return state.getSelectedMatanName;
+    return state.selectedMatanName;
+  },
+
+  getScoreUpdate(state) {
+    return state.scoreUpdate;
+  },
+  getNoteUpdate(state) {
+    return state.noteupdate;
   },
 };

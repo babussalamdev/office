@@ -11,70 +11,50 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <form @submit.prevent="submitUpdate" id="mutabaahupdatemodal">
-            <!-- <div class="modal-header">
-              <h1 class="modal-title fs-5" id="staticBackdropLabel">Input {{ subject }}</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div> -->
             <div class="modal-body">
               <div class="row">
-                <div class="mb-3 col-12 col-md-8">
-                  <label class="typo__label mb-2">Surat From</label>
-                  <multiselect
-                    style="font-family: 'Noto Kufi Arabic', sans-serif; font-size: 16px; font-weight: 600"
-                    v-model="surahfrom"
-                    :options="from"
-                    placeholder="Select one"
-                    label="name"
-                    track-by="name"></multiselect>
+                <div class="mb-3 col-6">
+                  <label class="typo__label mb-2">Dari Halaman</label>
+                  <input type="number" class="form-control" v-model="fromPage" min="1" required />
                 </div>
-                <div class="mb-3 col-12 col-md-4">
-                  <label class="typo__label mb-2">Ayat from</label>
-                  <multiselect v-model="ayatfrom" :options="surahfrom?.ayat" placeholder="Select one" label="number" track-by="number"></multiselect>
+                <div class="mb-3 col-6">
+                  <label class="typo__label mb-2">Sampai Halaman</label>
+                  <input type="number" class="form-control" v-model="toPage" min="1" required />
                 </div>
               </div>
-              <div class="row">
-                <div class="mb-3 col-12 col-md-8">
-                  <label class="typo__label mb-2">Surat To</label>
-                  <multiselect
-                    style="font-family: 'Noto Kufi Arabic', sans-serif; font-size: 16px; font-weight: 600"
-                    v-model="surahto"
-                    :options="from"
-                    placeholder="Select one"
-                    label="name"
-                    track-by="name"></multiselect>
-                </div>
-                <div class="mb-3 col-12 col-md-4">
-                  <label class="typo__label mb-2">Ayat To</label>
-                  <multiselect v-model="ayatto" :options="surahto?.ayat" placeholder="Select one" label="number" track-by="number"></multiselect>
-                </div>
-              </div>
+
               <div class="row">
                 <div class="mb-3 col">
                   <div class="input-group">
-                    <span class="input-group-text">Halaman</span>
-                    <input type="number" name="Page" id="halaman" class="form-control" :value="pageupdate" step="0.01" />
+                    <span class="input-group-text">Total Hal.</span>
+                    <input type="number" name="Page" id="halaman" class="form-control bg-light" :value="pageupdate" readonly />
                   </div>
                 </div>
+
                 <div class="mb-3 col">
                   <div class="input-group">
                     <span class="input-group-text">Nilai</span>
-                    <input type="number" step="any" name="Score" id="score" class="form-control" :value="updateData?.Score" min="0" max="100" />
+                    <!-- FIX: Changed to v-model="score" -->
+                    <input type="number" step="any" name="Score" id="score" class="form-control" v-model="score" min="0" max="100" required />
                   </div>
                 </div>
               </div>
+
               <div class="mb-3">
                 <div class="form-floating">
+                  <!-- FIX: Changed to v-model="note" -->
                   <textarea
                     name="Note"
                     id="catatan"
                     class="form-control"
-                    :value="updateData?.Note"
+                    v-model="note"
                     placeholder="Leave a comment here"
                     style="height: 100px"></textarea>
                   <label for="catatan">Catatan</label>
                 </div>
               </div>
             </div>
+
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="resetModalUpdate()">Close</button>
               <span>
@@ -93,90 +73,62 @@
 </template>
 
 <script>
-  import Swal from "sweetalert2";
-  import Multiselect from "vue-multiselect";
   import { mapState, mapMutations, mapGetters, mapActions } from "vuex";
+
   export default {
-    components: {
-      Multiselect,
-    },
-    data() {
-      return {
-        from: [
-          {
-            name: "",
-            ayat: [
-              {
-                number: "",
-                page: "",
-                juz: "",
-              },
-            ],
-          },
-        ],
-        subject: localStorage.getItem("subject"),
-      };
-    },
     computed: {
-      ...mapState("mutabaah", ["surah", "detail", "updateData", "pageupdate", "btn"]),
-      ...mapGetters("mutabaah", ["getSurahFrom", "getSurahTo", "getAyatFrom", "getAyatTo", "getNote"]),
-      surahfrom: {
+      ...mapState("mutabaahmatan", ["updateData", "pageupdate", "btn"]),
+
+      // Mapped Getters for the Update Modal
+      ...mapGetters("mutabaahmatan", ["getFromPageUpdate", "getToPageUpdate", "getScoreUpdate", "getNoteUpdate"]),
+
+      fromPage: {
         get() {
-          return this.getSurahFrom;
+          return this.getFromPageUpdate;
         },
         set(value) {
-          this.$store.commit("mutabaah/setSurahFrom", value);
+          this.$store.commit("mutabaahmatan/setFromPageUpdate", value);
         },
       },
-      surahto: {
+      toPage: {
         get() {
-          return this.getSurahTo;
+          return this.getToPageUpdate;
         },
         set(value) {
-          this.$store.commit("mutabaah/setSurahTo", value);
+          this.$store.commit("mutabaahmatan/setToPageUpdate", value);
         },
       },
-      ayatfrom: {
+
+      // FIX: Added computed property for score
+      score: {
         get() {
-          return this.getAyatFrom;
+          return this.getScoreUpdate;
         },
         set(value) {
-          this.$store.commit("mutabaah/setAyatFrom", value);
+          this.$store.commit("mutabaahmatan/setScoreUpdate", value);
         },
       },
-      ayatto: {
+
+      // FIX: Added computed property for note
+      note: {
         get() {
-          return this.getAyatTo;
+          return this.getNoteUpdate;
         },
         set(value) {
-          this.$store.commit("mutabaah/setAyatTo", value);
+          this.$store.commit("mutabaahmatan/setNoteUpdate", value);
         },
-      },
-    },
-    watch: {
-      updateData(value) {
-        if (value) {
-          this.surahfrom = this.surah.find((x) => x.name === this.updateData?.From?.name);
-          this.ayatfrom = this.updateData?.From?.ayat;
-          this.surahto = this.surah.find((x) => x.name === this.updateData?.To?.name);
-          this.ayatto = this.updateData?.To?.ayat;
-        }
-      },
-      surah(value) {
-        this.from = value;
       },
     },
     methods: {
-      ...mapActions("mutabaah", ["submitUpdate"]),
-      ...mapMutations("mutabaah", ["resetModalUpdate"]),
+      ...mapActions("mutabaahmatan", ["submitUpdate"]),
+      ...mapMutations("mutabaahmatan", ["resetModalUpdate"]),
     },
   };
 </script>
 
 <style scoped>
-  @import url("https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&display=swap");
-
   form label {
     font-size: 14px;
+    font-weight: 500;
   }
 </style>

@@ -132,7 +132,7 @@
             </ul>
           </li>
           <!-- matan-->
-          <!-- <li v-if="hasWaliKelas">
+          <li v-if="hasWaliKelas">
             <div @click="notClick('listMatan')" class="dropdown d-flex align-items-center justify-content-between gap-2">
               <span class="d-flex align-items-center gap-2">
                 <i class="material-icons animate__animated animate__fadeInRight"><span class="material-symbols-outlined">local_library</span></i>
@@ -172,7 +172,7 @@
                 </ul>
               </li>
             </ul>
-          </li> -->
+          </li>
           <!-- Ekskull -->
           <li v-if="hasRoot && hasSarpras && hasPermission('page ekskull')">
             <div @click="notClick('listEkskull')" class="dropdown d-flex align-items-center justify-content-between gap-2">

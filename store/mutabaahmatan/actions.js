@@ -52,72 +52,51 @@ export default {
       dispatch("index/submitLoad", null, { root: true });
     }
   },
+  // Inside actions.js
   async getDetail({ commit, dispatch }, data) {
     dispatch("index/submitLoad", null, { root: true });
-    const sk = data.replace("#", "%23");
-    const subject = localStorage.getItem("subject");
-    const reqDetail = this.$apiSantri.$get(`get-logs?subject=${subject}&sksantri=${sk}`);
-    const reqSurah = this.$apiBase.$get(`get-quran?subject=surah`);
-    const [resSurah, resDetail] = await Promise.all([reqSurah, reqDetail]);
-    commit("setDetailSantri", resDetail);
-    commit("setSurah", resSurah);
+    const sk = data.replace(/#/g, "%23");
+
+    // Encode the subject because it now contains multiple `#` from the SK Matan
+    const subject = localStorage.getItem("subject").replace(/#/g, "%23");
+
+    const reqDetail = await this.$apiSantri.$get(`get-logs?subject=${subject}&sksantri=${sk}`);
+
+    commit("setDetailSantri", reqDetail);
     dispatch("index/submitLoad", null, { root: true });
   },
+
   async submit({ commit, dispatch, state, rootState }, event) {
     commit("btn");
     const data = Object.fromEntries(new FormData(event.target));
-    const from = {
-      name: state.surahfrom.name,
-      ayat: state.ayatfrom,
-    };
-    const to = {
-      name: state.surahto.name,
-      ayat: state.ayatto,
-    };
+
+    data["From"] = state.fromPage;
+    data["To"] = state.toPage;
     data["Page"] = +data.Page;
     data["Score"] = +data.Score;
-    data["From"] = from;
-    data["To"] = to;
 
-    const { Page, Score, Note, From, To } = data;
-    const { name: fromName, ayat: fromAyat } = From;
-    const { name: toName, ayat: toAyat } = To;
-
-    // Cek apakah salah satu data kosong
-    if (
-      Page === 0 ||
-      fromName === "" ||
-      fromAyat.number === "" ||
-      fromAyat.page === "" ||
-      fromAyat.juz === "" ||
-      toName === "" ||
-      toAyat.name === "" ||
-      toAyat.page === "" ||
-      toAyat.juz === ""
-    ) {
+    if (data.Page === 0 || !data.From || !data.To) {
       Swal.fire({
-        text: "Data tidak boleh kosong!",
+        text: "Halaman awal dan akhir tidak boleh kosong!",
         icon: "error",
         timer: 3000,
-        timerProgressBar: false,
         showConfirmButton: false,
       });
       commit("btn");
       return;
     }
 
-    // Jika semua data valid, lanjutkan dengan proses
     try {
-      console.log(state.selectedType);
-      const program = localStorage.getItem("program");
-      const sk = state.detail.SK.replace("#", "%23");
       const kelas = state.detail.Kelas;
-      const subject = localStorage.getItem("subject");
       const tahun = rootState.index.label;
-      const semester = rootState.index.semester;
-      // const halaqah = type === "halaqah" ? state.santri.Halaqah : state.santri.HalaqahIdhofi;
       const halaqah = state.detail.Halaqah;
+      const sk = state.detail.SK.replace(/#/g, "%23");
+
+      // Safely encode the new subject
+      const subject = localStorage.getItem("subject").replace(/#/g, "%23");
+
       const result = await this.$apiSantri.$post(`input-logs?kls=${kelas}&subject=${subject}&sksantri=${sk}&halaqah=${halaqah}&thn=${tahun}`, data);
+
       if (result) {
         Swal.fire({
           position: "center",
@@ -140,43 +119,21 @@ export default {
       commit("btn");
     }
   },
+
   async submitUpdate({ state, dispatch, commit, rootState }, event) {
     commit("btn");
     const data = Object.fromEntries(new FormData(event.target));
-    const from = {
-      name: state.surahfromupdate.name,
-      ayat: state.ayatfromupdate,
-    };
-    const to = {
-      name: state.surahtoupdate.name,
-      ayat: state.ayattoupdate,
-    };
+
+    data["From"] = state.fromPageUpdate;
+    data["To"] = state.toPageUpdate;
     data["Page"] = +data.Page;
     data["Score"] = +data.Score;
-    data["From"] = from;
-    data["To"] = to;
 
-    const { Page, Score, Note, From, To } = data;
-    const { name: fromName, ayat: fromAyat } = From;
-    const { name: toName, ayat: toAyat } = To;
-
-    // Cek apakah salah satu data kosong
-    if (
-      Page === 0 ||
-      fromName === "" ||
-      fromAyat.number === "" ||
-      fromAyat.page === "" ||
-      fromAyat.juz === "" ||
-      toName === "" ||
-      toAyat.name === "" ||
-      toAyat.page === "" ||
-      toAyat.juz === ""
-    ) {
+    if (data.Page === 0 || !data.From || !data.To) {
       Swal.fire({
-        text: "Data tidak boleh kosong!",
+        text: "Halaman awal dan akhir tidak boleh kosong!",
         icon: "error",
         timer: 3000,
-        timerProgressBar: false,
         showConfirmButton: false,
       });
       commit("btn");
@@ -184,10 +141,14 @@ export default {
     }
 
     try {
-      const sk = state.updateData.SK.replace(" ", "%20");
-      const sksantri = state.detail.SK.replace("#", "%23");
-      const subject = localStorage.getItem("subject");
+      const sk = state.updateData.SK.replace(/ /g, "%20");
+      const sksantri = state.detail.SK.replace(/#/g, "%23");
+
+      // Safely encode the new subject
+      const subject = localStorage.getItem("subject").replace(/#/g, "%23");
+
       const result = await this.$apiSantri.$put(`update-logs?subject=${subject}&sksantri=${sksantri}&sk=${sk}`, data);
+
       if (result) {
         commit("btn");
         commit("updateDetail", result);

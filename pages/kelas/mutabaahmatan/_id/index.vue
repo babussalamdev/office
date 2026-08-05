@@ -9,11 +9,11 @@
           <i class="bi bi-arrow-left bg-primary p-2 rounded-circle text-white cursor-pointer" @click="backPage"></i>
         </div>
       </div>
-
+      <!-- Inside _id.vue -> template -->
       <div class="row mb-3">
         <div class="col-12 col-md-9 d-flex align-items-center">
           <h2 class="text-capitalize mb-3 mb-md-0">
-            Data Ziyadah {{ matanName }} -
+            Data {{ baseSubject }} {{ matanName }} -
             <b>{{ detail.Nama }}</b>
           </h2>
         </div>
@@ -22,6 +22,7 @@
         </div>
       </div>
 
+      <!-- Inside _id.vue -->
       <div class="table-responsive animate__animated animate__fadeInUp">
         <table v-if="detailMutabaah" class="table table-hover table-striped table-bordered border-danger">
           <thead>
@@ -37,8 +38,9 @@
           <tbody>
             <tr v-for="(data, index) in detailMutabaah" :key="index">
               <td>{{ data.SK }}</td>
-              <td class="text-center">{{ data?.From?.ayat?.page }}</td>
-              <td class="text-center">{{ data?.To?.ayat?.page }}</td>
+              <!-- Outputting data.From and data.To directly -->
+              <td class="text-center">{{ data?.From }}</td>
+              <td class="text-center">{{ data?.To }}</td>
               <td class="text-center">{{ data?.Page }}</td>
               <td class="text-center">{{ data?.Score }}</td>
               <td class="text-center">
@@ -62,20 +64,28 @@
 
 <script>
   import Swal from "sweetalert2";
-  import { mapState, mapMutations } from "vuex";
+  import { mapState, mapMutations } from "vuex"; // Removed mapActions as it's not used directly here
 
   export default {
-    name: "mutabaahmatan",
+    name: "mutabaahmatan", // FIX: Updated component name
+    // Inside _id.vue -> data()
     data() {
       return {
-        subject: localStorage.getItem("subject"),
+        // Splits "ziyadahmatan#sma#..." and only takes "ziyadahmatan"
+        baseSubject: localStorage.getItem("subject") ? localStorage.getItem("subject").split("#")[0] : "",
+
+        // Gets the clean human-readable Matan name we just saved
+        matanName: localStorage.getItem("matan_name") || "",
       };
     },
     async asyncData({ store, route, redirect }) {
+      // FIX: Changed state reference to mutabaahmatan
       const detail = store.state.mutabaahmatan.detail;
       if (detail) {
+        // FIX: Dispatched from mutabaahmatan
         store.dispatch("mutabaahmatan/getDetail", route.params.id);
       } else {
+        // FIX: Redirect updated to correct path
         redirect("/kelas/mutabaahmatan");
       }
     },
@@ -83,19 +93,11 @@
       this.closeAllModals();
     },
     computed: {
-      ...mapState("mutabaahmatan", ["detail", "detailMutabaah", "listMatan"]),
-
-      // Look up the Matan Name based on the SK saved in localStorage
-      matanName() {
-        const matanSk = typeof window !== "undefined" ? localStorage.getItem("matan_sk") : null;
-        if (matanSk && this.listMatan) {
-          const matan = this.listMatan.find((m) => m.SK === matanSk);
-          return matan ? matan.Nama : "";
-        }
-        return "";
-      },
+      // FIX: Mapped from mutabaahmatan module
+      ...mapState("mutabaahmatan", ["detail", "detailMutabaah"]),
     },
     methods: {
+      // FIX: Mapped from mutabaahmatan module
       ...mapMutations("mutabaahmatan", ["editItem"]),
       closeAllModals() {
         const backdrop = document.querySelector(".modal-backdrop");
@@ -107,6 +109,7 @@
         document.body.style.paddingRight = "";
       },
       backPage() {
+        // FIX: Route updated to correct path
         this.$router.push("/kelas/mutabaahmatan");
       },
       showNote(note) {
@@ -115,6 +118,7 @@
           text: note,
         });
       },
+      // Inside _id.vue -> methods
       async deleteItem(sk) {
         const i = this.detailMutabaah.findIndex((x) => x.SK === sk);
         const data = this.detailMutabaah[i];
@@ -131,7 +135,9 @@
         });
 
         if (result.isConfirmed) {
-          const subject = localStorage.getItem("subject");
+          // FIX: Encode the subject before passing it to the API endpoint
+          const subject = localStorage.getItem("subject").replace(/#/g, "%23");
+
           const res = await this.$apiSantri.$delete(`delete-logs?subject=${subject}&sksantri=${skSantri}&createdat=${data.SK}`);
 
           if (res) {

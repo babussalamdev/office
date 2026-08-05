@@ -93,13 +93,13 @@
       },
       getIconName(key) {
         const icons = {
-          ziyadah: "library_add",
+          ziyadahmatan: "library_add",
         };
         return icons[key.toLowerCase()] || "check_circle";
       },
       getIconColor(key) {
         const colors = {
-          ziyadah: "bg-primary",
+          ziyadahmatan: "bg-primary",
         };
         return colors[key.toLowerCase()] || "bg-secondary";
       },
