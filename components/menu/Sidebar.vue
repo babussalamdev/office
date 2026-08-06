@@ -153,7 +153,7 @@
               </li>
               <li>
                 <nuxt-link to="/kelas/mutabaahmatan" class="custom-link text-decoration-none d-flex align-items-center gap-2">
-                  <span class="text animate__animated animate__fadeInRight">mutabaah matan</span>
+                  <span class="text animate__animated animate__fadeInRight">Mutabaah Matan</span>
                 </nuxt-link>
               </li>
               <li v-if="hasRoot">
@@ -167,6 +167,11 @@
                   <li v-if="hasWaliKelas">
                     <nuxt-link to="/kelas/rekap/matan" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Absensi Matan</span>
+                    </nuxt-link>
+                  </li>
+                  <li>
+                    <nuxt-link to="/kelas/rekap/mutabaahmatan" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Mutabaah Matan</span>
                     </nuxt-link>
                   </li>
                 </ul>
