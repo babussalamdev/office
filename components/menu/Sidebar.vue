@@ -141,7 +141,7 @@
               <i class="bx bx-chevron-down"></i>
             </div>
             <ul v-if="listMatan" class="dropdown-list">
-              <li v-if="hasWaliKelas">
+              <li>
                 <nuxt-link to="/kelas/matan" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Absensi Matan</span>
                 </nuxt-link>
@@ -157,14 +157,14 @@
                 </nuxt-link>
               </li>
               <li v-if="hasRoot">
-                <div @click="notClickSub('kelas')" class="dropdown d-flex align-items-center justify-content-between gap-2">
+                <div @click="notClickSub('matan')" class="dropdown d-flex align-items-center justify-content-between gap-2">
                   <span class="d-flex align-items-center gap-2">
                     <span class="text animate__animated animate__fadeInRight">Rekap</span>
                   </span>
                   <i class="bx bx-chevron-down"></i>
                 </div>
-                <ul v-if="kelasSubList" class="dropdown-list">
-                  <li v-if="hasWaliKelas">
+                <ul v-if="matanSubList" class="dropdown-list">
+                  <li>
                     <nuxt-link to="/kelas/rekap/matan" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Absensi Matan</span>
                     </nuxt-link>
@@ -441,6 +441,27 @@
                       to="/report/tahfidz/nilaitahfidz"
                       class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Nilai Tahfidz</span>
+                    </nuxt-link>
+                  </li>
+                </ul>
+              </li>
+              <li v-if="hasRoot && hasPermission('setup matan')">
+                <div @click="notClickSub('matan2')" class="dropdown d-flex align-items-center justify-content-between gap-2">
+                  <span class="d-flex align-items-center gap-2">
+                    <span class="text animate__animated animate__fadeInRight">Report Matan</span>
+                  </span>
+                  <i class="bx bx-chevron-down"></i>
+                </div>
+                <!-- sub menu santri -->
+                <ul v-if="matan2SubList" class="dropdown-list">
+                  <li>
+                    <nuxt-link to="/report/matan/absensi" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Absensi Matan</span>
+                    </nuxt-link>
+                  </li>
+                  <li>
+                    <nuxt-link to="/report/matan/mutabaahmatan" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Mutabaah Matan</span>
                     </nuxt-link>
                   </li>
                 </ul>
@@ -816,6 +837,8 @@
         "tahfidzSubList",
         "tahfidz2SubList",
         "kelasSubList",
+        "matanSubList",
+        "matan2SubList",
         "settingLaundrySubList",
         "isSidebar",
         "isSidebarOpen",

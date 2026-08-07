@@ -1,8 +1,8 @@
 <template>
   <section id="rekap">
     <div class="rekap">
-      <h1 class="mb-3">Rekap Absensi Matan</h1>
-      <RekapAbsensiMatan />
+      <h1 class="mb-3">Report Absensi Matan</h1>
+      <ReportAbsensiMatan />
     </div>
   </section>
 </template>
@@ -10,7 +10,7 @@
 <script>
   export default {
     async asyncData({ store }) {
-      store.dispatch("matanAbsensi/rekap/changeUnit");
+      store.dispatch("report/matan/absensi/changeUnit");
     },
   };
 </script>

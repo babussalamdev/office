@@ -17,6 +17,8 @@ export default () => ({
   tahfidzSubList: false,
   tahfidz2SubList: false,
   kelasSubList: false,
+  matanSubList: false,
+  matan2SubList: false,
   settingLaundrySubList: false,
 
   isSidebar: true,
