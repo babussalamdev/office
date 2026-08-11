@@ -147,8 +147,8 @@
                 </nuxt-link>
               </li>
               <li>
-                <nuxt-link to="/kelas/jurnal" class="custom-link text-decoration-none d-flex align-items-center gap-2">
-                  <span class="text animate__animated animate__fadeInRight">Jurnal</span>
+                <nuxt-link to="/kelas/jurnalmatan" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Jurnal Matan</span>
                 </nuxt-link>
               </li>
               <li>
@@ -189,6 +189,16 @@
             </div>
             <ul v-if="listEkskull" class="dropdown-list">
               <!-- absensi -->
+              <li>
+                <nuxt-link to="/ekskull/absensi" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Absensi</span>
+                </nuxt-link>
+              </li>
+              <li>
+                <nuxt-link to="/ekskull/jurnal" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Jurnal</span>
+                </nuxt-link>
+              </li>
               <li>
                 <nuxt-link to="/ekskull/nilai" class="custom-link text-decoration-none d-flex align-items-center gap-2">
                   <span class="text animate__animated animate__fadeInRight">Nilai</span>
@@ -426,6 +436,11 @@
                       <span class="text animate__animated animate__fadeInRight">Murojaah</span>
                     </nuxt-link>
                   </li>
+                  <li>
+                    <nuxt-link to="/report/tahfidz/tilawah" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Tilawah</span>
+                    </nuxt-link>
+                  </li>
                   <!-- Nilai -->
                   <li>
                     <nuxt-link
@@ -457,6 +472,11 @@
                   <li>
                     <nuxt-link to="/report/matan/absensi" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
                       <span class="text animate__animated animate__fadeInRight">Absensi Matan</span>
+                    </nuxt-link>
+                  </li>
+                  <li>
+                    <nuxt-link to="/report/matan/jurnal" class="text-decoration-none sub-menu d-flex align-items-center gap-2">
+                      <span class="text animate__animated animate__fadeInRight">Jurnal Matan</span>
                     </nuxt-link>
                   </li>
                   <li>

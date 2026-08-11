@@ -11,9 +11,11 @@ export default {
   setSantri(state, value) {
     state.santri = value;
   },
+  // Inside your Vuex mutations
   setSelect(state, value) {
     state.select = value;
-    state.selectedMatan = ""; // reset selected on new select array
+    state.selectedMatan = ""; // resets selected on new select array
+    state.santri = []; // <-- Add this to clear the list on page reload
   },
   setDataSantri(state, value) {
     state.santri = value;

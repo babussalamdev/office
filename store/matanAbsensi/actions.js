@@ -17,9 +17,6 @@ export default {
 
     const kelas = this.$auth.user.Kelas[program];
 
-    // Commit the user class options directly to the state for dropdown menu
-    commit("setKelasOptions", kelas);
-
     const resSelect = await this.$apiBase.$get(`get-settings?type=absensimatan&program=${program}&tahun=${tahun}&kelas=${kelas}`);
 
     if (resSelect.length > 0) {

@@ -213,8 +213,9 @@
     watch: {
       selectedMatan(value) {
         if (value) {
-          this.getDataSantri(this.selectedMatan);
-        } else if (value) {
+          this.getDataSantri(value); // It's safer to use the passed 'value' directly
+        } else {
+          // This will now correctly trigger when selectedMatan is reset to ""
           this.santri = [];
         }
       },
