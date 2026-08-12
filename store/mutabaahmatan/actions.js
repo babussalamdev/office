@@ -1,7 +1,7 @@
 import Swal from "sweetalert2";
 
 export default {
-  async changeUnit({ commit, dispatch, rootState }) {
+  async changeUnit({ commit, state, dispatch, rootState }, isManualChange = true) {
     dispatch("index/submitLoad", null, { root: true });
 
     const program = localStorage.getItem("program");
@@ -13,22 +13,41 @@ export default {
       return;
     }
 
-    const kelas = this.$auth.user.Kelas[program];
-
-    // Assuming a root mutation exists for setting global class options if needed
-    // commit("setKelasOptions", kelas, { root: true });
-
     try {
-      const resSelect = await this.$apiBase.$get(`get-settings?type=absensimatan&program=${program}&tahun=${tahun}&kelas=${kelas}`);
+      // 1. Fetch Class list dynamically if it's empty
+      if (!state.kelas || state.kelas.length === 0) {
+        const resKelas = await this.$apiBase.$get(`get-settings?sk=${program}&type=kelas`);
+        const kelasArray = resKelas.kelas || [];
+
+        commit("setState", { key: "kelas", value: kelasArray });
+
+        // Auto-select the first class if none is selected
+        if (kelasArray.length > 0 && !state.selectedKelas) {
+          commit("setState", { key: "selectedKelas", value: kelasArray[0].Nama });
+        }
+      }
+
+      const activeKelas = state.selectedKelas;
+
+      if (!activeKelas) {
+        commit("setMatanList", []);
+        return;
+      }
+
+      // 2. Fetch Matan based on the active class
+      const resSelect = await this.$apiBase.$get(`get-settings?type=absensimatan&program=${program}&tahun=${tahun}&kelas=${activeKelas}`);
 
       if (resSelect && resSelect.length > 0) {
         commit("setMatanList", resSelect);
       } else {
-        Swal.fire({
-          position: "center",
-          icon: "warning",
-          text: "Anda tidak mengajar matan apapun",
-        });
+        if (!isManualChange) {
+          Swal.fire({
+            position: "center",
+            icon: "warning",
+            text: "Anda tidak mengajar matan apapun di kelas ini",
+          });
+        }
+        commit("setMatanList", []);
       }
     } catch (error) {
       console.error("Error fetching matan units:", error);
@@ -37,14 +56,19 @@ export default {
     }
   },
 
-  async getDataSantri({ commit, dispatch }) {
+  async getDataSantri({ commit, dispatch, state }) {
     dispatch("index/submitLoad", null, { root: true });
 
     try {
       const program = localStorage.getItem("program");
-      const kelas = this.$auth.user.Kelas[program];
+      const activeKelas = state.selectedKelas; // <-- Use state instead of $auth
 
-      const result = await this.$apiSantri.$get(`get-absensi-sisalam?type=every&subject=kelas&program=${program}&value=${kelas}`);
+      if (!activeKelas) {
+        commit("setDataSantri", []);
+        return;
+      }
+
+      const result = await this.$apiSantri.$get(`get-absensi-sisalam?type=every&subject=kelas&program=${program}&value=${activeKelas}`);
       commit("setDataSantri", result);
     } catch (error) {
       console.error("Error fetching santri data:", error);

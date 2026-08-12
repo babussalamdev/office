@@ -1,9 +1,9 @@
 export default () => ({
-  datas: [],
+  datas: [], // Holds the Matan options
+  kelas: [], // ADDED: Holds the dynamically fetched classes
   selectedMatan: "",
   selectedKelas: "",
-  kelasOptions: [],
-  values: [],
+  values: [], // Holds the Journal Table data
   btn: true,
   schedule: {},
   updateData: "",

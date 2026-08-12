@@ -5,10 +5,22 @@
         <div class="col-12 col-md-6 d-flex align-items-center">
           <h2 class="mb-3 mb-md-0">Absensi Matan</h2>
         </div>
-        <div class="col-12 col-md-6 d-flex align-items-center justify-content-end">
-          <select class="form-select" v-model="selectedMatan">
-            <option value="" selected disabled>Matan</option>
-            <option v-for="(data, index) in select" :key="index" :value="data">{{ data.Nama }}</option>
+        <!-- Updated Dropdown Section -->
+        <div class="col-12 col-md-6 d-flex align-items-center justify-content-md-end justify-content-start gap-2">
+          <!-- Select Kelas -->
+          <select class="form-select w-auto" v-model="selectedKelas">
+            <option value="" selected disabled>Pilih Kelas</option>
+            <option v-for="(data, index) in kelasOptions" :key="index" :value="data">
+              {{ data.Nama }}
+            </option>
+          </select>
+
+          <!-- Select Matan (Disabled if Kelas is not selected) -->
+          <select class="form-select w-auto" v-model="selectedMatan" :disabled="!selectedKelas">
+            <option value="" selected disabled>Pilih Matan</option>
+            <option v-for="(data, index) in select" :key="index" :value="data">
+              {{ data.Nama }}
+            </option>
           </select>
         </div>
       </div>
@@ -184,15 +196,21 @@
   import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
   export default {
-    data() {
-      return {
-        selectedKelas: "",
-      };
-    },
     computed: {
       ...mapState("matanAbsensi", ["permissions", "select", "date", "updateData"]),
-      ...mapGetters("matanAbsensi", ["getSelectedMatan", "getSantri"]),
+      ...mapGetters("matanAbsensi", ["getSelectedMatan", "getSantri", "getKelasOptions", "getSelectedKelas"]),
 
+      kelasOptions() {
+        return this.getKelasOptions;
+      },
+      selectedKelas: {
+        get() {
+          return this.getSelectedKelas;
+        },
+        set(value) {
+          this.$store.commit("matanAbsensi/setSelectedKelas", value);
+        },
+      },
       selectedMatan: {
         get() {
           return this.getSelectedMatan;
@@ -210,24 +228,39 @@
         },
       },
     },
+    mounted() {
+      // Fetch available classes as soon as the component loads
+      this.$store.dispatch("matanAbsensi/fetchKelasOptions");
+    },
     watch: {
+      selectedKelas(value) {
+        if (value) {
+          // If a class is selected, fetch the associated matan
+          this.$store.dispatch("matanAbsensi/fetchMatanOptions");
+        } else {
+          // If cleared, reset matan and santri
+          this.selectedMatan = "";
+          this.$store.commit("matanAbsensi/setSelect", []);
+          this.santri = [];
+        }
+      },
       selectedMatan(value) {
         if (value) {
-          this.getDataSantri(value); // It's safer to use the passed 'value' directly
+          this.getDataSantri(value);
         } else {
-          // This will now correctly trigger when selectedMatan is reset to ""
           this.santri = [];
         }
       },
     },
     methods: {
+      // Use standard existing methods, no changes required here unless logic shifted
       ...mapActions("matanAbsensi", ["setStatus", "deleteStatus", "getDataSantri"]),
       ...mapMutations("matanAbsensi", { changeStep: "setAbsensi" }),
       setAbsensi(sk, type, time, condition, dateTime) {
         const obj = {
           sk,
           type,
-          time, // passed as 'matan' from button click
+          time,
           condition,
         };
         if (condition && dateTime === this.date) {

@@ -7,13 +7,12 @@ const date = `${tahun}-${bulan}-${tanggal}`;
 export default () => ({
   santri: [],
   permissions: [],
-  select: [],
-  pagi: "",
-  sore: "",
+  kelasOptions: [], // Array populated by API (result.kelas)
+  selectedKelas: "", // Now dynamic instead of fixed
+  select: [], // Matan options array
+  selectedMatan: "",
   updateData: "",
   date: date,
-  selectedMatan: "", // renamed
-  kelasOptions: [], // added to fetch from Auth user
   dateNow: date,
   btn: true,
 });

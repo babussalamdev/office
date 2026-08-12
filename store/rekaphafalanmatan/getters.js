@@ -5,12 +5,17 @@ export default {
   getEnd(state) {
     return state.end;
   },
-
-  // ADDED: Matan Getters
   getSelectedMatan(state) {
     return state.selectedMatan;
   },
   getListMatan(state) {
     return state.listMatan;
+  },
+  // ADDED: Class getters
+  getKelas(state) {
+    return state.kelas;
+  },
+  getSelectedKelas(state) {
+    return state.selectedKelas;
   },
 };

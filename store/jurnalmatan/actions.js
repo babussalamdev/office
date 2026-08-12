@@ -1,8 +1,9 @@
 import Swal from "sweetalert2";
 
 export default {
-  async changeUnit({ commit, dispatch, rootState }) {
+  async changeUnit({ commit, state, dispatch, rootState }, isManualChange = true) {
     dispatch("index/submitLoad", null, { root: true });
+
     const program = localStorage.getItem("program");
     const tahun = rootState.index.label;
 
@@ -12,23 +13,45 @@ export default {
       return;
     }
 
-    // Set static kelas options directly from user Auth payload
-    const kelas = this.$auth.user.Kelas[program];
-    commit("setState", { key: "kelasOptions", value: kelas });
+    // 1. Fetch Class list dynamically if it's empty
+    if (!state.kelas || state.kelas.length === 0) {
+      const result = await this.$apiBase.$get(`get-settings?sk=${program}&type=kelas`);
+      const kelasArray = result.kelas || [];
 
-    const result = await this.$apiBase.$get(`get-settings?type=absensimatan&program=${program}&tahun=${tahun}&kelas=${kelas}`);
+      commit("setState", { key: "kelas", value: kelasArray });
 
-    if (result.length > 0) {
+      // Auto-select the first class if none is selected
+      if (kelasArray.length > 0 && !state.selectedKelas) {
+        commit("setState", { key: "selectedKelas", value: kelasArray[0].Nama });
+      }
+    }
+
+    const activeKelas = state.selectedKelas;
+
+    if (!activeKelas) {
+      commit("setState", { key: "datas", value: [] });
       dispatch("index/submitLoad", null, { root: true });
+      return;
+    }
+
+    // 2. Fetch Matan based on the active class
+    const result = await this.$apiBase.$get(`get-settings?type=absensimatan&program=${program}&tahun=${tahun}&kelas=${activeKelas}`);
+
+    if (result && result.length > 0) {
       commit("setState", { key: "datas", value: result });
     } else {
-      Swal.fire({
-        position: "center",
-        icon: "warning",
-        text: "Anda tidak mengajar apapun hari ini",
-      });
-      dispatch("index/submitLoad", null, { root: true });
+      // Use SweetAlert only if data is empty on initial load or change
+      if (!isManualChange) {
+        Swal.fire({
+          position: "center",
+          icon: "warning",
+          text: "Anda tidak mengajar matan apapun di kelas ini",
+        });
+      }
+      commit("setState", { key: "datas", value: [] });
     }
+
+    dispatch("index/submitLoad", null, { root: true });
   },
 
   async getData({ commit, state, dispatch, rootState }) {
@@ -43,24 +66,22 @@ export default {
 
       if (result) {
         commit("setState", { key: "values", value: result });
-        dispatch("index/submitLoad", null, { root: true });
       }
+      dispatch("index/submitLoad", null, { root: true });
     }
   },
 
   async submit({ commit, state, rootState }, event) {
     commit("btn");
     const data = Object.fromEntries(new FormData(event.target));
-    console.log(state.schedule);
 
-    data["Session"] = state.schedule.Hari || "-"; // Fallback to '-' if Hari doesn't exist for Matan
+    data["Session"] = state.schedule.Hari || "-";
     data["Subject"] = state.schedule.SK.split("#")[3];
 
     const program = localStorage.getItem("program");
     const tahun = rootState.index.label;
     const semester = rootState.index.semester;
     const kelas = state.selectedKelas;
-    console.log(data);
 
     const result = await this.$apiBase.$post(`input-journal?type=journal&program=${program}&thn=${tahun}&smstr=${semester}&kls=${kelas}`, data);
 

@@ -1,17 +1,23 @@
 export default {
   setDataSantri(state, value) {
-    state.santri = value;
+    state.santri = value || [];
   },
   setMatanList(state, data) {
-    state.listMatan = data;
-    if (data.length > 0) {
+    state.listMatan = data || [];
+    if (data && data.length > 0) {
       state.selectedMatan = data[0].SK;
       state.selectedMatanName = data[0].Nama;
+    } else {
+      // Clear selections if no data is passed
+      state.selectedMatan = "";
+      state.selectedMatanName = "";
     }
   },
   setState(state, data) {
     state[data.key] = data.value;
   },
+  // ... Keep the rest of your mutations the same ...
+
   btn(state) {
     state.btn = !state.btn;
   },

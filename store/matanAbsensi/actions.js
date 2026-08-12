@@ -3,43 +3,70 @@ import Swal from "sweetalert2";
 export default {
   // Assuming other actions live here...
 
-  async changeUnit({ commit, dispatch, state, rootState }, data) {
+  async fetchKelasOptions({ commit, dispatch }) {
     dispatch("index/submitLoad", null, { root: true });
-
     const program = localStorage.getItem("program");
-    const tahun = rootState.index.label;
 
-    if (!tahun) {
-      dispatch("index/submitLoad", null, { root: true });
-      this.$router.push("/");
-      return;
-    }
-
-    const kelas = this.$auth.user.Kelas[program];
-
-    const resSelect = await this.$apiBase.$get(`get-settings?type=absensimatan&program=${program}&tahun=${tahun}&kelas=${kelas}`);
-
-    if (resSelect.length > 0) {
-      commit("setSelect", resSelect);
-      dispatch("index/submitLoad", null, { root: true });
-    } else {
-      Swal.fire({
-        position: "center",
-        icon: "warning",
-        text: "Anda tidak mengajar matan apapun",
-      });
+    try {
+      const result = await this.$apiBase.$get(`get-settings?sk=${program}&type=kelas`);
+      if (result && result.kelas) {
+        // Only target the 'kelas' array from the API response
+        commit("setKelasOptions", result.kelas);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
       dispatch("index/submitLoad", null, { root: true });
     }
   },
 
-  async getDataSantri({ commit, dispatch }, data) {
+  // 2. Fetch Matan based on selected Kelas
+  async fetchMatanOptions({ commit, dispatch, state, rootState }) {
+    dispatch("index/submitLoad", null, { root: true });
+
+    const program = localStorage.getItem("program");
+    const tahun = rootState.index.label;
+    const kelas = state.selectedKelas.Nama; // Take class name dynamically
+
+    if (!tahun || !kelas) {
+      dispatch("index/submitLoad", null, { root: true });
+      return;
+    }
+
+    try {
+      const resSelect = await this.$apiBase.$get(`get-settings?type=absensimatan&program=${program}&tahun=${tahun}&kelas=${kelas}`);
+
+      if (resSelect.length > 0) {
+        commit("setSelect", resSelect);
+      } else {
+        commit("setSelect", []);
+        Swal.fire({
+          position: "center",
+          icon: "warning",
+          text: `Tidak ada matan untuk kelas ${kelas}`,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      dispatch("index/submitLoad", null, { root: true });
+    }
+  },
+
+  // 3. Update Santri fetch to use dynamic Kelas
+  async getDataSantri({ commit, dispatch, state }) {
     dispatch("index/submitLoad", null, { root: true });
     const program = localStorage.getItem("program");
-    const kelas = this.$auth.user.Kelas[program];
-    const result = await this.$apiSantri.$get(`get-absensi-sisalam?type=every&subject=kelas&program=${program}&value=${kelas}`);
+    const kelas = state.selectedKelas.Nama; // Take class name dynamically
 
-    commit("setDataSantri", result);
-    dispatch("index/submitLoad", null, { root: true });
+    try {
+      const result = await this.$apiSantri.$get(`get-absensi-sisalam?type=every&subject=kelas&program=${program}&value=${kelas}`);
+      commit("setDataSantri", result);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      dispatch("index/submitLoad", null, { root: true });
+    }
   },
   setStatus({ commit, state }, data) {
     const waktu = data;

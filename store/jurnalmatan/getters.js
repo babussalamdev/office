@@ -8,4 +8,8 @@ export default {
   getSelectedKelas(state) {
     return state.selectedKelas;
   },
+  // ADDED: Getter for the dynamic class list
+  getKelas(state) {
+    return state.kelas;
+  },
 };

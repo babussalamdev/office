@@ -1,3 +1,4 @@
+// mutations.js (Keep exactly the same, no changes needed from your original structure)
 export default {
   setState(state, data) {
     if (data.key === "details") {
@@ -8,11 +9,9 @@ export default {
     }
   },
 
-  // ADDED: Mutation specifically for the Matan List
   setMatanList(state, data) {
     state.listMatan = data;
-    // Auto-select the first matan if available
-    if (data.length > 0) {
+    if (data && data.length > 0) {
       state.selectedMatan = data[0].SK;
     } else {
       state.selectedMatan = "";

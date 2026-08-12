@@ -1,7 +1,10 @@
 export default () => ({
+  kelas: [], // <-- ADD THIS
+  selectedKelas: "", // <-- ADD THIS
+
   santri: [],
   detail: "",
-  detailMutabaah: [], // <-- Change this from "" to []  updateData: "",
+  detailMutabaah: [],
   mt: 0,
 
   // Matan setup
@@ -16,12 +19,12 @@ export default () => ({
   // Modal Insert Variables
   fromPage: "",
   toPage: "",
-  page: 0, // Total Halaman
+  page: 0,
 
   // Modal Update Variables
   fromPageUpdate: "",
   toPageUpdate: "",
-  pageupdate: 0, // Total Halaman Update
-  scoreUpdate: 0, // <-- ADD THIS
+  pageupdate: 0,
+  scoreUpdate: 0,
   noteupdate: "",
 });

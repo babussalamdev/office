@@ -4,19 +4,23 @@
       <h2 class="mb-2">Jurnal Matan</h2>
       <div class="d-flex justify-content-between mb-3">
         <div class="d-flex gap-2">
-          <select class="form-select" v-model="selectedKelas">
+          <!-- Dropdown Kelas: Using the dynamic kelas state and @change -->
+          <select class="form-select" v-model="selectedKelas" @change="handleKelasChange">
             <option value="" selected disabled>Kelas</option>
-            <option v-for="(data, index) in uniqueClasses" :key="index" :value="data">{{ data }}</option>
+            <option v-for="(k, index) in kelas" :key="index" :value="k.Nama">{{ k.Nama }}</option>
           </select>
+
+          <!-- Dropdown Matan: Loops directly over 'datas' -->
           <select class="form-select" v-model="selectedMatan">
             <option value="" selected disabled>Matan</option>
-            <option v-for="(data, index) in uniqueMatan" :key="index" :value="data.SK.split('#')[3]">{{ data.Nama }}</option>
+            <option v-for="(data, index) in datas" :key="index" :value="data.SK.split('#')[3]">{{ data.Nama }}</option>
           </select>
         </div>
         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#inputModalJurnal" :disabled="!selectedMatan">
           tambah data
         </button>
       </div>
+
       <div class="table-responsive">
         <table class="table table-hover table-striped">
           <thead>
@@ -28,8 +32,8 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-if="uniqueClasses.length === 0 || uniqueMatan.length === 0">
-              <td colspan="4" class="text-center">Anda tidak mengajar apapun hari ini</td>
+            <tr v-if="kelas.length === 0 || datas.length === 0">
+              <td colspan="4" class="text-center">Anda tidak mengajar apapun hari ini / Kelas kosong</td>
             </tr>
             <tr v-for="(data, index) in values" :key="index">
               <td class="text-capitalize" scope="col">{{ data.SK.split("#")[2] }}</td>
@@ -57,7 +61,8 @@
 
   export default {
     computed: {
-      ...mapState("jurnalmatan", ["datas", "values", "schedule", "kelasOptions"]),
+      // Map 'kelas' from state to power the dropdown
+      ...mapState("jurnalmatan", ["datas", "values", "schedule", "kelas"]),
       ...mapGetters("jurnalmatan", ["getSelectedMatan", "getSelectedKelas"]),
 
       selectedMatan: {
@@ -76,28 +81,15 @@
           this.setState({ key: "selectedKelas", value });
         },
       },
-      uniqueClasses() {
-        // Get static classes from auth
-        if (!this.kelasOptions) return [];
-        return Array.isArray(this.kelasOptions) ? this.kelasOptions : [this.kelasOptions];
-      },
-      uniqueMatan() {
-        // Filter the API response (datas) by matching the class extracted from the SK
-        if (!this.selectedKelas) return [];
-        return this.datas.filter((item) => item.SK.split("#")[2] === this.selectedKelas);
-      },
       scheduleMatan() {
-        // Cocokkan id/kode matan yang dipilih dengan SK yang di-split
-        return this.uniqueMatan.find((x) => x.SK.split("#")[3] === this.selectedMatan);
+        // Find the selected matan object directly from datas
+        if (!this.selectedMatan) return null;
+        return this.datas.find((x) => x.SK.split("#")[3] === this.selectedMatan);
       },
     },
     watch: {
-      selectedKelas(value) {
-        this.setState({ key: "reset", value });
-        if (value && this.selectedMatan) {
-          this.getData();
-        }
-      },
+      // ONLY watch selectedMatan to fetch journal data.
+      // Do NOT watch selectedKelas to prevent infinite API loops.
       selectedMatan(value) {
         if (value && this.selectedKelas) {
           this.getData();
@@ -109,9 +101,20 @@
         }
       },
     },
+    mounted() {
+      // Fetch classes and matans on page load
+      this.changeUnit();
+    },
     methods: {
-      ...mapActions("jurnalmatan", ["getData"]),
+      ...mapActions("jurnalmatan", ["getData", "changeUnit"]),
       ...mapMutations("jurnalmatan", ["setState", "editItem"]),
+
+      handleKelasChange() {
+        // Reset matan selection and values array via existing 'reset' mutation logic
+        this.setState({ key: "reset" });
+        // Fetch the new list of Matans for this newly selected class
+        this.changeUnit(true);
+      },
     },
   };
 </script>

@@ -17,6 +17,24 @@ export default {
     state.selectedMatan = ""; // resets selected on new select array
     state.santri = []; // <-- Add this to clear the list on page reload
   },
+  setKelasOptions(state, value) {
+    state.kelasOptions = value;
+  },
+  setSelectedKelas(state, value) {
+    state.selectedKelas = value;
+    // Automatically reset subsequent selections when Kelas changes
+    state.selectedMatan = "";
+    state.select = [];
+    state.santri = [];
+  },
+  setSelectedMatan(state, value) {
+    state.selectedMatan = value;
+  },
+  setSelect(state, value) {
+    state.select = value;
+    state.selectedMatan = "";
+    state.santri = [];
+  },
   setDataSantri(state, value) {
     state.santri = value;
   },

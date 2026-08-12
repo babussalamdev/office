@@ -11,4 +11,11 @@ export default {
   getSantri(state) {
     return state.santri;
   },
+  // ADDED: Getters for dynamic class selection
+  getKelas(state) {
+    return state.kelas;
+  },
+  getSelectedKelas(state) {
+    return state.selectedKelas;
+  },
 };
