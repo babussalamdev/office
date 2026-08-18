@@ -31,16 +31,19 @@ export default {
   async submit({ commit, state, rootState }, event) {
     commit("btn");
     const data = Object.fromEntries(new FormData(event.target));
-    console.log(state.schedule);
 
-    data["Session"] = state.schedule.Hari || "-"; // Fallback to '-' if Hari doesn't exist for Matan
-    data["Subject"] = state.schedule.SK.split("#")[3];
+    data["Session"] = state.schedule?.Hari || "-";
+
+    // SAFEGUARD ADDED HERE: Check if SK exists before splitting
+    data["Subject"] = state.selectedEkskull;
 
     const program = localStorage.getItem("program");
     const tahun = rootState.index.label;
     const semester = rootState.index.semester;
-    const kelas = state.selectedKelas;
+    const kelas = state.selectedEkskull;
+
     console.log(data);
+    console.log({ program, tahun, semester, kelas });
 
     const result = await this.$apiBase.$post(`input-journal?type=journal&program=${program}&thn=${tahun}&smstr=${semester}&kls=${kelas}`, data);
 
@@ -56,7 +59,7 @@ export default {
     data["Session"] = state.updateData.Session || "-";
 
     const program = localStorage.getItem("program");
-    const kelas = state.selectedKelas;
+    const kelas = state.selectedEkskull;
     const sk = state.updateData.SK.replace(/#/g, "%23");
 
     const result = await this.$apiBase.$put(`update-journal?type=journal&program=${program}&kls=${kelas}&sk=${sk}`, data);

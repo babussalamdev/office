@@ -6,7 +6,7 @@ export default {
       state[data.key] = data.value;
     } else if (data.key === "reset") {
       state.values = [];
-      state.selectedEkskull = "";
+      // REMOVED: state.selectedEkskull = "";  <-- This was causing the bug
     } else {
       state[data.key] = data.value;
     }

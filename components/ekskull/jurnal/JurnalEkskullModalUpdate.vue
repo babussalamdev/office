@@ -1,8 +1,14 @@
 <template>
   <div>
     <!-- Modal -->
-    <div class="modal fade" id="updateModalJurnal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div
+      class="modal fade"
+      id="updateModalJurnal"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <form @submit.prevent="update" id="modalUpdate">
@@ -12,13 +18,23 @@
             </div>
             <div class="modal-body">
               <div class="form-floating mb-3">
-                <textarea class="form-control" placeholder="Leave a comment here" id="judul" style="height: 100px"
-                  :value="updateData?.Description" name="Description"></textarea>
+                <textarea
+                  class="form-control"
+                  placeholder="Leave a comment here"
+                  id="judul"
+                  style="height: 100px"
+                  :value="updateData?.Description"
+                  name="Description"></textarea>
                 <label for="judul">Judul Pembahasan</label>
               </div>
               <div class="form-floating mb-3">
-                <textarea class="form-control" placeholder="Leave a comment here" id="catatan" style="height: 100px"
-                  :value="updateData?.Occurrence" name="Occurrence"></textarea>
+                <textarea
+                  class="form-control"
+                  placeholder="Leave a comment here"
+                  id="catatan"
+                  style="height: 100px"
+                  :value="updateData?.Occurrence"
+                  name="Occurrence"></textarea>
                 <label for="catatan">Catatan Kejadian</label>
               </div>
             </div>
@@ -40,15 +56,15 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex'
-export default {
-  computed: {
-    ...mapState('jurnal', ['updateData', 'btn'])
-  },
-  methods: {
-    ...mapActions('jurnal', ['update'])
-  },
-}
+  import { mapState, mapMutations, mapActions } from "vuex";
+  export default {
+    computed: {
+      ...mapState("jurnalekskull", ["updateData", "btn"]),
+    },
+    methods: {
+      ...mapActions("jurnalekskull", ["update"]),
+    },
+  };
 </script>
 
 <style scoped></style>

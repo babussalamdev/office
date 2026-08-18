@@ -13,7 +13,7 @@
         <div class="modal-content">
           <form @submit.prevent="submit" id="modalInput">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="staticBackdropLabel">Tambah Jurnal</h1>
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Tambah Jurnal Ekskull</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -47,10 +47,10 @@
   import { mapState, mapMutations, mapActions } from "vuex";
   export default {
     computed: {
-      ...mapState("jurnalmatan", ["btn"]),
+      ...mapState("jurnalekskull", ["btn"]),
     },
     methods: {
-      ...mapActions("jurnalmatan", ["submit"]),
+      ...mapActions("jurnalekskull", ["submit"]),
     },
   };
 </script>

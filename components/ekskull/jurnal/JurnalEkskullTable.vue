@@ -4,7 +4,7 @@
       <h2 class="mb-2">Jurnal Ekskull</h2>
       <div class="d-flex justify-content-between mb-3">
         <div class="d-flex gap-2">
-          <select class="form-select" v-model="selectedEkskull" @change="getData">
+          <select class="form-select" v-model="selectedEkskull">
             <option value="" disabled selected>Ekskull</option>
             <option v-for="(data, index) in datas" :key="index" :value="data">
               {{ data }}
@@ -26,7 +26,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-if="uniqueEkskull.length === 0">
+            <tr v-if="values.length === 0">
               <td colspan="4" class="text-center">Anda tidak mengajar apapun hari ini</td>
             </tr>
             <tr v-for="(data, index) in values" :key="index">
@@ -45,8 +45,8 @@
         </table>
       </div>
     </div>
-    <JurnalMatanModal />
-    <JurnalMatanModalUpdate />
+    <JurnalEkskullModal />
+    <JurnalEkskullModalUpdate />
   </div>
 </template>
 
@@ -55,7 +55,7 @@
 
   export default {
     computed: {
-      ...mapState("jurnalekskull", ["datas", "values", "schedule"]),
+      ...mapState("jurnalekskull", ["datas", "values"]),
       ...mapGetters("jurnalekskull", ["getselectedEkskull"]),
 
       selectedEkskull: {
@@ -67,13 +67,13 @@
         },
       },
       uniqueEkskull() {
-        // Filter the API response (datas) by matching the class extracted from the SK
         if (!this.selectedEkskull) return [];
-        return this.datas.filter((item) => item.SK.split("#")[2] === this.selectedEkskull);
+        // Ensure item.SK exists before trying to split it
+        return this.datas.filter((item) => item.SK && item.SK.split("#")[2] === this.selectedEkskull);
       },
       scheduleMatan() {
-        // Cocokkan id/kode matan yang dipilih dengan SK yang di-split
-        return this.uniqueEkskull.find((x) => x.SK.split("#")[3] === this.selectedEkskull);
+        // Ensure x.SK exists before trying to split it
+        return this.uniqueEkskull.find((x) => x.SK && x.SK.split("#")[3] === this.selectedEkskull);
       },
     },
     watch: {
@@ -81,11 +81,6 @@
         this.setState({ key: "reset", value });
         if (value && this.selectedEkskull) {
           this.getData();
-        }
-      },
-      scheduleEkskull(value) {
-        if (value) {
-          this.setState({ key: "schedule", value });
         }
       },
     },

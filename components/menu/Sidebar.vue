@@ -204,6 +204,11 @@
                   <span class="text animate__animated animate__fadeInRight">Nilai</span>
                 </nuxt-link>
               </li>
+              <li>
+                <nuxt-link to="/ekskull/rekap" class="custom-link text-decoration-none d-flex align-items-center gap-2">
+                  <span class="text animate__animated animate__fadeInRight">Rekap Absensi Ekskull</span>
+                </nuxt-link>
+              </li>
               <!-- waktu tidur -->
               <!-- <li>
                 <nuxt-link to="/asrama/waktutidur"
