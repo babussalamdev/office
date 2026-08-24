@@ -58,6 +58,9 @@ export default {
   setChartSarpras(state, value) {
     state.sarprasData = value;
   },
+  setReportStatus(state, value) {
+    state.reportStatus = value;
+  },
   setChart(state, value) {
     // chart class
     const izinData = [];

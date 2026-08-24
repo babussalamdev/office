@@ -1,14 +1,15 @@
 export default () => ({
-    chart: '',
-    dataChart: '',
-    colors: ["#198754", "#6c757d", "#ffc107", "#0d6efd", "#dc3545"],
-    pegawaiData: [],
-    santriData: [],
-    sarprasData: '',
-    chartOptions: [],
-    series: [0],
-    highlight: '',
-    kelasCounts: '',
-    series: [],
-    cate: []
-})
+  chart: "",
+  dataChart: "",
+  colors: ["#198754", "#6c757d", "#ffc107", "#0d6efd", "#dc3545"],
+  pegawaiData: [],
+  santriData: [],
+  sarprasData: "",
+  chartOptions: [],
+  series: [0],
+  highlight: "",
+  kelasCounts: "",
+  series: [],
+  cate: [],
+  reportStatus: "off", // Default state for the toggle
+});
